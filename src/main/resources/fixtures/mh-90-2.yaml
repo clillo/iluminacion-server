@@ -1,0 +1,16 @@
+id: mh-90-2
+pan: 260
+tilt: 261
+dimmer: 262
+strobo: 263
+color: 264
+goboCristal: 265
+goboRotation: 266
+goboCristalShake: 267
+gobo: 268
+goboNormalShake: 269
+focus: 270
+prisma: 271
+speed: 272
+panFine: 273
+tiltFine: 274
