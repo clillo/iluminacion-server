@@ -1,6 +1,6 @@
 package cl.clillo.ilumination;
 
-import cl.clillo.ilumination.executor.ProgramExecutor;
+import cl.clillo.ilumination.executor.ShowExecutor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -9,11 +9,11 @@ import org.springframework.stereotype.Component;
 public class SchedulerPOC {
 
     @Autowired
-    private ProgramExecutor programExecutor;
+    private ShowExecutor showExecutor;
 
     @Scheduled(fixedRate = 100)
     public void tic() {
-        programExecutor.tic();
+        showExecutor.tic();
 
     }
 }

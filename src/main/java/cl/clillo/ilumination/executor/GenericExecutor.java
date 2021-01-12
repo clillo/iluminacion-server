@@ -2,6 +2,7 @@ package cl.clillo.ilumination.executor;
 
 import cl.clillo.ilumination.dmx.Dmx;
 import cl.clillo.ilumination.model.Point;
+import cl.clillo.ilumination.model.Show;
 import cl.clillo.ilumination.model.Step;
 import lombok.Builder;
 import lombok.extern.log4j.Log4j2;
@@ -19,10 +20,10 @@ public class GenericExecutor implements StepExecutor{
     private Dmx dmx;
 
     @Override
-    public void execute(Program program) {
+    public void execute(Show show) {
 
-        log.info("ejecutando paso del programa {} paso {}", program.getName(), program.getPasoActual());
-        final Step step = program.nextStep();
+        log.info("ejecutando paso del programa {} paso {}", show.getName(), show.getPasoActual());
+        final Step step = show.nextStep();
         final List<Point> pointList = step.getPointList();
 
         for (Point point: pointList)

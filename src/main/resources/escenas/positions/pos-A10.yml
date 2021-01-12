@@ -1,0 +1,25 @@
+positions:
+  - position:
+      fixture: mh-90-1
+      pan: 72
+      panFine: 0
+      tilt: 2
+      tiltFine: 0
+  - position:
+      fixture: mh-90-2
+      pan: 72
+      panFine: 0
+      tilt: 2
+      tiltFine: 0
+  - position:
+      fixture: mh-60-1
+      pan: 113
+      panFine: 0
+      tilt: 2
+      tiltFine: 0
+  - position:
+      fixture: mh-60-2
+      pan: 113
+      panFine: 0
+      tilt: 2
+      tiltFine: 0

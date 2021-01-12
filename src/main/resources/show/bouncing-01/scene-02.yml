@@ -1,0 +1,7 @@
+duration: 9000
+scene:
+  - sceneNode:
+      fixture: mh-60-1
+      dimmer: 30
+      speed: 240
+      positions: C12

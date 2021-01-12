@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Configuration
 @Log4j2
@@ -22,7 +23,7 @@ public class MHPositionsConfig {
     public List<MHPositionsList> getMHPositionsLists() {
         final List<MHPositionsList> MHPositionsLists = new ArrayList<>();
         final ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        final File file = new File(classLoader.getResource("escenas/").getFile());
+        final File file = new File(Objects.requireNonNull(classLoader.getResource("escenas/positions/")).getFile());
 
         final File[] listFiles = file.listFiles();
 
