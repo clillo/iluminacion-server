@@ -5,11 +5,9 @@ import cl.clillo.ilumination.config.scenes.SceneConfig;
 import cl.clillo.ilumination.config.scenes.Scene;
 import cl.clillo.ilumination.config.scenes.SceneNode;
 import cl.clillo.ilumination.config.scenes.SceneNodeElement;
+import cl.clillo.ilumination.executor.BouncingExecutor;
 import cl.clillo.ilumination.executor.GenericExecutor;
-import cl.clillo.ilumination.model.SceneEntity;
-import cl.clillo.ilumination.model.Show;
-import cl.clillo.ilumination.model.ShowEntity;
-import cl.clillo.ilumination.model.SceneNodeEntity;
+import cl.clillo.ilumination.model.*;
 import cl.clillo.ilumination.repository.ScenesRepository;
 import cl.clillo.ilumination.repository.ShowsRepository;
 import cl.clillo.ilumination.repository.SceneNodeRepository;
@@ -41,6 +39,9 @@ public class ShowsConfig {
     private GenericExecutor genericExecutor;
 
     @Autowired
+    private BouncingExecutor bouncingExecutor;
+
+    @Autowired
     private ShowPostProcessor showPostProcessor;
 
     @Autowired
@@ -67,6 +68,15 @@ public class ShowsConfig {
             showList.add(show);
 
         }
+
+        final Show dummy = Show.builder()
+                .name("bouncing-auto")
+                .stepExecutor(bouncingExecutor)
+                .executing(true)
+                .firstTimeExecution(true)
+                .build();
+
+        showList.add(dummy);
 
         return showList;
     }

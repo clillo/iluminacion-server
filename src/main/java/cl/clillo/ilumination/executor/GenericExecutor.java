@@ -26,7 +26,7 @@ public class GenericExecutor implements StepExecutor{
         final List<Point> pointList = step.getPointList();
         log.info("executing {} step {}: [{}]", show.getName(), show.getPasoActual(), step.getDescription());
 
-        for (Point point: pointList)
+        for (final Point point: pointList)
             dmx.enviar(point);
 
     }

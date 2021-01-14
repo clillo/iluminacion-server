@@ -26,6 +26,11 @@ public class ConcreteFixtureConfig {
         MovingHead90 movingHead90_1 = (MovingHead90)getFixtureFromFile("mh-90-1", MovingHead90.class);
         MovingHead90 movingHead90_2 = (MovingHead90)getFixtureFromFile("mh-90-2", MovingHead90.class);
 
+        movingHead60_1.init();
+        movingHead60_2.init();
+        movingHead90_1.init();
+        movingHead90_2.init();
+
         fixturesMap = new ImmutableMap.Builder<String, Fixture>()
                 .put("mh-60-1", movingHead60_1)
                 .put("mh-60-2", movingHead60_2)

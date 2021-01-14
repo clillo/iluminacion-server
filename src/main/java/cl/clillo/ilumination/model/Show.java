@@ -10,6 +10,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
+import java.util.Objects;
 
 @Data
 @Builder
@@ -38,8 +39,11 @@ public class Show {
 
     private List<Scene> scenesLists;
 
+    private boolean firstTimeExecution;
+
     public Step nextStep(){
         pasoActual++;
+
         if (pasoActual >= stepList.size())
             pasoActual = 0;
 
@@ -51,6 +55,10 @@ public class Show {
             nextExecutionTime = System.currentTimeMillis() + NEXT_EXECUTION_DEFAULT;
         }
         return step;
+    }
+
+    public void setNextExec(){
+        nextExecutionTime = System.currentTimeMillis() + NEXT_EXECUTION_DEFAULT;
     }
 
 }
