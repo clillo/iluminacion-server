@@ -17,6 +17,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -30,6 +31,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ShowsConfig {
 
     private static final String prefix = "show/";
+
+    @Value("${show.path}")
+    private String baseDir;
 
     private final AtomicInteger atomicInteger = new AtomicInteger();
 
@@ -52,26 +56,26 @@ public class ShowsConfig {
     private ShowsRepository showsRepository;
 
     @Bean
-    public List<Show> getProgramList() {
-        final List<Show> programs = Lists.newArrayList();
+    public List<Show> geShowList() {
+        final List<Show> showList = Lists.newArrayList();
 
-        final List<File> shows = Utils.getDirectories(prefix);
+        final List<File> shows = Utils.getDirectories(baseDir+prefix);
 
         for(File f: shows) {
             final Show show = buildShowFromScenes(f.getName());
             //save(show);
-            programs.add(show);
+            showList.add(show);
 
         }
 
-        return programs;
+        return showList;
     }
 
-    public Show buildShowFromScenes(final String name){
-        final List<Scene> scenesLists = sceneConfig.getScenesLists(prefix+name);
+    public Show buildShowFromScenes(final String showName){
+        final List<Scene> scenesLists = sceneConfig.getScenesLists(baseDir+prefix+showName, showName);
 
         return Show.builder()
-                .name(name)
+                .name(showName)
                 .stepExecutor(genericExecutor)
                 .stepList(showPostProcessor.buildStepListFromScenes(scenesLists))
                 .scenesLists(scenesLists)
@@ -79,7 +83,12 @@ public class ShowsConfig {
                 .build();
     }
 
-    private void save(Show show){
+    public void write(final Show show, final Scene scene){
+        sceneConfig.write(baseDir+prefix, scene);
+        show.setStepList(showPostProcessor.buildStepListFromScenes(show.getScenesLists()));
+    }
+
+    private void save(final Show show){
 
         final Set<SceneEntity> scenes = Sets.newHashSet();
 

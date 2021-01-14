@@ -1,7 +1,14 @@
-duration: 9000
 scene:
-  - sceneNode:
-      fixture: mh-60-1
-      dimmer: 30
+- sceneNode:
+    fixture: "mh-60-1"
+    dimmer: 32
+    speed: 240
+    lights: ""
+    positions: "E01"
+- sceneNode:
+      fixture: "mh-60-2"
+      dimmer: 32
       speed: 240
-      positions: C12
+      lights: ""
+      positions: "E12"
+duration: 9000

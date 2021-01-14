@@ -4,11 +4,11 @@ scene:
     dimmer: 32
     speed: 240
     lights: ""
-    positions: "S01"
+    positions: "U07"
 - sceneNode:
       fixture: "mh-60-2"
       dimmer: 32
       speed: 240
       lights: ""
-      positions: "E01"
+      positions: "S01"
 duration: 9000

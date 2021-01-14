@@ -1,13 +1,16 @@
 package cl.clillo.ilumination.resources;
 
 import cl.clillo.ilumination.config.ShowsConfig;
+import cl.clillo.ilumination.config.scenes.Scene;
 import cl.clillo.ilumination.model.Show;
+import com.google.common.collect.Lists;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
@@ -25,35 +28,10 @@ public class ShowController {
     @Autowired
     private ShowsConfig showsConfig;
 
-    @GetMapping("/programs")
-    @ResponseBody
-    public List<Show> getProgramList() {
-        return showList;
-    }
-
-    @GetMapping("/program")
-    @ResponseBody
-    public Show getProgram(int index) {
-        return showList.get(index);
-    }
-
-
-    //creating put mapping that updates the book detail
-    @PutMapping("/programupdate")
-    private void update(@RequestBody Show show) {
-        log.info("Actualizando: "+ show.getName());
-
-    }
-
     @GetMapping("/index")
-    public String showUserList(Model model) {
+    public String showList(Model model) {
         model.addAttribute("shows", showList);
         return "index";
-    }
-
-    @GetMapping("/signup")
-    public String showSignUpForm(Show show) {
-        return "add-user";
     }
 
     @PostMapping("/adduser")
@@ -67,32 +45,37 @@ public class ShowController {
     }
 
     @PostMapping("/update/{name}")
-    public String updateUser(@PathVariable("name") String name, Show show, BindingResult result, Model model) {
-        final Optional<Show> showi = getSHow(name);
+    public String updateShow(@PathVariable("name") String name, Show show, BindingResult result, Model model) {
+        final Optional<Show> optShow = getSHow(name);
 
-        if(showi.isPresent()) {
-            showi.get().setName(show.getName());
-            showi.get().setExecuting(show.isExecuting());
+        if(optShow.isPresent()) {
+            optShow.get().setName(show.getName());
+            optShow.get().setExecuting(show.isExecuting());
+
         }
 
-
-        return "redirect:/index";
+        return "redirect:/edit/"+name;
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-     //   User user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-    //    userRepository.delete(user);
+    @PostMapping("/update/{name}/scene/{id}")
+    public String updateScene(@PathVariable("name") String name, @PathVariable("id") String id, Scene scene, BindingResult result, Model model) {
+        final Optional<Show> optShow = getSHow(name);
+        final Optional<Scene> optScene = getScene(id, optShow);
 
-        return "redirect:/index";
+        if(optScene.isPresent()) {
+            optScene.get().update(scene);
+            showsConfig.write(optShow.get(), optScene.get());
+        }
+
+        return "redirect:/edit/"+name;
     }
 
     @GetMapping("/edit/{name}")
     public String showUpdateForm(@PathVariable("name") String name, Model model) {
-        final Optional<Show> show = getSHow(name);
+        final Optional<Show> optShow = getSHow(name);
 
-        if(show.isPresent()) {
-            model.addAttribute("show", show.get());
+        if(optShow.isPresent()) {
+            model.addAttribute("show", optShow.get());
 
         }
 
@@ -101,8 +84,24 @@ public class ShowController {
 
     @GetMapping("/edit/{name}/scene/{id}")
     public String showUpdateSceneForm(@PathVariable("name") String name, @PathVariable("id") String id, Model model) {
+        final Optional<Show> show = getSHow(name);
+        final Optional<Scene> scene = getScene(id, show);
 
-        return "redirect:/index";
+        if(scene.isPresent()) {
+            model.addAttribute("scene", scene.get());
+
+            List<Test> test = new ArrayList<>();
+            model.addAttribute("test", test);
+            List<Test> tests = Lists.newArrayList(
+                    Test.builder().price(100).testCode("1").testName("uno").build(),
+                    Test.builder().price(200).testCode("2").testName("dos").build(),
+                    Test.builder().price(300).testCode("3").testName("tres").build()
+
+
+            );
+            model.addAttribute("tests", tests);
+        }
+        return "update-scene";
     }
 
     private Optional<Show> getSHow(final String name){
@@ -110,6 +109,17 @@ public class ShowController {
             if(show.getName().equals(name)) {
                 return Optional.of(show);
             }
+        }
+        return Optional.empty();
+    }
+
+    private Optional<Scene> getScene(final String id, final Optional<Show> show){
+        if (show.isEmpty())
+            return Optional.empty();
+
+        for(Scene scene: show.get().getScenesLists()){
+            if(scene.getId().equals(id))
+                return Optional.of(scene);
         }
         return Optional.empty();
     }

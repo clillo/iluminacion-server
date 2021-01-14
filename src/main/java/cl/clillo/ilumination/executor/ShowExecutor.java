@@ -17,10 +17,10 @@ public class ShowExecutor {
 		if (Objects.isNull(showList))
 			return;
 
-		long actual = System.currentTimeMillis();
+		long now = System.currentTimeMillis();
 
 		for (Show show : showList) {
-			if (show.isExecuting() && show.getNextExecutionTime() < actual) {
+			if (show.isExecuting() && show.getNextExecutionTime() < now) {
 				show.getStepExecutor().execute(show);
 			}
 

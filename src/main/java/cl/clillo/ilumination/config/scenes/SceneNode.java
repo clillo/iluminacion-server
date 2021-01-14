@@ -1,22 +1,29 @@
 package cl.clillo.ilumination.config.scenes;
 
 import cl.clillo.ilumination.model.Point;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 import java.util.Map;
 
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class SceneNode {
 
     private String fixture;
     private int dimmer;
     private int speed;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String lights;
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     private String positions;
 
     private Map<String, Integer> getDMXMap(){

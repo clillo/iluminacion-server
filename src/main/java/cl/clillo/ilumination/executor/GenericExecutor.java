@@ -22,9 +22,9 @@ public class GenericExecutor implements StepExecutor{
     @Override
     public void execute(Show show) {
 
-        log.info("ejecutando paso del programa {} paso {}", show.getName(), show.getPasoActual());
         final Step step = show.nextStep();
         final List<Point> pointList = step.getPointList();
+        log.info("executing {} step {}: [{}]", show.getName(), show.getPasoActual(), step.getDescription());
 
         for (Point point: pointList)
             dmx.enviar(point);

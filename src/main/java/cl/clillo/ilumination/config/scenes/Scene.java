@@ -6,8 +6,10 @@ import cl.clillo.ilumination.config.mhpositions.MHPositionsList;
 import cl.clillo.ilumination.fixture.dmx.Fixture;
 import cl.clillo.ilumination.model.Point;
 import cl.clillo.ilumination.model.Step;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import lombok.Data;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -16,7 +18,10 @@ import java.util.Objects;
 @Data
 public class Scene {
 
+	@JsonIgnore
 	private String id;
+	@JsonIgnore
+	private String showName;
 	private SceneNodeElement[] scene;
 	private long duration;
 
@@ -24,6 +29,7 @@ public class Scene {
 						  final Map<String, MHPositionsList> positionsMap,
 						  final Map<String, MHLightList> lightMap ){
 		final List<Point> pointList = Lists.newArrayList();
+		final StringBuilder sb = new StringBuilder();
 
 		for(SceneNodeElement element: scene){
 			final SceneNode sceneNode = element.getSceneNode();
@@ -33,7 +39,7 @@ public class Scene {
 			final String position = element.getSceneNode().getPositions();
 			final String lights = element.getSceneNode().getLights();
 
-			if (!Objects.isNull(position)) {
+			if (StringUtils.isNoneEmpty(position)) {
 				final MHPositionsList posList = positionsMap.get(position);
 				if (Objects.isNull(posList)){
 					System.out.println("position id: ["+position+"] is not valid");
@@ -43,7 +49,7 @@ public class Scene {
 				}
 			}
 
-			if (!Objects.isNull(lights)) {
+			if (StringUtils.isNoneEmpty(lights)) {
 				final List<Point> lightDMXMap = lightMap.get(lights).getPointList(fixture);
 				pointList.addAll(lightDMXMap);
 			}
@@ -56,6 +62,21 @@ public class Scene {
 				.pointList(pointList)
 				.nextExecution(duration>0)
 				.nextExecutionTime(duration)
+				.description("scene: "+id)
 				.build();
+	}
+
+	public void update(final Scene scene){
+		this.duration = scene.getDuration();
+		for (int i=0; i<getScene().length; i++){
+			final SceneNode sceneNodeOriginal = getScene()[i].getSceneNode();
+			final SceneNode sceneNode = scene.getScene()[i].getSceneNode();
+
+			sceneNodeOriginal.setDimmer(sceneNode.getDimmer());
+			sceneNodeOriginal.setFixture(sceneNode.getFixture());
+			sceneNodeOriginal.setLights(sceneNode.getLights());
+			sceneNodeOriginal.setPositions(sceneNode.getPositions());
+			sceneNodeOriginal.setSpeed(sceneNode.getSpeed());
+		}
 	}
 }
