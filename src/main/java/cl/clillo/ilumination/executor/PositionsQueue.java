@@ -4,68 +4,68 @@ import java.util.LinkedList;
 
 import cl.clillo.ilumination.fixture.dmx.MovingHead;
 
-public class ColaPosiciones implements Runnable  {
+public class PositionsQueue implements Runnable  {
 
-	private LinkedList<Punto> lista;
-	private MovingHead estacion;
+	private LinkedList<Punto> queue;
+	private MovingHead fixture;
 	private ListenerFinMovimiento listenerFinMovimiento;
 	
-	public ColaPosiciones(MovingHead estacion) {
-		this.estacion = estacion;
-		lista = new LinkedList<Punto>();
+	public PositionsQueue(MovingHead fixture) {
+		this.fixture = fixture;
+		queue = new LinkedList<Punto>();
 	}
 
 	public synchronized boolean estaMoviendose(){
-		return !lista.isEmpty();
+		return !queue.isEmpty();
 	}
 	
 	public synchronized void agregar() {
-		lista.addFirst(new Punto());
+		queue.addFirst(new Punto());
 		notifyAll();
 	}
 	
 	public synchronized void agregar(Punto punto) {
-		lista.addLast(punto);
+		queue.addLast(punto);
 		notifyAll();
 	}
 	
 	public synchronized void freeze() {
-		while (!lista.isEmpty())
-			lista.remove();
+		while (!queue.isEmpty())
+			queue.remove();
 		notifyAll();
 	}
 
 	private synchronized Punto obtener() {
-		while (lista.isEmpty()){
+		while (queue.isEmpty()){
 			try {
-				estacion.setMoviendose(false);
+				fixture.setMoviendose(false);
 				wait();
 			} catch (InterruptedException e) {
 			}
 		}
 		
-		Punto ins = lista.getFirst();
-		lista.removeFirst();
+		final Punto point = queue.getFirst();
+		queue.removeFirst();
 		
-		if (lista.isEmpty()){
-			estacion.setMoviendose(false);
+		if (queue.isEmpty()){
+			fixture.setMoviendose(false);
 			if (listenerFinMovimiento!=null)
 				listenerFinMovimiento.finalizaMovimiento();
 		}
-		return ins;
+		return point;
 	}
 
 	public void run() {
-		Punto instruccion;
+		Punto point;
 		while (true) {
-			instruccion = obtener();
-			if (!instruccion.isFake()){
-				estacion.saltarA(instruccion.getPosX(), instruccion.getPosY());
-				estacion.setMoviendose(true);
+			point = obtener();
+			if (!point.isFake()){
+				fixture.saltarA(point.getPosX(), point.getPosY());
+				fixture.setMoviendose(true);
 			}
 			
 			try {
-				Thread.sleep(instruccion.getVelocidad());
+				Thread.sleep(point.getVelocidad());
 			} catch (InterruptedException e1) {
 			}
 		}

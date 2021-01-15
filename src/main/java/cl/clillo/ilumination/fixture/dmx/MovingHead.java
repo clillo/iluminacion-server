@@ -1,9 +1,10 @@
 package cl.clillo.ilumination.fixture.dmx;
 
-import cl.clillo.ilumination.executor.ColaPosiciones;
+import cl.clillo.ilumination.executor.PositionsQueue;
 import cl.clillo.ilumination.executor.ListenerCambioPosicion;
 import cl.clillo.ilumination.executor.ListenerFinMovimiento;
 import cl.clillo.ilumination.executor.Punto;
+import cl.clillo.ilumination.model.Coordinate;
 import cl.clillo.ilumination.model.Point;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -14,11 +15,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-@Data
+@Data()
 @NoArgsConstructor
 @AllArgsConstructor
 public class MovingHead extends Fixture implements ListenerFinMovimiento {
 
+    // begin DMX channels
     private int pan;
     private int panFine;
 
@@ -35,19 +37,30 @@ public class MovingHead extends Fixture implements ListenerFinMovimiento {
 
     private int dimmer;
     private int speed;
+    // end DMX channels
 
-    private ColaPosiciones lista;
+    private PositionsQueue lista;
+
+    private boolean moviendose;
+    private int velocidadActual;
+
+    private long fakeX;
+    private long fakeY;
+    private Thread thLista = null;
+    private Coordinate coordinates;
+    private ArrayList<ListenerCambioPosicion> listenerCambioPosicion;
+    private List<Point> pointList;
 
     public void init(){
-        lista = new ColaPosiciones(this);
+        lista = new PositionsQueue(this);
         lista.setListenerFinMovimiento(this);
 
         thLista = new Thread(lista);
         thLista.setName("Lista de "+this);
         thLista.start();
 
-        posX = getPanMax();
-        posY = getTiltMax();
+        coordinates = new Coordinate(this);
+
         velocidadActual = 50;
     }
 
@@ -69,48 +82,25 @@ public class MovingHead extends Fixture implements ListenerFinMovimiento {
         return map;
     }
 
-
-    public long getPosicionAleatoriaPan(Random rndPan){
-        long ancho = getPanMax() - getPanMin();
-        long pos =  rndPan.nextInt((int)ancho);
-        return getPanMin() + pos;
-    }
-
-    public long getPosicionAleatoriaTilt(Random rndTilt){
-        long alto = getTiltMax() - getTiltMin();
-        long pos =  rndTilt.nextInt((int)alto);
-        return getTiltMin() + pos;
-    }
-
     public void freeze(){
         lista.freeze();
     }
-
-    private boolean moviendose;
-    private int velocidadActual;
-    private long posX;
-    private long posY;
-    private long fakeX;
-    private long fakeY;
-    private Thread thLista = null;
-
-    private ArrayList<ListenerCambioPosicion> listenerCambioPosicion;
 
     public void moverA(long x, long y){
         moverA(x, y, velocidadActual);
     }
 
     private void moverA(long x, long y, int velocidad) {
-        long deltax = Math.abs(x - posX);
-        long deltay = Math.abs(y - posY);
+        long deltax = Math.abs(x - coordinates.getX());
+        long deltay = Math.abs(y - coordinates.getY());
         boolean steep = deltay > deltax;
         long error;
-        int xstep = (posX < x)?1:-1;
-        int ystep = (posY < y)?1:-1;
+        int xstep = (coordinates.getX() < x)?1:-1;
+        int ystep = (coordinates.getY() < y)?1:-1;
         int i;
 
-        fakeX = posX;
-        fakeY = posY;
+        fakeX = coordinates.getX();
+        fakeY = coordinates.getY();
 
         error = 0;
 
@@ -143,15 +133,9 @@ public class MovingHead extends Fixture implements ListenerFinMovimiento {
 
     }
 
-    public long getRealTilt(){return posY;}
-
-    public long getRealPan(){return posX;}
-
-    private List<Point> pointList;
-
     public void saltarA(long x, long y) {
-        setPosX(x);
-        setPosY(y);
+        coordinates.setX(x);
+        coordinates.setY(y);
         pointList = Lists.newArrayList(getPointList());
 
    //     System.out.println("Moviendo a "+x+","+y+"\t"+pointList);
@@ -161,38 +145,7 @@ public class MovingHead extends Fixture implements ListenerFinMovimiento {
     }
 
     public List<Point> getPointList() {
-        final List<Point> pointList = Lists.newArrayList();
-/*        int vpan = (int)(posX / 256);
-        int vpanFine = (int)(posX % 256);
-
-        int vtilt = (int)(posY/ 256);
-        int vtiltFine = (int)(posY % 256);
-*/
-        int vpan = (int)(posX);
-        int vpanFine = 0;
-
-        int vtilt = (int)(posY);
-        int vtiltFine = 0;
-
-
-        pointList.add(Point.builder()
-                .canal(pan)
-                .dmx(vpan)
-                .build());
-        pointList.add(Point.builder()
-                .canal(panFine)
-                .dmx(vpanFine)
-                .build());
-        pointList.add(Point.builder()
-                .canal(tilt)
-                .dmx(vtilt)
-                .build());
-        pointList.add(Point.builder()
-                .canal(tiltFine)
-                .dmx(vtiltFine)
-                .build());
-
-        return pointList;
+        return coordinates.getPointList(this.getDMXMap());
     }
 
     private void incx(long p) {

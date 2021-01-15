@@ -1,6 +1,5 @@
 package cl.clillo.ilumination.fixture.dmx;
 
-import com.google.common.collect.Maps;
 import lombok.*;
 import org.springframework.stereotype.Component;
 

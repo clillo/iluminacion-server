@@ -1,17 +1,20 @@
 package cl.clillo.ilumination.config;
 
 import cl.clillo.ilumination.fixture.dmx.Fixture;
+import cl.clillo.ilumination.fixture.dmx.MovingHead;
 import cl.clillo.ilumination.fixture.dmx.MovingHead60;
 import cl.clillo.ilumination.fixture.dmx.MovingHead90;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Lists;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
 import java.io.File;
+import java.util.List;
 
 @Configuration
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
@@ -55,6 +58,16 @@ public class ConcreteFixtureConfig {
 
     public Fixture getFixture(String id){
         return fixturesMap.get(id);
+    }
+
+    public List<MovingHead> getMovingHeads() {
+        final List<MovingHead> movingHeadList = Lists.newArrayList();
+
+        for(Fixture fixture: fixturesMap.values()){
+            if (fixture.getId().startsWith("mh-"))
+                movingHeadList.add((MovingHead) fixture);
+        }
+        return movingHeadList;
     }
 
 }
