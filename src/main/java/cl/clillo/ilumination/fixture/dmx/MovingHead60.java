@@ -10,15 +10,17 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class MovingHead60 extends MovingHead{
-/*
-    public long getPanMax(){ return 33000;}
-    public long getPanMin(){ return 12000;}
-    public long getTiltMax(){ return 35000;}
-    public long getTiltMin(){ return 0;}
-*/
 
-    public long getPanMax(){ return 128;}
-    public long getPanMin(){ return 55;}
-    public long getTiltMax(){ return 130;}
-    public long getTiltMin(){ return 10;}
+    public int getPanMax(){ return 30_500;}
+    public int getPanMin(){ return 14_000;}
+    public int getTiltMax(){ return 31_500;}
+    public int getTiltMin(){ return 2_400;}
+
+/*
+    public int getPanMax(){ return 128;}
+    public int getPanMin(){ return 55;}
+    public int getTiltMax(){ return 130;}
+    public int getTiltMin(){ return 10;}
+
+ */
 }

@@ -9,4 +9,5 @@ public class Point {
 
     private int canal;
     private int dmx;
+    private String fixtureId;
 }

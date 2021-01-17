@@ -11,7 +11,7 @@ public class SchedulerPOC {
     @Autowired
     private ShowExecutor showExecutor;
 
-    @Scheduled(fixedRate = 100)
+    @Scheduled(fixedRate = 5)
     public void tic() {
         showExecutor.tic();
 

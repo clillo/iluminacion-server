@@ -28,14 +28,16 @@ public class MovingHead90 extends MovingHead{
 
         return map;
     }
-/*
-    public long getPanMax(){ return 23000;}
-    public long getPanMin(){ return 0;}
-    public long getTiltMax(){ return 31000;}
-    public long getTiltMin(){ return 0;}*/
 
-    public long getPanMax(){ return 88;}
-    public long getPanMin(){ return 10;}
-    public long getTiltMax(){ return 120;}
-    public long getTiltMin(){ return 10;}
+    public int getPanMax(){ return 20_000;}
+    public int getPanMin(){ return 500;}
+    public int getTiltMax(){ return 29_000;}
+    public int getTiltMin(){ return 1_000;}
+/*
+    public int getPanMax(){ return 88;}
+    public int getPanMin(){ return 10;}
+    public int getTiltMax(){ return 120;}
+    public int getTiltMin(){ return 10;}
+
+ */
 }
