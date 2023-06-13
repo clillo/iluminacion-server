@@ -56,7 +56,7 @@ public class ShowsConfig {
     @Autowired
     private ShowsRepository showsRepository;
 
-    @Bean
+    //@Bean
     public List<Show> geShowList() {
         final List<Show> showList = Lists.newArrayList();
 

@@ -16,7 +16,7 @@ import java.util.Optional;
 import java.util.concurrent.atomic.AtomicLong;
 import org.springframework.ui.Model;
 
-@Controller
+//@Controller
 @Log4j2
 public class ShowController {
 
