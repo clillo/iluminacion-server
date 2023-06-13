@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.6</Version>
+  <Author>carlo</Author>
+ </Creator>
+ <Manufacturer>china</Manufacturer>
+ <Model>beam+spot</Model>
+ <Type>Moving Head</Type>
+ <Channel Name="Pan" Preset="PositionPan"/>
+ <Channel Name="Pan fine" Preset="PositionPanFine"/>
+ <Channel Name="Tilt" Preset="PositionTilt"/>
+ <Channel Name="Tilt fine" Preset="PositionTiltFine"/>
+ <Channel Name="Pan/Tilt speed" Preset="SpeedPanTiltFastSlow"/>
+ <Channel Name="Dimmer" Preset="IntensityDimmer"/>
+ <Channel Name="Strobe" Preset="ShutterStrobeSlowFast"/>
+ <Channel Name="Color wheel" Preset="ColorWheel"/>
+ <Channel Name="Gobo wheel" Preset="GoboWheel"/>
+ <Channel Name="Prism rotation" Preset="PrismRotationSlowFast"/>
+ <Channel Name="No function" Preset="NoFunction"/>
+ <Mode Name="Normal">
+  <Channel Number="0">Pan</Channel>
+  <Channel Number="1">Pan fine</Channel>
+  <Channel Number="2">Tilt</Channel>
+  <Channel Number="3">Tilt fine</Channel>
+  <Channel Number="4">Pan/Tilt speed</Channel>
+  <Channel Number="5">Dimmer</Channel>
+  <Channel Number="6">Strobe</Channel>
+  <Channel Number="7">Color wheel</Channel>
+  <Channel Number="8">Gobo wheel</Channel>
+  <Channel Number="9">Prism rotation</Channel>
+  <Channel Number="10">No function</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

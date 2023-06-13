@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.2</Version>
+  <Author>carlos</Author>
+ </Creator>
+ <Manufacturer>generic</Manufacturer>
+ <Model>spider</Model>
+ <Type>Other</Type>
+ <Channel Name="motor.l" Preset="PositionPan"/>
+ <Channel Name="motor.r" Preset="PositionTilt"/>
+ <Channel Name="dimmer" Preset="IntensityMasterDimmer"/>
+ <Channel Name="strobo" Preset="ShutterStrobeSlowFast"/>
+ <Channel Name="rojo.l" Preset="IntensityRed"/>
+ <Channel Name="verde.l" Preset="IntensityGreen"/>
+ <Channel Name="azul.l" Preset="IntensityBlue"/>
+ <Channel Name="blanco.l" Preset="IntensityWhite"/>
+ <Channel Name="blanco.r" Preset="IntensityWhite"/>
+ <Channel Name="azul.r" Preset="IntensityBlue"/>
+ <Channel Name="verdel.r" Preset="IntensityGreen"/>
+ <Channel Name="rojo.r" Preset="IntensityRed"/>
+ <Mode Name="spider">
+  <Channel Number="0">motor.l</Channel>
+  <Channel Number="1">motor.r</Channel>
+  <Channel Number="2">dimmer</Channel>
+  <Channel Number="3">strobo</Channel>
+  <Channel Number="4">rojo.l</Channel>
+  <Channel Number="5">verde.l</Channel>
+  <Channel Number="6">azul.l</Channel>
+  <Channel Number="7">blanco.l</Channel>
+  <Channel Number="8">blanco.r</Channel>
+  <Channel Number="9">azul.r</Channel>
+  <Channel Number="10">verdel.r</Channel>
+  <Channel Number="11">rojo.r</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="LED" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="3" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Head" PanMax="180" TiltMax="0"/>
+  <Technical PowerConsumption="3" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

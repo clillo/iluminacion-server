@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.4</Version>
+  <Author>carlo</Author>
+ </Creator>
+ <Manufacturer>MovingHead</Manufacturer>
+ <Model>Beam</Model>
+ <Type>Moving Head</Type>
+ <Channel Name="Pan" Preset="PositionPan"/>
+ <Channel Name="Pan fine" Preset="PositionPanFine"/>
+ <Channel Name="Tilt" Preset="PositionTilt"/>
+ <Channel Name="Tilt fine" Preset="PositionTiltFine"/>
+ <Channel Name="Pan/Tilt speed" Preset="SpeedPanTiltFastSlow"/>
+ <Channel Name="No function" Preset="NoFunction"/>
+ <Channel Name="No function2" Preset="NoFunction"/>
+ <Channel Name="Color wheel" Preset="ColorWheel"/>
+ <Channel Name="Dimmer" Preset="IntensityDimmer"/>
+ <Channel Name="Strobe" Preset="ShutterStrobeSlowFast"/>
+ <Channel Name="Macro" Preset="NoFunction"/>
+ <Mode Name="normal">
+  <Channel Number="0" ActsOn="0">Pan</Channel>
+  <Channel Number="1" ActsOn="1">Pan fine</Channel>
+  <Channel Number="2" ActsOn="2">Tilt</Channel>
+  <Channel Number="3" ActsOn="3">Tilt fine</Channel>
+  <Channel Number="4" ActsOn="4">Pan/Tilt speed</Channel>
+  <Channel Number="5" ActsOn="5">No function</Channel>
+  <Channel Number="6" ActsOn="6">No function2</Channel>
+  <Channel Number="7" ActsOn="7">Color wheel</Channel>
+  <Channel Number="8" ActsOn="8">Dimmer</Channel>
+  <Channel Number="9" ActsOn="9">Strobe</Channel>
+  <Channel Number="10" ActsOn="10">Macro</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

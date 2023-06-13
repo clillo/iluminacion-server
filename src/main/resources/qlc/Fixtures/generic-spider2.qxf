@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.2</Version>
+  <Author>carlos</Author>
+ </Creator>
+ <Manufacturer>generic</Manufacturer>
+ <Model>spider2</Model>
+ <Type>Other</Type>
+ <Channel Name="motor.l" Preset="PositionPan"/>
+ <Channel Name="motor.r" Preset="PositionTilt"/>
+ <Channel Name="dimmer" Preset="IntensityMasterDimmer"/>
+ <Channel Name="strobo" Preset="ShutterStrobeSlowFast"/>
+ <Channel Name="rojo.l.1" Preset="IntensityRed"/>
+ <Channel Name="verde.l.1" Preset="IntensityGreen"/>
+ <Channel Name="azul.l.1" Preset="IntensityBlue"/>
+ <Channel Name="blanco.l.1" Preset="IntensityWhite"/>
+ <Channel Name="rojo.l.2" Preset="IntensityRed"/>
+ <Channel Name="verde.l.2" Preset="IntensityGreen"/>
+ <Channel Name="azul.l.2" Preset="IntensityBlue"/>
+ <Channel Name="blanco.l.2" Preset="IntensityWhite"/>
+ <Channel Name="rojo.l.3" Preset="IntensityRed"/>
+ <Channel Name="verde.l.3" Preset="IntensityGreen"/>
+ <Channel Name="azul.l.3" Preset="IntensityBlue"/>
+ <Channel Name="blanco.l.3" Preset="IntensityWhite"/>
+ <Channel Name="rojo.l.4" Preset="IntensityRed"/>
+ <Channel Name="verde.l.4" Preset="IntensityGreen"/>
+ <Channel Name="azul.l.4" Preset="IntensityBlue"/>
+ <Channel Name="blanco.l.4" Preset="IntensityWhite"/>
+ <Channel Name="rojo.r.1" Preset="IntensityRed"/>
+ <Channel Name="verde.r.1" Preset="IntensityGreen"/>
+ <Channel Name="azul.r.1" Preset="IntensityBlue"/>
+ <Channel Name="blanco.r.1" Preset="IntensityWhite"/>
+ <Channel Name="rojo.rl.2" Preset="IntensityRed"/>
+ <Channel Name="verde.r.2" Preset="IntensityGreen"/>
+ <Channel Name="azul.r.2" Preset="IntensityBlue"/>
+ <Channel Name="blanco.r.2" Preset="IntensityWhite"/>
+ <Channel Name="rojo.r.3" Preset="IntensityRed"/>
+ <Channel Name="verde.r.3" Preset="IntensityGreen"/>
+ <Channel Name="azul.r.3" Preset="IntensityBlue"/>
+ <Channel Name="blanco.r.3" Preset="IntensityWhite"/>
+ <Channel Name="rojo.r.4" Preset="IntensityRed"/>
+ <Channel Name="verde.r.4" Preset="IntensityGreen"/>
+ <Channel Name="azul.r.4" Preset="IntensityBlue"/>
+ <Channel Name="blanco.r.4" Preset="IntensityWhite"/>
+ <Mode Name="normal">
+  <Channel Number="0">motor.l</Channel>
+  <Channel Number="1">motor.r</Channel>
+  <Channel Number="2">dimmer</Channel>
+  <Channel Number="3">strobo</Channel>
+  <Channel Number="4">rojo.l.1</Channel>
+  <Channel Number="5">verde.l.1</Channel>
+  <Channel Number="6">azul.l.1</Channel>
+  <Channel Number="7">blanco.l.1</Channel>
+  <Channel Number="8">rojo.l.2</Channel>
+  <Channel Number="9">verde.l.2</Channel>
+  <Channel Number="10">azul.l.2</Channel>
+  <Channel Number="11">blanco.l.2</Channel>
+  <Channel Number="12">rojo.l.3</Channel>
+  <Channel Number="13">verde.l.3</Channel>
+  <Channel Number="14">azul.l.3</Channel>
+  <Channel Number="15">blanco.l.3</Channel>
+  <Channel Number="16">rojo.l.4</Channel>
+  <Channel Number="17">verde.l.4</Channel>
+  <Channel Number="18">azul.l.4</Channel>
+  <Channel Number="19">blanco.l.4</Channel>
+  <Channel Number="20">rojo.r.1</Channel>
+  <Channel Number="21">verde.r.1</Channel>
+  <Channel Number="22">azul.r.1</Channel>
+  <Channel Number="23">blanco.r.1</Channel>
+  <Channel Number="24">rojo.rl.2</Channel>
+  <Channel Number="25">verde.r.2</Channel>
+  <Channel Number="26">azul.r.2</Channel>
+  <Channel Number="27">blanco.r.2</Channel>
+  <Channel Number="28">rojo.r.3</Channel>
+  <Channel Number="29">verde.r.3</Channel>
+  <Channel Number="30">azul.r.3</Channel>
+  <Channel Number="31">blanco.r.3</Channel>
+  <Channel Number="32">rojo.r.4</Channel>
+  <Channel Number="33">verde.r.4</Channel>
+  <Channel Number="34">azul.r.4</Channel>
+  <Channel Number="35">blanco.r.4</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="LED" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="3" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Head" PanMax="180" TiltMax="0"/>
+  <Technical PowerConsumption="3" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

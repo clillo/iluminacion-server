@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.4</Version>
+  <Author>carlos</Author>
+ </Creator>
+ <Manufacturer>Wild Pro</Manufacturer>
+ <Model>RGBW</Model>
+ <Type>Other</Type>
+ <Channel Name="Dimmer">
+  <Group Byte="0">Intensity</Group>
+ </Channel>
+ <Channel Name="Red">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Red</Colour>
+ </Channel>
+ <Channel Name="Green">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Green</Colour>
+ </Channel>
+ <Channel Name="Blue">
+  <Group Byte="0">Intensity</Group>
+  <Colour>Blue</Colour>
+ </Channel>
+ <Channel Name="White">
+  <Group Byte="0">Intensity</Group>
+  <Colour>White</Colour>
+ </Channel>
+ <Channel Name="Strobo">
+  <Group Byte="0">Shutter</Group>
+ </Channel>
+ <Channel Name="Color Change">
+  <Group Byte="0">Effect</Group>
+ </Channel>
+ <Mode Name="Normal">
+  <Channel Number="0">Dimmer</Channel>
+  <Channel Number="1">Red</Channel>
+  <Channel Number="2">Green</Channel>
+  <Channel Number="3">Blue</Channel>
+  <Channel Number="4">White</Channel>
+  <Channel Number="5">Strobo</Channel>
+  <Channel Number="6">Color Change</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>

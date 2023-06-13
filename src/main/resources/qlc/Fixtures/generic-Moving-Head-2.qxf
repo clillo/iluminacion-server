@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE FixtureDefinition>
+<FixtureDefinition xmlns="http://www.qlcplus.org/FixtureDefinition">
+ <Creator>
+  <Name>Q Light Controller Plus</Name>
+  <Version>4.12.2</Version>
+  <Author>carlos</Author>
+ </Creator>
+ <Manufacturer>generic</Manufacturer>
+ <Model>Moving Head 2</Model>
+ <Type>Moving Head</Type>
+ <Channel Name="Pan" Preset="PositionPan"/>
+ <Channel Name="Tilt" Preset="PositionTilt"/>
+ <Channel Name="Master dimmer" Preset="IntensityMasterDimmer"/>
+ <Channel Name="Strobe" Preset="ShutterStrobeSlowFast"/>
+ <Channel Name="Color wheel" Preset="ColorWheel"/>
+ <Channel Name="Gobo cristal" Preset="GoboIndex"/>
+ <Channel Name="Gobo wheel" Preset="GoboWheel"/>
+ <Channel Name="Gobo shake" Preset="GoboWheel"/>
+ <Channel Name="Gobo index" Preset="GoboIndex"/>
+ <Channel Name="Gobo normal shake" Preset="GoboWheel"/>
+ <Channel Name="Focus" Preset="BeamFocusNearFar"/>
+ <Channel Name="Prism rotation" Preset="PrismRotationSlowFast"/>
+ <Channel Name="nc">
+  <Group Byte="0">Intensity</Group>
+ </Channel>
+ <Channel Name="Pan fine" Preset="PositionPanFine"/>
+ <Channel Name="Tilt fine" Preset="PositionTiltFine"/>
+ <Mode Name="normal">
+  <Channel Number="0">Pan</Channel>
+  <Channel Number="1">Tilt</Channel>
+  <Channel Number="2">Master dimmer</Channel>
+  <Channel Number="3">Strobe</Channel>
+  <Channel Number="4">Color wheel</Channel>
+  <Channel Number="5">Gobo cristal</Channel>
+  <Channel Number="6">Gobo wheel</Channel>
+  <Channel Number="7">Gobo shake</Channel>
+  <Channel Number="8">Gobo index</Channel>
+  <Channel Number="9">Gobo normal shake</Channel>
+  <Channel Number="10">Focus</Channel>
+  <Channel Number="11">Prism rotation</Channel>
+  <Channel Number="12">nc</Channel>
+  <Channel Number="13">Pan fine</Channel>
+  <Channel Number="14">Tilt fine</Channel>
+ </Mode>
+ <Physical>
+  <Bulb Type="" Lumens="0" ColourTemperature="0"/>
+  <Dimensions Weight="0" Width="0" Height="0" Depth="0"/>
+  <Lens Name="Other" DegreesMin="0" DegreesMax="0"/>
+  <Focus Type="Fixed" PanMax="0" TiltMax="0"/>
+  <Technical PowerConsumption="0" DmxConnector="5-pin"/>
+ </Physical>
+</FixtureDefinition>
