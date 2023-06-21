@@ -1,10 +1,12 @@
 package cl.clillo.lighting.model;
 
+import lombok.Getter;
 import lombok.ToString;
 
 import java.util.List;
 
 @ToString
+@Getter
 public class QLCScene extends QLCFunction{
 
     private List<QLCPoint> qlcPointList;
@@ -20,7 +22,7 @@ public class QLCScene extends QLCFunction{
         for (QLCPoint point: qlcPointList)
             sb.append('{').append(point.getFixture().getId()).append(',')
                     .append(point.getChannel()).append(',')
-                    .append(point.getValue()).append('}');
+                    .append(point.getData()).append('}');
         return sb.toString();
     }
 }

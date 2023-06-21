@@ -40,6 +40,7 @@ public class QLCFunction {
         private String path;
         private QLCDirection direction;
         private QLCRunOrder runOrder;
+        private QLCScene boundScene;
         private final List<QLCPoint> qlcPointList = new ArrayList<>();
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
@@ -67,6 +68,11 @@ public class QLCFunction {
             return this;
         }
 
+        public QLCFunctionBuilder boundScene(final QLCScene boundScene) {
+            this.boundScene = boundScene;
+            return this;
+        }
+
         public void direction(final QLCDirection direction) {
             this.direction = direction;
         }
@@ -83,8 +89,9 @@ public class QLCFunction {
             this.qlcPointList.add(fixture);
         }
 
-        public void addStepList(final QLCStep step) {
+        public QLCFunctionBuilder addStepList(final QLCStep step) {
             this.qlcStepList.add(step);
+            return this;
         }
 
         public QLCFunction build() {
@@ -96,7 +103,7 @@ public class QLCFunction {
 
             if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
-                        this.qlcStepList);
+                        this.qlcStepList, boundScene);
 
             return new QLCFunction(this.id, this.type, this.name, this.path);
         }

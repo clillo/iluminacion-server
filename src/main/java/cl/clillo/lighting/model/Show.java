@@ -40,6 +40,8 @@ public class Show {
 
     private boolean firstTimeExecution;
 
+    private QLCSequence sequence;
+
     public Step nextStep(){
         pasoActual++;
 

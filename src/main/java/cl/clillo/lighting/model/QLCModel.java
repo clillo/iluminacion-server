@@ -243,8 +243,8 @@ public class QLCModel {
         builder.path(getAttribute(functionNode, "Path"));
         boolean hidden = getAttribute(functionNode, "Hidden").equalsIgnoreCase("True");
 
-        if (hidden)
-            return null;
+    //    if (hidden)
+   //         return null;
 
         final NodeList list = functionNode.getChildNodes();
         for (int temp = 0; temp < list.getLength(); temp++) {
@@ -261,7 +261,7 @@ public class QLCModel {
                     QLCPoint qlcPoint = QLCPoint.builder()
                             .fixture(fixture)
                             .channel(channel)
-                            .value(Integer.parseInt(values[i+1]))
+                            .data(Integer.parseInt(values[i+1]))
                             .dmxChannel(channel + fixture.getAddress())
                             .build();
                     builder.addPointList(qlcPoint);
@@ -291,8 +291,13 @@ public class QLCModel {
                 builder.runOrder(QLCRunOrder.valueOf(eElement.getTextContent().toUpperCase()));
 
             }
+
         }
 
+        if ("Sequence".equalsIgnoreCase(type)) {
+            builder.boundScene((QLCScene) functionMap.get(getAttributeInt(functionNode, "BoundScene")));
+
+        }
         QLCFunction qlcFunction = builder.build();
 
         if ("Sequence".equalsIgnoreCase(type))
@@ -302,14 +307,46 @@ public class QLCModel {
     }
 
     private QLCStep getSequenceStep(final Node node){
-        QLCStep.QLCStepBuilder builder = QLCStep.builder();
+        final QLCStep.QLCStepBuilder builder = QLCStep.builder();
         builder.fadeIn(getAttributeInt(node, "FadeIn"));
         builder.hold(getAttributeInt(node, "Hold"));
         builder.fadeOut(getAttributeInt(node, "FadeOut"));
 
-        Element eElement = (Element) node;
-        System.out.println(eElement.getTextContent());
+        final Element eElement = (Element) node;
+        //System.out.println(eElement.getTextContent());
+        final List<QLCPoint> pointList = new ArrayList<>();
+        builder.pointList(pointList);
+
+        if (eElement.getTextContent().length()>0){
+            String []part1 = eElement.getTextContent().split(":");
+
+
+
+            for (int i=0; i<part1.length;i+=2){
+                final int fixtureId = Integer.parseInt(part1[i]);
+                final QLCFixture fixture = fixtureMap.get(fixtureId);
+                String []part2 = part1[i+1].split(",");
+
+                for (int j=0; j<part2.length; j+=2) {
+                    final int dxmChannel = Integer.parseInt(part2[j]);
+                    final int dmxValue = Integer.parseInt(part2[j+1]);
+                    QLCPoint qlcPoint = QLCPoint.builder()
+                            .data(dmxValue)
+                            .channel(dxmChannel)
+                            .dmxChannel(dxmChannel + fixture.getAddress())
+                            .fixture(fixture)
+                            .build();
+
+                    pointList.add(qlcPoint);
+                    //System.out.println(fixtureId + "\t" + dxmChannel+"\t"+dmxValue);
+                }
+            }
+        }
 
         return builder.build();
+    }
+
+    public QLCSequence getSequence(final int id){
+        return (QLCSequence) functionMap.get(id);
     }
 }

@@ -11,6 +11,7 @@ import java.util.List;
 @ToString
 public class QLCStep {
 
+    private int id;
     private int fadeIn;
     private int hold;
     private int fadeOut;

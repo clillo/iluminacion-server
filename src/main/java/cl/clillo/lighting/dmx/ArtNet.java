@@ -1,4 +1,4 @@
-package cl.clillo.lighting;
+package cl.clillo.lighting.dmx;
 
 import ch.bildspur.artnet.ArtNetClient;
 
