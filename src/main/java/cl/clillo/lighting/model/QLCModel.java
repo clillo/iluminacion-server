@@ -131,93 +131,16 @@ public class QLCModel {
     }
 
     private QLCFixtureModel getFixtureModel(final File inputFile) throws ParserConfigurationException, IOException, SAXException {
-        final QLCFixtureModel.QLCFixtureModelBuilder builder = QLCFixtureModel.builder();
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        Document doc = docBuilder.parse(inputFile);
+        return QLCFixtureModel.builder().build(inputFile);
 
-        Node engine = doc.getElementsByTagName("FixtureDefinition").item(0);
-
-        NodeList list = engine.getChildNodes();
-
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() != Node.ELEMENT_NODE)
-                continue;
-
-            Element eElement = (Element) node;
-            if ("Manufacturer".equals(eElement.getNodeName()))
-                builder.manufacturer(eElement.getTextContent());
-            if ("Model".equals(eElement.getNodeName()))
-                builder.model(eElement.getTextContent());
-            if ("Type".equals(eElement.getNodeName()))
-                builder.type(eElement.getTextContent());
-
-            if ("Mode".equals(eElement.getNodeName())) {
-                builder.channels(getFixtureMode(node));
-            }
-        }
-
-        //   System.out.println( builder.build());
-        return builder.build();
-    }
-
-    private String [] getFixtureMode(final Node fixtureNode) {
-        final NodeList list = fixtureNode.getChildNodes();
-        final Map<Integer, String> channels = new HashMap<>();
-
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-
-                if ("Channel".equals(eElement.getNodeName()))
-                    channels.put(getAttributeInt(node, "Number"), node.getTextContent());
-            }
-        }
-
-        String [] output = new String[channels.size()];
-        for (int i=0; i< channels.size(); i++)
-            output[i] = channels.get(i);
-
-        return output;
     }
 
     private QLCFixture getFixture(final Node fixtureNode) {
-        final NodeList list = fixtureNode.getChildNodes();
-        final QLCFixture.QLCFixtureBuilder builder = QLCFixture.builder();
+        return QLCFixture.builder().build(fixtureNode,fixtureModelMap);
 
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) node;
-                if ("Manufacturer".equals(eElement.getNodeName()))
-                    builder.manufacturer(eElement.getTextContent());
-                if ("Name".equals(eElement.getNodeName()))
-                    builder.name(eElement.getTextContent());
-                if ("Model".equals(eElement.getNodeName()))
-                    builder.model(eElement.getTextContent());
-                if ("Mode".equals(eElement.getNodeName()))
-                    builder.mode(eElement.getTextContent());
-                if ("ID".equals(eElement.getNodeName()))
-                    builder.id(Integer.parseInt(eElement.getTextContent()));
-                if ("Universe".equals(eElement.getNodeName()))
-                    builder.universe(Integer.parseInt(eElement.getTextContent()));
-                if ("Address".equals(eElement.getNodeName()))
-                    builder.address(Integer.parseInt(eElement.getTextContent()));
-                if ("Channels".equals(eElement.getNodeName()))
-                    builder.channels(Integer.parseInt(eElement.getTextContent()));
-            }
-        }
-
-        final QLCFixture fixture = builder.build();
-        fixture.setFixtureModel(fixtureModelMap.get(fixture.getManufacturer()+"."+fixture.getModel()));
-
-        //  System.out.println(fixture);
-        return fixture;
     }
 
-    private String getAttribute(final Node node, final String name) {
+    private static String getAttribute(final Node node, final String name) {
         NamedNodeMap attr = node.getAttributes();
         Node nodeAttr = attr.getNamedItem(name);
         if (nodeAttr == null)
@@ -225,7 +148,7 @@ public class QLCModel {
         return nodeAttr.getTextContent();
     }
 
-    private int getAttributeInt(final Node node, final String name) {
+    public static int getAttributeInt(final Node node, final String name) {
         return Integer.parseInt(getAttribute(node, name));
     }
 
@@ -300,7 +223,7 @@ public class QLCModel {
         }
         QLCFunction qlcFunction = builder.build();
 
-        if ("Sequence".equalsIgnoreCase(type))
+        if ("Efx".equalsIgnoreCase(type))
             System.out.println(qlcFunction.toSmallString());
 
         return qlcFunction;
@@ -319,8 +242,6 @@ public class QLCModel {
 
         if (eElement.getTextContent().length()>0){
             String []part1 = eElement.getTextContent().split(":");
-
-
 
             for (int i=0; i<part1.length;i+=2){
                 final int fixtureId = Integer.parseInt(part1[i]);
@@ -346,7 +267,11 @@ public class QLCModel {
         return builder.build();
     }
 
-    public QLCSequence getSequence(final int id){
-        return (QLCSequence) functionMap.get(id);
+    public <T extends QLCFunction> T getFunction(final int id){
+        return (T)functionMap.get(id);
+    }
+
+    public <T extends QLCFixture> T getFixture(final int id){
+        return (T)fixtureMap.get(id);
     }
 }

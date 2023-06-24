@@ -44,6 +44,7 @@ public class QLCFunction {
         private final List<QLCPoint> qlcPointList = new ArrayList<>();
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
+        private final List<QLCRoboticFixture> roboticFixtureList = new ArrayList<>();
 
         QLCFunctionBuilder() {
         }
@@ -94,6 +95,11 @@ public class QLCFunction {
             return this;
         }
 
+        public QLCFunctionBuilder addFixture(final QLCRoboticFixture fixture) {
+            this.roboticFixtureList.add(fixture);
+            return this;
+        }
+
         public QLCFunction build() {
             if ("Scene".equalsIgnoreCase(type))
                 return new QLCScene(this.id, this.type, this.name, this.path, this.qlcPointList);
@@ -104,6 +110,10 @@ public class QLCFunction {
             if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                         this.qlcStepList, boundScene);
+
+            if ("EFX".equalsIgnoreCase(type))
+                return new QLCEfx(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
+                        this.qlcStepList, boundScene, roboticFixtureList);
 
             return new QLCFunction(this.id, this.type, this.name, this.path);
         }

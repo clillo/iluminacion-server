@@ -70,7 +70,7 @@ public class ShowsConfig {
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")
-                .stepExecutor(bouncingExecutor)
+                //.stepExecutor(bouncingExecutor)
                 .executing(true)
                 .firstTimeExecution(true)
                 .build();
@@ -85,7 +85,7 @@ public class ShowsConfig {
 
         return Show.builder()
                 .name(showName)
-                .stepExecutor(genericExecutor)
+              //  .stepExecutor(genericExecutor)
                 .stepList(showPostProcessor.buildStepListFromScenes(scenesLists))
                 .scenesLists(scenesLists)
                 .executing(false)

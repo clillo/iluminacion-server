@@ -1,4 +1,4 @@
-package cl.clillo.lighting;
+package cl.clillo.lighting.executor;
 
 import cl.clillo.lighting.dmx.Dmx;
 import cl.clillo.lighting.executor.StepExecutor;
@@ -9,7 +9,7 @@ import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class SequenceExecutor implements StepExecutor {
+public class QLCSequenceExecutor implements StepExecutor {
 
     private final Dmx dmx = Dmx.getInstance();
     private int actualStep;
@@ -21,7 +21,7 @@ public class SequenceExecutor implements StepExecutor {
             show.setFirstTimeExecution(false);
         }
 
-        final QLCSequence sequence = show.getSequence();
+        final QLCSequence sequence = show.getFunction();
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
         log.info("executing {} sequence {}: [{}] [{}]", show.getName(), actualStep, sequence.getId(), step);

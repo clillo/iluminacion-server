@@ -1,12 +1,12 @@
-id : mh-60-2
-pan : 115
-tilt : 116
-speed : 117
-color : 118
-gobo: 119
-goboRotation: 120
-strobo: 121
-dimmer: 122
-panFine: 123
-tiltFine: 124
-prisma: 125
+ id : mh-60-2
+0 pan : 115
+1 tilt : 116
+2 speed : 117
+3 color : 118
+4 gobo: 119
+5 goboRotation: 120
+6 strobo: 121
+7 dimmer: 122
+8 panFine: 123
+9 tiltFine: 124
+10 prisma: 125

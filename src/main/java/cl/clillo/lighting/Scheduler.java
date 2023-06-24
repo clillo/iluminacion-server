@@ -1,5 +1,6 @@
 package cl.clillo.lighting;
 
+import cl.clillo.lighting.dmx.ArtNet;
 import cl.clillo.lighting.model.Show;
 
 import java.util.List;
@@ -24,7 +25,8 @@ public class Scheduler extends Thread {
 
                 }
 
-                Thread.sleep(0);
+                ArtNet.getInstance().broadCast();
+                Thread.sleep(180);
             }
         }catch (Exception e){
             e.printStackTrace();

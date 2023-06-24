@@ -1,11 +1,17 @@
 package cl.clillo.lighting;
 
+import cl.clillo.lighting.executor.QLCEfxExecutor;
+import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;
+import cl.clillo.lighting.utils.PanelCreaProgramasRobotizados;
+import cl.clillo.lighting.utils.PanelEdicionFiguras;
+import cl.clillo.lighting.utils.Principal;
+import cl.clillo.lighting.utils.PruebaCreaProgramasRobotizados;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,20 +41,24 @@ public class StandAlone {
 
         final QLCModel qlcModel = new QLCModel();
 
-        final SequenceExecutor sequenceExecutor = new SequenceExecutor();
+        final QLCEfx qlcEfx = qlcModel.getFunction(13);
+        qlcEfx.getFixtureList().add(qlcModel.getFixture(19));
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")
-                .stepExecutor(sequenceExecutor)
                 .executing(true)
                 .firstTimeExecution(true)
                 .stepList(List.of())
-                .sequence((QLCSequence)qlcSequence)
-                .sequence(qlcModel.getSequence(61))
+               // .function((QLCSequence)qlcSequence)
+              //  .function(qlcModel.getFunction(61))
+               // .function(qlcModel.getFunction(10))
+                .function(qlcEfx)
                 .build();
 
         showList.add(dummy);
 
+        PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start();
+        ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(((PanelCreaProgramasRobotizados)p.getContentPane()).getPnlMovingHead1());
         Scheduler scheduler = new Scheduler(showList);
         scheduler.start();
     }

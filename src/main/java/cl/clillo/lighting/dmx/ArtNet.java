@@ -16,12 +16,12 @@ public class ArtNet {
     }
 
     private ArtNet(){
-        artNetClient = new ArtNetClient();
+        artNetClient = new ArtNetClient(null);
+        artNetClient.start();
+
         dmxData = new byte[512];
         for (int i=0; i<512; i++)
             dmxData[i] = 0;
-
-        artNetClient.start();
     }
 
     public void send(final int channel, final int data){
@@ -30,18 +30,38 @@ public class ArtNet {
 
     public void send(final int channel, final byte data){
         dmxData[channel] = data;
-        artNetClient.broadcastDmx(0, 0, dmxData);
+    }
+
+    public void broadCast(){
+      //  System.out.println(dmxData[120]);
+       artNetClient.broadcastDmx(0, 0, dmxData);
+       // artNetClient.unicastDmx("192.168.1.255", 0, 0, dmxData);
     }
 
     public static void main(String[] args) throws InterruptedException {
         ArtNet artNet = ArtNet.getInstance();
-        artNet.send(419, 255);
+        artNet.send(115, 255);
+        artNet.send(116, 255);
+        artNet.send(117, 100);
+        artNet.send(119, 255);
+        artNet.send(121, 255);
+        artNet.send(120, 10);
+        artNet.send(118, 120);
         for (int i=0; i<10000; i++) {
-            artNet.send(423, 255);
-            Thread.sleep(600);
+            artNet.send(122, 100);
+            Thread.sleep(100);
 
-            artNet.send(423, 0);
-            Thread.sleep(600);
+
+
+            artNet.send(122, 0);
+            Thread.sleep(100);
         }
+        artNet.send(118, 0);
+        artNet.send(120, 0);
+        artNet.send(121, 0);
+        artNet.send(119, 0);
+        artNet.send(115, 0);
+        artNet.send(116, 0);
+        artNet.send(117, 0);
     }
 }

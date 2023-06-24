@@ -10,9 +10,7 @@
   <InputOutputMap>
    <Universe Name="Universe 1" ID="0">
     <Input Plugin="MIDI" UID="4- UMC204HD 192k MIDI In" Line="0"/>
-    <Output Plugin="ArtNet" UID="169.254.80.234" Line="3">
-     <PluginParameters outputIP="2.0.0.10"/>
-    </Output>
+    <Output Plugin="ArtNet" UID="169.254.111.225" Line="1"/>
     <Feedback Plugin="MIDI" UID="4- UMC204HD 192k MIDI Out" Line="1"/>
    </Universe>
    <Universe Name="Universe 2" ID="1"/>
@@ -208,6 +206,16 @@
    <Address>89</Address>
    <Channels>11</Channels>
   </Fixture>
+  <Fixture>
+   <Manufacturer>Generic</Manufacturer>
+   <Model>Moving Head 1</Model>
+   <Mode>normal</Mode>
+   <ID>19</ID>
+   <Name>Moving Head 1</Name>
+   <Universe>0</Universe>
+   <Address>100</Address>
+   <Channels>11</Channels>
+  </Fixture>
   <FixtureGroup ID="0">
    <Name>RBGW</Name>
    <Size X="4" Y="1"/>
@@ -320,10 +328,24 @@
    <EndColor>4294967167</EndColor>
    <ControlMode>RGB</ControlMode>
    <FixtureGroup>0</FixtureGroup>
+   <Property Name="tailfade" Value="No"/>
    <Property Name="direction" Value="Right"/>
    <Property Name="orientation" Value="Horizontal"/>
-   <Property Name="tailfade" Value="No"/>
    <Property Name="taillength" Value="50"/>
+  </Function>
+  <Function ID="9" Type="Scene" Name="New Scene" Hidden="True">
+   <Speed FadeIn="0" FadeOut="0" Duration="0"/>
+   <FixtureVal ID="19">6,0,7,0</FixtureVal>
+  </Function>
+  <Function ID="10" Type="Sequence" Name="New Sequence 10" BoundScene="9">
+   <Speed FadeIn="0" FadeOut="0" Duration="1000"/>
+   <Direction>Forward</Direction>
+   <RunOrder>Loop</RunOrder>
+   <SpeedModes FadeIn="Common" FadeOut="Default" Duration="Common"/>
+   <Step Number="0" FadeIn="0" Hold="3000" FadeOut="0" Values="2">19:6,255,7,255,0,100,1,50</Step>
+   <Step Number="1" FadeIn="0" Hold="3000" FadeOut="0" Values="2">19:6,255,7,0,0,120,1,80</Step>
+
+
   </Function>
   <Function ID="11" Type="Chaser" Name="Secuencia 2" Path="Generales">
    <Speed FadeIn="2000" FadeOut="2000" Duration="10000"/>
