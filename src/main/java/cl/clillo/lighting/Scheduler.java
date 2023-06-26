@@ -26,7 +26,7 @@ public class Scheduler extends Thread {
                 }
 
                 ArtNet.getInstance().broadCast();
-                Thread.sleep(180);
+                Thread.sleep(1);
             }
         }catch (Exception e){
             e.printStackTrace();

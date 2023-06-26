@@ -34,8 +34,8 @@ public class ArtNet {
 
     public void broadCast(){
       //  System.out.println(dmxData[120]);
-       artNetClient.broadcastDmx(0, 0, dmxData);
-       // artNetClient.unicastDmx("192.168.1.255", 0, 0, dmxData);
+      // artNetClient.broadcastDmx(0, 0, dmxData);
+        artNetClient.unicastDmx("169.254.255.255", 0, 0, dmxData);
     }
 
     public static void main(String[] args) throws InterruptedException {
