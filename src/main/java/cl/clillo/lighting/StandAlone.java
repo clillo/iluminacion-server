@@ -8,9 +8,8 @@ import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;
-import cl.clillo.lighting.utils.PanelCreaProgramasRobotizados;
-import cl.clillo.lighting.utils.PanelEdicionFiguras;
-import cl.clillo.lighting.utils.Principal;
+import cl.clillo.lighting.utils.EffectEditPanel;
+import cl.clillo.lighting.utils.FixtureRoboticPanel;
 import cl.clillo.lighting.utils.PruebaCreaProgramasRobotizados;
 
 import java.util.ArrayList;
@@ -43,6 +42,10 @@ public class StandAlone {
 
         final QLCEfx qlcEfx = qlcModel.getFunction(13);
         qlcEfx.getFixtureList().add(qlcModel.getFixture(19));
+        qlcEfx.setCenterX(32700);
+        qlcEfx.setCenterY(32700);
+        qlcEfx.setWidth(10000);
+        qlcEfx.setHeight(20000);
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")
@@ -58,7 +61,10 @@ public class StandAlone {
         showList.add(dummy);
 
         PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start();
-        ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(((PanelCreaProgramasRobotizados)p.getContentPane()).getPnlMovingHead1());
+        EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
+        effectEditPanel.setQlcEfx(qlcEfx);
+
+        ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
         Scheduler scheduler = new Scheduler(showList);
         scheduler.start();
     }

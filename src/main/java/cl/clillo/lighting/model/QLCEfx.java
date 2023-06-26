@@ -1,12 +1,14 @@
 package cl.clillo.lighting.model;
 
 import lombok.Getter;
+import lombok.Setter;
 import lombok.ToString;
 
 import java.util.List;
 
 @ToString
 @Getter
+@Setter
 public class QLCEfx extends QLCFunction{
 
     private final QLCDirection direction;
@@ -14,6 +16,11 @@ public class QLCEfx extends QLCFunction{
     private final List<QLCStep> qlcStepList;
     private final QLCScene boundScene;
     private final List<QLCRoboticFixture> fixtureList;
+
+    private double centerX;
+    private double centerY;
+    private double width;
+    private double height;
 
     public QLCEfx(final int id, final String type, final String name, final String path,
                   final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,

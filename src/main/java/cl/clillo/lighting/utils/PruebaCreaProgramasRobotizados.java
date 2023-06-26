@@ -26,8 +26,8 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
     }
 
     private void initialize() {
-        setSize(PanelCreaProgramasRobotizados.WIDTH1+200, PanelCreaProgramasRobotizados.HEIGHT1+50);
-        setContentPane(new PanelCreaProgramasRobotizados());
+        setSize(FixtureRoboticPanel.WIDTH1+200, FixtureRoboticPanel.HEIGHT1+50);
+        setContentPane(new FixtureRoboticPanel());
     }
 
     protected void processWindowEvent(WindowEvent e) {
