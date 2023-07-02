@@ -403,7 +403,7 @@
   </Function>
   <Function ID="14" Type="EFX" Name="Spider23 - Mov 1" Path="Spider">
    <Fixture>
-    <ID>5</ID>
+    <ID>9</ID>
     <Head>0</Head>
     <Mode>0</Mode>
     <Direction>Forward</Direction>
@@ -419,7 +419,7 @@
    <PropagationMode>Parallel</PropagationMode>
    <Speed FadeIn="0" FadeOut="0" Duration="9673"/>
    <Direction>Forward</Direction>
-   <RunOrder>Loop</RunOrder>
+   <RunOrder>PingPong</RunOrder>
    <Algorithm>Line</Algorithm>
    <Width>100</Width>
    <Height>127</Height>

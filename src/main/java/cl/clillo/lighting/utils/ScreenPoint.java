@@ -20,4 +20,8 @@ public class ScreenPoint {
         screenX = (int) ((CANVAS_WIDTH * realX)/MAX);
         screenY = (int) ((CANVAS_HEIGHT * realY)/MAX);
     }
+
+    public boolean isNear(final double mouseRealX, final double mouseRealY){
+        return Math.abs(mouseRealX - realX)<500 && Math.abs(mouseRealY - realY)<500;
+    }
 }

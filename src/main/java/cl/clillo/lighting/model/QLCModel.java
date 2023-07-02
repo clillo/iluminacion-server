@@ -215,6 +215,10 @@ public class QLCModel {
 
             }
 
+            if ("Efx".equalsIgnoreCase(type) && "Algorithm".equals(eElement.getNodeName())) {
+                builder.algorithm(QLCAlgorithm.valueOf(eElement.getTextContent().toUpperCase()));
+
+            }
         }
 
         if ("Sequence".equalsIgnoreCase(type)) {

@@ -41,6 +41,7 @@ public class QLCFunction {
         private QLCDirection direction;
         private QLCRunOrder runOrder;
         private QLCScene boundScene;
+        private QLCAlgorithm algorithm;
         private final List<QLCPoint> qlcPointList = new ArrayList<>();
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
@@ -78,6 +79,10 @@ public class QLCFunction {
             this.direction = direction;
         }
 
+        public void algorithm(final QLCAlgorithm algorithm) {
+            this.algorithm = algorithm;
+        }
+
         public void runOrder(final QLCRunOrder runOrder){
             this.runOrder = runOrder;
         }
@@ -111,10 +116,16 @@ public class QLCFunction {
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                         this.qlcStepList, boundScene);
 
-            if ("EFX".equalsIgnoreCase(type))
-                return new QLCEfx(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
-                        this.qlcStepList, boundScene, roboticFixtureList);
+            if ("EFX".equalsIgnoreCase(type)){
 
+                if ( QLCAlgorithm.CIRCLE==algorithm)
+                    return new QLCEfxCircle(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
+                            this.qlcStepList, boundScene, roboticFixtureList);
+
+                if ( QLCAlgorithm.LINE==algorithm)
+                    return new QLCEfxLine(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
+                            this.qlcStepList, boundScene, roboticFixtureList);
+            }
             return new QLCFunction(this.id, this.type, this.name, this.path);
         }
 

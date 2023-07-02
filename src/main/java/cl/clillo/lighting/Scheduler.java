@@ -20,7 +20,7 @@ public class Scheduler extends Thread {
 
                 for (Show show : showList) {
                     if (show.isExecuting() && show.getNextExecutionTime() < now) {
-                        show.getStepExecutor().execute(show);
+                        show.getStepExecutor().execute();
                     }
 
                 }

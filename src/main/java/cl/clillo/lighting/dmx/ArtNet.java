@@ -2,17 +2,44 @@ package cl.clillo.lighting.dmx;
 
 import ch.bildspur.artnet.ArtNetClient;
 
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 public class ArtNet {
+
+    public enum ArtNetMode {
+        NON_ART_NET,
+        HTTP_ART_NET,
+        DIRECT_ART_NET
+    }
 
     private final ArtNetClient artNetClient;
     private final byte[] dmxData;
 
     private static final class InstanceHolder {
-        private static final ArtNet instance = new ArtNet();
+        private static ArtNet instance;
+        private static ArtNetMode artNetMode;
+
+        public static void setMode(final ArtNetMode artNetMode) {
+            InstanceHolder.artNetMode = artNetMode;
+        }
+
+        public static ArtNet getInstance() {
+            if (instance==null){
+                instance = InstanceHolder.artNetMode==ArtNetMode.HTTP_ART_NET?new ArtNetHttpProxy():
+                        InstanceHolder.artNetMode==ArtNetMode.DIRECT_ART_NET?new ArtNet():new NoComm();
+            }
+            return instance;
+        }
     }
 
     public static ArtNet getInstance() {
-        return ArtNet.InstanceHolder.instance;
+        return ArtNet.InstanceHolder.getInstance();
+    }
+
+    public static void setMode(final ArtNetMode artNetMode){
+        ArtNet.InstanceHolder.setMode(artNetMode);
     }
 
     private ArtNet(){
@@ -38,30 +65,41 @@ public class ArtNet {
         artNetClient.unicastDmx("169.254.255.255", 0, 0, dmxData);
     }
 
-    public static void main(String[] args) throws InterruptedException {
-        ArtNet artNet = ArtNet.getInstance();
-        artNet.send(115, 255);
-        artNet.send(116, 255);
-        artNet.send(117, 100);
-        artNet.send(119, 255);
-        artNet.send(121, 255);
-        artNet.send(120, 10);
-        artNet.send(118, 120);
-        for (int i=0; i<10000; i++) {
-            artNet.send(122, 100);
-            Thread.sleep(100);
+    private static class ArtNetHttpProxy extends ArtNet{
 
+        public void send(final int channel, final int data){
+           // send(channel, (byte) data);
+            try {
+                final URL url = new URL("http://192.168.1.141:8090/dmx/"+ channel +"/"+data);
 
+                final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.getInputStream().close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-            artNet.send(122, 0);
-            Thread.sleep(100);
         }
-        artNet.send(118, 0);
-        artNet.send(120, 0);
-        artNet.send(121, 0);
-        artNet.send(119, 0);
-        artNet.send(115, 0);
-        artNet.send(116, 0);
-        artNet.send(117, 0);
+
+        public void send(final int channel, final byte data){
+
+        }
+
+        public void broadCast(){
+
+        }
+
+    }
+
+    private static class NoComm extends ArtNet{
+
+        public void send(final int channel, final int data){
+        }
+
+        public void send(final int channel, final byte data){
+        }
+
+        public void broadCast(){
+        }
     }
 }

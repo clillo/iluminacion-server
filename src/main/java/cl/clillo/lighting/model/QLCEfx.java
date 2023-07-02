@@ -1,26 +1,24 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.utils.ScreenPoint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ToString
 @Getter
 @Setter
-public class QLCEfx extends QLCFunction{
+public abstract class QLCEfx extends QLCFunction{
 
     private final QLCDirection direction;
     private final QLCRunOrder runOrder;
     private final List<QLCStep> qlcStepList;
     private final QLCScene boundScene;
     private final List<QLCRoboticFixture> fixtureList;
-
-    private double centerX;
-    private double centerY;
-    private double width;
-    private double height;
+    private List<QLCExecutionNode> nodes;
 
     public QLCEfx(final int id, final String type, final String name, final String path,
                   final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
@@ -47,6 +45,11 @@ public class QLCEfx extends QLCFunction{
                 }
             }
 
+        setNodes(buildNodes());
+    }
+
+    protected void setNodes(List<QLCExecutionNode> nodes) {
+        this.nodes = nodes;
     }
 
     public String toSmallString(){
@@ -73,4 +76,17 @@ public class QLCEfx extends QLCFunction{
 
         return sb.toString();
     }
+
+    public abstract List<ScreenPoint> buildScreenPoint();
+
+    private List<QLCExecutionNode> buildNodes(){
+        final List<QLCExecutionNode> nodes = new ArrayList<>();
+        for (double time=0; time<=360; time+=1) {
+            for (QLCRoboticFixture fixture : fixtureList) {
+            }
+        }
+        return nodes;
+    }
+
+
 }

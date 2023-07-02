@@ -1,9 +1,9 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.executor.IQLCStepExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSequenceExecutor;
 import cl.clillo.lighting.config.scenes.Scene;
-import cl.clillo.lighting.executor.StepExecutor;
 import cl.clillo.lighting.executor.TipoGatillador;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,7 +22,7 @@ public class Show {
     private String name;
     private long nextExecutionTime;
     private boolean executing;
-    private StepExecutor stepExecutor;
+    private IQLCStepExecutor stepExecutor;
     private TipoGatillador tipoGatillador;
     private int pasoActual;
     private List<Step> stepList;
@@ -114,16 +114,19 @@ public class Show {
         }
 
         public Show build() {
-            StepExecutor executor = null;
+            IQLCStepExecutor executor = null;
+
+
+            Show show = new Show(this.id, this.name, this.nextExecutionTime, this.executing, executor,
+                    this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists, this.firstTimeExecution, this.function);
 
             if (function instanceof QLCSequence)
-                executor = new QLCSequenceExecutor();
+                show.setStepExecutor(new QLCSequenceExecutor(show));
 
             if (function instanceof QLCEfx)
-                executor = new QLCEfxExecutor();
+                show.setStepExecutor(new QLCEfxExecutor(show));
 
-            return new Show(this.id, this.name, this.nextExecutionTime, this.executing, executor,
-                    this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists, this.firstTimeExecution, this.function);
+            return show;
         }
 
     }
