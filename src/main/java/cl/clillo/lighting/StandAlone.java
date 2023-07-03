@@ -23,9 +23,9 @@ import java.util.List;
 public class StandAlone {
 
     public static void main(String[] args) {
-        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+      //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-       // ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         final List<Show> showList = new ArrayList<>();
         final QLCStep step1 = QLCStep.builder().id(1)
@@ -66,22 +66,22 @@ public class StandAlone {
                // .function((QLCSequence)qlcSequence)
               //  .function(qlcModel.getFunction(61))
                // .function(qlcModel.getFunction(10))
-                //.function(qlcEfxCircle)
-                .function(qlcEfxLine)
+                .function(qlcEfxCircle)
+              //  .function(qlcEfxLine)
                 .build();
 
         showList.add(dummy);
 
-        final PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start();
+        //final PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start(qlcEfxLine);
+        final PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start(qlcEfxCircle);
         final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
-   //     effectEditPanel.setQlcEfx(qlcEfxCircle);
-        effectEditPanel.setQlcEfx(qlcEfxLine);
 
         ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
 
         final List<ScreenPoint> nodesCircle = qlcEfxCircle.buildScreenPoint();
         final List<ScreenPoint> nodesLine = qlcEfxLine.buildScreenPoint();
-        effectEditPanel.setNodes(nodesLine);
+     //   effectEditPanel.setNodes(nodesLine);
+        effectEditPanel.setNodes(nodesCircle);
 
 
         Scheduler scheduler = new Scheduler(showList);

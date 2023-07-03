@@ -1,6 +1,8 @@
 package cl.clillo.lighting.utils;
 
 
+import cl.clillo.lighting.model.QLCEfx;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -14,8 +16,11 @@ import javax.swing.UIManager;
 public class PruebaCreaProgramasRobotizados extends JFrame implements ActionListener{
 
     private static final long serialVersionUID = 1823403452881818081L;
+    private final QLCEfx qlcEfx;
 
-    public PruebaCreaProgramasRobotizados() {
+    public PruebaCreaProgramasRobotizados(final QLCEfx qlcEfx) {
+        this.qlcEfx = qlcEfx;
+
         enableEvents(64L);
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -27,7 +32,7 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
 
     private void initialize() {
         setSize(FixtureRoboticPanel.WIDTH1+200, FixtureRoboticPanel.HEIGHT1+50);
-        setContentPane(new FixtureRoboticPanel());
+        setContentPane(new FixtureRoboticPanel(qlcEfx));
     }
 
     protected void processWindowEvent(WindowEvent e) {
@@ -43,8 +48,8 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
     public void actionPerformed(ActionEvent e) {
     }
 
-    public static PruebaCreaProgramasRobotizados start() {
-        PruebaCreaProgramasRobotizados vp = new PruebaCreaProgramasRobotizados();
+    public static PruebaCreaProgramasRobotizados start(final QLCEfx qlcEfx) {
+        PruebaCreaProgramasRobotizados vp = new PruebaCreaProgramasRobotizados(qlcEfx);
         vp.validate();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = vp.getSize();
