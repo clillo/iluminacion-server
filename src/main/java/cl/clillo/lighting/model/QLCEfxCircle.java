@@ -18,6 +18,9 @@ public class QLCEfxCircle extends QLCEfx{
     private double width;
     private double height;
 
+    private int nodePos = 0;
+    private int nodeDelta = 1;
+
     public QLCEfxCircle(final int id, final String type, final String name, final String path,
                         final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
                         final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
@@ -48,6 +51,8 @@ public class QLCEfxCircle extends QLCEfx{
     private List<QLCExecutionNode> buildNodes(){
         final List<QLCExecutionNode> nodes = new ArrayList<>();
         for (double time=0; time<=360; time+=1) {
+            final List<int[]> channels = new ArrayList<>();
+            final List<int[]> data = new ArrayList<>();
             for (QLCRoboticFixture fixture : getFixtureList()) {
                 double x = centerX + (int) (Math.cos(Math.toRadians(time)) * width);
                 double y = centerY + (int) (Math.sin(Math.toRadians(time)) * height);
@@ -58,15 +63,24 @@ public class QLCEfxCircle extends QLCEfx{
                 double vTilt = y / 256;
                 double vTiltFine = y % 256;
 
-                final int[] channels = {fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
-                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()};
-
-                final int[] data = {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine};
-
-                nodes.add(QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build());
+                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
+                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
+                data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
             }
+
+            final QLCExecutionNode node = QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build();
+            node.setId(nodes.size());
+            nodes.add(node);
         }
         return nodes;
     }
 
+    @Override
+    public QLCExecutionNode nextNode() {
+        nodePos++;
+        if (nodePos>=nodes.size()){
+            nodePos=0;
+        }
+        return nodes.get(nodePos);
+    }
 }

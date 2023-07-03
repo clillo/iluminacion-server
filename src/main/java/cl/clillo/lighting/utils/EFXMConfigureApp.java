@@ -1,6 +1,5 @@
 package cl.clillo.lighting.utils;
 
-
 import cl.clillo.lighting.model.QLCEfx;
 
 import java.awt.Dimension;
@@ -12,13 +11,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-
-public class PruebaCreaProgramasRobotizados extends JFrame implements ActionListener{
+public class EFXMConfigureApp extends JFrame implements ActionListener{
 
     private static final long serialVersionUID = 1823403452881818081L;
     private final QLCEfx qlcEfx;
 
-    public PruebaCreaProgramasRobotizados(final QLCEfx qlcEfx) {
+    public EFXMConfigureApp(final QLCEfx qlcEfx) {
         this.qlcEfx = qlcEfx;
 
         enableEvents(64L);
@@ -32,7 +30,11 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
 
     private void initialize() {
         setSize(FixtureRoboticPanel.WIDTH1+200, FixtureRoboticPanel.HEIGHT1+50);
-        setContentPane(new FixtureRoboticPanel(qlcEfx));
+        FixtureRoboticPanel fixtureRoboticPanel = new FixtureRoboticPanel(qlcEfx);
+        final EffectEditPanel effectEditPanel = fixtureRoboticPanel.getPnlMovingHead1();
+        effectEditPanel.setNodes(qlcEfx.buildScreenPoint());
+        setContentPane(fixtureRoboticPanel);
+
     }
 
     protected void processWindowEvent(WindowEvent e) {
@@ -48,8 +50,8 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
     public void actionPerformed(ActionEvent e) {
     }
 
-    public static PruebaCreaProgramasRobotizados start(final QLCEfx qlcEfx) {
-        PruebaCreaProgramasRobotizados vp = new PruebaCreaProgramasRobotizados(qlcEfx);
+    public static EFXMConfigureApp start(final QLCEfx qlcEfx) {
+        EFXMConfigureApp vp = new EFXMConfigureApp(qlcEfx);
         vp.validate();
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         Dimension frameSize = vp.getSize();
@@ -59,7 +61,9 @@ public class PruebaCreaProgramasRobotizados extends JFrame implements ActionList
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+       // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        vp.setLocationRelativeTo(null);
+        vp.setLocation(-1250, 200);
         vp.setVisible(true);
 
         return vp;

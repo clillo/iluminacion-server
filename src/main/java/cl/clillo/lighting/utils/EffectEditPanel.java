@@ -150,7 +150,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     @Override
     public void notify(double time) {
-        pointList.add(nodes.get((int)time));
+        pointList.add(nodes.get((int)time%nodes.size()));
         canvas.repaint();
     }
 

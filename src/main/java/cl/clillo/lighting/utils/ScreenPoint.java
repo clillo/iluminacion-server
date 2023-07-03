@@ -1,5 +1,6 @@
 package cl.clillo.lighting.utils;
 
+import cl.clillo.lighting.model.RealPoint;
 import lombok.Getter;
 
 @Getter
@@ -14,9 +15,16 @@ public class ScreenPoint {
     private final int screenX;
     private final int screenY;
 
-    public ScreenPoint(double realX, double realY) {
+    public ScreenPoint(final double realX, final double realY) {
         this.realX = realX;
         this.realY = realY;
+        screenX = (int) ((CANVAS_WIDTH * realX)/MAX);
+        screenY = (int) ((CANVAS_HEIGHT * realY)/MAX);
+    }
+
+    public ScreenPoint(final RealPoint realPoint) {
+        this.realX = realPoint.getX();
+        this.realY = realPoint.getY();
         screenX = (int) ((CANVAS_WIDTH * realX)/MAX);
         screenY = (int) ((CANVAS_HEIGHT * realY)/MAX);
     }

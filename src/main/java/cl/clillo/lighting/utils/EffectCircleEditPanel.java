@@ -120,7 +120,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         mousePrevY = screenToRealY(e.getY());
         txtScreenPosition.setText(Math.round(mousePrevX)+","+ Math.round(mousePrevY));
 
-            if (Math.abs(mousePrevX-((QLCEfxCircle)qlcEfx).getCenterX())<500 && Math.abs(mousePrevY-((QLCEfxCircle)qlcEfx).getCenterY())<500) {
+            if (Math.abs(mousePrevX- qlcEfx.getCenterX())<500 && Math.abs(mousePrevY-((QLCEfxCircle)qlcEfx).getCenterY())<500) {
                 this.setCursor(CURSOR_CROSS);
                 return;
             }

@@ -18,11 +18,14 @@ public class QLCEfxLine extends QLCEfx{
     private double destinyX;
     private double destinyY;
 
+    private int nodePos = 0;
+    private int nodeDelta = 1;
+
     public QLCEfxLine(final int id, final String type, final String name, final String path,
                       final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
                       final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
         super(id, type, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
-
+        nodePos = 0;
     }
 
     public List<ScreenPoint> buildScreenPoint(){
@@ -47,8 +50,12 @@ public class QLCEfxLine extends QLCEfx{
 
     private List<QLCExecutionNode> buildNodes(){
         final List<QLCExecutionNode> nodes = new ArrayList<>();
+
         for (double time=0; time<=1; time+=0.01) {
+            final List<int[]> channels = new ArrayList<>();
+            final List<int[]> data = new ArrayList<>();
             for (QLCRoboticFixture fixture : getFixtureList()) {
+
                 double x = originX + (int) (time * (destinyX - originX));
                 double y = originY + (int) (time * (destinyY - originY));
 
@@ -58,17 +65,31 @@ public class QLCEfxLine extends QLCEfx{
                 double vTilt = y / 256;
                 double vTiltFine = y % 256;
 
-                final int[] channels = {fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
-                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()};
-
-                final int[] data = {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine};
-
-                nodes.add(QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build());
+                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
+                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
+                data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
 
             }
+            final QLCExecutionNode node = QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build();
+            node.setId(nodes.size());
+            nodes.add(node);
         }
 
         return nodes;
+    }
+
+    @Override
+    public QLCExecutionNode nextNode() {
+        nodePos+=nodeDelta;
+        if (nodePos<0){
+            nodePos=1;
+            nodeDelta=1;
+        }
+        if (nodePos>=nodes.size()){
+            nodePos=nodes.size()-2;
+            nodeDelta=-1;
+        }
+        return nodes.get(nodePos);
     }
 
 }

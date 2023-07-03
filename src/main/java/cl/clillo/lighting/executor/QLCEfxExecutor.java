@@ -14,8 +14,6 @@ import java.util.List;
 public class QLCEfxExecutor implements IQLCStepExecutor {
 
     private final Dmx dmx = Dmx.getInstance();
-    private int t;
-    private int inc;
     private final Show show;
     private final QLCEfx efx;
     private RoboticNotifiable roboticNotifiable;
@@ -32,8 +30,6 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
     @Override
     public void execute() {
         if (show.isFirstTimeExecution()){
-            t = 0;
-            inc = 1;
             show.setFirstTimeExecution(false);
         }
 
@@ -42,19 +38,12 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
         dmx.send(106, 255);
         dmx.send(107, 255);
 
-        if (efx.getNodes().size()>0) {
-            final QLCExecutionNode node = efx.getNodes().get(t);
-            node.send();
+        final QLCExecutionNode node = efx.nextNode();
+        node.send();
 
-            roboticNotifiable.notify(t);
-            log.info("executing {} efx {} {} {}", show.getName(), t, node.getChannel(), node.getData());
-        }
-        t+=inc;
+        roboticNotifiable.notify(node.getId());
+       // log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
 
-        if (t>=efx.getNodes().size()-1 || t<=0){
-            inc = inc==1?-1:1;
-        }
-
-        show.setNextExecutionTime(System.currentTimeMillis() + 50);
+        show.setNextExecutionTime(System.currentTimeMillis() + 5);
     }
 }

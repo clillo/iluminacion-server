@@ -2,19 +2,23 @@ package cl.clillo.lighting;
 
 import cl.clillo.lighting.dmx.ArtNet;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
-import cl.clillo.lighting.model.QLCEfx;
+import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCEfxCircle;
 import cl.clillo.lighting.model.QLCEfxLine;
-import cl.clillo.lighting.model.QLCExecutionNode;
+import cl.clillo.lighting.model.QLCEfxMultiLine;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.QLCPoint;
+import cl.clillo.lighting.model.QLCRoboticFixture;
+import cl.clillo.lighting.model.QLCRunOrder;
+import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
+import cl.clillo.lighting.model.RealPoint;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.utils.EffectEditPanel;
 import cl.clillo.lighting.utils.FixtureRoboticPanel;
-import cl.clillo.lighting.utils.PruebaCreaProgramasRobotizados;
+import cl.clillo.lighting.utils.EFXMConfigureApp;
 import cl.clillo.lighting.utils.ScreenPoint;
 
 import java.util.ArrayList;
@@ -57,6 +61,18 @@ public class StandAlone {
         qlcEfxLine.getFixtureList().add(qlcModel.getFixture(19));
         qlcEfxLine.updateParameters(60416.0, 45001.0, 45248.0, 51336.0);
 
+        final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(0, "type", "name", "path",
+            QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
+        qlcEfxMultiLine.getFixtureList().add(qlcModel.getFixture(19));
+
+       /* qlcEfxMultiLine.updateParameters(List.of(
+                ,
+                ,
+                RealPoint.builder().x(52248.0).y(45220.0).build(),
+                RealPoint.builder().x(58248.0).y(60220.0).build()));
+*/
+
+        qlcEfxMultiLine.updateParameters(RealPoint.builder().x(45248.0).y(45001.0).build(), RealPoint.builder().x(60416.0).y(60220.0).build());
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")
@@ -66,23 +82,16 @@ public class StandAlone {
                // .function((QLCSequence)qlcSequence)
               //  .function(qlcModel.getFunction(61))
                // .function(qlcModel.getFunction(10))
-                .function(qlcEfxCircle)
-              //  .function(qlcEfxLine)
+            //    .function(qlcEfxCircle)
+                .function(qlcEfxMultiLine)
+             //  .function(qlcEfxLine)
                 .build();
 
         showList.add(dummy);
 
-        //final PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start(qlcEfxLine);
-        final PruebaCreaProgramasRobotizados p = PruebaCreaProgramasRobotizados.start(qlcEfxCircle);
+        final EFXMConfigureApp p = EFXMConfigureApp.start(qlcEfxMultiLine);
         final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
-
         ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
-
-        final List<ScreenPoint> nodesCircle = qlcEfxCircle.buildScreenPoint();
-        final List<ScreenPoint> nodesLine = qlcEfxLine.buildScreenPoint();
-     //   effectEditPanel.setNodes(nodesLine);
-        effectEditPanel.setNodes(nodesCircle);
-
 
         Scheduler scheduler = new Scheduler(showList);
         scheduler.start();

@@ -18,7 +18,7 @@ public abstract class QLCEfx extends QLCFunction{
     private final List<QLCStep> qlcStepList;
     private final QLCScene boundScene;
     private final List<QLCRoboticFixture> fixtureList;
-    private List<QLCExecutionNode> nodes;
+    protected List<QLCExecutionNode> nodes;
 
     public QLCEfx(final int id, final String type, final String name, final String path,
                   final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
@@ -88,5 +88,6 @@ public abstract class QLCEfx extends QLCFunction{
         return nodes;
     }
 
+    public abstract QLCExecutionNode nextNode();
 
 }
