@@ -10,10 +10,12 @@ public class QLCExecutionNode {
     private final Dmx dmx = Dmx.getInstance();
     private final int[] channel;
     private final int[] data;
+    private final double[] timePos;
     private final long holdTime;
 
-    public QLCExecutionNode(final int[] channel, final int[] data, final long holdTime) {
-        if (channel.length != data.length)
+    public QLCExecutionNode(final int[] channel, final int[] data, double[] timePos, final long holdTime) {
+        this.timePos = timePos;
+        if (channel.length != data.length && data.length != timePos.length)
             throw new RuntimeException("channel and data has different size");
 
         this.channel = channel;
@@ -31,6 +33,10 @@ public class QLCExecutionNode {
 
     public int[] getData() {
         return data;
+    }
+
+    public double[] getTimePos() {
+        return timePos;
     }
 
     public long getHoldTime() {
@@ -54,6 +60,7 @@ public class QLCExecutionNode {
     public static class QLCExecutionNodeBuilder {
         private int[] channel;
         private int[] data;
+        private double[] timePos;
         private long holdTime;
 
         QLCExecutionNodeBuilder() {
@@ -73,6 +80,11 @@ public class QLCExecutionNode {
 
         public QLCExecutionNodeBuilder channel(int[] channel) {
             this.channel = channel;
+            return this;
+        }
+
+        public QLCExecutionNodeBuilder timePos(double[] timePos) {
+            this.timePos = timePos;
             return this;
         }
 
@@ -99,7 +111,7 @@ public class QLCExecutionNode {
         }
 
         public QLCExecutionNode build() {
-            return new QLCExecutionNode(this.channel, this.data, this.holdTime);
+            return new QLCExecutionNode(this.channel, this.data, timePos, this.holdTime);
         }
 
         public String toString() {

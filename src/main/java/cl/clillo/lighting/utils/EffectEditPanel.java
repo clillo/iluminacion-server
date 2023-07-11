@@ -37,7 +37,6 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     private final List<ScreenPoint> pointList = new ArrayList<>();
 
-
     protected List<ScreenPoint> nodes;
 
     public EffectEditPanel(QLCEfx qlcEfx) {
@@ -55,19 +54,23 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
             private static final long serialVersionUID = 9056031188937687827L;
 
             public void paint(final Graphics g){
-                super.paint(g);
-                g.setColor(Color.gray);
-                g.drawLine(canvas.getWidth()/2, 0, canvas.getWidth()/2, canvas.getHeight());
-                g.drawLine(0, canvas.getHeight()/2, canvas.getWidth(), canvas.getHeight()/2);
+            super.paint(g);
+            g.setColor(Color.gray);
+            g.drawLine(canvas.getWidth()/2, 0, canvas.getWidth()/2, canvas.getHeight());
+            g.drawLine(0, canvas.getHeight()/2, canvas.getWidth(), canvas.getHeight()/2);
 
-                txtPointList.setText("");
-                if (pointList!=null && pointList.size()>1){
-                    g.setColor(Color.RED);
-                    ScreenPoint p = pointList.get(pointList.size()-1);
-                    g.fillOval(p.getScreenX()-4, p.getScreenY()-4, 8, 8);
+            txtPointList.setText("");
+            if (pointList!=null && pointList.size()>1){
+                synchronized (pointList) {
+                    for (ScreenPoint screenPoint : pointList) {
+                        g.setColor(Color.RED);
+                        g.fillOval(screenPoint.getScreenX() - 4, screenPoint.getScreenY() - 4, 8, 8);
+                    }
                 }
 
-                drawCanvas(g);
+            }
+
+            drawCanvas(g);
             }
         };
 
@@ -128,7 +131,6 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
         canvas.repaint();
     }
 
@@ -150,9 +152,21 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     @Override
     public void notify(double time) {
-        pointList.add(nodes.get((int)time%nodes.size()));
+      //  pointList.add(nodes.get((int)time%nodes.size()));
+      //  canvas.repaint();
+    }
+
+    @Override
+    public void notify(double[] timePos) {
+        synchronized (pointList) {
+            pointList.clear();
+            for (double time : timePos)
+                pointList.add(nodes.get((int) time % nodes.size()));
+        }
         canvas.repaint();
     }
+
+
 
     @Override
     public void clear() {
@@ -168,4 +182,6 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     public void setNodes(final List<ScreenPoint> nodes) {
         this.nodes = nodes;
     }
+
+
 }

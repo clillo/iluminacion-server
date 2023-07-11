@@ -4,6 +4,7 @@ import cl.clillo.lighting.dmx.ArtNet;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCEfxCircle;
+import cl.clillo.lighting.model.QLCEfxFixtureData;
 import cl.clillo.lighting.model.QLCEfxLine;
 import cl.clillo.lighting.model.QLCEfxMultiLine;
 import cl.clillo.lighting.model.QLCFunction;
@@ -54,16 +55,20 @@ public class StandAlone {
         final QLCModel qlcModel = new QLCModel();
 
         final QLCEfxCircle qlcEfxCircle = qlcModel.getFunction(13); // 13 -circle
-        qlcEfxCircle.getFixtureList().add(qlcModel.getFixture(19));
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(90).reverse(true).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(180).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(270).reverse(true).build());
         qlcEfxCircle.updateParameters(52672.0, 54977.4, 6880.0, 7490.0);
 
-        final QLCEfxLine qlcEfxLine = qlcModel.getFunction(14); // 13 -circle
-        qlcEfxLine.getFixtureList().add(qlcModel.getFixture(19));
+        final QLCEfxLine qlcEfxLine = qlcModel.getFunction(14);
+        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
+        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).reverse(true).build());
         qlcEfxLine.updateParameters(60416.0, 45001.0, 45248.0, 51336.0);
 
         final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(0, "type", "name", "path",
             QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
-        qlcEfxMultiLine.getFixtureList().add(qlcModel.getFixture(19));
+        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
 
        /* qlcEfxMultiLine.updateParameters(List.of(
                 ,
@@ -82,14 +87,14 @@ public class StandAlone {
                // .function((QLCSequence)qlcSequence)
               //  .function(qlcModel.getFunction(61))
                // .function(qlcModel.getFunction(10))
-            //    .function(qlcEfxCircle)
-                .function(qlcEfxMultiLine)
-             //  .function(qlcEfxLine)
+               // .function(qlcEfxCircle)
+            //    .function(qlcEfxMultiLine)
+               .function(qlcEfxLine)
                 .build();
 
         showList.add(dummy);
 
-        final EFXMConfigureApp p = EFXMConfigureApp.start(qlcEfxMultiLine);
+        final EFXMConfigureApp p = EFXMConfigureApp.start(qlcEfxLine);
         final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
         ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
 

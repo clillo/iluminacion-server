@@ -24,7 +24,7 @@ public class QLCEfxMultiLine extends QLCEfx{
 
     public QLCEfxMultiLine(final int id, final String type, final String name, final String path,
                            final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
-                           final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
+                           final QLCScene boundScene, List<QLCEfxFixtureData> fixtureList) {
         super(id, type, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
 
     }
@@ -120,7 +120,8 @@ public class QLCEfxMultiLine extends QLCEfx{
         for (double time=0; time<=1; time+=0.01) {
             final List<int[]> channels = new ArrayList<>();
             final List<int[]> data = new ArrayList<>();
-            for (QLCRoboticFixture fixture : getFixtureList()) {
+            for (QLCEfxFixtureData fixtureData: getFixtureList()) {
+                final QLCRoboticFixture fixture = fixtureData.getFixture();
 
                 double x = a.getX() + (int) (time * (b.getX() - a.getX()));
                 double y = a.getY() + (int) (time * (b.getY() - a.getY()));

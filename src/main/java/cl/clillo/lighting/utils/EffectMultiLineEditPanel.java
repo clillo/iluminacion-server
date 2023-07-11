@@ -24,7 +24,6 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
         this.qlcEfx = qlcEfx;
     }
 
-
     @Override
     protected void drawCanvas(Graphics g) {
         drawLineControlLines(g);
@@ -119,4 +118,5 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
         this.setQlcEfx(qlcEfx);
         return nodes;
     }
+
 }

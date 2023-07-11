@@ -17,12 +17,12 @@ public abstract class QLCEfx extends QLCFunction{
     private final QLCRunOrder runOrder;
     private final List<QLCStep> qlcStepList;
     private final QLCScene boundScene;
-    private final List<QLCRoboticFixture> fixtureList;
+    private final List<QLCEfxFixtureData> fixtureList;
     protected List<QLCExecutionNode> nodes;
 
     public QLCEfx(final int id, final String type, final String name, final String path,
                   final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
-                  final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
+                  final QLCScene boundScene, List<QLCEfxFixtureData> fixtureList) {
         super(id, type, name, path);
         this.qlcStepList = qlcStepList;
         this.direction = direction;
@@ -82,8 +82,7 @@ public abstract class QLCEfx extends QLCFunction{
     private List<QLCExecutionNode> buildNodes(){
         final List<QLCExecutionNode> nodes = new ArrayList<>();
         for (double time=0; time<=360; time+=1) {
-            for (QLCRoboticFixture fixture : fixtureList) {
-            }
+
         }
         return nodes;
     }

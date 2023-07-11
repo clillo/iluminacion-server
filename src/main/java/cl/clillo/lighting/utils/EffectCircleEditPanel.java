@@ -151,7 +151,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
     }
 
     public List<ScreenPoint> updateParametersCircle(final double centerX, final double centerY, final double width, final double height) {
-        final QLCEfxCircle qlcEfx = ((QLCEfxCircle)this.qlcEfx);
+        final QLCEfxCircle qlcEfx = this.qlcEfx;
         List<ScreenPoint> nodes = qlcEfx.updateParameters(centerX, centerY, width, height);
         this.setQlcEfx(qlcEfx);
         return nodes;

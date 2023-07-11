@@ -45,7 +45,7 @@ public class QLCFunction {
         private final List<QLCPoint> qlcPointList = new ArrayList<>();
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
-        private final List<QLCRoboticFixture> roboticFixtureList = new ArrayList<>();
+        private final List<QLCEfxFixtureData> roboticFixtureList = new ArrayList<>();
 
         QLCFunctionBuilder() {
         }
@@ -101,7 +101,7 @@ public class QLCFunction {
         }
 
         public QLCFunctionBuilder addFixture(final QLCRoboticFixture fixture) {
-            this.roboticFixtureList.add(fixture);
+            this.roboticFixtureList.add(QLCEfxFixtureData.builder().fixture(fixture).build());
             return this;
         }
 

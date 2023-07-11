@@ -23,7 +23,7 @@ public class QLCEfxLine extends QLCEfx{
 
     public QLCEfxLine(final int id, final String type, final String name, final String path,
                       final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
-                      final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
+                      final QLCScene boundScene, List<QLCEfxFixtureData> fixtureList) {
         super(id, type, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
         nodePos = 0;
     }
@@ -54,10 +54,17 @@ public class QLCEfxLine extends QLCEfx{
         for (double time=0; time<=1; time+=0.01) {
             final List<int[]> channels = new ArrayList<>();
             final List<int[]> data = new ArrayList<>();
-            for (QLCRoboticFixture fixture : getFixtureList()) {
+            final double[] timePos = new double[getFixtureList().size()];
+            int index = 0;
 
-                double x = originX + (int) (time * (destinyX - originX));
-                double y = originY + (int) (time * (destinyY - originY));
+            for (QLCEfxFixtureData fixtureData: getFixtureList()) {
+                final QLCRoboticFixture fixture = fixtureData.getFixture();
+
+                double fixtureTime = (fixtureData.isReverse()?100.0-time*100:time*100);
+                timePos[index] = fixtureTime;
+
+                double x = originX + (int) (fixtureTime * (destinyX - originX));
+                double y = originY + (int) (fixtureTime * (destinyY - originY));
 
                 double vPan = x / 256;
                 double vPanFine = x % 256;
@@ -68,9 +75,16 @@ public class QLCEfxLine extends QLCEfx{
                 channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
                         fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
                 data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
-
+                index++;
             }
-            final QLCExecutionNode node = QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build();
+
+            final QLCExecutionNode node = QLCExecutionNode.builder()
+                    .channel(channels)
+                    .data(data)
+                    .timePos(timePos)
+                    .holdTime(50)
+                    .build();
+
             node.setId(nodes.size());
             nodes.add(node);
         }
@@ -91,5 +105,4 @@ public class QLCEfxLine extends QLCEfx{
         }
         return nodes.get(nodePos);
     }
-
 }

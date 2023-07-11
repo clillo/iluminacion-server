@@ -19,11 +19,10 @@ public class QLCEfxCircle extends QLCEfx{
     private double height;
 
     private int nodePos = 0;
-    private int nodeDelta = 1;
 
     public QLCEfxCircle(final int id, final String type, final String name, final String path,
                         final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
-                        final QLCScene boundScene, List<QLCRoboticFixture> fixtureList) {
+                        final QLCScene boundScene, final List<QLCEfxFixtureData> fixtureList) {
         super(id, type, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
 
     }
@@ -53,9 +52,16 @@ public class QLCEfxCircle extends QLCEfx{
         for (double time=0; time<=360; time+=1) {
             final List<int[]> channels = new ArrayList<>();
             final List<int[]> data = new ArrayList<>();
-            for (QLCRoboticFixture fixture : getFixtureList()) {
-                double x = centerX + (int) (Math.cos(Math.toRadians(time)) * width);
-                double y = centerY + (int) (Math.sin(Math.toRadians(time)) * height);
+            final double[] timePos = new double[getFixtureList().size()];
+            int index = 0;
+            for (QLCEfxFixtureData fixtureData: getFixtureList()) {
+                final QLCRoboticFixture fixture = fixtureData.getFixture();
+
+                double fixtureTime = ((fixtureData.isReverse()?360-time:time)+ fixtureData.getStartOffset())%360;
+                timePos[index] = fixtureTime;
+
+                double x = centerX + (int) (Math.cos(Math.toRadians(fixtureTime)) * width);
+                double y = centerY + (int) (Math.sin(Math.toRadians(fixtureTime)) * height);
 
                 double vPan = x / 256;
                 double vPanFine = x % 256;
@@ -66,9 +72,16 @@ public class QLCEfxCircle extends QLCEfx{
                 channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
                         fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
                 data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
+                index++;
             }
 
-            final QLCExecutionNode node = QLCExecutionNode.builder().channel(channels).data(data).holdTime(50).build();
+            final QLCExecutionNode node = QLCExecutionNode.builder()
+                    .channel(channels)
+                    .data(data)
+                    .holdTime(50)
+                    .timePos(timePos)
+                    .build();
+
             node.setId(nodes.size());
             nodes.add(node);
         }
