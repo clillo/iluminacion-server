@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

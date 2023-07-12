@@ -77,15 +77,7 @@ public abstract class QLCEfx extends QLCFunction{
         return sb.toString();
     }
 
-    public abstract List<ScreenPoint> buildScreenPoint();
-
-    private List<QLCExecutionNode> buildNodes(){
-        final List<QLCExecutionNode> nodes = new ArrayList<>();
-        for (double time=0; time<=360; time+=1) {
-
-        }
-        return nodes;
-    }
+    protected abstract List<QLCExecutionNode> buildNodes();
 
     public abstract QLCExecutionNode nextNode();
 

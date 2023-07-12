@@ -1,10 +1,14 @@
 package cl.clillo.lighting.utils;
 
+import cl.clillo.lighting.model.QLCExecutionNode;
+
 public interface RoboticNotifiable {
 
-    void notify(double time);
+    default void notify(double time){}
 
-    void notify(double[] timePos);
+    default void notify(double[] timePos){}
 
-    void clear();
+    default void notify(final QLCExecutionNode node){}
+
+    default void clear(){}
 }

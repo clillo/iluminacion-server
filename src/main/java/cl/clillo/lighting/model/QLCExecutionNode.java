@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.dmx.Dmx;
+import cl.clillo.lighting.utils.ScreenPoint;
 
 import java.util.List;
 
@@ -10,13 +11,14 @@ public class QLCExecutionNode {
     private final Dmx dmx = Dmx.getInstance();
     private final int[] channel;
     private final int[] data;
-    private final double[] timePos;
     private final long holdTime;
 
-    public QLCExecutionNode(final int[] channel, final int[] data, double[] timePos, final long holdTime) {
-        this.timePos = timePos;
-        if (channel.length != data.length && data.length != timePos.length)
-            throw new RuntimeException("channel and data has different size");
+    private final ScreenPoint[] screenPoints;
+
+    public QLCExecutionNode(final int[] channel, final int[] data, final long holdTime, final ScreenPoint[] screenPoints) {
+        this.screenPoints = screenPoints;
+        if (channel.length != data.length && data.length != screenPoints.length)
+            throw new RuntimeException("channel, screenPoints and data has different size");
 
         this.channel = channel;
         this.data = data;
@@ -35,10 +37,6 @@ public class QLCExecutionNode {
         return data;
     }
 
-    public double[] getTimePos() {
-        return timePos;
-    }
-
     public long getHoldTime() {
         return holdTime;
     }
@@ -51,6 +49,10 @@ public class QLCExecutionNode {
         return id;
     }
 
+    public ScreenPoint[] getScreenPoints() {
+        return screenPoints;
+    }
+
     public void send() {
         for (int i = 0; i < channel.length; i++)
             dmx.send(channel[i], data[i]);
@@ -60,7 +62,7 @@ public class QLCExecutionNode {
     public static class QLCExecutionNodeBuilder {
         private int[] channel;
         private int[] data;
-        private double[] timePos;
+        private ScreenPoint[] screenPoints;
         private long holdTime;
 
         QLCExecutionNodeBuilder() {
@@ -83,11 +85,6 @@ public class QLCExecutionNode {
             return this;
         }
 
-        public QLCExecutionNodeBuilder timePos(double[] timePos) {
-            this.timePos = timePos;
-            return this;
-        }
-
         public QLCExecutionNodeBuilder data(List<int[]> data) {
             int n=0;
             for (int[] ints : data) n += ints.length;
@@ -100,22 +97,24 @@ public class QLCExecutionNode {
             return this;
         }
 
-        public QLCExecutionNodeBuilder data(int[] data) {
+        public QLCExecutionNodeBuilder data(final int[] data) {
             this.data = data;
             return this;
         }
 
-        public QLCExecutionNodeBuilder holdTime(long holdTime) {
+        public QLCExecutionNodeBuilder holdTime(final long holdTime) {
             this.holdTime = holdTime;
             return this;
         }
 
-        public QLCExecutionNode build() {
-            return new QLCExecutionNode(this.channel, this.data, timePos, this.holdTime);
+        public QLCExecutionNodeBuilder screenPoints(final ScreenPoint[] screenPoints) {
+            this.screenPoints = screenPoints;
+            return this;
         }
 
-        public String toString() {
-            return "QLCExecutionNode.QLCExecutionNodeBuilder(channel=" + java.util.Arrays.toString(this.channel) + ", data=" + java.util.Arrays.toString(this.data) + ", holdTime=" + this.holdTime + ")";
+        public QLCExecutionNode build() {
+            return new QLCExecutionNode(this.channel, this.data, this.holdTime, this.screenPoints);
         }
+
     }
 }

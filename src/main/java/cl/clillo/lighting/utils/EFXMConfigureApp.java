@@ -31,8 +31,6 @@ public class EFXMConfigureApp extends JFrame implements ActionListener{
     private void initialize() {
         setSize(FixtureRoboticPanel.WIDTH1+200, FixtureRoboticPanel.HEIGHT1+50);
         FixtureRoboticPanel fixtureRoboticPanel = new FixtureRoboticPanel(qlcEfx);
-        final EffectEditPanel effectEditPanel = fixtureRoboticPanel.getPnlMovingHead1();
-        effectEditPanel.setNodes(qlcEfx.buildScreenPoint());
         setContentPane(fixtureRoboticPanel);
 
     }

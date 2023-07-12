@@ -6,7 +6,6 @@ import cl.clillo.lighting.model.QLCEfxCircle;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class EffectCircleEditPanel extends EffectEditPanel {
 
@@ -33,9 +32,9 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         drawCircleControlLines(g);
     }
 
+    private void drawCircleControlLines(final Graphics g) {
 
-    private void drawCircleControlLines(Graphics g) {
-        if (nodes==null)
+        if (qlcEfx.getNodes()==null)
             return;
 
         double minX=Double.MAX_VALUE;
@@ -44,10 +43,10 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         double maxY=-1;
 
         g.setColor(Color.CYAN);
-        ScreenPoint pb = nodes.get(0);
+        ScreenPoint pb = qlcEfx.getNodes().get(0).getScreenPoints()[0];
         ScreenPoint pa;
-        for (int i = 1; i < nodes.size()-1; i++) {
-            pa = nodes.get(i);
+        for (int i = 1; i < qlcEfx.getNodes().size()-1; i++) {
+            pa = qlcEfx.getNodes().get(i).getScreenPoints()[0];
 
             if (pa.getRealX()<minX)
                 minX= pa.getRealX();
@@ -65,7 +64,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
             pb = pa;
         }
 
-        pa=nodes.get(0);
+        pa = qlcEfx.getNodes().get(0).getScreenPoints()[0];
         g.drawLine(pb.getScreenX(), pb.getScreenY(), pa.getScreenX(), pa.getScreenY());
 
         sc1 = new ScreenPoint(minX+ (maxX - minX)/2, minY);
@@ -75,8 +74,8 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         drawCrossLine(g, sc3);
     }
 
-    public void setQlcEfx(QLCEfx qlcEfx) {
-          final QLCEfxCircle qlcEfxCircle = ((QLCEfxCircle) qlcEfx);
+    public void setQlcEfx(final QLCEfx qlcEfx) {
+        final QLCEfxCircle qlcEfxCircle = ((QLCEfxCircle) qlcEfx);
         txtCircleCenterX.setText(String.valueOf((int)qlcEfxCircle.getCenterX()));
         txtCircleCenterY.setText(String.valueOf((int)qlcEfxCircle.getCenterY()));
         txtCircleWidth.setText(String.valueOf((int)qlcEfxCircle.getWidth()));
@@ -91,7 +90,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         double y = screenToRealY(e.getY());
 
         if (this.getCursor()==CURSOR_CROSS){
-            this.nodes = updateParametersCircle(x, y,
+            updateParametersCircle(x, y,
                     Double.parseDouble(txtCircleWidth.getText()), Double.parseDouble(txtCircleHeight.getText()));
         }
 
@@ -99,7 +98,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
             double delta = -10;
             if (mousePrevX>x)
                 delta=10;
-            this.nodes = updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
+            updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
                     Double.parseDouble(txtCircleWidth.getText()) + delta, Double.parseDouble(txtCircleHeight.getText()));
         }
 
@@ -108,7 +107,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
             if (mousePrevY>y)
                 delta=10;
 
-            this.nodes = updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
+            updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
                 Double.parseDouble(txtCircleWidth.getText()) , Double.parseDouble(txtCircleHeight.getText())+ delta);
         }
 
@@ -144,17 +143,16 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         if (e.getSource().equals(txtCircleCenterX) || e.getSource().equals(txtCircleCenterY) ||
                 e.getSource().equals(txtCircleWidth) || e.getSource().equals(txtCircleHeight)) {
 
-            this.nodes = updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
+             updateParametersCircle(Double.parseDouble(txtCircleCenterX.getText()), Double.parseDouble(txtCircleCenterY.getText()),
                 Double.parseDouble(txtCircleWidth.getText()), Double.parseDouble(txtCircleHeight.getText()));
-
         }
+
     }
 
-    public List<ScreenPoint> updateParametersCircle(final double centerX, final double centerY, final double width, final double height) {
+    public void updateParametersCircle(final double centerX, final double centerY, final double width, final double height) {
         final QLCEfxCircle qlcEfx = this.qlcEfx;
-        List<ScreenPoint> nodes = qlcEfx.updateParameters(centerX, centerY, width, height);
+        qlcEfx.updateParameters(centerX, centerY, width, height);
         this.setQlcEfx(qlcEfx);
-        return nodes;
-    }
 
+    }
 }

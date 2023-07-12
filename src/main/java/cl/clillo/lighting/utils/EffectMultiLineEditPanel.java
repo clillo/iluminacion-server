@@ -29,6 +29,8 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
         drawLineControlLines(g);
     }
 
+    List<String> nodes = List.of();
+
     private void drawLineControlLines(Graphics g) {
         if (nodes==null)
             return;
@@ -72,12 +74,12 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
         double y = screenToRealY(e.getY());
 
         if (this.getCursor()==CURSOR_X ){
-            this.nodes = updateParametersLine(qlcEfx.getLeftUp(), RealPoint.builder().x(x).y(y).build());
+            updateParametersMultiLine(qlcEfx.getLeftUp(), RealPoint.builder().x(x).y(y).build());
         }
 
 
         if (this.getCursor()==CURSOR_Y){
-            this.nodes = updateParametersLine(RealPoint.builder().x(x).y(y).build(), qlcEfx.getRightDown());
+            updateParametersMultiLine(RealPoint.builder().x(x).y(y).build(), qlcEfx.getRightDown());
         }
     }
 
@@ -104,19 +106,10 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
     public void actionPerformed(ActionEvent e) {
     }
 
-    public List<ScreenPoint> updateParametersLine(List<RealPoint> realPoints) {
+    public void updateParametersMultiLine(final RealPoint leftUp, RealPoint rightDown) {
         final QLCEfxMultiLine qlcEfx = this.qlcEfx;
-        List<ScreenPoint> nodes = qlcEfx.updateParameters(realPoints);
+        qlcEfx.updateParameters(leftUp, rightDown);
         this.setQlcEfx(qlcEfx);
-        return nodes;
+
     }
-
-
-    public List<ScreenPoint> updateParametersLine(final RealPoint leftUp, RealPoint rightDown) {
-        final QLCEfxMultiLine qlcEfx = this.qlcEfx;
-        List<ScreenPoint> nodes = qlcEfx.updateParameters(leftUp, rightDown);
-        this.setQlcEfx(qlcEfx);
-        return nodes;
-    }
-
 }

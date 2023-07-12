@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import lombok.Builder;
 import lombok.Getter;
 

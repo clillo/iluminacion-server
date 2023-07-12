@@ -1,6 +1,8 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.QLCReader;
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
+import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;

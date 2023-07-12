@@ -33,10 +33,10 @@ public class EffectLineEditPanel extends EffectEditPanel {
     }
 
     private void drawLineControlLines(Graphics g) {
-        if (nodes==null)
+        if (qlcEfx.getNodes()==null)
             return;
 
-        final QLCEfxLine qlcEfxLine = ((QLCEfxLine) this.qlcEfx);
+        final QLCEfxLine qlcEfxLine = this.qlcEfx;
         sc1 = new ScreenPoint(qlcEfxLine.getOriginX(), qlcEfxLine.getOriginY());
         sc3 = new ScreenPoint(qlcEfxLine.getDestinyX(), qlcEfxLine.getDestinyY());
 
@@ -45,8 +45,6 @@ public class EffectLineEditPanel extends EffectEditPanel {
 
         drawCrossLine(g, sc1);
         drawCrossLine(g, sc3);
-
-
     }
 
     public void setQlcEfx(QLCEfx qlcEfx) {
@@ -64,12 +62,12 @@ public class EffectLineEditPanel extends EffectEditPanel {
         double y = screenToRealY(e.getY());
 
         if (this.getCursor()==CURSOR_X ){
-            this.nodes = updateParametersLine(Double.parseDouble(txtLineOriginX.getText()) , Double.parseDouble(txtLineOriginY.getText()), x, y);
+            updateParametersLine(Double.parseDouble(txtLineOriginX.getText()) , Double.parseDouble(txtLineOriginY.getText()), x, y);
         }
 
 
         if (this.getCursor()==CURSOR_Y){
-            this.nodes = updateParametersLine(x, y, Double.parseDouble(txtLineDestinyX.getText()) , Double.parseDouble(txtLineDestinyY.getText()));
+            updateParametersLine(x, y, Double.parseDouble(txtLineDestinyX.getText()) , Double.parseDouble(txtLineDestinyY.getText()));
         }
     }
 
@@ -98,17 +96,16 @@ public class EffectLineEditPanel extends EffectEditPanel {
         if (e.getSource().equals(txtLineOriginX) || e.getSource().equals(txtLineOriginX) ||
                 e.getSource().equals(txtLineDestinyX) || e.getSource().equals(txtLineDestinyY)) {
 
-
-        this.nodes = updateParametersLine(Double.parseDouble(txtLineOriginX.getText()), Double.parseDouble(txtLineOriginY.getText()),
+            updateParametersLine(Double.parseDouble(txtLineOriginX.getText()), Double.parseDouble(txtLineOriginY.getText()),
                 Double.parseDouble(txtLineDestinyX.getText()), Double.parseDouble(txtLineDestinyY.getText()));
         }
 
     }
 
-    public List<ScreenPoint> updateParametersLine(final double originX, final double originY, final double destinyX, final double destinyY) {
-        final QLCEfxLine qlcEfx = ((QLCEfxLine)this.qlcEfx);
-        List<ScreenPoint> nodes = qlcEfx.updateParameters(originX, originY, destinyX, destinyY);
+    public void updateParametersLine(final double originX, final double originY, final double destinyX, final double destinyY) {
+        final QLCEfxLine qlcEfx = this.qlcEfx;
+        qlcEfx.updateParameters(originX, originY, destinyX, destinyY);
         this.setQlcEfx(qlcEfx);
-        return nodes;
+
     }
 }

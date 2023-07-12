@@ -1,6 +1,7 @@
 package cl.clillo.lighting.utils;
 
 import cl.clillo.lighting.model.QLCEfx;
+import cl.clillo.lighting.model.QLCExecutionNode;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,8 +10,6 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
-import java.util.ArrayList;
-import java.util.List;
 
 public abstract class EffectEditPanel extends JPanel implements MouseMotionListener, MouseListener, RoboticNotifiable, ActionListener {
 
@@ -30,47 +29,33 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     protected final JTextField txtLineDestinyX;
     protected final JTextField txtLineDestinyY;
     protected JPanel canvas;
-    private final JTextArea txtPointList;
 
     private static final double MAX_X = 65536;
     private static final double MAX_Y = 65536;
 
-    private final List<ScreenPoint> pointList = new ArrayList<>();
-
-    protected List<ScreenPoint> nodes;
+    private ScreenPoint[] screenPoints;
 
     public EffectEditPanel(QLCEfx qlcEfx) {
         setLayout(null);
-
-        JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setBounds(FixtureRoboticPanel.WIDTH1+ 20, 11, 123, 189);
-        add(scrollPane);
-
-        txtPointList = new JTextArea();
-        txtPointList.setFont(new Font("Monospaced", Font.PLAIN, 9));
-        scrollPane.setViewportView(txtPointList);
 
         canvas = new JPanel(){
             private static final long serialVersionUID = 9056031188937687827L;
 
             public void paint(final Graphics g){
-            super.paint(g);
-            g.setColor(Color.gray);
-            g.drawLine(canvas.getWidth()/2, 0, canvas.getWidth()/2, canvas.getHeight());
-            g.drawLine(0, canvas.getHeight()/2, canvas.getWidth(), canvas.getHeight()/2);
+                super.paint(g);
+                g.setColor(Color.gray);
+                g.drawLine(canvas.getWidth()/2, 0, canvas.getWidth()/2, canvas.getHeight());
+                g.drawLine(0, canvas.getHeight()/2, canvas.getWidth(), canvas.getHeight()/2);
 
-            txtPointList.setText("");
-            if (pointList!=null && pointList.size()>1){
-                synchronized (pointList) {
-                    for (ScreenPoint screenPoint : pointList) {
+                if (screenPoints!=null){
+                    for (ScreenPoint screenPoint : screenPoints) {
                         g.setColor(Color.RED);
                         g.fillOval(screenPoint.getScreenX() - 4, screenPoint.getScreenY() - 4, 8, 8);
                     }
+
                 }
+                drawCanvas(g);
 
-            }
-
-            drawCanvas(g);
             }
         };
 
@@ -151,26 +136,13 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
 
     @Override
-    public void notify(double time) {
-      //  pointList.add(nodes.get((int)time%nodes.size()));
-      //  canvas.repaint();
-    }
-
-    @Override
-    public void notify(double[] timePos) {
-        synchronized (pointList) {
-            pointList.clear();
-            for (double time : timePos)
-                pointList.add(nodes.get((int) time % nodes.size()));
-        }
+    public void notify(final QLCExecutionNode node) {
+        this.screenPoints = node.getScreenPoints();
         canvas.repaint();
     }
 
-
-
     @Override
     public void clear() {
-        pointList.clear();
         canvas.repaint();
     }
 
@@ -179,9 +151,6 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     }
 
-    public void setNodes(final List<ScreenPoint> nodes) {
-        this.nodes = nodes;
-    }
 
 
 }
