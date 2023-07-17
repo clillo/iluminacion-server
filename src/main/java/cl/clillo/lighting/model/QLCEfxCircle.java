@@ -36,49 +36,18 @@ public class QLCEfxCircle extends QLCEfx{
         setNodes(buildNodes());
     }
 
-    protected List<QLCExecutionNode> buildNodes(){
-        final List<QLCExecutionNode> nodes = new ArrayList<>();
-        for (double time=0; time<=360; time+=1) {
-            final List<int[]> channels = new ArrayList<>();
-            final List<int[]> data = new ArrayList<>();
-            final ScreenPoint[] screenPoints = new ScreenPoint[getFixtureList().size()];
+    protected List<QLCEfxPosition> buildPositions(){
+        final List<QLCEfxPosition> positions = new ArrayList<>();
 
-            int index = 0;
+        for (int time=0; time<360; time+=1)
+            positions.add(QLCEfxPosition.builder()
+                            .index(time)
+                            .x(centerX + (int) (Math.cos(Math.toRadians(time)) * width))
+                            .y(centerY + (int) (Math.sin(Math.toRadians(time)) * height))
+                    .build());
 
-            for (QLCEfxFixtureData fixtureData: getFixtureList()) {
-                final QLCRoboticFixture fixture = fixtureData.getFixture();
+        return positions;
 
-                double fixtureTime = ((fixtureData.isReverse()?360-time:time)+ fixtureData.getStartOffset())%360;
-
-                double x = centerX + (int) (Math.cos(Math.toRadians(fixtureTime)) * width);
-                double y = centerY + (int) (Math.sin(Math.toRadians(fixtureTime)) * height);
-
-                screenPoints[index] = new ScreenPoint(x, y);
-
-                double vPan = x / 256;
-                double vPanFine = x % 256;
-
-                double vTilt = y / 256;
-                double vTiltFine = y % 256;
-
-                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
-                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
-                data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
-                index++;
-            }
-
-            final QLCExecutionNode node = QLCExecutionNode.builder()
-                    .channel(channels)
-                    .data(data)
-                    .screenPoints(screenPoints)
-                    .holdTime(50)
-                    .build();
-
-            node.setId(nodes.size());
-            nodes.add(node);
-        }
-
-        return nodes;
     }
 
     @Override

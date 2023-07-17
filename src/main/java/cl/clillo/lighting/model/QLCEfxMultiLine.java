@@ -1,7 +1,5 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
-import cl.clillo.lighting.utils.ScreenPoint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -75,82 +73,37 @@ public class QLCEfxMultiLine extends QLCEfx{
         return leftUp.getX() + (rightDown.getX() - leftUp.getX())*Math.random();
     }
 
-    protected List<QLCExecutionNode> buildNodes(){
+    protected List<QLCEfxPosition> buildPositions(){
         if (realPoints==null)
             return List.of();
 
-        final List<QLCExecutionNode> nodes = new ArrayList<>();
+        final List<QLCEfxPosition> positions = new ArrayList<>();
+
         RealPoint p1 = realPoints.get(0);
         RealPoint initialPoint = p1;
 
         for(int i=1; i<realPoints.size(); i++) {
-            buildNodes(p1, realPoints.get(i), nodes);
+            positions.addAll(buildPositions(p1, realPoints.get(i), nodes));
             p1 = realPoints.get(i);
         }
 
-        buildNodes(p1, initialPoint, nodes);
+        positions.addAll(buildPositions(p1, initialPoint, nodes));
 
-        for (int i=0; i<nodes.size()/2; i++) {
-            QLCExecutionNode node = nodes.get(i);
-            for (int j=0; j<getFixtureList().size(); j++) {
-                QLCEfxFixtureData fixtureData = getFixtureList().get(j);
-                if (fixtureData.isReverse()){
-                    QLCExecutionNode oppositeNode = nodes.get(nodes.size()-i-1);
-                    ScreenPoint screenPointA = node.getScreenPoints()[j];
-                    ScreenPoint screenPointB = oppositeNode.getScreenPoints()[j];
-                    node.getScreenPoints()[j] = screenPointB;
-                    oppositeNode.getScreenPoints()[j] = screenPointA;
-                }
-
-            }
-        }
-
-        return nodes;
+        return positions;
     }
 
-    private void buildNodes(final RealPoint a, final RealPoint b, final List<QLCExecutionNode> nodes){
-        double dx = b.getX() - a.getX();
-        double dy = b.getY() - a.getY();
-        double length = Math.sqrt(dx*dx + dy*dy);
+    private List<QLCEfxPosition> buildPositions(final RealPoint a, final RealPoint b, final List<QLCExecutionNode> nodes){
+        final List<QLCEfxPosition> positions = new ArrayList<>();
 
-      //  for (double time=0; time<=1.0; time+=0.1*length) {
-        for (double time=0; time<=1.0; time+=0.01) {
-            final List<int[]> channels = new ArrayList<>();
-            final List<int[]> data = new ArrayList<>();
-            final ScreenPoint[] screenPoints = new ScreenPoint[getFixtureList().size()];
+        int index=0;
+        for (double time=0; time<=1; time+=0.01)
+            positions.add(QLCEfxPosition.builder()
+                    .index(index++)
+                    .x(a.getX() + (int) (time * (b.getX() - a.getX())))
+                    .y(a.getY() + (int) (time * (b.getY() - a.getY())))
+                    .build());
 
-            int index = 0;
-
-            for (QLCEfxFixtureData fixtureData: getFixtureList()) {
-                final QLCRoboticFixture fixture = fixtureData.getFixture();
-
-                double x = a.getX() + (int) (time * (b.getX() - a.getX()));
-                double y = a.getY() + (int) (time * (b.getY() - a.getY()));
-
-                screenPoints[index] = new ScreenPoint(x, y);
-
-                double vPan = x / 256;
-                double vPanFine = x % 256;
-
-                double vTilt = y / 256;
-                double vTiltFine = y % 256;
-
-                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
-                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
-                data.add(new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine});
-                index++;
-            }
-
-            final QLCExecutionNode node = QLCExecutionNode.builder()
-                    .channel(channels)
-                    .data(data)
-                    .screenPoints(screenPoints)
-                    .holdTime(50)
-                    .build();
-
-            node.setId(nodes.size());
-            nodes.add(node);
-        }
+        return positions;
     }
 
     @Override

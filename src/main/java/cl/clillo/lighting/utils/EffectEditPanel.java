@@ -48,9 +48,12 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
                 g.drawLine(0, canvas.getHeight()/2, canvas.getWidth(), canvas.getHeight()/2);
 
                 if (screenPoints!=null){
+                    char index=0;
                     for (ScreenPoint screenPoint : screenPoints) {
+                        char [] str = { (char)('0'+(index++))};
                         g.setColor(Color.RED);
                         g.fillOval(screenPoint.getScreenX() - 4, screenPoint.getScreenY() - 4, 8, 8);
+                        g.drawChars(str,0,1,screenPoint.getScreenX()+10 , screenPoint.getScreenY()+10);
                     }
 
                 }

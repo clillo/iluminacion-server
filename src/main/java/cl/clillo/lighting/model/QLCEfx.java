@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.utils.ScreenPoint;
 import lombok.Getter;
 import lombok.Setter;
@@ -77,8 +78,51 @@ public abstract class QLCEfx extends QLCFunction{
         return sb.toString();
     }
 
-    protected abstract List<QLCExecutionNode> buildNodes();
+    protected final List<QLCExecutionNode> buildNodes(){
+
+        final List<QLCEfxPosition> positions = buildPositions();
+        final int positionsSize = positions.size();
+        final List<QLCExecutionNode> nodes = new ArrayList<>();
+
+        for (int positionIndex=0; positionIndex<positionsSize; positionIndex++) {
+
+            final List<int[]> channels = new ArrayList<>();
+            final List<int[]> data = new ArrayList<>();
+            final ScreenPoint[] screenPoints = new ScreenPoint[getFixtureList().size()];
+
+            for (int positionFixture=0; positionFixture<getFixtureList().size(); positionFixture++) {
+                QLCEfxFixtureData fixtureData = getFixtureList().get(positionFixture);
+
+                final QLCRoboticFixture fixture = fixtureData.getFixture();
+
+                int fixtureIndexPosition = ((fixtureData.isReverse()?positionsSize-positionIndex:positionIndex)+ (int)fixtureData.getStartOffset())%positionsSize;
+                final QLCEfxPosition position = positions.get(fixtureIndexPosition);
+
+                screenPoints[positionFixture] = position.buildScreenPoint();
+
+                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
+                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
+
+                data.add(position.buildDataArray());
+            }
+
+            final QLCExecutionNode node = QLCExecutionNode.builder()
+                    .channel(channels)
+                    .data(data)
+                    .screenPoints(screenPoints)
+                    .holdTime(50)
+                    .build();
+
+            node.setId(nodes.size());
+            nodes.add(node);
+        }
+
+        return nodes;
+    }
 
     public abstract QLCExecutionNode nextNode();
 
+    protected List<QLCEfxPosition> buildPositions(){
+        return List.of();
+    }
 }

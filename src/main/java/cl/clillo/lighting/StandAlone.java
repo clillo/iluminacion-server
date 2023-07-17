@@ -62,14 +62,17 @@ public class StandAlone {
 
         final QLCEfxLine qlcEfxLine = qlcModel.getFunction(14);
         qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
-        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).reverse(true).build());
+        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(0.25).reverse().build());
+        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
+        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(0.75).reverse().build());
         qlcEfxLine.updateParameters(60416.0, 45001.0, 45248.0, 51336.0);
 
        final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(0, "type", "name", "path",
             QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
         qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
-        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).reverse().build());
-
+        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(25).reverse().build());
+        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
+        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(75).reverse().build());
        /* qlcEfxMultiLine.updateParameters(List.of(
                 ,
                 ,
@@ -82,7 +85,7 @@ public class StandAlone {
                 RealPoint.builder().x(60416.0).y(60220.0).build());
 
         //final QLCEfx qlcFunction = qlcEfxCircle;
-       // final QLCEfx qlcFunction = qlcEfxLine;
+      //  final QLCEfx qlcFunction = qlcEfxLine;
         final QLCEfx qlcFunction = qlcEfxMultiLine;
 
         final Show dummy = Show.builder()
