@@ -36,6 +36,8 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
         dmx.send(107, 255);
 
         final QLCExecutionNode node = efx.nextNode();
+        if (node==null)
+            return;
         node.send();
 
        // roboticNotifiable.notify(node.getId());

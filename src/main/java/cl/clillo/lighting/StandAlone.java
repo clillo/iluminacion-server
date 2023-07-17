@@ -9,6 +9,7 @@ import cl.clillo.lighting.model.QLCEfxCircle;
 import cl.clillo.lighting.model.QLCEfxFixtureData;
 import cl.clillo.lighting.model.QLCEfxLine;
 import cl.clillo.lighting.model.QLCEfxMultiLine;
+import cl.clillo.lighting.model.QLCEfxSpline;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.QLCPoint;
@@ -73,20 +74,28 @@ public class StandAlone {
         qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(25).reverse().build());
         qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
         qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(75).reverse().build());
-       /* qlcEfxMultiLine.updateParameters(List.of(
-                ,
-                ,
-                RealPoint.builder().x(52248.0).y(45220.0).build(),
-                RealPoint.builder().x(58248.0).y(60220.0).build()));
-*/
 
         qlcEfxMultiLine.updateParameters(
                 RealPoint.builder().x(45248.0).y(45001.0).build(),
                 RealPoint.builder().x(60416.0).y(60220.0).build());
 
+        final QLCEfxSpline qlcEfxSpline = new QLCEfxSpline(0, "type", "name", "path",
+                QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
+        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
+        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(25).reverse().build());
+        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
+        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(75).reverse().build());
+        qlcEfxSpline.updateParameters(List.of(
+                RealPoint.builder().x(45248.0).y(45001.0).build(),
+                RealPoint.builder().x(49248.0).y(55001.0).build(),
+                RealPoint.builder().x(60416.0).y(60220.0).build(),
+                RealPoint.builder().x(55248.0).y(48001.0).build(),
+                RealPoint.builder().x(45248.0).y(45001.0).build()));
+
         //final QLCEfx qlcFunction = qlcEfxCircle;
       //  final QLCEfx qlcFunction = qlcEfxLine;
-        final QLCEfx qlcFunction = qlcEfxMultiLine;
+      //  final QLCEfx qlcFunction = qlcEfxMultiLine;
+        final QLCEfx qlcFunction = qlcEfxSpline;
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")

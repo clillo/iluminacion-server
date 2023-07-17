@@ -4,6 +4,7 @@ import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxCircle;
 import cl.clillo.lighting.model.QLCEfxLine;
 import cl.clillo.lighting.model.QLCEfxMultiLine;
+import cl.clillo.lighting.model.QLCEfxSpline;
 
 import javax.swing.*;
 
@@ -28,7 +29,10 @@ public class FixtureRoboticPanel extends JPanel {
                 if (qlcEfx instanceof QLCEfxMultiLine)
                     pnlMovingHead1 = new EffectMultiLineEditPanel((QLCEfxMultiLine) qlcEfx);
                     else
-                        pnlMovingHead1=null;
+                        if (qlcEfx instanceof QLCEfxSpline)
+                            pnlMovingHead1 = new EffectSplineEditPanel((QLCEfxSpline) qlcEfx);
+                        else
+                            pnlMovingHead1=null;
 
         this.setLayout(null);
         this.setBounds(0, 0, WIDTH1+200, HEIGHT1);
