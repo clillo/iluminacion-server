@@ -1,13 +1,13 @@
 package cl.clillo.lighting.utils;
 
 import cl.clillo.lighting.model.QLCEfx;
-import cl.clillo.lighting.model.QLCEfxMultiLine;
 import cl.clillo.lighting.model.QLCEfxSpline;
 import cl.clillo.lighting.model.RealPoint;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 public class EffectSplineEditPanel extends EffectEditPanel {
@@ -15,14 +15,18 @@ public class EffectSplineEditPanel extends EffectEditPanel {
     private static final long serialVersionUID = -5869553409971473557L;
 
     private final QLCEfxSpline qlcEfx;
-
-    private ScreenPoint sc1;
-    private ScreenPoint sc2;
-    private ScreenPoint sc3;
+    private final List<ScreenPoint> controlPoints;
+    private List<ScreenPoint> splinePoints;
+    private int selectedScreenPoint;
 
     public EffectSplineEditPanel(final QLCEfxSpline qlcEfx) {
         super(qlcEfx);
         this.qlcEfx = qlcEfx;
+        controlPoints = new ArrayList<>(qlcEfx.getRealPoints().size());
+        for (RealPoint realPoint: qlcEfx.getRealPoints())
+            controlPoints.add(new ScreenPoint(realPoint));
+
+        selectedScreenPoint = -1;
     }
 
     @Override
@@ -30,34 +34,19 @@ public class EffectSplineEditPanel extends EffectEditPanel {
         drawLineControlLines(g);
     }
 
-    List<String> nodes = List.of();
-
     private void drawLineControlLines(Graphics g) {
-        if (qlcEfx.getNodes()==null)
+        if (qlcEfx.getNodes()==null || controlPoints==null)
             return;
 
-        double minX=Double.MAX_VALUE;
-        double maxX=-1;
-        double minY=Double.MAX_VALUE;;
-        double maxY=-1;
-
         g.setColor(Color.CYAN);
+
+        splinePoints = new ArrayList<>();
+
         ScreenPoint pb = qlcEfx.getNodes().get(0).getScreenPoints()[0];
         ScreenPoint pa;
         for (int i = 1; i < qlcEfx.getNodes().size()-1; i++) {
             pa = qlcEfx.getNodes().get(i).getScreenPoints()[0];
-
-            if (pa.getRealX()<minX)
-                minX= pa.getRealX();
-
-            if (pa.getRealX()>maxX)
-                maxX= pa.getRealX();
-
-            if (pa.getRealY()<minY)
-                minY= pa.getRealY();
-
-            if (pa.getRealY()>maxY)
-                maxY= pa.getRealY();
+            splinePoints.add(pa);
 
             g.drawLine(pb.getScreenX(), pb.getScreenY(), pa.getScreenX(), pa.getScreenY());
             pb = pa;
@@ -65,12 +54,10 @@ public class EffectSplineEditPanel extends EffectEditPanel {
 
         pa = qlcEfx.getNodes().get(0).getScreenPoints()[0];
         g.drawLine(pb.getScreenX(), pb.getScreenY(), pa.getScreenX(), pa.getScreenY());
+        splinePoints.add(pa);
 
-        sc1 = new ScreenPoint(minX+ (maxX - minX)/2, minY);
-        sc3 = new ScreenPoint(minX, minY + (maxY -minY)/2);
-
-        drawCrossLine(g, sc1);
-        drawCrossLine(g, sc3);
+        for (ScreenPoint screenPoint: controlPoints)
+           drawCrossLine(g, screenPoint);
     }
 
     public void setQlcEfx(QLCEfx qlcEfx) {
@@ -82,43 +69,76 @@ public class EffectSplineEditPanel extends EffectEditPanel {
         double x = screenToRealX(e.getX());
         double y = screenToRealY(e.getY());
 
-        if (this.getCursor()==CURSOR_X ){
-            updateParametersMultiLine(qlcEfx.getLeftUp(), RealPoint.builder().x(x).y(y).build());
+        if (this.selectedScreenPoint !=-1 ){
+            updateParametersMultiLine(selectedScreenPoint, x, y);
         }
 
-
-        if (this.getCursor()==CURSOR_Y){
-            updateParametersMultiLine(RealPoint.builder().x(x).y(y).build(), qlcEfx.getRightDown());
-        }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        double mousePrevX = screenToRealX(e.getX());
-        double mousePrevY = screenToRealY(e.getY());
-        txtScreenPosition.setText(Math.round(mousePrevX)+","+ Math.round(mousePrevY));
+        double realX = screenToRealX(e.getX());
+        double realY = screenToRealY(e.getY());
+        txtScreenPosition.setText(Math.round(realX)+","+ Math.round(realY));
+        selectedScreenPoint = -1;
 
-        if (sc3!=null && sc3.isNear(mousePrevX, mousePrevY)) {
-            this.setCursor(CURSOR_X);
-            return;
+        for (int i=0; i<controlPoints.size(); i++) {
+            ScreenPoint screenPoint = controlPoints.get(i);
+
+            if (screenPoint.isNear(realX, realY)) {
+                this.setCursor(CURSOR_X);
+                selectedScreenPoint = i;
+                return;
+            }
         }
-
-        if (sc1!=null && sc1.isNear(mousePrevX, mousePrevY)) {
-            this.setCursor(CURSOR_Y);
-            return;
-        }
-
         this.setCursor(Cursor.getDefaultCursor());
+    }
+
+    protected void doubleClick(int x, int y){
+        double realX = screenToRealX(x);
+        double realY = screenToRealY(y);
+        appendPoint(realX, realY);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
     }
 
-    public void updateParametersMultiLine(final RealPoint leftUp, RealPoint rightDown) {
+    public void appendPoint(double x, double y) {
         final QLCEfxSpline qlcEfx = this.qlcEfx;
-     //   qlcEfx.updateParameters(leftUp, rightDown);
+        controlPoints.add(new ScreenPoint(x,y));
+
+        List<RealPoint> updatedPoints = new ArrayList<>(controlPoints.size());
+        for (ScreenPoint screenPoint1: controlPoints)
+            updatedPoints.add(new RealPoint(screenPoint1));
+
+        qlcEfx.updateParameters(updatedPoints);
         this.setQlcEfx(qlcEfx);
+
+    }
+
+    public void updateParametersMultiLine(final int screenPoint, double x, double y) {
+        final QLCEfxSpline qlcEfx = this.qlcEfx;
+        controlPoints.remove(screenPoint);
+        controlPoints.add(screenPoint, new ScreenPoint(x,y));
+
+        List<RealPoint> updatedPoints = new ArrayList<>(controlPoints.size());
+        for (ScreenPoint screenPoint1: controlPoints)
+            updatedPoints.add(new RealPoint(screenPoint1));
+
+        qlcEfx.updateParameters(updatedPoints);
+        this.setQlcEfx(qlcEfx);
+
+    }
+
+    @Override
+    protected void save() {
+        System.out.println("qlcEfxSpline.updateParameters(List.of(");
+
+        for (ScreenPoint controlPoint: controlPoints)
+            System.out.println("\tRealPoint.builder().x("+controlPoint.getRealX()+").y("+controlPoint.getRealY()+").build(),");
+
+        System.out.println("\t\t));");
 
     }
 }

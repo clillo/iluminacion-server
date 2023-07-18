@@ -11,7 +11,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-public abstract class EffectEditPanel extends JPanel implements MouseMotionListener, MouseListener, RoboticNotifiable, ActionListener {
+public abstract class EffectEditPanel extends JPanel implements MouseMotionListener, RoboticNotifiable, ActionListener {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -29,6 +29,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     protected final JTextField txtLineDestinyX;
     protected final JTextField txtLineDestinyY;
     protected JPanel canvas;
+    protected JButton btnSave;
 
     private static final double MAX_X = 65536;
     private static final double MAX_Y = 65536;
@@ -65,7 +66,34 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
         canvas.setBackground(Color.BLACK);
         canvas.setBounds(10, 0, FixtureRoboticPanel.WIDTH1, FixtureRoboticPanel.HEIGHT1);
         canvas.addMouseMotionListener(this);
-        canvas.addMouseListener(this);
+        canvas.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent event) {
+                if (event.getClickCount() == 2 && event.getButton() == MouseEvent.BUTTON1) {
+                    doubleClick(event.getX(), event.getY());
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         add(canvas);
 
         txtScreenPosition = buildTxt(240);
@@ -79,6 +107,12 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
         txtLineDestinyX = buildTxt(520);
         txtLineDestinyY = buildTxt(560);
 
+        btnSave = new JButton();
+        btnSave.setText("Save");
+        btnSave.setBounds(FixtureRoboticPanel.WIDTH1+ 20, 50, 120, 20);
+
+        btnSave.addActionListener(e -> save());
+        add(btnSave);
         setQlcEfx(qlcEfx);
     }
 
@@ -117,25 +151,11 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
         return (MAX_Y * screenY)/(canvas.getHeight()*1.0);
     }
 
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        canvas.repaint();
+
+    protected void doubleClick(int x, int y){
     }
 
-    @Override
-    public void mousePressed(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
+    protected void save(){
     }
 
     @Override
@@ -150,10 +170,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
+    public void actionPerformed(final ActionEvent e) {
 
     }
-
-
-
 }

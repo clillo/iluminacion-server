@@ -29,8 +29,8 @@ public class StandAlone {
 
     public static void main(String[] args) {
       //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
-      //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
+      //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         final List<Show> showList = new ArrayList<>();
         final QLCStep step1 = QLCStep.builder().id(1)
@@ -82,16 +82,18 @@ public class StandAlone {
         final QLCEfxSpline qlcEfxSpline = new QLCEfxSpline(0, "type", "name", "path",
                 QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
         qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).build());
-        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(25).reverse().build());
-        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
-        qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(75).reverse().build());
+      //  qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(25).reverse().build());
+     //   qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(50).build());
+     //   qlcEfxSpline.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(19)).startOffset(75).reverse().build());
         qlcEfxSpline.updateParameters(List.of(
-                RealPoint.builder().x(45248.0).y(45001.0).build(),
-                RealPoint.builder().x(49248.0).y(55001.0).build(),
-                RealPoint.builder().x(60416.0).y(60220.0).build(),
-                RealPoint.builder().x(55248.0).y(48001.0).build(),
-                RealPoint.builder().x(45248.0).y(45001.0).build()));
-
+                RealPoint.builder().x(56128.0).y(56360.0).build(),
+                RealPoint.builder().x(49472.0).y(60730.0).build(),
+                RealPoint.builder().x(44096.0).y(55487.0).build(),
+                RealPoint.builder().x(55296.0).y(43326.0).build(),
+                RealPoint.builder().x(48448.0).y(39612.0).build(),
+                RealPoint.builder().x(43264.0).y(42962.0).build(),
+                RealPoint.builder().x(53760.0).y(52137.0).build()
+                ));
         //final QLCEfx qlcFunction = qlcEfxCircle;
       //  final QLCEfx qlcFunction = qlcEfxLine;
       //  final QLCEfx qlcFunction = qlcEfxMultiLine;

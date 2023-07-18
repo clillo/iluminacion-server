@@ -39,19 +39,21 @@ public class QLCEfxSpline extends QLCEfx{
 
         final List<QLCEfxPosition> positions = new ArrayList<>();
 
-
-        double[] x = new double[realPoints.size()];
-        double[] y = new double[realPoints.size()];
+        double[] x = new double[realPoints.size()+1];
+        double[] y = new double[realPoints.size()+1];
 
         for(int i=0; i<realPoints.size(); i++) {
             x[i] = realPoints.get(i).getX();
             y[i] = realPoints.get(i).getY();
         }
 
-        Spline2D spline2D = new Spline2D(x, y);
+        x[realPoints.size()] = realPoints.get(0).getX();
+        y[realPoints.size()] = realPoints.get(0).getY();
+
+        final Spline2D spline2D = new Spline2D(x, y);
 
         int index=0;
-        for (double time=0; time<=1; time+=0.01)
+        for (double time=0; time<1; time+=0.01)
             positions.add(QLCEfxPosition.builder()
                     .index(index++)
                     .x(spline2D.getPoint(time)[0])

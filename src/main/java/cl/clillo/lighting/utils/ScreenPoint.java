@@ -32,4 +32,12 @@ public class ScreenPoint {
     public boolean isNear(final double mouseRealX, final double mouseRealY){
         return Math.abs(mouseRealX - realX)<500 && Math.abs(mouseRealY - realY)<500;
     }
+
+    public boolean isNear(final ScreenPoint screenPoint){
+        return Math.abs(screenPoint.realX - realX)<500 && Math.abs(screenPoint.realY - realY)<500;
+    }
+
+    public boolean isEquals(final ScreenPoint screenPoint){
+        return Math.abs(screenPoint.realX - realX)<500 && Math.abs(screenPoint.realY - realY)<500;
+    }
 }
