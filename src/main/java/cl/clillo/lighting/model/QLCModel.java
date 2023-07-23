@@ -280,4 +280,8 @@ public class QLCModel {
     public <T extends QLCFixture> T getFixture(final int id){
         return (T)fixtureMap.get(id);
     }
+
+    public List<QLCFixtureModel> getFixtureModelList() {
+        return fixtureModelList;
+    }
 }
