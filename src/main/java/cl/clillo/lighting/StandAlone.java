@@ -29,9 +29,9 @@ import java.util.List;
 public class StandAlone {
 
     public static void main(String[] args) {
-      //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+       // ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         final List<Show> showList = new ArrayList<>();
         final QLCStep step1 = QLCStep.builder().id(1)
@@ -57,25 +57,25 @@ public class StandAlone {
         final QLCFixtureBuilder qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
 
         final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(1,null,null,null,null,null,null,null, new ArrayList<>()); // 13 -circle
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(90).reverse().build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(180).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(270).reverse().build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(101)).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(102)).startOffset(90).reverse().build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(303)).startOffset(180).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(304)).startOffset(270).reverse().build());
         qlcEfxCircle.updateParameters(52672.0, 54977.4, 6880.0, 7490.0);
 
         final QLCEfxLine qlcEfxLine = new QLCEfxLine(1,null,null,null,null,null,null,null,new ArrayList<>());
         qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
-        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(0.25).reverse().build());
-        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(50).build());
-        qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(0.75).reverse().build());
+ //       qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(0.25).reverse().build());
+   //     qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(50).build());
+     //   qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(0.75).reverse().build());
         qlcEfxLine.updateParameters(60416.0, 45001.0, 45248.0, 51336.0);
 
        final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(0, "type", "name", "path",
             QLCDirection.FORWARD, QLCRunOrder.LOOP, new ArrayList<>(), null, new ArrayList<>());
         qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
-        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(25).reverse().build());
-        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(50).build());
-        qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(75).reverse().build());
+     //   qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(25).reverse().build());
+      //  qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(50).build());
+      //  qlcEfxMultiLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(75).reverse().build());
 
         qlcEfxMultiLine.updateParameters(
                 RealPoint.builder().x(45248.0).y(45001.0).build(),
@@ -96,10 +96,10 @@ public class StandAlone {
                 RealPoint.builder().x(43264.0).y(42962.0).build(),
                 RealPoint.builder().x(53760.0).y(52137.0).build()
                 ));
-        //final QLCEfx qlcFunction = qlcEfxCircle;
-      //  final QLCEfx qlcFunction = qlcEfxLine;
+        final QLCEfx qlcFunction = qlcEfxCircle;
+    //  final QLCEfx qlcFunction = qlcEfxLine;
       //  final QLCEfx qlcFunction = qlcEfxMultiLine;
-        final QLCEfx qlcFunction = qlcEfxSpline;
+    //    final QLCEfx qlcFunction = qlcEfxSpline;
 
         final Show dummy = Show.builder()
                 .name("bouncing-auto")

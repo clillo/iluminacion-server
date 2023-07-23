@@ -61,7 +61,7 @@ public class EFXMConfigureApp extends JFrame implements ActionListener{
         }
        // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         vp.setLocationRelativeTo(null);
-        vp.setLocation(-1250, 200);
+     //   vp.setLocation(-1250, 200);
         vp.setVisible(true);
 
         return vp;

@@ -30,10 +30,10 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
             show.setFirstTimeExecution(false);
         }
 
-        dmx.send(102, 40);
+  //      dmx.send(102, 40);
 //        dmx.send(102, 185);
-        dmx.send(106, 255);
-        dmx.send(107, 255);
+    //    dmx.send(106, 255);
+     //   dmx.send(107, 255);
 
         final QLCExecutionNode node = efx.nextNode();
         if (node==null)
@@ -44,7 +44,7 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
      //   roboticNotifiable.notify(node.getTimePos());
         roboticNotifiable.notify(node);
 
-        //log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel());
+     //   log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
 
         show.setNextExecutionTime(System.currentTimeMillis() + 25);
     }
