@@ -1,5 +1,7 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
+import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import lombok.Getter;
 import lombok.ToString;
 
@@ -24,5 +26,12 @@ public class QLCScene extends QLCFunction{
                     .append(point.getChannel()).append(',')
                     .append(point.getData()).append('}');
         return sb.toString();
+    }
+
+    public static QLCScene build(final int id, final List<QLCPoint> qlcPointList){
+        String type = "type";
+        String path = "path";
+
+        return new QLCScene(id, type, "scene: "+id, path, qlcPointList);
     }
 }

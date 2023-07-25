@@ -15,6 +15,7 @@ import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCRunOrder;
+import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.RealPoint;
@@ -29,9 +30,9 @@ import java.util.List;
 public class StandAlone {
 
     public static void main(String[] args) {
-        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+       // ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-       // ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         final List<Show> showList = new ArrayList<>();
         final QLCStep step1 = QLCStep.builder().id(1)
@@ -59,9 +60,17 @@ public class StandAlone {
         final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(1,null,null,null,null,null,null,null, new ArrayList<>()); // 13 -circle
         qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(101)).build());
         qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(102)).startOffset(90).reverse().build());
+
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(90).reverse().build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(180).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(270).reverse().build());
+
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(301)).build());
+        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(302)).startOffset(90).reverse().build());
         qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(303)).startOffset(180).build());
         qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(304)).startOffset(270).reverse().build());
-        qlcEfxCircle.updateParameters(52672.0, 54977.4, 6880.0, 7490.0);
+        qlcEfxCircle.updateParameters(48768, 13544, 6880.0, 7490.0);
 
         final QLCEfxLine qlcEfxLine = new QLCEfxLine(1,null,null,null,null,null,null,null,new ArrayList<>());
         qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
@@ -101,7 +110,7 @@ public class StandAlone {
       //  final QLCEfx qlcFunction = qlcEfxMultiLine;
     //    final QLCEfx qlcFunction = qlcEfxSpline;
 
-        final Show dummy = Show.builder()
+        final Show movingPositions = Show.builder()
                 .name("bouncing-auto")
                 .executing(true)
                 .firstTimeExecution(true)
@@ -112,11 +121,30 @@ public class StandAlone {
                 .function(qlcFunction)
                 .build();
 
-        showList.add(dummy);
+        final Show movingFade = Show.builder()
+                .name("bouncing-auto")
+                .executing(true)
+                .firstTimeExecution(true)
+                .stepList(List.of())
+                .function(QLCScene.build(1, List.of(
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(101), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(102), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(201), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(202), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(203), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(204), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(301), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(302), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(303), QLCFixture.ChannelType.DIMMER, 255),
+                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(304), QLCFixture.ChannelType.DIMMER, 255))))
+                .build();
+
+        showList.add(movingPositions);
+        showList.add(movingFade);
 
         final EFXMConfigureApp p = EFXMConfigureApp.start(qlcFunction);
         final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
-        ((QLCEfxExecutor)dummy.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
+        ((QLCEfxExecutor)movingPositions.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
 
         Scheduler scheduler = new Scheduler(showList);
         scheduler.start();

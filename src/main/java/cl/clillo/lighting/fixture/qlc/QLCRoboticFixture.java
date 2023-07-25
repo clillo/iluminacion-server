@@ -7,6 +7,8 @@ import lombok.ToString;
 @Getter
 public class QLCRoboticFixture extends QLCFixture{
 
+    public enum ChannelType {PAN, TILT, PAN_FINE, TILT_FINE};
+
     private int panDmxChannel;
     private int tiltDmxChannel;
     private int panFineDmxChannel;
@@ -54,4 +56,13 @@ public class QLCRoboticFixture extends QLCFixture{
         }
     }
 
+    public static QLCRoboticFixture build(final int id, final int dmxAddress, final QLCFixtureModel fixtureModel){
+        String manufacturer = "manufacturer";
+        String model = "model";
+        String mode = "mode";
+        int universe = 0;
+
+        return new QLCRoboticFixture(manufacturer, model, mode, id, "fixture: "+id, universe, dmxAddress-1,
+                fixtureModel.getChannels().length, fixtureModel);
+    }
 }

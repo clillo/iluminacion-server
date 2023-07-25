@@ -27,6 +27,7 @@ public class QLCFixtureModel {
     private String model;
     private String type;
     private String[] channels;
+    private QLCFixture.ChannelType[] typeChannels;
 
     private boolean robotic;
 
@@ -36,6 +37,11 @@ public class QLCFixtureModel {
         this.type = type;
         this.channels = channels;
         this.robotic = robotic;
+
+        typeChannels = new QLCFixture.ChannelType[channels.length];
+        for (int i=0; i<channels.length; i++)
+            typeChannels[i]=QLCFixture.ChannelType.of(channels[i]);
+
     }
 
     public static QLCFixtureModelBuilder builder() {

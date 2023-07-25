@@ -2,6 +2,7 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.executor.IQLCStepExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
+import cl.clillo.lighting.executor.QLCSceneExecutor;
 import cl.clillo.lighting.executor.QLCSequenceExecutor;
 import cl.clillo.lighting.config.scenes.Scene;
 import cl.clillo.lighting.executor.TipoGatillador;
@@ -116,7 +117,6 @@ public class Show {
         public Show build() {
             IQLCStepExecutor executor = null;
 
-
             Show show = new Show(this.id, this.name, this.nextExecutionTime, this.executing, executor,
                     this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists, this.firstTimeExecution, this.function);
 
@@ -126,6 +126,8 @@ public class Show {
             if (function instanceof QLCEfx)
                 show.setStepExecutor(new QLCEfxExecutor(show));
 
+            if (function instanceof QLCScene)
+                show.setStepExecutor(new QLCSceneExecutor(show));
             return show;
         }
 

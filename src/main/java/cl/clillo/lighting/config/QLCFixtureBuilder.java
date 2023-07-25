@@ -44,18 +44,19 @@ public class QLCFixtureBuilder {
 
     public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA, QLCFixtureModel fixtureModelB, QLCFixtureModel fixtureModelC){
         final List<QLCFixture> list = new ArrayList<>();
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 101, this.name, this.universe, 259, 11, fixtureModelA));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 102, this.name, this.universe, 239, 11, fixtureModelA));
 
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 201, this.name, this.universe, 439, 11, fixtureModelB));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 202, this.name, this.universe, 451, 11, fixtureModelB));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 203, this.name, this.universe, 463, 11, fixtureModelB));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 204, this.name, this.universe, 475, 11, fixtureModelB));
+        list.add(QLCRoboticFixture.build(101, 260, fixtureModelA));
+        list.add(QLCRoboticFixture.build(102, 240, fixtureModelA));
 
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 301, this.name, this.universe, 54, 11, fixtureModelC));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 302, this.name, this.universe, 69, 11, fixtureModelC));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 303, this.name, this.universe, 89, 11, fixtureModelC));
-        list.add(new QLCRoboticFixture(this.manufacturer, this.model, this.mode, 304, this.name, this.universe, 39, 11, fixtureModelC));
+        list.add(QLCRoboticFixture.build(201, 440, fixtureModelB));
+        list.add(QLCRoboticFixture.build(202, 452, fixtureModelB));
+        list.add(QLCRoboticFixture.build(203, 464, fixtureModelB));
+        list.add(QLCRoboticFixture.build(204, 476, fixtureModelB));
+
+        list.add(QLCRoboticFixture.build(301, 55, fixtureModelC));
+        list.add(QLCRoboticFixture.build(302, 70, fixtureModelC));
+        list.add(QLCRoboticFixture.build(303, 90, fixtureModelC));
+        list.add(QLCRoboticFixture.build(304, 40, fixtureModelC));
 
         return list;
     }
