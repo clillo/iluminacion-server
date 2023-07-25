@@ -19,7 +19,10 @@ public class QLCFixture {
         public static ChannelType of(String name){
             if ("dimmer".equalsIgnoreCase(name))
                 return DIMMER;
-
+            if ("master dimmer".equalsIgnoreCase(name))
+                return DIMMER;
+            if ("strobe".equalsIgnoreCase(name))
+                return STROBE;
             return null;
         }
     };

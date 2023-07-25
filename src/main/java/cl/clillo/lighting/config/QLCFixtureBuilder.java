@@ -30,7 +30,7 @@ public class QLCFixtureBuilder {
                fixtureModelB = fixtureModel1;
        //     if ("Moving Head 2".equalsIgnoreCase(fixtureModel1.getModel()))
         //        fixtureModelB = fixtureModel1;
-            if ("Moving Head 1".equalsIgnoreCase(fixtureModel1.getModel()))
+            if ("Moving Head 2".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelA = fixtureModel1;
             if ("beam+spot".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelC = fixtureModel1;
