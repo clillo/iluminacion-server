@@ -5,7 +5,7 @@ import java.awt.*;
 
 public class Principal {
 
-    private static JFrame frame;
+    private static final JFrame frame;
 
     static {
         try {

@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class QLCFixtureBuilder {
+public class QLCFixtureBuilder implements FixtureListBuilder{
 
     private final Map<Integer, QLCFixture> fixtureMap;
     private String manufacturer = "manufacturer";
@@ -61,6 +61,7 @@ public class QLCFixtureBuilder {
         return list;
     }
 
+    @Override
     public <T extends QLCFixture> T getFixture(final int id){
         return (T)fixtureMap.get(id);
     }

@@ -11,7 +11,7 @@ import java.awt.event.WindowEvent;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 
-public class EFXMConfigureApp extends JFrame implements ActionListener{
+public class EFXMConfigureApp extends JFrame implements ActionListener {
 
     private static final long serialVersionUID = 1823403452881818081L;
     private final QLCEfx qlcEfx;
@@ -29,7 +29,7 @@ public class EFXMConfigureApp extends JFrame implements ActionListener{
     }
 
     private void initialize() {
-        setSize(FixtureRoboticPanel.WIDTH1+200, FixtureRoboticPanel.HEIGHT1+50);
+        setSize(FixtureRoboticPanel.WIDTH1 + 200, FixtureRoboticPanel.HEIGHT1 + 50);
         FixtureRoboticPanel fixtureRoboticPanel = new FixtureRoboticPanel(qlcEfx);
         setContentPane(fixtureRoboticPanel);
 
@@ -37,7 +37,7 @@ public class EFXMConfigureApp extends JFrame implements ActionListener{
 
     protected void processWindowEvent(WindowEvent e) {
         super.processWindowEvent(e);
-        if (e.getID() == 201){
+        if (e.getID() == 201) {
             dispose();
 
             System.exit(0);
@@ -59,9 +59,9 @@ public class EFXMConfigureApp extends JFrame implements ActionListener{
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-       // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         vp.setLocationRelativeTo(null);
-     //   vp.setLocation(-1250, 200);
+        vp.setLocation(-1250, 200);
         vp.setVisible(true);
 
         return vp;

@@ -23,16 +23,19 @@ import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.utils.EffectEditPanel;
 import cl.clillo.lighting.utils.FixtureRoboticPanel;
 import cl.clillo.lighting.utils.EFXMConfigureApp;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class StandAlone {
 
-    public static void main(String[] args) {
-        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+    public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
+      //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-     //   ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         final List<Show> showList = new ArrayList<>();
         final QLCStep step1 = QLCStep.builder().id(1)
@@ -57,20 +60,8 @@ public class StandAlone {
         final QLCModel qlcModelOriginal = new QLCModel();
         final QLCFixtureBuilder qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
 
-        final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(1,null,null,null,null,null,null,null, new ArrayList<>()); // 13 -circle
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(101)).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(102)).startOffset(36).reverse().build());
-
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).startOffset(72).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(202)).startOffset(108).reverse().build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(203)).startOffset(144).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(204)).startOffset(180).reverse().build());
-
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(301)).startOffset(216).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(302)).startOffset(252).reverse().build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(303)).startOffset(288).build());
-        qlcEfxCircle.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(304)).startOffset(314).reverse().build());
-        qlcEfxCircle.updateParameters(44352, 14417, 8520, 13190);
+        final QLCEfxCircle qlcEfxCircle = QLCEfxCircle.read(qlcModel, "QLCEfxCircle.circle1.xml");
+        //qlcEfxCircle.writeToConfigFile();
 
         final QLCEfxLine qlcEfxLine = new QLCEfxLine(1,null,null,null,null,null,null,null,new ArrayList<>());
         qlcEfxLine.getFixtureList().add(QLCEfxFixtureData.builder().fixture(qlcModel.getFixture(201)).build());
