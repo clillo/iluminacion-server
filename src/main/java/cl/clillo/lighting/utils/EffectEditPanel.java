@@ -35,9 +35,11 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     private static final double MAX_Y = 65536;
 
     private ScreenPoint[] screenPoints;
+    private final QLCEfx qlcEf;
 
-    public EffectEditPanel(QLCEfx qlcEfx) {
+    public EffectEditPanel(final QLCEfx qlcEfx) {
         setLayout(null);
+        this.qlcEf = qlcEfx;
 
         canvas = new JPanel(){
             private static final long serialVersionUID = 9056031188937687827L;
@@ -156,6 +158,8 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
 
     protected void save(){
+        System.out.println("saving current efx");
+        qlcEf.writeToConfigFile();
     }
 
     @Override

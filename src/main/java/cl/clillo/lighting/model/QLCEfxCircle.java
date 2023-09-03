@@ -111,7 +111,7 @@ public class QLCEfxCircle extends QLCEfx{
         final Document doc = getDocument(file);
         final QLCFunction function = QLCFunction.read(doc);
 
-        final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(function.getId(), function.getType(), function.getType(),function.getPath(),null,null,null,null, new ArrayList<>()); // 13 -circle
+        final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(function.getId(), function.getType(), function.getName(),function.getPath(),null,null,null,null, new ArrayList<>()); // 13 -circle
 
         Node common = doc.getElementsByTagName("fixtures").item(0);
         NodeList list = common.getChildNodes();

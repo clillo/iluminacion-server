@@ -4,6 +4,9 @@ import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.dmx.ArtNet;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
+import cl.clillo.lighting.midi.KeyData;
+import cl.clillo.lighting.midi.MidiEvent;
+import cl.clillo.lighting.midi.MidiHandler;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxCircle;
@@ -30,7 +33,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StandAlone {
+public class StandAlone implements MidiEvent {
 
     public static void main(String[] args) throws ParserConfigurationException, IOException, SAXException {
       //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
@@ -139,7 +142,25 @@ public class StandAlone {
         final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
         ((QLCEfxExecutor)movingPositions.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
 
+        final StandAlone standAlone = new StandAlone();
+        final MidiHandler midiHandler = new MidiHandler(standAlone);
+
         Scheduler scheduler = new Scheduler(showList);
         scheduler.start();
+    }
+
+    @Override
+    public void onKeyPress(final KeyData keyData) {
+        System.out.println("Key press: "+keyData);
+    }
+
+    @Override
+    public void onKeyRelease(final KeyData keyData) {
+        System.out.println("Key release: "+keyData);
+    }
+
+    @Override
+    public void onSlide(KeyData keyData) {
+        System.out.println("Slide: "+keyData);
     }
 }
