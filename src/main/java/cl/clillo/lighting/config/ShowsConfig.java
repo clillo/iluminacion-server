@@ -1,6 +1,6 @@
 package cl.clillo.lighting.config;
 
-import cl.clillo.lighting.Utils;
+import cl.clillo.lighting.utils.FileUtils;
 import cl.clillo.lighting.config.scenes.SceneConfig;
 import cl.clillo.lighting.config.scenes.Scene;
 import cl.clillo.lighting.config.scenes.SceneNode;
@@ -59,7 +59,7 @@ public class ShowsConfig {
     public List<Show> geShowList() {
         final List<Show> showList = Lists.newArrayList();
 
-        final List<File> shows = Utils.getDirectories(baseDir+prefix);
+        final List<File> shows = FileUtils.getDirectories(baseDir+prefix);
 
         for(File f: shows) {
             final Show show = buildShowFromScenes(f.getName());

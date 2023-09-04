@@ -1,7 +1,8 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.gui;
 
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxCircle;
+import cl.clillo.lighting.model.Show;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,8 +21,8 @@ public class EffectCircleEditPanel extends EffectEditPanel {
     private double mousePrevX=0;
     private double mousePrevY=0;
 
-    public EffectCircleEditPanel(final QLCEfxCircle qlcEfx) {
-        super(qlcEfx);
+    public EffectCircleEditPanel(final QLCEfxCircle qlcEfx, final Show show) {
+        super(qlcEfx, show);
         this.qlcEfx = qlcEfx;
     }
 
@@ -153,6 +154,6 @@ public class EffectCircleEditPanel extends EffectEditPanel {
         final QLCEfxCircle qlcEfx = this.qlcEfx;
         qlcEfx.updateParameters(centerX, centerY, width, height);
         this.setQlcEfx(qlcEfx);
-
+        this.repaint();
     }
 }

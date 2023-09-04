@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -30,6 +31,7 @@ public class Show {
     private List<Scene> scenesLists;
     private boolean firstTimeExecution;
     private QLCFunction function;
+    private List<Show> uniqueShow;
 
     public <T extends QLCFunction> T getFunction() {
         return (T)function;
@@ -60,7 +62,8 @@ public class Show {
     }
 
     public static class ShowBuilder {
-        private int id;
+        private static int idCount=1;
+
         private String name;
         private long nextExecutionTime;
         private boolean executing;
@@ -72,11 +75,6 @@ public class Show {
         private QLCFunction function;
 
         ShowBuilder() {
-        }
-
-        public ShowBuilder id(int id) {
-            this.id = id;
-            return this;
         }
 
         public ShowBuilder name(String name) {
@@ -117,8 +115,9 @@ public class Show {
         public Show build() {
             IQLCStepExecutor executor = null;
 
-            Show show = new Show(this.id, this.name, this.nextExecutionTime, this.executing, executor,
-                    this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists, this.firstTimeExecution, this.function);
+            Show show = new Show(idCount++, this.name, this.nextExecutionTime, this.executing, executor,
+                    this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists,
+                    this.firstTimeExecution, this.function, new ArrayList<>());
 
             if (function instanceof QLCSequence)
                 show.setStepExecutor(new QLCSequenceExecutor(show));

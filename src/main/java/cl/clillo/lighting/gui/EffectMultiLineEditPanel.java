@@ -1,8 +1,9 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.gui;
 
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxMultiLine;
 import cl.clillo.lighting.model.RealPoint;
+import cl.clillo.lighting.model.Show;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,8 +20,8 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
     private ScreenPoint sc2;
     private ScreenPoint sc3;
 
-    public EffectMultiLineEditPanel(final QLCEfxMultiLine qlcEfx) {
-        super(qlcEfx);
+    public EffectMultiLineEditPanel(final QLCEfxMultiLine qlcEfx, final Show show) {
+        super(qlcEfx, show);
         this.qlcEfx = qlcEfx;
     }
 

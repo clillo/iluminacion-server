@@ -69,7 +69,7 @@ public class QLCModel {
                     if ("Monitor".equals(eElement.getNodeName())) {
                         continue;
                     }
-                    System.out.println(eElement.getNodeName());
+                  //  System.out.println(eElement.getNodeName());
                     //  System.out.println(eElement.getNodeName());
 
                 }
@@ -119,7 +119,7 @@ public class QLCModel {
             }
         }
 
-        System.out.println(type+"\t"+(functionList.size()-nAnterior));
+     //   System.out.println(type+"\t"+(functionList.size()-nAnterior));
 
     }
 
@@ -229,8 +229,8 @@ public class QLCModel {
         }
         QLCFunction qlcFunction = builder.build();
 
-        if ("Efx".equalsIgnoreCase(type))
-            System.out.println(qlcFunction.toSmallString());
+    //    if ("Efx".equalsIgnoreCase(type))
+      //      System.out.println(qlcFunction.toSmallString());
 
         return qlcFunction;
     }

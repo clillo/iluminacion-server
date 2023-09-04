@@ -4,7 +4,7 @@ import cl.clillo.lighting.dmx.Dmx;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
 import cl.clillo.lighting.model.Show;
-import cl.clillo.lighting.utils.RoboticNotifiable;
+import cl.clillo.lighting.midi.RoboticNotifiable;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
@@ -38,13 +38,14 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
         final QLCExecutionNode node = efx.nextNode();
         if (node==null)
             return;
+
         node.send();
 
        // roboticNotifiable.notify(node.getId());
      //   roboticNotifiable.notify(node.getTimePos());
         roboticNotifiable.notify(node);
 
-     //   log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
+        log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
 
         show.setNextExecutionTime(System.currentTimeMillis() + 25);
     }

@@ -1,4 +1,4 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.gui;
 
 import cl.clillo.lighting.model.RealPoint;
 import lombok.Getter;
@@ -7,8 +7,8 @@ import lombok.Getter;
 public class ScreenPoint {
 
     private final double MAX = 65536;
-    private final int CANVAS_WIDTH = FixtureRoboticPanel.WIDTH1;
-    private final int CANVAS_HEIGHT = FixtureRoboticPanel.HEIGHT1;
+    private final int CANVAS_WIDTH = EFXMConfigureMainPanel.WIDTH1;
+    private final int CANVAS_HEIGHT = EFXMConfigureMainPanel.HEIGHT1;
 
     private final double realX;
     private final double realY;

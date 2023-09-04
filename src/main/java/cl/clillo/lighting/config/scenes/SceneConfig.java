@@ -1,6 +1,6 @@
 package cl.clillo.lighting.config.scenes;
 
-import cl.clillo.lighting.Utils;
+import cl.clillo.lighting.utils.FileUtils;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -26,7 +26,7 @@ public class SceneConfig {
     public List<Scene> getScenesLists(final String baseDir, final String showName) {
         final List<Scene> scenes = new ArrayList<>();
 
-        final List<File> sceneFiles = Utils.getFiles(baseDir, prefix);
+        final List<File> sceneFiles = FileUtils.getFiles(baseDir, prefix);
 
         for (File f: sceneFiles) {
             final String id = StringUtils.substringBetween(f.getName(), prefix, suffix);
@@ -40,7 +40,7 @@ public class SceneConfig {
     }
 
     public void write(final String baseDir, final Scene scene) {
-        writeFile(scene, Utils.getFile(baseDir+ scene.getShowName()+"/", prefix+scene.getId()+ suffix).getAbsolutePath());
+        writeFile(scene, FileUtils.getFile(baseDir+ scene.getShowName()+"/", prefix+scene.getId()+ suffix).getAbsolutePath());
     }
 
     private Scene readFile(final String id, final String fileName){

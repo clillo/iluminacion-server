@@ -16,14 +16,12 @@ import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-
 public class ColorChooserDemo extends JPanel implements ChangeListener {
 
     private static final long serialVersionUID = 2066941021336318125L;
 
-    private JColorChooser tcc;
-    private JLabel banner;
-    //	private DmxRgbw estacion = new DmxRgbw(100, "");
+    private final JColorChooser tcc;
+    private final JLabel banner;
     private int n = 1;
 
     public ColorChooserDemo() {
@@ -52,7 +50,6 @@ public class ColorChooserDemo extends JPanel implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         Color newColor = tcc.getColor();
         banner.setBackground(newColor);
-        //estacion.enviar(newColor);
         System.out.println("<color id=\""+n+"\"><r>"+newColor.getRed()+"</r><g>"+newColor.getGreen()+"</g><b>"+newColor.getBlue()+"</b></color>");
         n++;
     }
@@ -62,10 +59,6 @@ public class ColorChooserDemo extends JPanel implements ChangeListener {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         frame.addWindowListener(new WindowAdapter() {
-            @Override public void windowClosing(WindowEvent e) {
-               // Dmx.stop();
-
-            }
         });
 
         JComponent newContentPane = new ColorChooserDemo();
@@ -78,10 +71,6 @@ public class ColorChooserDemo extends JPanel implements ChangeListener {
     }
 
     public static void main(String[] args) {
-        javax.swing.SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI();
-            }
-        });
+        javax.swing.SwingUtilities.invokeLater(ColorChooserDemo::createAndShowGUI);
     }
 }

@@ -1,20 +1,18 @@
-package cl.clillo.lighting;
+package cl.clillo.lighting.utils;
 
 import ch.bildspur.artnet.ArtNet;
-import ch.bildspur.artnet.ArtNetClient;
 import ch.bildspur.artnet.ArtNetException;
 import ch.bildspur.artnet.ArtNetNode;
 import ch.bildspur.artnet.ArtNetNodeDiscovery;
 import ch.bildspur.artnet.events.ArtNetDiscoveryListener;
 import ch.bildspur.artnet.packets.ArtDmxPacket;
-import ch.bildspur.artnet.packets.ArtPollReplyPacket;
 
 import java.net.SocketException;
 import java.util.List;
 
-public class Discovery {
+public class ArtNetDiscovery {
 
-    ArtNetManager artnet;
+    private ArtNetManager artnet;
 
     void setup(){
         artnet = new ArtNetManager();
@@ -22,8 +20,7 @@ public class Discovery {
 
     }
 
-
-    class ArtNetManager implements ArtNetDiscoveryListener {
+    static class ArtNetManager implements ArtNetDiscoveryListener {
 
         ArtNetNode openDMX;
         int sequenceID=0;
@@ -94,11 +91,7 @@ public class Discovery {
                     }
                     Thread.sleep(30);
                 }
-            } catch (SocketException e) {
-                e.printStackTrace();
-            } catch (ArtNetException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
+            } catch (SocketException | InterruptedException | ArtNetException e) {
                 e.printStackTrace();
             }
         }
@@ -106,9 +99,9 @@ public class Discovery {
     }
 
 
-    public static void main(String[] args) throws ArtNetException, SocketException {
-        Discovery discovery = new Discovery();
-        discovery.setup();
+    public static void main(String[] args){
+        ArtNetDiscovery artNetDiscovery = new ArtNetDiscovery();
+        artNetDiscovery.setup();
 
     }
 }

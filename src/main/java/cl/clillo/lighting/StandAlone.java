@@ -2,11 +2,9 @@ package cl.clillo.lighting;
 
 import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.dmx.ArtNet;
-import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.midi.KeyData;
 import cl.clillo.lighting.midi.MidiEvent;
-import cl.clillo.lighting.midi.MidiHandler;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxCircle;
@@ -23,9 +21,6 @@ import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.RealPoint;
 import cl.clillo.lighting.model.Show;
-import cl.clillo.lighting.utils.EffectEditPanel;
-import cl.clillo.lighting.utils.FixtureRoboticPanel;
-import cl.clillo.lighting.utils.EFXMConfigureApp;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -115,38 +110,7 @@ public class StandAlone implements MidiEvent {
                 .function(qlcFunction)
                 .build();
 
-        final Show movingFade = Show.builder()
-                .name("bouncing-auto")
-                .executing(true)
-                .firstTimeExecution(true)
-                .stepList(List.of())
-                .function(QLCScene.build(1, List.of(
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(101), QLCFixture.ChannelType.DIMMER, 255),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(102), QLCFixture.ChannelType.DIMMER, 255),
-                    //    QLCPoint.buildRoboticPoint(qlcModel.getFixture(101), QLCFixture.ChannelType.STROBE, 255),
-                   //     QLCPoint.buildRoboticPoint(qlcModel.getFixture(102), QLCFixture.ChannelType.STROBE, 255),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(201), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(202), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(203), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(204), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(301), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(302), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(303), QLCFixture.ChannelType.DIMMER, 128),
-                        QLCPoint.buildRoboticPoint(qlcModel.getFixture(304), QLCFixture.ChannelType.DIMMER, 128))))
-                .build();
 
-        showList.add(movingPositions);
-        showList.add(movingFade);
-
-        final EFXMConfigureApp p = EFXMConfigureApp.start(qlcFunction);
-        final EffectEditPanel effectEditPanel = ((FixtureRoboticPanel)p.getContentPane()).getPnlMovingHead1();
-        ((QLCEfxExecutor)movingPositions.getStepExecutor()).setRoboticNotifiable(effectEditPanel);
-
-        final StandAlone standAlone = new StandAlone();
-        final MidiHandler midiHandler = new MidiHandler(standAlone);
-
-        Scheduler scheduler = new Scheduler(showList);
-        scheduler.start();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.midi;
 
 import cl.clillo.lighting.model.QLCExecutionNode;
 

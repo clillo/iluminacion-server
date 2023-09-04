@@ -1,4 +1,4 @@
-package cl.clillo.lighting;
+package cl.clillo.lighting.utils;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
@@ -7,7 +7,7 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
-public class Utils {
+public class FileUtils {
 
     public static List<File> getDirectories(final String baseName){
         final File file = new File(baseName);

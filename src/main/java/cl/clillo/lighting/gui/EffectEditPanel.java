@@ -1,7 +1,10 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.gui;
 
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
+import cl.clillo.lighting.midi.RoboticNotifiable;
+import cl.clillo.lighting.model.Show;
+import cl.clillo.lighting.model.ShowCollection;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,16 +33,19 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     protected final JTextField txtLineDestinyY;
     protected JPanel canvas;
     protected JButton btnSave;
+    protected JButton btnRun;
 
     private static final double MAX_X = 65536;
     private static final double MAX_Y = 65536;
 
     private ScreenPoint[] screenPoints;
     private final QLCEfx qlcEf;
+    private final Show show;
 
-    public EffectEditPanel(final QLCEfx qlcEfx) {
+    public EffectEditPanel(final QLCEfx qlcEfx, final Show show) {
         setLayout(null);
         this.qlcEf = qlcEfx;
+        this.show = show;
 
         canvas = new JPanel(){
             private static final long serialVersionUID = 9056031188937687827L;
@@ -66,7 +72,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
         };
 
         canvas.setBackground(Color.BLACK);
-        canvas.setBounds(10, 0, FixtureRoboticPanel.WIDTH1, FixtureRoboticPanel.HEIGHT1);
+        canvas.setBounds(10, 0, EFXMConfigureMainPanel.WIDTH1, EFXMConfigureMainPanel.HEIGHT1);
         canvas.addMouseMotionListener(this);
         canvas.addMouseListener(new MouseListener() {
             @Override
@@ -111,10 +117,17 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
         btnSave = new JButton();
         btnSave.setText("Save");
-        btnSave.setBounds(FixtureRoboticPanel.WIDTH1+ 20, 50, 120, 20);
+        btnSave.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 50, 120, 20);
 
         btnSave.addActionListener(e -> save());
         add(btnSave);
+
+        btnRun = new JButton();
+        btnRun.setText("Start/Stop");
+        btnRun.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 10, 120, 20);
+
+        btnRun.addActionListener(e -> run());
+        add(btnRun);
         setQlcEfx(qlcEfx);
     }
 
@@ -129,7 +142,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     protected JTextField buildTxt(final int posY){
         final JTextField txt = new JTextField();
-        txt.setBounds(FixtureRoboticPanel.WIDTH1+ 20, posY, 120, 20);
+        txt.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, posY, 120, 20);
         txt.addActionListener(this);
         add(txt);
         return txt;
@@ -158,9 +171,18 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
 
     protected void save(){
-        System.out.println("saving current efx");
+        System.out.println("saving efx: " +qlcEf.getName());
         qlcEf.writeToConfigFile();
     }
+
+    protected void run() {
+        ShowCollection.getInstance().troggleShow(show);
+    /*    if (show.isExecuting())
+            btnRun.setText("Stop");
+        else
+            btnRun.setText("Start");*/
+    }
+
 
     @Override
     public void notify(final QLCExecutionNode node) {
@@ -176,5 +198,8 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     @Override
     public void actionPerformed(final ActionEvent e) {
 
+    }
+    public QLCEfx getQlcEf() {
+        return qlcEf;
     }
 }

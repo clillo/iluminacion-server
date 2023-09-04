@@ -1,12 +1,12 @@
-package cl.clillo.lighting.utils;
+package cl.clillo.lighting.gui;
 
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxLine;
+import cl.clillo.lighting.model.Show;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
-import java.util.List;
 
 public class EffectLineEditPanel extends EffectEditPanel {
 
@@ -21,8 +21,8 @@ public class EffectLineEditPanel extends EffectEditPanel {
     private double mousePrevX=0;
     private double mousePrevY=0;
 
-    public EffectLineEditPanel(final QLCEfxLine qlcEfx) {
-        super(qlcEfx);
+    public EffectLineEditPanel(final QLCEfxLine qlcEfx, final Show show) {
+        super(qlcEfx, show);
         this.qlcEfx = qlcEfx;
     }
 
