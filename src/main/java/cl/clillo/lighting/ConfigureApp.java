@@ -5,6 +5,9 @@ import cl.clillo.lighting.dmx.ArtNet;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.gui.EFXMConfigureJFrame;
 import cl.clillo.lighting.model.QLCEfxCircle;
+import cl.clillo.lighting.model.QLCEfxLine;
+import cl.clillo.lighting.model.QLCEfxMultiLine;
+import cl.clillo.lighting.model.QLCEfxSpline;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCScene;
@@ -29,14 +32,8 @@ public class ConfigureApp {
 
         final QLCModel qlcModelOriginal = new QLCModel();
         final QLCFixtureBuilder qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
-
-        final QLCEfxCircle qlcEfxCircle1 = QLCEfxCircle.read(qlcModel, "QLCEfxCircle.circle 1.xml");
-        final QLCEfxCircle qlcEfxCircle2 = QLCEfxCircle.read(qlcModel, "QLCEfxCircle.circle 2.xml");
-
         final ShowCollection showCollection = ShowCollection.getInstance();
-
-        showCollection.addQLCEfx(qlcEfxCircle1);
-        showCollection.addQLCEfx(qlcEfxCircle2);
+        showCollection.addFromDirectory(qlcModel);
 
         showCollection.addQLCScene (QLCScene.build(1, List.of(
                         QLCPoint.buildRoboticPoint(qlcModel.getFixture(101), QLCFixture.ChannelType.DIMMER, 255),

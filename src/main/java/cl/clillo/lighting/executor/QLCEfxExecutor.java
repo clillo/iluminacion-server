@@ -45,7 +45,7 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
      //   roboticNotifiable.notify(node.getTimePos());
         roboticNotifiable.notify(node);
 
-        log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
+      //  log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
 
         show.setNextExecutionTime(System.currentTimeMillis() + 25);
     }

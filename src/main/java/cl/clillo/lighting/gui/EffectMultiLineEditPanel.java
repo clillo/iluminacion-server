@@ -111,6 +111,6 @@ public class EffectMultiLineEditPanel extends EffectEditPanel {
         final QLCEfxMultiLine qlcEfx = this.qlcEfx;
         qlcEfx.updateParameters(leftUp, rightDown);
         this.setQlcEfx(qlcEfx);
-
+        this.repaint();
     }
 }

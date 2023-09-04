@@ -106,6 +106,6 @@ public class EffectLineEditPanel extends EffectEditPanel {
         final QLCEfxLine qlcEfx = this.qlcEfx;
         qlcEfx.updateParameters(originX, originY, destinyX, destinyY);
         this.setQlcEfx(qlcEfx);
-
+        this.repaint();
     }
 }

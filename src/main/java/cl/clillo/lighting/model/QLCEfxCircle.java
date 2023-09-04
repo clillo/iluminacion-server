@@ -1,22 +1,17 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.config.QLCReader;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -72,22 +67,7 @@ public class QLCEfxCircle extends QLCEfx{
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
-        out.writeStartElement("fixtures");
-        for (QLCEfxFixtureData data: getFixtureList()) {
-            out.writeStartElement("fixture");
-
-            out.writeStartElement("id");
-            out.writeCharacters(String.valueOf(data.getFixture().getId()));
-            out.writeEndElement();
-            out.writeStartElement("offset");
-            out.writeCharacters(String.valueOf(data.getStartOffset()));
-            out.writeEndElement();
-            out.writeStartElement("reverse");
-            out.writeCharacters(String.valueOf(data.isReverse()));
-            out.writeEndElement();
-            out.writeEndElement();
-        }
-        out.writeEndElement();
+        writeElementsFixture(out, getFixtureList());
 
         out.writeStartElement("dimensions");
 
@@ -130,13 +110,5 @@ public class QLCEfxCircle extends QLCEfx{
                 getNodeDouble(dimensions, "height"));
 
         return qlcEfxCircle;
-    }
-
-    private static QLCEfxFixtureData buildFixtureData(final FixtureListBuilder fixtureListBuilder, final Node node){
-       return QLCEfxFixtureData.builder().fixture(fixtureListBuilder
-               .getFixture(getNodeInt(node, "id")))
-               .startOffset(getNodeDouble(node, "offset"))
-               .reverse(getNodeBoolean(node, "reverse"))
-               .build();
     }
 }

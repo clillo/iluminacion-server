@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import lombok.Getter;
@@ -19,6 +20,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -72,6 +77,26 @@ public class QLCFunction {
         out.writeEndElement();
     }
 
+    protected void writeElementsFixture(final XMLStreamWriter out, final List<QLCEfxFixtureData> fixtureDataList) throws XMLStreamException {
+        out.writeStartElement("fixtures");
+        for (QLCEfxFixtureData data: fixtureDataList) {
+            out.writeStartElement("fixture");
+
+            out.writeStartElement("id");
+            out.writeCharacters(String.valueOf(data.getFixture().getId()));
+            out.writeEndElement();
+            out.writeStartElement("offset");
+            out.writeCharacters(String.valueOf(data.getStartOffset()));
+            out.writeEndElement();
+            out.writeStartElement("reverse");
+            out.writeCharacters(String.valueOf(data.isReverse()));
+            out.writeEndElement();
+            out.writeEndElement();
+        }
+        out.writeEndElement();
+
+    }
+
     protected static Document getDocument(final String file) throws ParserConfigurationException, IOException, SAXException {
         File inputFile = new File(QLCReader.repoBase + file);
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
@@ -105,6 +130,21 @@ public class QLCFunction {
         }
     }
 
+    protected static String getPathString(final Document doc, final String path){
+        XPath xPath = XPathFactory.newInstance().newXPath();
+        Node node = null;
+        try {
+            node = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
+        } catch (XPathExpressionException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (node != null) {
+            return node.getTextContent();
+        }
+
+        return null;
+    }
 
     protected static String getNodeString(final Node node, final String name){
         NodeList list = node.getChildNodes();
@@ -125,9 +165,24 @@ public class QLCFunction {
         return (value==null?-1: Integer.parseInt(value));
     }
 
+    protected static int getPathInt(final Document doc, final String path){
+        String value = getPathString(doc, path);
+        return (value==null?-1: Integer.parseInt(value));
+    }
+
     protected static double getNodeDouble(final Node node, final String name){
         String value = getNodeString(node, name);
         return (value==null?-1: Double.parseDouble(value));
+    }
+
+    protected static double getPathDouble(final Document doc, final String path){
+        String value = getPathString(doc, path);
+        return (value==null?-1: Double.parseDouble(value));
+    }
+
+    protected static boolean getPathBoolean(final Document doc, final String path){
+        String value = getPathString(doc, path);
+        return ("true".equalsIgnoreCase(value));
     }
 
     protected static boolean getNodeBoolean(final Node node, final String name){
@@ -140,6 +195,14 @@ public class QLCFunction {
 
         return new QLCFunction(getNodeInt(common, "id"), getNodeString(common, "type"),
                 getNodeString(common ,"name"), null);
+    }
+
+    protected static QLCEfxFixtureData buildFixtureData(final FixtureListBuilder fixtureListBuilder, final Node node){
+        return QLCEfxFixtureData.builder().fixture(fixtureListBuilder
+                        .getFixture(getNodeInt(node, "id")))
+                .startOffset(getNodeDouble(node, "offset"))
+                .reverse(getNodeBoolean(node, "reverse"))
+                .build();
     }
 
     public static class QLCFunctionBuilder {

@@ -6,20 +6,26 @@ import org.apache.commons.lang3.StringUtils;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class FileUtils {
 
     public static List<File> getDirectories(final String baseName){
         final File file = new File(baseName);
 
-        final File[] listFiles = Arrays.stream(file.listFiles()).filter(f -> f.isDirectory()).toArray(File[]::new);
+        final File[] listFiles = Arrays.stream(Objects.requireNonNull(file.listFiles())).filter(File::isDirectory).toArray(File[]::new);
         return Lists.newArrayList(listFiles);
     }
 
     public static List<File> getFiles(final String baseName, final String prefix){
         final File file = new File(baseName);
 
-        final File[] listFiles = Arrays.stream(file.listFiles()).filter(f -> StringUtils.isNoneEmpty(StringUtils.substringBetween(f.getName(), prefix, ".yml"))).toArray(File[]::new);
+        final File[] listFiles = Arrays.stream(
+                Objects
+                        .requireNonNull(file.listFiles()))
+                .filter(f ->
+                        StringUtils.isNoneEmpty(
+                                StringUtils.substringBetween(f.getName(), prefix, ".xml"))).toArray(File[]::new);
         return Lists.newArrayList(listFiles);
     }
 

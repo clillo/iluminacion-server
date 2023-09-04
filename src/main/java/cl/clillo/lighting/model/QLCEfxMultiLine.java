@@ -1,9 +1,20 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.utils.MultiLineScrambler;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -21,11 +32,15 @@ public class QLCEfxMultiLine extends QLCEfx{
     private int nodePos = 0;
     private int nodeDelta = 1;
 
-    public QLCEfxMultiLine(final int id, final String type, final String name, final String path,
-                           final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
-                           final QLCScene boundScene, List<QLCEfxFixtureData> fixtureList) {
-        super(id, type, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
+    private final int loops;
+    private final MultiLineScrambler.Type scramblerType;
 
+    public QLCEfxMultiLine(final int id, final String scramblerType, final String name, final String path,
+                           final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
+                           final QLCScene boundScene, List<QLCEfxFixtureData> fixtureList, int loops, MultiLineScrambler.Type type1) {
+        super(id, scramblerType, name, path, direction, runOrder,qlcStepList, boundScene,  fixtureList);
+        this.loops = loops;
+        this.scramblerType = type1;
     }
 
     public void updateParameters(final List<RealPoint> realPoints){
@@ -33,44 +48,15 @@ public class QLCEfxMultiLine extends QLCEfx{
         setNodes(buildNodes());
     }
 
-
-    public void updateParameters(final RealPoint leftUp, RealPoint rightDown){
+    public void updateParameters(final RealPoint leftUp, final RealPoint rightDown){
         this.leftUp = leftUp;
         this.rightDown = rightDown;
         this.realPoints = new ArrayList<>();
 
-        for (int i=0; i<3; i++){
-            realPoints.add(randomA());
-            realPoints.add(randomB());
-            realPoints.add(randomC());
-            realPoints.add(randomD());
-        }
+        final MultiLineScrambler multiLineScrambler = new MultiLineScrambler(leftUp, rightDown);
+        this.realPoints = multiLineScrambler.buildRealPoints(loops, scramblerType);
 
         setNodes(buildNodes());
-    }
-
-    private RealPoint randomA(){
-        return RealPoint.builder().x(leftUp.getX()).y(randomY()).build();
-    }
-
-    private RealPoint randomB(){
-        return RealPoint.builder().x(randomX()).y(leftUp.getY()).build();
-    }
-
-    private RealPoint randomC(){
-        return RealPoint.builder().x(rightDown.getX()).y(randomY()).build();
-    }
-
-    private RealPoint randomD(){
-        return RealPoint.builder().x(randomX()).y(rightDown.getY()).build();
-    }
-
-    private double randomY(){
-        return leftUp.getY() + (rightDown.getY() - leftUp.getY())*Math.random();
-    }
-
-    private double randomX(){
-        return leftUp.getX() + (rightDown.getX() - leftUp.getX())*Math.random();
     }
 
     protected List<QLCEfxPosition> buildPositions(){
@@ -114,4 +100,63 @@ public class QLCEfxMultiLine extends QLCEfx{
         }
         return nodes.get(nodePos);
     }
+
+    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
+        super.writeElements(out);
+        writeElementsFixture(out, getFixtureList());
+
+        out.writeStartElement("dimensions");
+
+        out.writeStartElement("leftUp");
+            out.writeStartElement("x");
+            out.writeCharacters(String.valueOf(leftUp.getX()));
+            out.writeEndElement();
+            out.writeStartElement("y");
+            out.writeCharacters(String.valueOf(leftUp.getY()));
+            out.writeEndElement();
+        out.writeEndElement();
+        out.writeStartElement("rightDown");
+            out.writeStartElement("x");
+            out.writeCharacters(String.valueOf(rightDown.getX()));
+            out.writeEndElement();
+            out.writeStartElement("y");
+            out.writeCharacters(String.valueOf(rightDown.getY()));
+            out.writeEndElement();
+        out.writeEndElement();
+
+        out.writeEndElement();
+
+    }
+
+    public static QLCEfxMultiLine read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
+        final Document doc = getDocument(file);
+        final QLCFunction function = QLCFunction.read(doc);
+
+        final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(function.getId(), function.getType(),
+                function.getName(),function.getPath(),null,null,null,null,
+                new ArrayList<>(), getPathInt(doc, "/doc/config/loops"),
+                MultiLineScrambler.Type.of( getPathString(doc, "/doc/config/type")));
+
+        Node common = doc.getElementsByTagName("fixtures").item(0);
+        NodeList list = common.getChildNodes();
+        for (int temp = 0; temp < list.getLength(); temp++) {
+            Node node = list.item(temp);
+            if (node.getNodeType() == Node.ELEMENT_NODE) {
+                qlcEfxMultiLine.getFixtureList().add(buildFixtureData(fixtureListBuilder, node));
+            }
+        }
+
+        qlcEfxMultiLine.updateParameters(
+                RealPoint.builder()
+                        .x(getPathDouble(doc, "/doc/dimensions/leftUp/x"))
+                        .y(getPathDouble(doc, "/doc/dimensions/leftUp/y"))
+                        .build(),
+                RealPoint.builder()
+                        .x(getPathDouble(doc, "/doc/dimensions/rightDown/x"))
+                        .y(getPathDouble(doc, "/doc/dimensions/rightDown/y"))
+                        .build());
+
+        return qlcEfxMultiLine;
+    }
+
 }

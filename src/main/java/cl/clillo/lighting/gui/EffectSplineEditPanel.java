@@ -129,17 +129,7 @@ public class EffectSplineEditPanel extends EffectEditPanel {
 
         qlcEfx.updateParameters(updatedPoints);
         this.setQlcEfx(qlcEfx);
-
+        this.repaint();
     }
 
-    @Override
-    protected void save() {
-        System.out.println("qlcEfxSpline.updateParameters(List.of(");
-
-        for (ScreenPoint controlPoint: controlPoints)
-            System.out.println("\tRealPoint.builder().x("+controlPoint.getRealX()+").y("+controlPoint.getRealY()+").build(),");
-
-        System.out.println("\t\t));");
-
-    }
 }
