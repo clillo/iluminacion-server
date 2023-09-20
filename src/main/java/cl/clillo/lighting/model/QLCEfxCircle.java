@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -88,8 +89,8 @@ public class QLCEfxCircle extends QLCEfx{
     }
 
     public static QLCEfxCircle read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = getDocument(file);
-        final QLCFunction function = QLCFunction.read(doc);
+        final Document doc = XMLParser.getDocument(file);
+        final QLCElement function = QLCElement.read(doc);
 
         final QLCEfxCircle qlcEfxCircle = new QLCEfxCircle(function.getId(), function.getType(), function.getName(),function.getPath(),null,null,null,null, new ArrayList<>()); // 13 -circle
 
@@ -104,10 +105,10 @@ public class QLCEfxCircle extends QLCEfx{
 
         Node dimensions = doc.getElementsByTagName("dimensions").item(0);
 
-        qlcEfxCircle.updateParameters(getNodeDouble(dimensions, "centerX"),
-                getNodeDouble(dimensions, "centerY"),
-                getNodeDouble(dimensions, "width"),
-                getNodeDouble(dimensions, "height"));
+        qlcEfxCircle.updateParameters(XMLParser.getNodeDouble(dimensions, "centerX"),
+                XMLParser.getNodeDouble(dimensions, "centerY"),
+                XMLParser.getNodeDouble(dimensions, "width"),
+                XMLParser.getNodeDouble(dimensions, "height"));
 
         return qlcEfxCircle;
     }

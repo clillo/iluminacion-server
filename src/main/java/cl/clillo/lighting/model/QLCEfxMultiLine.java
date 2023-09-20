@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.repository.XMLParser;
 import cl.clillo.lighting.utils.MultiLineScrambler;
 import lombok.Getter;
 import lombok.Setter;
@@ -129,13 +130,13 @@ public class QLCEfxMultiLine extends QLCEfx{
     }
 
     public static QLCEfxMultiLine read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = getDocument(file);
-        final QLCFunction function = QLCFunction.read(doc);
+        final Document doc = XMLParser.getDocument(file);
+        final QLCElement function = QLCElement.read(doc);
 
         final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(function.getId(), function.getType(),
                 function.getName(),function.getPath(),null,null,null,null,
-                new ArrayList<>(), getPathInt(doc, "/doc/config/loops"),
-                MultiLineScrambler.Type.of( getPathString(doc, "/doc/config/type")));
+                new ArrayList<>(), XMLParser.getPathInt(doc, "/doc/config/loops"),
+                MultiLineScrambler.Type.of( XMLParser.getPathString(doc, "/doc/config/type")));
 
         Node common = doc.getElementsByTagName("fixtures").item(0);
         NodeList list = common.getChildNodes();
@@ -148,12 +149,12 @@ public class QLCEfxMultiLine extends QLCEfx{
 
         qlcEfxMultiLine.updateParameters(
                 RealPoint.builder()
-                        .x(getPathDouble(doc, "/doc/dimensions/leftUp/x"))
-                        .y(getPathDouble(doc, "/doc/dimensions/leftUp/y"))
+                        .x(XMLParser.getPathDouble(doc, "/doc/dimensions/leftUp/x"))
+                        .y(XMLParser.getPathDouble(doc, "/doc/dimensions/leftUp/y"))
                         .build(),
                 RealPoint.builder()
-                        .x(getPathDouble(doc, "/doc/dimensions/rightDown/x"))
-                        .y(getPathDouble(doc, "/doc/dimensions/rightDown/y"))
+                        .x(XMLParser.getPathDouble(doc, "/doc/dimensions/rightDown/x"))
+                        .y(XMLParser.getPathDouble(doc, "/doc/dimensions/rightDown/y"))
                         .build());
 
         return qlcEfxMultiLine;

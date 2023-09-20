@@ -43,7 +43,7 @@ public class ShowCollection {
         showQLCEfxList.add(show);
     }
 
-    public void addQLCScene(final QLCScene qlcScene){
+    private void addQLCScene(final QLCScene qlcScene){
         showList.add(Show.builder()
                 .name(qlcScene.getName())
                 .executing(false)
@@ -68,7 +68,7 @@ public class ShowCollection {
 
     public void addFromDirectory(final QLCFixtureBuilder qlcModel){
         File file = new File("src/main/resources/qlc");
-        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLCEfx");
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
 
         try {
             for (File f: files){
@@ -80,6 +80,10 @@ public class ShowCollection {
                     addQLCEfx(QLCEfxMultiLine.read(qlcModel, f.getName()));
                 if (f.getName().startsWith("QLCEfxLine"))
                     addQLCEfx(QLCEfxLine.read(qlcModel, f.getName()));
+                if (f.getName().startsWith("QLCScene"))
+                    addQLCScene(QLCScene.read(qlcModel, f.getName()));
+
+
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

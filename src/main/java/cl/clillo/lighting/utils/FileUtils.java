@@ -17,7 +17,7 @@ public class FileUtils {
         return Lists.newArrayList(listFiles);
     }
 
-    public static List<File> getFiles(final String baseName, final String prefix){
+    public static List<File> getFiles(final String baseName, final String prefix, final String suffix){
         final File file = new File(baseName);
 
         final File[] listFiles = Arrays.stream(
@@ -25,7 +25,7 @@ public class FileUtils {
                         .requireNonNull(file.listFiles()))
                 .filter(f ->
                         StringUtils.isNoneEmpty(
-                                StringUtils.substringBetween(f.getName(), prefix, ".xml"))).toArray(File[]::new);
+                                StringUtils.substringBetween(f.getName(), prefix, suffix))).toArray(File[]::new);
         return Lists.newArrayList(listFiles);
     }
 

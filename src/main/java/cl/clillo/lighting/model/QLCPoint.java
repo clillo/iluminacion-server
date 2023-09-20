@@ -13,6 +13,7 @@ public class QLCPoint {
     private int channel;
     private int dmxChannel;
     private int data;
+    private final QLCFixture.ChannelType channelType;
 
     public String getOperationalId(){
         return fixture.getId()+"."+channel;
@@ -25,7 +26,7 @@ public class QLCPoint {
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data){
         int channel = fixture.getChannel(channelType);
         int dmxChannel = fixture.getDMXChannel(channelType);
-        return new QLCPoint(fixture, channel, dmxChannel, data);
+        return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
     }
 
 }

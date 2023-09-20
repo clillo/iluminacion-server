@@ -3,29 +3,15 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
+import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.apache.commons.lang3.NotImplementedException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathConstants;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -35,20 +21,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
 @ToString
-public class QLCFunction {
-
-    private int id;
-    private String type;
-    private String name;
-    private String path;
+public class QLCFunction extends QLCElement{
 
     QLCFunction(int id, String type, String name, String path) {
-        this.id = id;
-        this.type = type;
-        this.name = name;
-        this.path = path;
+        super(id, type, name, path);
     }
 
     public String toSmallString(){
@@ -97,13 +74,6 @@ public class QLCFunction {
 
     }
 
-    protected static Document getDocument(final String file) throws ParserConfigurationException, IOException, SAXException {
-        File inputFile = new File(QLCReader.repoBase + file);
-        DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-        DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-        return docBuilder.parse(inputFile);
-    }
-
     public void writeToConfigFile(){
         OutputStream outputStream;
         try {
@@ -130,78 +100,11 @@ public class QLCFunction {
         }
     }
 
-    protected static String getPathString(final Document doc, final String path){
-        XPath xPath = XPathFactory.newInstance().newXPath();
-        Node node = null;
-        try {
-            node = (Node) xPath.compile(path).evaluate(doc, XPathConstants.NODE);
-        } catch (XPathExpressionException e) {
-            throw new RuntimeException(e);
-        }
-
-        if (node != null) {
-            return node.getTextContent();
-        }
-
-        return null;
-    }
-
-    protected static String getNodeString(final Node node, final String name){
-        NodeList list = node.getChildNodes();
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node data = list.item(temp);
-            if (data.getNodeType() == Node.ELEMENT_NODE) {
-                Element eElement = (Element) data;
-                if(eElement.getNodeName().equals(name))
-                    return eElement.getTextContent();
-
-            }
-        }
-        return null;
-    }
-
-    protected static int getNodeInt(final Node node, final String name){
-        String value = getNodeString(node, name);
-        return (value==null?-1: Integer.parseInt(value));
-    }
-
-    protected static int getPathInt(final Document doc, final String path){
-        String value = getPathString(doc, path);
-        return (value==null?-1: Integer.parseInt(value));
-    }
-
-    protected static double getNodeDouble(final Node node, final String name){
-        String value = getNodeString(node, name);
-        return (value==null?-1: Double.parseDouble(value));
-    }
-
-    protected static double getPathDouble(final Document doc, final String path){
-        String value = getPathString(doc, path);
-        return (value==null?-1: Double.parseDouble(value));
-    }
-
-    protected static boolean getPathBoolean(final Document doc, final String path){
-        String value = getPathString(doc, path);
-        return ("true".equalsIgnoreCase(value));
-    }
-
-    protected static boolean getNodeBoolean(final Node node, final String name){
-        String value = getNodeString(node, name);
-        return ("true".equalsIgnoreCase(value));
-    }
-
-    public static QLCFunction read(final Document doc){
-        Node common = doc.getElementsByTagName("common").item(0);
-
-        return new QLCFunction(getNodeInt(common, "id"), getNodeString(common, "type"),
-                getNodeString(common ,"name"), null);
-    }
-
     protected static QLCEfxFixtureData buildFixtureData(final FixtureListBuilder fixtureListBuilder, final Node node){
         return QLCEfxFixtureData.builder().fixture(fixtureListBuilder
-                        .getFixture(getNodeInt(node, "id")))
-                .startOffset(getNodeDouble(node, "offset"))
-                .reverse(getNodeBoolean(node, "reverse"))
+                        .getFixture(XMLParser.getNodeInt(node, "id")))
+                .startOffset(XMLParser.getNodeDouble(node, "offset"))
+                .reverse(XMLParser.getNodeBoolean(node, "reverse"))
                 .build();
     }
 

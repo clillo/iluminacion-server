@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -102,8 +103,8 @@ public class QLCEfxLine extends QLCEfx{
     }
 
     public static QLCEfxLine read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = getDocument(file);
-        final QLCFunction function = QLCFunction.read(doc);
+        final Document doc = XMLParser.getDocument(file);
+        final QLCElement function = QLCElement.read(doc);
 
         final QLCEfxLine qlcEfxMultiLine = new QLCEfxLine(function.getId(), function.getType(), function.getName(),function.getPath(),null,null,null,null, new ArrayList<>());
 
@@ -117,10 +118,10 @@ public class QLCEfxLine extends QLCEfx{
         }
 
         qlcEfxMultiLine.updateParameters(
-                getPathDouble(doc, "/doc/points/origin/x"),
-                getPathDouble(doc, "/doc/points/origin/y"),
-                getPathDouble(doc, "/doc/points/destiny/x"),
-                getPathDouble(doc, "/doc/points/destiny/y"));
+                XMLParser.getPathDouble(doc, "/doc/points/origin/x"),
+                XMLParser.getPathDouble(doc, "/doc/points/origin/y"),
+                XMLParser.getPathDouble(doc, "/doc/points/destiny/x"),
+                XMLParser.getPathDouble(doc, "/doc/points/destiny/y"));
 
         return qlcEfxMultiLine;
     }

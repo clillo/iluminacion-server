@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -105,8 +106,8 @@ public class QLCEfxSpline extends QLCEfx{
     }
 
     public static QLCEfxSpline read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = getDocument(file);
-        final QLCFunction function = QLCFunction.read(doc);
+        final Document doc = XMLParser.getDocument(file);
+        final QLCElement function = QLCElement.read(doc);
 
         final QLCEfxSpline efxSpline = new QLCEfxSpline(function.getId(), function.getType(), function.getName(),function.getPath(),null,null,null,null, new ArrayList<>());
 
@@ -128,8 +129,8 @@ public class QLCEfxSpline extends QLCEfx{
             Node node = listRealPoint.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 realPoints.add( RealPoint.builder()
-                        .x(getNodeDouble(node, "x"))
-                        .y(getNodeDouble(node, "y")).build()
+                        .x(XMLParser.getNodeDouble(node, "x"))
+                        .y(XMLParser.getNodeDouble(node, "y")).build()
                 );
             }
         }

@@ -26,7 +26,7 @@ public class SceneConfig {
     public List<Scene> getScenesLists(final String baseDir, final String showName) {
         final List<Scene> scenes = new ArrayList<>();
 
-        final List<File> sceneFiles = FileUtils.getFiles(baseDir, prefix);
+        final List<File> sceneFiles = FileUtils.getFiles(baseDir, prefix, suffix);
 
         for (File f: sceneFiles) {
             final String id = StringUtils.substringBetween(f.getName(), prefix, suffix);
