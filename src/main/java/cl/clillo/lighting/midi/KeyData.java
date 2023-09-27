@@ -118,6 +118,7 @@ public class KeyData {
 
         return keyData;
     }
+
     private static ShortMessage buildShortMessage(final int channel, final StateLight stateLight){
         final ShortMessage myMsg = new ShortMessage();
         try {
@@ -159,6 +160,17 @@ public class KeyData {
         return "other";
     }
 
+    public int getValue(){
+
+        if (midiInputType == MidiInputType.SIDE_BUTTON)
+            return posY;
+
+        if (midiInputType == MidiInputType.SLIDER_BUTTON)
+            return  posX;
+
+        return -1;
+    }
+
     public ShortMessage getMessage(final StateLight stateLight){
         switch (stateLight){
             case OFF:
@@ -177,5 +189,17 @@ public class KeyData {
                 return shortMessageYellowBlink;
         }
         return null;
+    }
+
+    public MidiInputType getMidiInputType() {
+        return midiInputType;
+    }
+
+    public int getMatrixX() {
+        return matrixX;
+    }
+
+    public int getMatrixY() {
+        return matrixY;
     }
 }

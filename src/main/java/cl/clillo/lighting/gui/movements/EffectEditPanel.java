@@ -1,13 +1,18 @@
-package cl.clillo.lighting.gui;
+package cl.clillo.lighting.gui.movements;
 
+import cl.clillo.lighting.gui.ScreenPoint;
+import cl.clillo.lighting.midi.RoboticNotifiable;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
-import cl.clillo.lighting.midi.RoboticNotifiable;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 
-import javax.swing.*;
-import java.awt.*;
+import javax.swing.JButton;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -176,7 +181,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
 
     protected void run() {
-        ShowCollection.getInstance().troggleShow(show);
+        ShowCollection.getInstance().toggleShow(show);
     /*    if (show.isExecuting())
             btnRun.setText("Stop");
         else

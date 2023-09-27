@@ -1,4 +1,4 @@
-package cl.clillo.lighting.gui;
+package cl.clillo.lighting.gui.movements;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;

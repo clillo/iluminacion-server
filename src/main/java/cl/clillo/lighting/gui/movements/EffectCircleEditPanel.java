@@ -1,5 +1,6 @@
-package cl.clillo.lighting.gui;
+package cl.clillo.lighting.gui.movements;
 
+import cl.clillo.lighting.gui.ScreenPoint;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxCircle;
 import cl.clillo.lighting.model.Show;
@@ -15,9 +16,7 @@ public class EffectCircleEditPanel extends EffectEditPanel {
     private final QLCEfxCircle qlcEfx;
 
     private ScreenPoint sc1;
-    private ScreenPoint sc2;
     private ScreenPoint sc3;
-    private ScreenPoint sc4;
     private double mousePrevX=0;
     private double mousePrevY=0;
 

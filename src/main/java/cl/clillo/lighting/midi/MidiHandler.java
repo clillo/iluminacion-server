@@ -1,6 +1,14 @@
 package cl.clillo.lighting.midi;
 
-import javax.sound.midi.*;
+import org.springframework.boot.autoconfigure.session.SessionRepositoryUnavailableException;
+
+import javax.sound.midi.MidiDevice;
+import javax.sound.midi.MidiMessage;
+import javax.sound.midi.MidiSystem;
+import javax.sound.midi.MidiUnavailableException;
+import javax.sound.midi.Receiver;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Transmitter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,7 +18,31 @@ public class MidiHandler {
     private final Map<String, KeyData> keyDataMapByPos;
     private MidiDevice mainMidiDevice;
 
-    public MidiHandler(MidiEvent midiEvent) {
+    private static final class InstanceHolder {
+        private static MidiHandler instance;
+
+        public static MidiHandler getInstance(final MidiEvent midiEvent) {
+            if (instance==null)
+                instance = new MidiHandler(midiEvent);
+            return instance;
+        }
+
+        public static MidiHandler getInstance() {
+            if (instance==null)
+                throw new RuntimeException("Not implemented");
+            return instance;
+        }
+    }
+
+    public static MidiHandler getInstance(final MidiEvent midiEvent) {
+        return InstanceHolder.getInstance(midiEvent);
+    }
+
+    public static MidiHandler getInstance() {
+        return InstanceHolder.getInstance();
+    }
+
+    private MidiHandler(final MidiEvent midiEvent) {
         keyDataMapByPos = new HashMap<>();
         Map<String, KeyData> keyDataMapByChannel = new HashMap<>();
 
@@ -82,15 +114,47 @@ public class MidiHandler {
             for (int i=0; i<KeyData.MAX_X; i++)
                 for (int j=0; j<KeyData.MAX_X; j++)
                     this.send(i,j, KeyData.StateLight.OFF);
-        } catch (MidiUnavailableException | InvalidMidiDataException e) {
+        } catch (MidiUnavailableException e) {
             throw new RuntimeException(e);
         }
 
     }
 
-    public void send(final int matrixX, final int matrixY, final KeyData.StateLight stateLight) throws MidiUnavailableException, InvalidMidiDataException {
-        final Receiver receiver = MidiSystem.getReceiver();
+    public ShortMessage getShortMessage(final int matrixX, final int matrixY, final KeyData.StateLight stateLight){
+        return keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
+    }
+
+    public void send(final int matrixX, final int matrixY, final KeyData.StateLight stateLight) {
+        final Receiver receiver;
+        try {
+            receiver = MidiSystem.getReceiver();
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
+        }
         final ShortMessage myMsg = keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
+        receiver.send(myMsg, -1);
+
+    }
+
+    public void send(final ShortMessage myMsg) {
+        final Receiver receiver;
+        try {
+            receiver = MidiSystem.getReceiver();
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        receiver.send(myMsg, -1);
+
+    }
+
+    public void sendSide(final int posY, final KeyData.StateLight stateLight) {
+        final Receiver receiver;
+        try {
+            receiver = MidiSystem.getReceiver();
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        final ShortMessage myMsg = keyDataMapByPos.get("Y-"+posY).getMessage(stateLight);
         receiver.send(myMsg, -1);
 
     }

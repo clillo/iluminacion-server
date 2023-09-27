@@ -1,5 +1,7 @@
-package cl.clillo.lighting.gui;
+package cl.clillo.lighting.gui.movements;
 
+import cl.clillo.lighting.gui.ScreenPoint;
+import cl.clillo.lighting.gui.movements.EffectEditPanel;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCEfxMultiLine;
 import cl.clillo.lighting.model.RealPoint;

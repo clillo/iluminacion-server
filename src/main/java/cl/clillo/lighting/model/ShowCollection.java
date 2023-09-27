@@ -57,7 +57,7 @@ public class ShowCollection {
         return showList;
     }
 
-    public void troggleShow(final Show show){
+    public void toggleShow(final Show show){
         boolean isExecuting = show.isExecuting();
 
         for (Show show1: show.getUniqueShow())

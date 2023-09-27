@@ -2,7 +2,7 @@ package cl.clillo.lighting;
 
 import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.dmx.ArtNet;
-import cl.clillo.lighting.gui.EFXMConfigureJFrame;
+import cl.clillo.lighting.gui.movements.EFXMConfigureJFrame;
 import cl.clillo.lighting.model.QLCModel;
 import cl.clillo.lighting.model.ShowCollection;
 import org.xml.sax.SAXException;

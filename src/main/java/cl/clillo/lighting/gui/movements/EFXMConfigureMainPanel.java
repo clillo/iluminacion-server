@@ -1,6 +1,11 @@
-package cl.clillo.lighting.gui;
+package cl.clillo.lighting.gui.movements;
 
 import cl.clillo.lighting.executor.QLCEfxExecutor;
+import cl.clillo.lighting.gui.movements.EffectCircleEditPanel;
+import cl.clillo.lighting.gui.movements.EffectEditPanel;
+import cl.clillo.lighting.gui.movements.EffectLineEditPanel;
+import cl.clillo.lighting.gui.movements.EffectMultiLineEditPanel;
+import cl.clillo.lighting.gui.movements.EffectSplineEditPanel;
 import cl.clillo.lighting.model.QLCEfxCircle;
 import cl.clillo.lighting.model.QLCEfxLine;
 import cl.clillo.lighting.model.QLCEfxMultiLine;

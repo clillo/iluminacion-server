@@ -1,5 +1,6 @@
 package cl.clillo.lighting.gui;
 
+import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.model.RealPoint;
 import lombok.Getter;
 
