@@ -3,11 +3,9 @@ package cl.clillo.lighting.gui.controller;
 import cl.clillo.lighting.midi.KeyData;
 import cl.clillo.lighting.midi.MidiEvent;
 import cl.clillo.lighting.midi.MidiHandler;
-import cl.clillo.lighting.model.QLCEfx;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,24 +40,12 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
 
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
-        selectPanel(0);
+        selectPanel(7);
 
     }
 
     private ControllerEditPanel buildPanel(final int index) {
-
-        return new ControllerEditPanel(midiHandler, index){
-
-            @Override
-            protected void drawCanvas(Graphics g) {
-
-            }
-
-            @Override
-            protected void setQlcEfx(QLCEfx qlcEfx) {
-
-            }
-        };
+        return new ControllerEditPanel(midiHandler, index){ };
     }
 
     @Override

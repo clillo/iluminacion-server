@@ -2,15 +2,14 @@ package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.midi.MidiHandler;
-import cl.clillo.lighting.model.QLCEfx;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class ControllerEditPanel extends JPanel implements ActionListener {
@@ -63,21 +62,25 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
 
         add(btnRun);
 
-        buttonMapByPos = MidiButtonFunctionRepository.getInstance().getButtonMap();
+        final List<QLCButtonGroup> buttonGroups = MidiButtonFunctionRepository.getInstance().getButtonGroupMap(index);
+
+        buttonMapByPos = new HashMap<>();
+
+        for (QLCButtonGroup group: buttonGroups)
+            for (QLCButton button: group.getButtonList())
+                buttonMapByPos.put(button.getMapKey(), button);
+
         buttonMapGroupId = new HashMap<>();
 
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
                 if (!buttonMapByPos.containsKey(matrixX + "-" + matrixY)) {
-                    final QLCButton button = new QLCButton(matrixX, matrixY, 160);
+                    final QLCButton button = new QLCButton(matrixX, matrixY, null);
                     buttonMapByPos.put(matrixX + "-" + matrixY, button);
                 }
 
                 add(buttonMapByPos.get(matrixX + "-" + matrixY).getButton());
             }
-
-
-
     }
 
     public void activePanel(){
@@ -89,7 +92,6 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
     }
 
     public void toggleButton(int x, int y){
-
         buttonMapByPos.get(x + "-" + y).toggle();
     }
 
@@ -98,8 +100,6 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
         return "Panel "+index;
     }
 
-    protected abstract void drawCanvas(final Graphics g);
-
     protected JTextField buildTxt(final int posY){
         final JTextField txt = new JTextField();
         txt.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, posY, 120, 20);
@@ -107,8 +107,6 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
         add(txt);
         return txt;
     }
-
-    protected abstract void setQlcEfx(QLCEfx qlcEfx);
 
     @Override
     public void actionPerformed(final ActionEvent e) {

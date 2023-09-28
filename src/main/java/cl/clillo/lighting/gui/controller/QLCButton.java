@@ -14,7 +14,7 @@ import java.util.List;
 public class QLCButton implements ItemListener {
 
     private final JToggleButton button;
-    private final String text;
+    private String text;
     private final ShortMessage onMessage;
     private final ShortMessage offMessage;
     private final ShortMessage nullMessage;
@@ -28,29 +28,31 @@ public class QLCButton implements ItemListener {
 
     private List<QLCButton> toggleBrothers;
 
-    public QLCButton(int matrixX, int matrixY, int showId) {
-        this(matrixX, matrixY, showId, -1);
+    public QLCButton(final int matrixX, final int matrixY, final Show show) {
+        this(matrixX, matrixY, show, -1, KeyData.StateLight.OFF, KeyData.StateLight.OFF, KeyData.StateLight.OFF);
     }
 
-    public QLCButton(int matrixX, int matrixY, int showId, int groupId) {
+    public QLCButton(final int matrixX, final int matrixY, final Show show, final int groupId,
+                     final KeyData.StateLight onState, final KeyData.StateLight offState, final KeyData.StateLight nullState) {
         this.matrixX = matrixX;
         this.matrixY = matrixY;
         this.button = new JToggleButton();
         this.groupId = groupId;
-       // this.text = matrixX + "," + matrixY;
+        this.text = matrixX + "," + matrixY;
 
         midiHandler = MidiHandler.getInstance();
-        onMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, KeyData.StateLight.RED_BLINK);
-        offMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, KeyData.StateLight.RED);
-        nullMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, KeyData.StateLight.OFF);
+        onMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, onState);
+        offMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, offState);
+        nullMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, nullState);
 
         button.setBounds(matrixX*120+ 20, (7-matrixY)*70 + 10, 110, 60);
         button.addItemListener(this);
 
         state = false;
 
-        show = ShowCollection.getInstance().getShow(showId);
-        text = show.getFunction().getPath()+"\n"+show.getFunction().getName();
+        this.show = show;
+        if (show!=null)
+            text = show.getFunction().getPath()+"\n"+show.getFunction().getName();
 
         button.setText("<html><center><small>" + text.replaceAll("\\n", "<br>") + "</small></center></html>");
     }
@@ -74,10 +76,13 @@ public class QLCButton implements ItemListener {
     }
 
     public void refresh(){
+        if (show==null)
+            return;
+
       //  System.out.println(text + "\tPrev: "+state);
         if (toggleBrothers!=null)
             for (QLCButton qlcButton: toggleBrothers)
-                if(!qlcButton.getButton().getText().equals(this.getButton().getText()) && qlcButton.show.isExecuting()) {
+                if(!qlcButton.getButton().getText().equals(this.getButton().getText()) && qlcButton.show!=null && qlcButton.show.isExecuting()) {
                     qlcButton.show.setExecuting(false);
                     qlcButton.getButton().setSelected(false);
                 }
@@ -98,4 +103,11 @@ public class QLCButton implements ItemListener {
         this.toggleBrothers = toggleBrothers;
     }
 
+    public Show getShow() {
+        return show;
+    }
+
+    public String getMapKey(){
+        return matrixX + "-" + matrixY;
+    }
 }
