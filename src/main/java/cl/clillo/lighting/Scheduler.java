@@ -10,8 +10,8 @@ public class Scheduler extends Thread {
 
     private final List<Show> showList;
 
-    public Scheduler() {
-        this.showList = ShowCollection.getInstance().getShowList();
+    public Scheduler(final List<Show> showList) {
+        this.showList = showList;
     }
 
     public void run() {

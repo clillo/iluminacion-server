@@ -29,4 +29,8 @@ public class QLCPoint {
         return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
     }
 
+    public static QLCPoint buildRawPoint(final QLCFixture fixture, final int channel, final int data){
+        int dmxChannel = fixture.getDMXChannel(channel);
+        return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
+    }
 }

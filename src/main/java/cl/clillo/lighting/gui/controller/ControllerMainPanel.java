@@ -24,11 +24,12 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     private final ControllerEditPanel[] controllerEditPanels;
 
     public ControllerMainPanel() {
+
         pnlList = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
         tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
         tabbedPane.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
-
+        cleanMatrix();
         add(tabbedPane);
         controllerEditPanels = new ControllerEditPanel[8];
         for (int i=0; i<8; i++) {
@@ -41,8 +42,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
 
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
-        selectPanel(7);
-        cleanMatrix();
+        selectPanel(0);
+
     }
 
     private ControllerEditPanel buildPanel(final int index) {

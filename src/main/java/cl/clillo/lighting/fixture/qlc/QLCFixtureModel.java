@@ -31,7 +31,7 @@ public class QLCFixtureModel {
 
     private boolean robotic;
 
-    QLCFixtureModel(String manufacturer, String model, String type, String[] channels, boolean robotic) {
+    public QLCFixtureModel(String manufacturer, String model, String type, String[] channels, boolean robotic) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.type = type;

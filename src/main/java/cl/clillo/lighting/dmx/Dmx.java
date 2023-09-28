@@ -20,7 +20,8 @@ public class Dmx {
 	}
 
 	public void send(final int channel, final int data){
-		notificablesCollection.enviar(channel, data);
+		//notificablesCollection.enviar(channel, data);
+	//	System.out.println(channel+"\t"+data);
 		ArtNet artNet = ArtNet.getInstance();
 		artNet.send(channel, data);
 	}

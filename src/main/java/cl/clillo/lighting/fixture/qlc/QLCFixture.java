@@ -14,7 +14,7 @@ import java.util.Map;
 @ToString
 public class QLCFixture {
 
-    public enum ChannelType {GLOBAL_DIMMER, DIMMER, STROBE, COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION ;
+    public enum ChannelType {GLOBAL_DIMMER, DIMMER, STROBE, COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW ;
 
         public static ChannelType of(String name){
             if ("dimmer".equalsIgnoreCase(name))
@@ -23,7 +23,7 @@ public class QLCFixture {
                 return DIMMER;
             if ("strobe".equalsIgnoreCase(name))
                 return STROBE;
-            return null;
+            return RAW;
         }
     };
 
@@ -61,10 +61,23 @@ public class QLCFixture {
         return getChannel(channelType) + address - 1;
     }
 
+    public int getDMXChannel(int channel){
+        return channel + address;
+    }
+
     public static QLCFixtureBuilder builder() {
         return new QLCFixtureBuilder();
     }
 
+    public static QLCFixture build(final int id, final int dmxAddress, final QLCFixtureModel fixtureModel){
+        String manufacturer = "manufacturer";
+        String model = "model";
+        String mode = "mode";
+        int universe = 0;
+
+        return new QLCFixture(manufacturer, model, mode, id, "fixture: "+id, universe, dmxAddress-1,
+                fixtureModel.getChannels().length, fixtureModel);
+    }
 
     public static class QLCFixtureBuilder {
         private String manufacturer;

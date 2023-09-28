@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.Scheduler;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
@@ -12,8 +13,19 @@ import java.util.List;
 
 public class ShowCollection {
 
-    final List<Show> showList = new ArrayList<>();
-    final List<Show> showQLCEfxList = new ArrayList<>();
+    private final List<Show> showList = new ArrayList<>();
+    private final List<Show> showQLCEfxList = new ArrayList<>();
+    private final QLCModel qlcModelOriginal;
+    private final QLCFixtureBuilder qlcModel;
+    private final Scheduler scheduler;
+
+    private ShowCollection(){
+        qlcModelOriginal = new QLCModel();
+        qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
+        scheduler = new Scheduler(showList);
+        addFromDirectory("src/main/resources/qlc");
+        scheduler.start();
+    }
 
     private static final class InstanceHolder {
         private static ShowCollection instance;
@@ -44,13 +56,15 @@ public class ShowCollection {
     }
 
     private void addQLCScene(final QLCScene qlcScene){
-        showList.add(Show.builder()
+        final Show show = Show.builder()
                 .name(qlcScene.getName())
                 .executing(false)
                 .firstTimeExecution(true)
                 .stepList(List.of())
                 .function(qlcScene)
-                .build());
+                .build(qlcScene.getId());
+        qlcScene.setShow(show);
+        showList.add(show);
     }
 
     public List<Show> getShowList() {
@@ -66,8 +80,17 @@ public class ShowCollection {
         show.setExecuting(!isExecuting);
     }
 
-    public void addFromDirectory(final QLCFixtureBuilder qlcModel){
-        File file = new File("src/main/resources/qlc");
+    public void executeShow(final Show show){
+        boolean isExecuting = show.isExecuting();
+
+        for (Show show1: show.getUniqueShow())
+            show1.setExecuting(false);
+
+        show.setExecuting(isExecuting);
+    }
+
+    public void addFromDirectory(final String path){
+        File file = new File(path);
         final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
 
         try {
@@ -88,6 +111,21 @@ public class ShowCollection {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public List<QLCFunction> getFunctionList(final String type, final String path){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (QLCFunction function: qlcModelOriginal.getFunctionList())
+            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
+                functionList.add(function);
+
+        return functionList;
+    }
+
+    public Show getShow(final int sceneId){
+        for (Show show: showList)
+            if (show.getId()==sceneId)
+                return show;
+        return null;
     }
 }

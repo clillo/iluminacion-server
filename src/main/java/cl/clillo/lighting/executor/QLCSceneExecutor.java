@@ -26,6 +26,8 @@ public class QLCSceneExecutor implements IQLCStepExecutor {
              show.setFirstTimeExecution(false);
         }
 
+        System.out.println("Executing "+ show.getId() + "\t"+show.getName());
+
         final QLCScene scene = show.getFunction();
         for (QLCPoint qlcPoint: scene.getQlcPointList())
             dmx.send(qlcPoint.getDmxChannel(), qlcPoint.getData());

@@ -33,6 +33,7 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
     private final MidiHandler midiHandler;
     private final int index;
     private final Map<String, QLCButton> buttonMapByPos;
+    private final Map<QLCButton, Integer> buttonMapGroupId;
 
     public ControllerEditPanel(final MidiHandler midiHandler, final int index) {
         this.midiHandler = midiHandler;
@@ -62,14 +63,20 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
 
         add(btnRun);
 
-        buttonMapByPos = new HashMap<>();
+        buttonMapByPos = MidiButtonFunctionRepository.getInstance().getButtonMap();
+        buttonMapGroupId = new HashMap<>();
+
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
-                final QLCButton button = new QLCButton(matrixX, matrixY);
+                if (!buttonMapByPos.containsKey(matrixX + "-" + matrixY)) {
+                    final QLCButton button = new QLCButton(matrixX, matrixY, 160);
+                    buttonMapByPos.put(matrixX + "-" + matrixY, button);
+                }
 
-                add(button.getButton());
-                buttonMapByPos.put(matrixX + "-" + matrixY, button);
+                add(buttonMapByPos.get(matrixX + "-" + matrixY).getButton());
             }
+
+
 
     }
 
@@ -82,6 +89,7 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
     }
 
     public void toggleButton(int x, int y){
+
         buttonMapByPos.get(x + "-" + y).toggle();
     }
 

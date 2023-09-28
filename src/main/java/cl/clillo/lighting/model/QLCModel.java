@@ -284,4 +284,8 @@ public class QLCModel {
     public List<QLCFixtureModel> getFixtureModelList() {
         return fixtureModelList;
     }
+
+    public List<QLCFunction> getFunctionList() {
+        return functionList;
+    }
 }

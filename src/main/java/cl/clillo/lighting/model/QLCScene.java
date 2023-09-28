@@ -24,6 +24,7 @@ import java.util.List;
 public class QLCScene extends QLCFunction{
 
     private final List<QLCPoint> qlcPointList;
+    private Show show;
 
     public QLCScene(final int id, final String type, final String name, final String path, final List<QLCPoint> qlcPointList) {
         super(id, type, name, path);
@@ -69,8 +70,10 @@ public class QLCScene extends QLCFunction{
     protected static QLCPoint buildPoint(final FixtureListBuilder fixtureListBuilder, final Node node){
         final boolean isRobotic = XMLParser.getNodeBoolean(node, "fixture-robotic");
         if (!isRobotic) {
-            System.out.println("Fixture must be robotic type");
-            System.exit(0);
+            return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(
+                            XMLParser.getNodeInt(node, "fixture")),
+                    XMLParser.getNodeInt(node, "channel"),
+                    XMLParser.getNodeInt(node, "value"));
         }
         return QLCPoint.buildRoboticPoint(fixtureListBuilder.getFixture(
                 XMLParser.getNodeInt(node, "fixture")),
@@ -83,7 +86,10 @@ public class QLCScene extends QLCFunction{
         for (QLCPoint data: points) {
             out.writeStartElement("point");
                 out.writeStartElement("type");
-                out.writeCharacters(String.valueOf(data.getChannelType()));
+                if (data.getChannelType()==null)
+                    out.writeCharacters("RAW");
+                else
+                    out.writeCharacters(String.valueOf(data.getChannelType()));
                 out.writeEndElement();
                 out.writeStartElement("fixture-robotic");
                 out.writeCharacters(String.valueOf(data.getFixture() instanceof QLCRoboticFixture));
@@ -94,6 +100,11 @@ public class QLCScene extends QLCFunction{
                 out.writeStartElement("value");
                 out.writeCharacters(String.valueOf(data.getData()));
                 out.writeEndElement();
+
+                out.writeStartElement("channel");
+                out.writeCharacters(String.valueOf(data.getChannel()));
+                out.writeEndElement();
+
             out.writeEndElement();
         }
         out.writeEndElement();
@@ -105,4 +116,7 @@ public class QLCScene extends QLCFunction{
         writePoints(out, qlcPointList);
     }
 
+    public void setShow(Show show) {
+        this.show = show;
+    }
 }

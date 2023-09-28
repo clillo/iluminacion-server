@@ -112,10 +112,10 @@ public class Show {
             return this;
         }
 
-        public Show build() {
+        public Show build(int id) {
             IQLCStepExecutor executor = null;
 
-            Show show = new Show(idCount++, this.name, this.nextExecutionTime, this.executing, executor,
+            Show show = new Show(id==-1?idCount++:id, this.name, this.nextExecutionTime, this.executing, executor,
                     this.tipoGatillador, this.pasoActual, this.stepList, this.scenesLists,
                     this.firstTimeExecution, this.function, new ArrayList<>());
 
@@ -128,6 +128,10 @@ public class Show {
             if (function instanceof QLCScene)
                 show.setStepExecutor(new QLCSceneExecutor(show));
             return show;
+        }
+
+        public Show build() {
+            return build(-1);
         }
 
     }

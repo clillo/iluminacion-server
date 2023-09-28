@@ -77,7 +77,12 @@ public class QLCFunction extends QLCElement{
     public void writeToConfigFile(){
         OutputStream outputStream;
         try {
-            final String name = this.getClass().getSimpleName() + "." +this.name;
+            String name = this.getClass().getSimpleName() + "." ;
+            if (path==null || path.isEmpty())
+                name = name + this.name;
+            else
+                name = name + path + "." + id;
+
             outputStream = new FileOutputStream(QLCReader.repoBase  + "/" + name + ".xml");
             XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
                     new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
