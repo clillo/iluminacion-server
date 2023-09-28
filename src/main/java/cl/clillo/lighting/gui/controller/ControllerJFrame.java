@@ -18,7 +18,7 @@ public class ControllerJFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setSize(ControllerMainPanel.WIDTH1 + 600, ControllerMainPanel.HEIGHT1 + 150);
+        setSize(ControllerMainPanel.WIDTH1 + 200, ControllerMainPanel.HEIGHT1 + 150);
         ControllerMainPanel ControllerMainPanel = new ControllerMainPanel();
         setContentPane(ControllerMainPanel);
 

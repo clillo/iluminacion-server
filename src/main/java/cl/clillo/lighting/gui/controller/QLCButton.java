@@ -45,7 +45,7 @@ public class QLCButton implements ItemListener {
         offMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, offState);
         nullMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, nullState);
 
-        button.setBounds(matrixX*120+ 20, (7-matrixY)*70 + 10, 110, 60);
+        button.setBounds(matrixX*175+ 20, (7-matrixY)*70 + 10, 165, 60);
         button.addItemListener(this);
 
         state = false;
@@ -54,7 +54,7 @@ public class QLCButton implements ItemListener {
         if (show!=null)
             text = show.getFunction().getPath()+"\n"+show.getFunction().getName();
 
-        button.setText("<html><center><small>" + text.replaceAll("\\n", "<br>") + "</small></center></html>");
+        button.setText("<html><center>" + text.replaceAll("\\n", "<br>") + "</center></html>");
     }
 
     public JToggleButton getButton() {
