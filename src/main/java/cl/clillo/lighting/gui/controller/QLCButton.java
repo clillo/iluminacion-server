@@ -7,11 +7,13 @@ import cl.clillo.lighting.model.ShowCollection;
 
 import javax.sound.midi.ShortMessage;
 import javax.swing.JToggleButton;
+import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.List;
 
 public class QLCButton implements ItemListener {
+
+    private static int globalIdCounter = 1;
 
     private final JToggleButton button;
     private String text;
@@ -25,8 +27,9 @@ public class QLCButton implements ItemListener {
     private final MidiHandler midiHandler;
     private final Show show;
     private int groupId;
+    private final int getGlobalId;
 
-    private List<QLCButton> toggleBrothers;
+    private ButtonSelectedListener buttonSelectedListener;
 
     public QLCButton(final int matrixX, final int matrixY, final Show show) {
         this(matrixX, matrixY, show, -1, KeyData.StateLight.OFF, KeyData.StateLight.OFF, KeyData.StateLight.OFF);
@@ -34,6 +37,7 @@ public class QLCButton implements ItemListener {
 
     public QLCButton(final int matrixX, final int matrixY, final Show show, final int groupId,
                      final KeyData.StateLight onState, final KeyData.StateLight offState, final KeyData.StateLight nullState) {
+        getGlobalId = globalIdCounter++;
         this.matrixX = matrixX;
         this.matrixY = matrixY;
         this.button = new JToggleButton();
@@ -45,16 +49,17 @@ public class QLCButton implements ItemListener {
         offMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, offState);
         nullMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, nullState);
 
-        button.setBounds(matrixX*175+ 20, (7-matrixY)*70 + 10, 165, 60);
+        button.setBounds(matrixX * 175 + 20, (7 - matrixY) * 70 + 10, 165, 60);
         button.addItemListener(this);
 
         state = false;
 
         this.show = show;
-        if (show!=null)
-            text = show.getFunction().getPath()+"\n"+show.getFunction().getName();
+        if (show != null)
+            text = show.getFunction().getPath() + "\n" + show.getFunction().getName();
 
         button.setText("<html><center>" + text.replaceAll("\\n", "<br>") + "</center></html>");
+
     }
 
     public JToggleButton getButton() {
@@ -65,7 +70,7 @@ public class QLCButton implements ItemListener {
         return text;
     }
 
-    public void toggle(){
+    public void toggle() {
         button.setSelected(!state);
     }
 
@@ -75,39 +80,63 @@ public class QLCButton implements ItemListener {
         refresh();
     }
 
-    public void refresh(){
-        if (show==null)
+    public void refresh() {
+        if (show == null)
             return;
-
-      //  System.out.println(text + "\tPrev: "+state);
-        if (toggleBrothers!=null)
-            for (QLCButton qlcButton: toggleBrothers)
-                if(!qlcButton.getButton().getText().equals(this.getButton().getText()) && qlcButton.show!=null && qlcButton.show.isExecuting()) {
-                    qlcButton.show.setExecuting(false);
-                    qlcButton.getButton().setSelected(false);
-                }
+        if (buttonSelectedListener != null) {
+            if (state)
+                buttonSelectedListener.selected(this);
+            else
+                buttonSelectedListener.unSelected(this);
+        }
+       // System.out.println(show + "\tPrev: "+state);
 
         show.setExecuting(state);
         ShowCollection.getInstance().executeShow(show);
         if (state) {
+            button.setBackground(Color.RED);
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
+            button.setBorderPainted(true);
             midiHandler.send(onMessage);
-        }else
+
+        } else {
+            button.setBackground(Color.GRAY);
+            button.setOpaque(true);
+            button.setContentAreaFilled(true);
+            button.setBorderPainted(true);
             midiHandler.send(offMessage);
+
+        }
+
+        if (buttonSelectedListener != null)
+            buttonSelectedListener.onFinishChange(this);
     }
 
     public int getGroupId() {
         return groupId;
     }
 
-    public void setToggleBrothers(List<QLCButton> toggleBrothers) {
-        this.toggleBrothers = toggleBrothers;
+    public void setButtonSelectedListener(ButtonSelectedListener buttonSelectedListener) {
+        this.buttonSelectedListener = buttonSelectedListener;
     }
 
     public Show getShow() {
         return show;
     }
 
-    public String getMapKey(){
+    public String getMapKey() {
         return matrixX + "-" + matrixY;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj==null)
+            return false;
+        if (!(obj instanceof QLCButton))
+            return false;
+        return getGlobalId == ((QLCButton)obj).getGlobalId;
+    }
+
+
 }

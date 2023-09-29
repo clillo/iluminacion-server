@@ -15,6 +15,7 @@ public class QLCElement {
     protected final String type;
     protected final String name;
     protected final String path;
+    protected boolean blackout;
 
     public QLCElement(int id, String type, String name, String path) {
         this.id = id;
@@ -26,8 +27,11 @@ public class QLCElement {
     public static QLCElement read(final Document doc) {
         Node common = doc.getElementsByTagName("common").item(0);
 
-        return new QLCElement(XMLParser.getNodeInt(common, "id"), XMLParser.getNodeString(common, "type"),
+        QLCElement qlcElement =  new QLCElement(XMLParser.getNodeInt(common, "id"), XMLParser.getNodeString(common, "type"),
                 XMLParser.getNodeString(common, "name"), XMLParser.getNodeString(common, "path"));
+        qlcElement.blackout = XMLParser.getNodeBoolean(common, "blackout");
+
+        return qlcElement;
     }
 
     protected void writeFixtures(final XMLStreamWriter out, final List<QLCFixture> fixtureList) throws XMLStreamException {
@@ -57,5 +61,13 @@ public class QLCElement {
 
     public String getPath() {
         return this.path;
+    }
+
+    public boolean isBlackout() {
+        return blackout;
+    }
+
+    public void setBlackout(boolean blackout) {
+        this.blackout = blackout;
     }
 }

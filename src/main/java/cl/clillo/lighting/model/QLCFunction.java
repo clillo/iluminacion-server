@@ -5,7 +5,6 @@ import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
-import lombok.Setter;
 import lombok.ToString;
 import org.w3c.dom.Node;
 

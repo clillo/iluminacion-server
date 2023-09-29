@@ -66,8 +66,13 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         list.add(QLCRoboticFixture.build(303, 90, fixtureModelC));
         list.add(QLCRoboticFixture.build(304, 40, fixtureModelC));
 
+        list.add(QLCFixture.build(4, 300, fixtureLaser)); // spider
+        list.add(QLCFixture.build(5, 320, fixtureLaser));
 
-        list.add(QLCFixture.build(13, 10, fixtureLaser));
+        list.add(QLCFixture.build(6, 150, fixtureLaser)); // derby
+        list.add(QLCFixture.build(7, 181, fixtureLaser));
+
+        list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser
         return list;
     }
 

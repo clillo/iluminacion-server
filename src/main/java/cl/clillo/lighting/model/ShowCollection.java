@@ -113,12 +113,22 @@ public class ShowCollection {
         }
     }
 
-    public List<QLCFunction> getFunctionList(final String type, final String path){
+    public List<QLCFunction> getOriginalFunctionList(final String type, final String path){
         final List<QLCFunction> functionList = new ArrayList<>();
         for (QLCFunction function: qlcModelOriginal.getFunctionList())
             if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
                 functionList.add(function);
 
+        return functionList;
+    }
+
+    public List<QLCFunction> getFunctionList(final String type, final String path){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
+                functionList.add(function);
+        }
         return functionList;
     }
 

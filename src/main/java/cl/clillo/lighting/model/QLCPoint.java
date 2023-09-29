@@ -30,6 +30,8 @@ public class QLCPoint {
     }
 
     public static QLCPoint buildRawPoint(final QLCFixture fixture, final int channel, final int data){
+        if (fixture==null)
+            System.exit(0);
         int dmxChannel = fixture.getDMXChannel(channel);
         return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
     }

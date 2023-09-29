@@ -12,13 +12,17 @@ public class ControllerJFrame extends JFrame {
 
     public ControllerJFrame() {
         enableEvents(64L);
-
+       /* try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }*/
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setSize(ControllerMainPanel.WIDTH1 + 200, ControllerMainPanel.HEIGHT1 + 150);
+        setSize(ControllerMainPanel.WIDTH1 + 300, ControllerMainPanel.HEIGHT1 + 150);
         ControllerMainPanel ControllerMainPanel = new ControllerMainPanel();
         setContentPane(ControllerMainPanel);
 

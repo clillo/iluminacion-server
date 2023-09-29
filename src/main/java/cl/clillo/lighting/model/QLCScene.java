@@ -54,6 +54,7 @@ public class QLCScene extends QLCFunction{
 
         final List<QLCPoint> qlcPointList = new ArrayList<>();
         final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList);
+        scene.setBlackout(function.isBlackout());
 
         Node common = doc.getElementsByTagName("points").item(0);
         NodeList list = common.getChildNodes();

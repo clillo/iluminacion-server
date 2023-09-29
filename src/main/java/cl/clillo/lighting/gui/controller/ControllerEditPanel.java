@@ -1,7 +1,6 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
-import cl.clillo.lighting.midi.MidiHandler;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public abstract class ControllerEditPanel extends JPanel implements ActionListener {
+public class ControllerEditPanel extends JPanel implements ActionListener, ButtonSelectedListener {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -29,13 +28,11 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
     protected JButton btnSave;
     protected JButton btnRun;
 
-    private final MidiHandler midiHandler;
     private final int index;
     private final Map<String, QLCButton> buttonMapByPos;
-    private final Map<QLCButton, Integer> buttonMapGroupId;
+    private final Map<QLCButton, QLCButtonGroup> buttonMapGroupId;
 
-    public ControllerEditPanel(final MidiHandler midiHandler, final int index) {
-        this.midiHandler = midiHandler;
+    public ControllerEditPanel(final int index) {
         setLayout(null);
         this.index = index;
 
@@ -65,28 +62,33 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
         final List<QLCButtonGroup> buttonGroups = MidiButtonFunctionRepository.getInstance().getButtonGroupMap(index);
 
         buttonMapByPos = new HashMap<>();
+        buttonMapGroupId = new HashMap<>();
 
         for (QLCButtonGroup group: buttonGroups)
-            for (QLCButton button: group.getButtonList())
+            for (QLCButton button: group.getButtonList()) {
                 buttonMapByPos.put(button.getMapKey(), button);
-
-        buttonMapGroupId = new HashMap<>();
+                buttonMapGroupId.put(button, group);
+            }
 
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
                 if (!buttonMapByPos.containsKey(matrixX + "-" + matrixY)) {
-                    final QLCButton button = new QLCButton(matrixX, matrixY, null);
-                    buttonMapByPos.put(matrixX + "-" + matrixY, button);
+                    final QLCButton button2 = new QLCButton(matrixX, matrixY, null);
+                    buttonMapByPos.put(matrixX + "-" + matrixY, button2);
                 }
 
-                add(buttonMapByPos.get(matrixX + "-" + matrixY).getButton());
+                QLCButton qlcButton = buttonMapByPos.get(matrixX + "-" + matrixY);
+                add(qlcButton.getButton());
             }
+
     }
 
     public void activePanel(){
+      //  System.out.println("Activating Panel: "+this.index);
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
                 final QLCButton button = buttonMapByPos.get(matrixX + "-" + matrixY);
+                button.setButtonSelectedListener(this);
                 button.refresh();
             }
     }
@@ -113,4 +115,39 @@ public abstract class ControllerEditPanel extends JPanel implements ActionListen
 
     }
 
+    @Override
+    public void selected(final QLCButton qlcButton) {
+        QLCButtonGroup buttonGroup = buttonMapGroupId.get(qlcButton);
+        if (buttonGroup==null)
+            return ;
+
+        buttonGroup.addFinalOffReview();
+        for (QLCButton qlcButtonIdx: buttonGroup.getButtonList()) {
+            if (!qlcButtonIdx.equals(qlcButton) && qlcButtonIdx.getShow() != null && qlcButtonIdx.getShow().isExecuting()) {
+                qlcButtonIdx.getButton().setSelected(false);
+            }
+        }
+        buttonGroup.minusFinalOffReview();
+
+    }
+
+    @Override
+    public void unSelected(final QLCButton qlcButton) {
+        selected(qlcButton);
+
+    }
+
+    @Override
+    public void onFinishChange(final QLCButton qlcButton) {
+        final QLCButtonGroup buttonGroup = buttonMapGroupId.get(qlcButton);
+        if (buttonGroup==null || !buttonGroup.isFinalOffReview())
+            return ;
+
+        for (QLCButton qlcButtonIdx: buttonGroup.getButtonList())
+            if (qlcButtonIdx.getShow() != null && qlcButtonIdx.getShow().isExecuting())
+                return;
+
+        if (buttonGroup.getGlobalOff()!=null)
+            buttonGroup.getGlobalOff().getShow().setExecuteOneTime(true);
+    }
 }

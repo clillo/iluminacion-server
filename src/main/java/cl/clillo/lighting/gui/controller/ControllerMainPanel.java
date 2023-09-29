@@ -45,7 +45,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     }
 
     private ControllerEditPanel buildPanel(final int index) {
-        return new ControllerEditPanel(midiHandler, index){ };
+        return new ControllerEditPanel(index){ };
     }
 
     @Override
@@ -67,6 +67,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     }
 
     private void selectPanel(int index){
+        cleanMatrix();
         tabbedPane.setSelectedIndex(7-index);
         for (int i=0; i<8; i++)
             midiHandler.sendSide(i, KeyData.StateLight.OFF);

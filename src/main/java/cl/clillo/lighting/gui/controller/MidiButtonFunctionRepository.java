@@ -2,6 +2,7 @@ package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
+import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.ShowCollection;
 
 import java.util.ArrayList;
@@ -25,20 +26,35 @@ public class MidiButtonFunctionRepository {
     MidiButtonFunctionRepository(){
         buttonMap = new HashMap<>();
         buttonGroupMap = new HashMap<>();
-        final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList("Scene", "Laser");
+
+        createRows(1, 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows(1, 2, "Scene", "Derby", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+
+        createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        createRows(2, 4, "Scene", "Spider Positions", 0, 2,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+
+
+    }
+
+    private void createRows(final int panelId, final int groupId, final String type, final String path, int matrixX,
+                            int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState){
+        final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList(type, path);
         int[] showIds = new int[list.size()];
         int i=0;
 
+        QLCScene blackoutScene = null;
         for (QLCFunction function: list){
-            showIds[i++]=function.getId();
+            if(!function.isBlackout())
+                showIds[i++]=function.getId();
+            else
+                blackoutScene = (QLCScene)function;
         }
 
         final List<QLCButton> laserButtons = new ArrayList<>();
-        int matrixX=0;
-        int matrixY=7;
+
         for (i=0; i<showIds.length; i++){
             QLCButton qlcButton = new QLCButton(matrixX, matrixY, ShowCollection.getInstance().getShow(showIds[i]),1,
-                    KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, KeyData.StateLight.OFF);
+                    onState, offState, KeyData.StateLight.OFF);
 
             laserButtons.add(qlcButton);
             buttonMap.put(matrixX+"-"+matrixY, qlcButton);
@@ -49,9 +65,12 @@ public class MidiButtonFunctionRepository {
             }
         }
 
-        final QLCButtonGroup qlcButtonGroup = new QLCButtonGroup(1,1, "Laser", laserButtons, laserButtons.get(1).getShow().getFunction());
-        buttonGroupMap.put(1, List.of(qlcButtonGroup));
+        final QLCButtonGroup qlcButtonGroup = new QLCButtonGroup(panelId, groupId, type, laserButtons, blackoutScene);
 
+        if (!buttonGroupMap.containsKey(panelId))
+            buttonGroupMap.put(panelId, new ArrayList<>());
+
+         buttonGroupMap.get(panelId).add(qlcButtonGroup);
     }
 
     public Map<String, QLCButton> getButtonMap() {
