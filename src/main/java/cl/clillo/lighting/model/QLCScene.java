@@ -3,7 +3,6 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
-import cl.clillo.lighting.midi.RoboticNotifiable;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.ToString;
@@ -15,6 +14,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +48,7 @@ public class QLCScene extends QLCFunction{
         return new QLCScene(id, type, "scene: "+id, path, qlcPointList);
     }
 
-    public static QLCScene read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
+    public static QLCScene read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
         final Document doc = XMLParser.getDocument(file);
         final QLCElement function = QLCElement.read(doc);
 
@@ -61,7 +61,9 @@ public class QLCScene extends QLCFunction{
         for (int temp = 0; temp < list.getLength(); temp++) {
             Node node = list.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                qlcPointList.add(buildPoint(fixtureListBuilder, node));
+                final QLCPoint point = buildPoint(fixtureListBuilder, node);
+                if (point!=null)
+                    qlcPointList.add(point);
             }
         }
 
@@ -70,14 +72,17 @@ public class QLCScene extends QLCFunction{
 
     protected static QLCPoint buildPoint(final FixtureListBuilder fixtureListBuilder, final Node node){
         final boolean isRobotic = XMLParser.getNodeBoolean(node, "fixture-robotic");
+        int fixtureId = XMLParser.getNodeInt(node, "fixture");
+
+        if (fixtureId==6 || fixtureId==7)
+            return null;
         if (!isRobotic) {
-            return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(
-                            XMLParser.getNodeInt(node, "fixture")),
+            return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(fixtureId),
                     XMLParser.getNodeInt(node, "channel"),
                     XMLParser.getNodeInt(node, "value"));
         }
-        return QLCPoint.buildRoboticPoint(fixtureListBuilder.getFixture(
-                XMLParser.getNodeInt(node, "fixture")),
+
+        return QLCPoint.buildRoboticPoint(fixtureListBuilder.getFixture(fixtureId),
                 QLCFixture.ChannelType.of(XMLParser.getNodeString(node, "type")),
                 XMLParser.getNodeInt(node, "value"));
     }

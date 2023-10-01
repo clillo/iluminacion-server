@@ -5,7 +5,6 @@ import cl.clillo.lighting.executor.IQLCStepExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
 import cl.clillo.lighting.executor.QLCSequenceExecutor;
-import cl.clillo.lighting.executor.TipoGatillador;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 
@@ -105,11 +104,15 @@ public class Show {
     public void setExecuting(boolean executing) {
         this.executing = executing;
         this.nextExecutionTime =  -1;
+        if (executing)
+            setFirstTimeExecution(true);
     }
 
     public void setExecuteOneTime(boolean executing) {
         this.executing = executing;
         this.nextExecutionTime =  -1;
+        if (executing)
+            setFirstTimeExecution(true);
     }
 
     public void setStepExecutor(IQLCStepExecutor stepExecutor) {

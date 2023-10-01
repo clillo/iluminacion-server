@@ -13,6 +13,7 @@ import org.xml.sax.SAXException;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -105,7 +106,7 @@ public class QLCEfxSpline extends QLCEfx{
 
     }
 
-    public static QLCEfxSpline read(final FixtureListBuilder fixtureListBuilder, final String file) throws ParserConfigurationException, IOException, SAXException {
+    public static QLCEfxSpline read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
         final Document doc = XMLParser.getDocument(file);
         final QLCElement function = QLCElement.read(doc);
 

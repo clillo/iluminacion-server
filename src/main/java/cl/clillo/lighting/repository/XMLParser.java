@@ -1,6 +1,5 @@
 package cl.clillo.lighting.repository;
 
-import cl.clillo.lighting.config.QLCReader;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -19,8 +18,7 @@ import java.io.IOException;
 
 public class XMLParser {
 
-    public static Document getDocument(final String file) throws ParserConfigurationException, IOException, SAXException {
-        File inputFile = new File(QLCReader.repoBase + file);
+    public static Document getDocument(final File inputFile) throws ParserConfigurationException, IOException, SAXException {
         DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         return docBuilder.parse(inputFile);

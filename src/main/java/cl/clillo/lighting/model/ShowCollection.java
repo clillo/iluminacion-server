@@ -91,22 +91,30 @@ public class ShowCollection {
 
     public void addFromDirectory(final String path){
         File file = new File(path);
+        final List<File> directories = FileUtils.getDirectories(file.getAbsolutePath());
+        addFromDirectory(file);
+
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                  addFromDirectory(dir);
+
+    }
+
+    private void addFromDirectory(final File file){
         final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
 
         try {
             for (File f: files){
                 if (f.getName().startsWith("QLCEfxCircle"))
-                    addQLCEfx(QLCEfxCircle.read(qlcModel, f.getName()));
+                    addQLCEfx(QLCEfxCircle.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxSpline"))
-                    addQLCEfx(QLCEfxSpline.read(qlcModel, f.getName()));
+                    addQLCEfx(QLCEfxSpline.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxMultiLine"))
-                    addQLCEfx(QLCEfxMultiLine.read(qlcModel, f.getName()));
+                    addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxLine"))
-                    addQLCEfx(QLCEfxLine.read(qlcModel, f.getName()));
+                    addQLCEfx(QLCEfxLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCScene"))
-                    addQLCScene(QLCScene.read(qlcModel, f.getName()));
-
-
+                    addQLCScene(QLCScene.read(qlcModel, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

@@ -33,6 +33,7 @@ public class MidiButtonFunctionRepository {
         createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
         createRows(2, 4, "Scene", "Spider Positions", 0, 2,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
 
+        createRows(3, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
     }
 
@@ -49,6 +50,9 @@ public class MidiButtonFunctionRepository {
             else
                 blackoutScene = (QLCScene)function;
         }
+
+        if (blackoutScene==null)
+            System.out.println(panelId+"\t"+groupId+"\tNo tiene off");
 
         final List<QLCButton> laserButtons = new ArrayList<>();
 

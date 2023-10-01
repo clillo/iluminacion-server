@@ -39,22 +39,22 @@
             <reverse>true</reverse>
         </fixture>
         <fixture>
-            <id>301</id>
+            <id>8</id>
             <offset>216.0</offset>
             <reverse>false</reverse>
         </fixture>
         <fixture>
-            <id>302</id>
+            <id>10</id>
             <offset>252.0</offset>
             <reverse>true</reverse>
         </fixture>
         <fixture>
-            <id>303</id>
+            <id>11</id>
             <offset>288.0</offset>
             <reverse>false</reverse>
         </fixture>
         <fixture>
-            <id>304</id>
+            <id>18</id>
             <offset>314.0</offset>
             <reverse>true</reverse>
         </fixture>

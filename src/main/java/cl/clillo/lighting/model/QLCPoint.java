@@ -24,6 +24,8 @@ public class QLCPoint {
     }
 
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data){
+        if (fixture==null)
+            System.exit(0);
         int channel = fixture.getChannel(channelType);
         int dmxChannel = fixture.getDMXChannel(channelType);
         return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
