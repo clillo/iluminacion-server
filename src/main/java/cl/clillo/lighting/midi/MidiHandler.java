@@ -9,6 +9,7 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
 import javax.sound.midi.ShortMessage;
 import javax.sound.midi.Transmitter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -77,14 +78,16 @@ public class MidiHandler {
         keyDataMapByPos.put("SHIFT", keyData);
         keyDataMapByChannel.put("M-"+keyData.getChannel(), keyData);
 
-        MidiDevice device;
+        List<MidiDevice> midiDevices = getTransmitterDevices();
+
+    //    MidiDevice device;
         MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
 
-        for (MidiDevice.Info info : infos) {
+        for (MidiDevice device: midiDevices) {
             try {
-                device = MidiSystem.getMidiDevice(info);
-                if (!"APC MINI".equals(info.getName()))
-                    continue;
+              //  device = MidiSystem.getMidiDevice(info);
+            //    if (!"APC MINI".equals(info.getName()))
+              //      continue;
 
                 List<Transmitter> transmitters = device.getTransmitters();
 
@@ -100,7 +103,7 @@ public class MidiHandler {
                 mainMidiDevice = device;
 
             } catch (MidiUnavailableException e) {
-                //e.printStackTrace();
+                e.printStackTrace();
             }
         }
 
@@ -120,6 +123,45 @@ public class MidiHandler {
 
     }
 
+    public List<MidiDevice> getTransmitterDevices() {
+        MidiDevice.Info[] deviceInfo = MidiSystem.getMidiDeviceInfo();
+
+        List<MidiDevice> transmitterDevices = new ArrayList<>();
+        for(int i=0;i<deviceInfo.length;i++) {
+            try {
+                MidiDevice device = MidiSystem.getMidiDevice(deviceInfo[i]);
+                if(device.getMaxTransmitters()!=0 && deviceInfo[i].getName().contains("APC")) {
+                    transmitterDevices.add(device);
+                }
+            } catch (MidiUnavailableException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+        return transmitterDevices;
+    }
+/*
+    public void getTransmiter(){
+        MidiDevices<ArrayList> transmitterDevices = getTransmitterDevices();
+        for(MidiDevice tmp : transmitterDevices) {
+            if(tmp.getDeviceInfo().equals(info)) {
+                try {
+                    midiController = tmp;
+                    Transmitter transmitter = midiController.getTransmitter();
+                    // something that implements receiver
+                    midiReceiver = new MidiReceiver();
+                    transmitter.setReceiver(midiReceiver);
+                    midiController.open();
+                    System.out.println("controller set ok");
+                } catch (MidiUnavailableException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+*/
     public ShortMessage getShortMessage(final int matrixX, final int matrixY, final KeyData.StateLight stateLight){
         return keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
     }
