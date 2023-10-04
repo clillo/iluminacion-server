@@ -1,6 +1,6 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.dmx.Dmx;
+import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.gui.ScreenPoint;
 
 import java.util.List;

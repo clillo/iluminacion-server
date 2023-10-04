@@ -1,4 +1,4 @@
-package cl.clillo.lighting.midi;
+package cl.clillo.lighting.external.midi;
 
 public interface MidiEvent {
 

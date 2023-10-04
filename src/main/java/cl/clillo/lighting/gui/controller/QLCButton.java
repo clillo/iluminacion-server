@@ -1,7 +1,7 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.midi.KeyData;
-import cl.clillo.lighting.midi.MidiHandler;
+import cl.clillo.lighting.external.midi.KeyData;
+import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 

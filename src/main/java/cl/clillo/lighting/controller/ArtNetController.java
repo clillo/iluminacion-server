@@ -1,13 +1,13 @@
 package cl.clillo.lighting.controller;
 
-import cl.clillo.lighting.dmx.ArtNet;
+
+import cl.clillo.lighting.external.dmx.ArtNet;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-
 public class ArtNetController {
 
     private final ArtNet artNet = ArtNet.getInstance();

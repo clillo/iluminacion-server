@@ -1,8 +1,8 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.midi.KeyData;
-import cl.clillo.lighting.midi.MidiEvent;
-import cl.clillo.lighting.midi.MidiHandler;
+import cl.clillo.lighting.external.midi.KeyData;
+import cl.clillo.lighting.external.midi.MidiEvent;
+import cl.clillo.lighting.external.midi.MidiHandler;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;

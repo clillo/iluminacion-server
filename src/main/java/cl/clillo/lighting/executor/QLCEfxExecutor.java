@@ -1,6 +1,6 @@
 package cl.clillo.lighting.executor;
 
-import cl.clillo.lighting.midi.RoboticNotifiable;
+import cl.clillo.lighting.external.midi.RoboticNotifiable;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
 import cl.clillo.lighting.model.Show;

@@ -1,4 +1,4 @@
-package cl.clillo.lighting.midi;
+package cl.clillo.lighting.external.midi;
 
 import javax.sound.midi.InvalidMidiDataException;
 import javax.sound.midi.ShortMessage;

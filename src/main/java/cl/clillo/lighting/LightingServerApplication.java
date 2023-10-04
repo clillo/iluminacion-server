@@ -1,6 +1,6 @@
 package cl.clillo.lighting;
 
-import cl.clillo.lighting.dmx.ArtNet;
+import cl.clillo.lighting.external.dmx.ArtNet;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;

@@ -1,6 +1,6 @@
 package cl.clillo.lighting;
 
-import cl.clillo.lighting.dmx.ArtNet;
+import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.gui.controller.ControllerJFrame;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.ShowCollection;

@@ -1,4 +1,4 @@
-package cl.clillo.lighting.dmx;
+package cl.clillo.lighting.external.dmx;
 
 import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.QLCPoint;

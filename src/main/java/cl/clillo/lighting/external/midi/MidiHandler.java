@@ -1,6 +1,4 @@
-package cl.clillo.lighting.midi;
-
-import org.springframework.boot.autoconfigure.session.SessionRepositoryUnavailableException;
+package cl.clillo.lighting.external.midi;
 
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;

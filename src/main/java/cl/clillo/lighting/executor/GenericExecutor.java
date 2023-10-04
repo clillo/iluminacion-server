@@ -1,6 +1,6 @@
 package cl.clillo.lighting.executor;
 
-import cl.clillo.lighting.dmx.Dmx;
+import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.Step;

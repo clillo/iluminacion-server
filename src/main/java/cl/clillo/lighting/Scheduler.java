@@ -1,6 +1,6 @@
 package cl.clillo.lighting;
 
-import cl.clillo.lighting.dmx.ArtNet;
+import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.model.Show;
 
 import java.util.List;

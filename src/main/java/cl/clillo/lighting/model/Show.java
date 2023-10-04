@@ -1,6 +1,5 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.config.scenes.Scene;
 import cl.clillo.lighting.executor.IQLCStepExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
@@ -24,7 +23,6 @@ public class Show {
     private IQLCStepExecutor stepExecutor;
     private int pasoActual;
     private List<Step> stepList;
-    private List<Scene> scenesLists;
     private boolean firstTimeExecution;
     private QLCFunction function;
     private List<Show> uniqueShow;
@@ -75,10 +73,6 @@ public class Show {
 
     public int getPasoActual() {
         return this.pasoActual;
-    }
-
-    public List<Scene> getScenesLists() {
-        return this.scenesLists;
     }
 
     public boolean isFirstTimeExecution() {
@@ -146,7 +140,6 @@ public class Show {
         private long nextExecutionTime;
         private boolean executing;
         private List<Step> stepList;
-        private List<Scene> scenesLists;
         private boolean firstTimeExecution;
         private QLCFunction function;
 
@@ -168,11 +161,6 @@ public class Show {
             return this;
         }
 
-        public ShowBuilder scenesLists(List<Scene> scenesLists) {
-            this.scenesLists = scenesLists;
-            return this;
-        }
-
         public ShowBuilder firstTimeExecution(boolean firstTimeExecution) {
             this.firstTimeExecution = firstTimeExecution;
             return this;
@@ -187,7 +175,7 @@ public class Show {
             IQLCStepExecutor executor = null;
 
             Show show = new Show(id == -1 ? idCount++ : id, this.name, this.nextExecutionTime, this.executing, executor,
-                     0, this.stepList, this.scenesLists,
+                     0, this.stepList,
                     this.firstTimeExecution, this.function, new ArrayList<>());
 
             if (function instanceof QLCSequence)

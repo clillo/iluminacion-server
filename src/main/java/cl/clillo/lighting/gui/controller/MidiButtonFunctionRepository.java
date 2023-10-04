@@ -1,6 +1,6 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.midi.KeyData;
+import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.ShowCollection;

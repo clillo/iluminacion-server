@@ -1,7 +1,7 @@
 package cl.clillo.lighting.gui.movements;
 
 import cl.clillo.lighting.gui.ScreenPoint;
-import cl.clillo.lighting.midi.RoboticNotifiable;
+import cl.clillo.lighting.external.midi.RoboticNotifiable;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
 import cl.clillo.lighting.model.Show;
