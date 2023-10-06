@@ -21,7 +21,7 @@ public class StandAlone {
         //list.addAll(ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single"));
         for (QLCFunction function: list){
             System.out.println(function.getId()+"\t"+function.getName());
-            function.writeToConfigFile();
+         //   function.writeToConfigFile();
        }
     }
 }
