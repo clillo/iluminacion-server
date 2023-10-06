@@ -28,7 +28,7 @@ public class QLCSequenceExecutor implements IQLCStepExecutor {
         final QLCSequence sequence = show.getFunction();
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
-        log.info("executing {} sequence {}: [{}] [{}]", show.getName(), actualStep, sequence.getId(), step);
+        log.info("executing {} sequence {}: [{}] [{}]", show.getName(), actualStep, sequence.getId(), step.getId());
 
         for (QLCPoint point: step.getPointList())
             dmx.send(point);

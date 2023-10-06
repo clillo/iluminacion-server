@@ -67,6 +67,18 @@ public class ShowCollection {
         showList.add(show);
     }
 
+    private void addQLCSequence(final QLCSequence qlcSequence){
+        final Show show = Show.builder()
+                .name(qlcSequence.getName())
+                .executing(false)
+                .firstTimeExecution(true)
+                .stepList(List.of())
+                .function(qlcSequence)
+                .build(qlcSequence.getId());
+        qlcSequence.setShow(show);
+        showList.add(show);
+    }
+
     public List<Show> getShowList() {
         return showList;
     }
@@ -115,6 +127,8 @@ public class ShowCollection {
                     addQLCEfx(QLCEfxLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCScene"))
                     addQLCScene(QLCScene.read(qlcModel, f));
+                if (f.getName().startsWith("QLCSequence"))
+                    addQLCSequence(QLCSequence.read(qlcModel, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

@@ -1,0 +1,41 @@
+<?xml version="1.0" ?>
+<doc>
+    <title>QLCScene.Moving Head Beam + Spot Color.287</title>
+    <common>
+        <id>287</id>
+        <type>Scene</type>
+        <path>Moving Head Beam + Spot Color</path>
+        <name>All Off</name>
+        <blackout>true</blackout>
+    </common>
+    <points>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>true</fixture-robotic>
+            <fixture>8</fixture>
+            <value>0</value>
+            <channel>5</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>true</fixture-robotic>
+            <fixture>10</fixture>
+            <value>0</value>
+            <channel>5</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>true</fixture-robotic>
+            <fixture>11</fixture>
+            <value>0</value>
+            <channel>5</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>true</fixture-robotic>
+            <fixture>18</fixture>
+            <value>0</value>
+            <channel>5</channel>
+        </point>
+    </points>
+</doc>

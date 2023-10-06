@@ -84,7 +84,7 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
     }
 
     public void activePanel(){
-      //  System.out.println("Activating Panel: "+this.index);
+        System.out.println("Activating Panel: "+this.index);
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
                 final QLCButton button = buttonMapByPos.get(matrixX + "-" + matrixY);

@@ -77,11 +77,13 @@ public class QLCFunction extends QLCElement{
         OutputStream outputStream;
         try {
             String name = this.getClass().getSimpleName() + "." ;
+
             if (path==null || path.isEmpty())
                 name = name + this.name;
-            else
-                name = name + path + "." + id;
-
+            else {
+                String fakePath = path.replace('/','.');
+                name = name + fakePath + "." + id;
+            }
             outputStream = new FileOutputStream(QLCReader.repoBase  + "/" + name + ".xml");
             XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
                     new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
@@ -121,6 +123,7 @@ public class QLCFunction extends QLCElement{
         private QLCRunOrder runOrder;
         private QLCScene boundScene;
         private QLCAlgorithm algorithm;
+        private QLCSpeed qlcSpeed;
         private final List<QLCPoint> qlcPointList = new ArrayList<>();
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
@@ -154,6 +157,10 @@ public class QLCFunction extends QLCElement{
             return this;
         }
 
+        public QLCFunctionBuilder speed(final QLCSpeed qlcSpeed) {
+            this.qlcSpeed = qlcSpeed;
+            return this;
+        }
         public void direction(final QLCDirection direction) {
             this.direction = direction;
         }
@@ -193,7 +200,7 @@ public class QLCFunction extends QLCElement{
 
             if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
-                        this.qlcStepList, boundScene);
+                        this.qlcStepList, boundScene, qlcSpeed);
 
             if ("EFX".equalsIgnoreCase(type)){
 

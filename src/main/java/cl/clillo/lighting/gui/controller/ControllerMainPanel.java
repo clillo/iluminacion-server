@@ -6,10 +6,13 @@ import cl.clillo.lighting.external.midi.MidiHandler;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import javax.swing.event.AncestorListener;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerMainPanel extends JPanel implements MidiEvent {
+public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -20,6 +23,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     private final MidiHandler midiHandler;
     private final JTabbedPane tabbedPane;
     private final ControllerEditPanel[] controllerEditPanels;
+    private int activeIndex = -1;
 
     public ControllerMainPanel() {
 
@@ -38,6 +42,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
             pnlList.add(editPanel);
         }
 
+        tabbedPane.addChangeListener(this);
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
         selectPanel(7);
@@ -67,12 +72,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     }
 
     private void selectPanel(int index){
-        cleanMatrix();
+        activePanel(7-index);
+        tabbedPane.removeChangeListener(this);
         tabbedPane.setSelectedIndex(7-index);
-        for (int i=0; i<8; i++)
-            midiHandler.sendSide(i, KeyData.StateLight.OFF);
-        midiHandler.sendSide(index, KeyData.StateLight.RED);
-        controllerEditPanels[7-index].activePanel();
+        tabbedPane.addChangeListener(this);
     }
 
     @Override
@@ -83,5 +86,23 @@ public class ControllerMainPanel extends JPanel implements MidiEvent {
     @Override
     public void onSlide(KeyData keyData) {
 
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        tabbedPane.removeChangeListener(this);
+        activePanel(tabbedPane.getSelectedIndex());
+        tabbedPane.addChangeListener(this);
+    }
+
+    private void activePanel(int index){
+        if (activeIndex==index)
+            return;
+        cleanMatrix();
+        for (int i=0; i<8; i++)
+            midiHandler.sendSide(i, KeyData.StateLight.OFF);
+        midiHandler.sendSide(7-index, KeyData.StateLight.RED);
+        controllerEditPanels[index].activePanel();
+        activeIndex = index;
     }
 }

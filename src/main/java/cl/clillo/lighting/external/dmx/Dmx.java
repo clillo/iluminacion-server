@@ -6,6 +6,7 @@ import cl.clillo.lighting.model.QLCPoint;
 public class Dmx {
 	
 	private final NotificablesCollection notificablesCollection;
+	private final ArtNet artNet = ArtNet.getInstance();
 
 	private static final class InstanceHolder {
 		private static final Dmx instance = new Dmx();
@@ -22,7 +23,6 @@ public class Dmx {
 	public void send(final int channel, final int data){
 		//notificablesCollection.enviar(channel, data);
 		//System.out.println(channel+"\t"+data);
-		ArtNet artNet = ArtNet.getInstance();
 		artNet.send(channel, data);
 	}
 

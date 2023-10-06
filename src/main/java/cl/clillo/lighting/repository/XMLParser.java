@@ -15,6 +15,8 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class XMLParser {
 
@@ -38,6 +40,33 @@ public class XMLParser {
         }
 
         return null;
+    }
+
+    public static Node getNode(final Node node, final String name){
+        NodeList list = node.getChildNodes();
+        for (int temp = 0; temp < list.getLength(); temp++) {
+            Node data = list.item(temp);
+            if (name.equals(data.getNodeName())) {
+               return data;
+            }
+        }
+        return null;
+    }
+
+    public static List<Node> getNodeList(final Node node, final String name){
+        final List<Node> nodeList = new ArrayList<>();
+
+        final NodeList list = node.getChildNodes();
+        for (int temp = 0; temp < list.getLength(); temp++) {
+            Node data = list.item(temp);
+            if (name.equals(data.getNodeName())) {
+                NodeList listData = data.getChildNodes();
+                for (int i = 0; i < listData.getLength(); i++) {
+                    nodeList.add(listData.item(i));
+                }
+            }
+        }
+        return nodeList;
     }
 
     public static String getNodeString(final Node node, final String name){

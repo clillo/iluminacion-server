@@ -40,4 +40,5 @@ public class QLCButtonGroup {
     public QLCScene getGlobalOff() {
         return globalOff;
     }
+
 }

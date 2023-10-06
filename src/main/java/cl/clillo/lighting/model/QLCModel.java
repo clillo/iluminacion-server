@@ -221,12 +221,19 @@ public class QLCModel {
                 builder.algorithm(QLCAlgorithm.valueOf(eElement.getTextContent().toUpperCase()));
 
             }
+
+            if ("Sequence".equalsIgnoreCase(type) && "Speed".equals(eElement.getNodeName())) {
+                builder.speed(getSequenceSpeed(node));
+
+            }
         }
 
         if ("Sequence".equalsIgnoreCase(type)) {
             builder.boundScene((QLCScene) functionMap.get(getAttributeInt(functionNode, "BoundScene")));
 
         }
+
+
         QLCFunction qlcFunction = builder.build();
 
     //    if ("Efx".equalsIgnoreCase(type))
@@ -235,8 +242,17 @@ public class QLCModel {
         return qlcFunction;
     }
 
+    private QLCSpeed getSequenceSpeed(final Node node) {
+        return QLCSpeed.builder()
+                .duration(getAttributeInt(node, "Duration"))
+                .fadeIn(getAttributeInt(node, "FadeIn"))
+                .fadeOut(getAttributeInt(node, "FadeOut"))
+                .build();
+    }
+
     private QLCStep getSequenceStep(final Node node){
         final QLCStep.QLCStepBuilder builder = QLCStep.builder();
+        builder.id(getAttributeInt(node, "Number"));
         builder.fadeIn(getAttributeInt(node, "FadeIn"));
         builder.hold(getAttributeInt(node, "Hold"));
         builder.fadeOut(getAttributeInt(node, "FadeOut"));

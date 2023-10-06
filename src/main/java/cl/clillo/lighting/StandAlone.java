@@ -17,11 +17,11 @@ public class StandAlone {
         final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
 
-        final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Scene", "Moving Head Beam + Spot Color");
-
+        final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Derby");
+        //list.addAll(ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single"));
         for (QLCFunction function: list){
             System.out.println(function.getId()+"\t"+function.getName());
-         //   function.writeToConfigFile();
+            function.writeToConfigFile();
        }
     }
 }
