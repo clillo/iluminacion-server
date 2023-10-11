@@ -4,15 +4,11 @@ import cl.clillo.lighting.executor.IQLCStepExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
 import cl.clillo.lighting.executor.QLCSequenceExecutor;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-public class Show {
+public class Show implements Comparable<Show> {
 
     private static final long NEXT_EXECUTION_DEFAULT = 3000;
 
@@ -26,6 +22,25 @@ public class Show {
     private boolean firstTimeExecution;
     private QLCFunction function;
     private List<Show> uniqueShow;
+    private int[] dimmerChannels;
+
+    public Show(int id, String name, long nextExecutionTime, boolean executing, IQLCStepExecutor stepExecutor,
+                int pasoActual, List<Step> stepList, boolean firstTimeExecution, QLCFunction function,
+                List<Show> uniqueShow) {
+        this.id = id;
+        this.name = name;
+        this.nextExecutionTime = nextExecutionTime;
+        this.executing = executing;
+        this.stepExecutor = stepExecutor;
+        this.pasoActual = pasoActual;
+        this.stepList = stepList;
+        this.firstTimeExecution = firstTimeExecution;
+        this.function = function;
+        this.uniqueShow = uniqueShow;
+    }
+
+    public Show() {
+    }
 
     public <T extends QLCFunction> T getFunction() {
         return (T) function;
@@ -97,14 +112,14 @@ public class Show {
 
     public void setExecuting(boolean executing) {
         this.executing = executing;
-        this.nextExecutionTime =  -1;
+        this.nextExecutionTime = -1;
         if (executing)
             setFirstTimeExecution(true);
     }
 
     public void setExecuteOneTime(boolean executing) {
         this.executing = executing;
-        this.nextExecutionTime =  -1;
+        this.nextExecutionTime = -1;
         if (executing)
             setFirstTimeExecution(true);
     }
@@ -130,7 +145,20 @@ public class Show {
     }
 
     public String toString() {
-        return "Show(id=" + this.getId() + ", name=" + this.getName() +")";
+        return "Show(id=" + this.getId() + ", name=" + this.getName() + ")";
+    }
+
+    public int[] getDimmerChannels() {
+        return dimmerChannels;
+    }
+
+    public void setDimmerChannels(int[] dimmerChannels) {
+        this.dimmerChannels = dimmerChannels;
+    }
+
+    @Override
+    public int compareTo(Show o) {
+        return this.id - o.getId();
     }
 
     public static class ShowBuilder {
@@ -175,7 +203,7 @@ public class Show {
             IQLCStepExecutor executor = null;
 
             Show show = new Show(id == -1 ? idCount++ : id, this.name, this.nextExecutionTime, this.executing, executor,
-                     0, this.stepList,
+                    0, this.stepList,
                     this.firstTimeExecution, this.function, new ArrayList<>());
 
             if (function instanceof QLCSequence)
@@ -194,4 +222,5 @@ public class Show {
         }
 
     }
+
 }

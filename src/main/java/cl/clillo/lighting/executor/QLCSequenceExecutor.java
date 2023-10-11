@@ -13,9 +13,11 @@ public class QLCSequenceExecutor implements IQLCStepExecutor {
     private final Dmx dmx = Dmx.getInstance();
     private int actualStep;
     private final Show show;
+    private int[] dimmerChannels;
 
     public QLCSequenceExecutor(final Show show) {
         this.show = show;
+        dimmerChannels = show.getDimmerChannels();
     }
 
     @Override

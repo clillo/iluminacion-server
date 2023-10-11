@@ -9,6 +9,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ShowCollection {
@@ -101,6 +102,7 @@ public class ShowCollection {
         }
 
         showList.add(show);
+        Collections.sort(showList);
     }
 
     public List<Show> getShowList() {
@@ -175,6 +177,7 @@ public class ShowCollection {
             if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
                 functionList.add(function);
         }
+
         return functionList;
     }
 
