@@ -1,6 +1,5 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.gui.ScreenPoint;
 import lombok.Getter;
 import lombok.Setter;
@@ -93,17 +92,17 @@ public abstract class QLCEfx extends QLCFunction{
             for (int positionFixture=0; positionFixture<getFixtureList().size(); positionFixture++) {
                 QLCEfxFixtureData fixtureData = getFixtureList().get(positionFixture);
 
-                final QLCRoboticFixture fixture = fixtureData.getFixture();
-
                 int fixtureIndexPosition = ((fixtureData.isReverse()?positionsSize-positionIndex:positionIndex)+ (int)fixtureData.getStartOffset())%positionsSize;
                 final QLCEfxPosition position = positions.get(fixtureIndexPosition);
 
                 screenPoints[positionFixture] = position.buildScreenPoint();
 
-                channels.add(new int[]{fixture.getPanDmxChannel(), fixture.getTiltDmxChannel(),
-                        fixture.getPanFineDmxChannel(), fixture.getTiltFineDmxChannel()});
+                channels.add(fixtureData.getChannels());
 
-                data.add(position.buildDataArray());
+             //   if (fixtureData.getChannels().length==4)
+              //      data.add(position.buildSimpleDataArray());
+              //  else
+                    data.add(position.buildDataArray());
             }
 
             final QLCExecutionNode node = QLCExecutionNode.builder()

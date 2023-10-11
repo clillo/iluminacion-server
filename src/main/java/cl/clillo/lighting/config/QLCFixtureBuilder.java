@@ -3,6 +3,7 @@ package cl.clillo.lighting.config;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
+import cl.clillo.lighting.fixture.qlc.QLCSimpleRoboticFixture;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -66,8 +67,14 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         list.add(QLCRoboticFixture.build(11, 90, fixtureModelC));
         list.add(QLCRoboticFixture.build(18, 40, fixtureModelC));
 
-        list.add(QLCFixture.build(4, 300, fixtureLaser)); // spider
-        list.add(QLCFixture.build(5, 320, fixtureLaser));
+   //     QLCFixtureModel fixtureSpider = new QLCFixtureModel("Generic", "Generic", "Spider", new String[]{
+   //             "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r", "pan fine", "tilt fine"}, false);
+
+        QLCFixtureModel fixtureSpider = new QLCFixtureModel("Generic", "Generic", "Spider", new String[]{
+                "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r"}, false);
+
+        list.add(QLCSimpleRoboticFixture.build(4, 300, fixtureSpider)); // spider
+        list.add(QLCSimpleRoboticFixture.build(5, 320, fixtureSpider));
 
         list.add(QLCFixture.build(6, 150, fixtureLaser)); // derby
         list.add(QLCFixture.build(7, 181, fixtureLaser));

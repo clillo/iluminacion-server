@@ -34,6 +34,10 @@ public class QLCEfxPosition {
         return new int[] {(int) vPan, (int) vTilt, (int) vPanFine, (int) vTiltFine};
     }
 
+    public int[] buildSimpleDataArray(){
+        return new int[] {(int) vPan, (int) vTilt};
+    }
+
     public static QLCEfxPositionBuilder builder() {
         return new QLCEfxPositionBuilder();
     }

@@ -59,7 +59,7 @@ public class QLCFunction extends QLCElement{
             out.writeStartElement("fixture");
 
             out.writeStartElement("id");
-            out.writeCharacters(String.valueOf(data.getFixture().getId()));
+            out.writeCharacters(String.valueOf(data.getRoboticFixture().getId()));
             out.writeEndElement();
             out.writeStartElement("offset");
             out.writeCharacters(String.valueOf(data.getStartOffset()));
@@ -107,8 +107,7 @@ public class QLCFunction extends QLCElement{
     }
 
     protected static QLCEfxFixtureData buildFixtureData(final FixtureListBuilder fixtureListBuilder, final Node node){
-        return QLCEfxFixtureData.builder().fixture(fixtureListBuilder
-                        .getFixture(XMLParser.getNodeInt(node, "id")))
+        return QLCEfxFixtureData.builder().fixture(fixtureListBuilder.getFixture(XMLParser.getNodeInt(node, "id")))
                 .startOffset(XMLParser.getNodeDouble(node, "offset"))
                 .reverse(XMLParser.getNodeBoolean(node, "reverse"))
                 .build();
@@ -187,7 +186,7 @@ public class QLCFunction extends QLCElement{
         }
 
         public QLCFunctionBuilder addFixture(final QLCRoboticFixture fixture) {
-            this.roboticFixtureList.add(QLCEfxFixtureData.builder().fixture(fixture).build());
+            this.roboticFixtureList.add(QLCEfxFixtureData.builder().roboticFixture(fixture).build());
             return this;
         }
 

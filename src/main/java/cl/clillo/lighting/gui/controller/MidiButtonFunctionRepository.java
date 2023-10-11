@@ -33,15 +33,17 @@ public class MidiButtonFunctionRepository {
 
         createRows(1, 6, "Sequence", "RGBW", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
-        createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
-        qlcButtonGroup = createRows(2, 4, "Scene", "Spider Positions", 0, 2,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
-        createRows(2, 4, "Sequence", "Spiders/Multiple", 3, 1,
-                KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
-        createRows(2, 4, "Sequence", "Spiders/Single", 6, 1,
+        qlcButtonGroup = createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+
+        createRows(2, 3, "Sequence", "Spiders/Multiple", 5, 4,
+                KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
+
+        qlcButtonGroup = createRows(2, 7, "Scene", "Spider Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+
+        createRows(2, 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
                 KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
 
         createRows(3, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
-
 
     }
 

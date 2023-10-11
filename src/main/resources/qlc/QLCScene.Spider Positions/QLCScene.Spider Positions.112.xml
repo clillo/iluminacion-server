@@ -1,1 +1,40 @@
-<?xml version="1.0" ?><doc><title>QLCScene.Spider Positions.112</title><common><id>112</id><type>Scene</type><path>Spider Positions</path><name>Spider - L L R R</name></common><points><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>4</fixture><value>10</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>4</fixture><value>0</value><channel>1</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>5</fixture><value>175</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>5</fixture><value>175</value><channel>1</channel></point></points></doc>
+<?xml version="1.0" ?>
+<doc>
+    <title>QLCScene.Spider Positions.112</title>
+    <common>
+        <id>112</id>
+        <type>Scene</type>
+        <path>Spider Positions</path>
+        <name>Spider - L L R R</name>
+    </common>
+    <points>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>4</fixture>
+            <value>10</value>
+            <channel>0</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>4</fixture>
+            <value>0</value>
+            <channel>1</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>5</fixture>
+            <value>175</value>
+            <channel>0</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>5</fixture>
+            <value>175</value>
+            <channel>1</channel>
+        </point>
+    </points>
+</doc>

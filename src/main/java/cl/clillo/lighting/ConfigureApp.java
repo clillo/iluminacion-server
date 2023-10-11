@@ -10,8 +10,8 @@ public class ConfigureApp {
 
     public ConfigureApp() {
         //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
-        //  ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+          ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
+        //ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
         ShowCollection.getInstance();
 

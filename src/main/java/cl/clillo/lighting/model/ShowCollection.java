@@ -49,9 +49,9 @@ public class ShowCollection {
                 .firstTimeExecution(true)
                 .stepList(List.of())
                 .function(qlcEfx)
-                .build();
+                .build(qlcEfx.getId());
         show.setUniqueShow(showQLCEfxList);
-        showList.add(show);
+        addShow(show);
         showQLCEfxList.add(show);
     }
 
@@ -64,7 +64,7 @@ public class ShowCollection {
                 .function(qlcScene)
                 .build(qlcScene.getId());
         qlcScene.setShow(show);
-        showList.add(show);
+        addShow(show);
     }
 
     private void addQLCSequence(final QLCSequence qlcSequence){
@@ -76,6 +76,30 @@ public class ShowCollection {
                 .function(qlcSequence)
                 .build(qlcSequence.getId());
         qlcSequence.setShow(show);
+        addShow(show);
+    }
+
+    private void addShow(final Show show){
+        if (show.getId()<=0) {
+            System.out.println("Show con id 0: "+show.getName());
+            System.exit(0);
+        }
+        if (show.getFunction().getId()<=0) {
+            System.out.println("Show con function id 0: "+show.getName());
+            System.exit(0);
+        }
+
+        for (Show show1: showList) {
+            if (show1.getId() == show.getId()) {
+                System.out.println("Show con id : " + show.getId() + " repetido\t" + show.getName() + "\t" + show1.getName());
+                System.exit(0);
+            }
+            if (show1.getFunction().getId() == show.getFunction().getId()) {
+                System.out.println("Show con function id : " + show.getFunction().getId() + " repetido\t" + show.getName() + "\t" + show1.getName());
+                System.exit(0);
+            }
+        }
+
         showList.add(show);
     }
 

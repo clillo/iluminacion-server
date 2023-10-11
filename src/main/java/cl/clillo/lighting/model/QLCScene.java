@@ -74,8 +74,6 @@ public class QLCScene extends QLCFunction{
         final boolean isRobotic = XMLParser.getNodeBoolean(node, "fixture-robotic");
         int fixtureId = XMLParser.getNodeInt(node, "fixture");
 
-        if (fixtureId==6 || fixtureId==7)
-            return null;
         if (!isRobotic) {
             return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(fixtureId),
                     XMLParser.getNodeInt(node, "channel"),
@@ -125,4 +123,5 @@ public class QLCScene extends QLCFunction{
     public void setShow(Show show) {
         this.show = show;
     }
+
 }

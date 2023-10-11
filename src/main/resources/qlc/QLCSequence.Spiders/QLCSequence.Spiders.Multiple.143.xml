@@ -11,9 +11,9 @@
         <step>
             <common>
                 <id>0</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -35,16 +35,6 @@
                     <fixture>5</fixture>
                     <channel>324</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -84,16 +74,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -141,9 +121,9 @@
         <step>
             <common>
                 <id>1</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -165,16 +145,6 @@
                     <fixture>5</fixture>
                     <channel>325</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -214,16 +184,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -271,9 +231,9 @@
         <step>
             <common>
                 <id>2</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -295,16 +255,6 @@
                     <fixture>5</fixture>
                     <channel>326</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -344,16 +294,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -401,9 +341,9 @@
         <step>
             <common>
                 <id>3</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -425,16 +365,6 @@
                     <fixture>5</fixture>
                     <channel>327</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -474,16 +404,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -531,9 +451,9 @@
         <step>
             <common>
                 <id>4</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -555,16 +475,6 @@
                     <fixture>5</fixture>
                     <channel>328</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -604,16 +514,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -661,9 +561,9 @@
         <step>
             <common>
                 <id>5</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -685,16 +585,6 @@
                     <fixture>5</fixture>
                     <channel>329</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -734,16 +624,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -791,9 +671,9 @@
         <step>
             <common>
                 <id>6</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -815,16 +695,6 @@
                     <fixture>5</fixture>
                     <channel>330</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -864,16 +734,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>309</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>
@@ -921,9 +781,9 @@
         <step>
             <common>
                 <id>7</id>
-                <fadeIn>2000</fadeIn>
+                <fadeIn>500</fadeIn>
                 <hold>500</hold>
-                <fadeOut>2000</fadeOut>
+                <fadeOut>100</fadeOut>
             </common>
             <points>
                 <point>
@@ -945,16 +805,6 @@
                     <fixture>5</fixture>
                     <channel>323</channel>
                     <data>255</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>299</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>4</fixture>
-                    <channel>300</channel>
-                    <data>0</data>
                 </point>
                 <point>
                     <fixture>4</fixture>
@@ -994,16 +844,6 @@
                 <point>
                     <fixture>4</fixture>
                     <channel>310</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>319</channel>
-                    <data>0</data>
-                </point>
-                <point>
-                    <fixture>5</fixture>
-                    <channel>320</channel>
                     <data>0</data>
                 </point>
                 <point>

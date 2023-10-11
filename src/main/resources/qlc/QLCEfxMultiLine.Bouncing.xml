@@ -2,9 +2,9 @@
 <doc>
     <title>QLCEfxMultiLine.Bouncing</title>
     <common>
-        <id>0</id>
+        <id>1100</id>
         <type>EfxMultiLine</type>
-        <path>null</path>
+        <path></path>
         <name>Bouncing Cross</name>
     </common>
     <fixtures>

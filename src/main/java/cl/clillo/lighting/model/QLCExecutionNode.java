@@ -17,12 +17,14 @@ public class QLCExecutionNode {
 
     public QLCExecutionNode(final int[] channel, final int[] data, final long holdTime, final ScreenPoint[] screenPoints) {
         this.screenPoints = screenPoints;
-        if (channel.length != data.length && data.length != screenPoints.length)
+        if (channel.length != data.length && data.length != screenPoints.length) {
             throw new RuntimeException("channel, screenPoints and data has different size");
+        }
 
         this.channel = channel;
         this.data = data;
         this.holdTime = holdTime;
+
     }
 
     public static QLCExecutionNodeBuilder builder() {
@@ -64,14 +66,18 @@ public class QLCExecutionNode {
         private int[] data;
         private ScreenPoint[] screenPoints;
         private long holdTime;
+        private int lengthChannels=0;
 
         QLCExecutionNodeBuilder() {
         }
 
         public QLCExecutionNodeBuilder channel(List<int[]> channel) {
             int n=0;
-            for (int[] ints : channel) n += ints.length;
-
+            for (int[] ints : channel) {
+                if (ints.length>lengthChannels)
+                    lengthChannels=ints.length;
+                n += ints.length;
+            }
             this.channel = new int[n];
             n=0;
             for (int[] ints : channel)
@@ -86,14 +92,24 @@ public class QLCExecutionNode {
         }
 
         public QLCExecutionNodeBuilder data(List<int[]> data) {
+            if (data.size()==0) {
+                this.data = new int[0];
+                return this;
+            }
             int n=0;
-            for (int[] ints : data) n += ints.length;
+            for (int[] ints : data) {
+                n += Math.min(ints.length, this.lengthChannels);
 
+            }
             this.data = new int[n];
             n=0;
-            for (int[] ints : data)
-                for (int anInt : ints) this.data[n++] = anInt;
-
+            for (int[] ints : data) {
+                int index = 0;
+                for (int anInt : ints) {
+                    if (index++ < this.lengthChannels)
+                        this.data[n++] = anInt;
+                }
+            }
             return this;
         }
 
@@ -113,6 +129,8 @@ public class QLCExecutionNode {
         }
 
         public QLCExecutionNode build() {
+   //         if (this.data.length>0)
+ //               System.out.println("A");
             return new QLCExecutionNode(this.channel, this.data, this.holdTime, this.screenPoints);
         }
 

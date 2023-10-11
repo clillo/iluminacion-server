@@ -181,11 +181,18 @@ public class QLCSequence extends QLCFunction{
                 .pointList(points);
 
         for(Node point: XMLParser.getNodeList(node, "points")){
-            points.add(QLCPoint.builder()
-                            .data(XMLParser.getNodeInt(point, "data"))
-                            .dmxChannel(XMLParser.getNodeInt(point, "channel"))
-                            .fixture(fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture")))
-                    .build());
+            int data = XMLParser.getNodeInt(point, "data");
+            int channel = XMLParser.getNodeInt(point, "channel");
+            if (data!=-1 && channel!=-1) {
+       //         System.out.println("Point data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
+                points.add(QLCPoint.builder()
+                        .data(data)
+                        .dmxChannel(channel)
+                        .fixture(fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture")))
+                        .build());
+            }else{
+              //  System.out.println(qlcStep+"\tPoint data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
+            }
         }
 
         return qlcStep.build();
