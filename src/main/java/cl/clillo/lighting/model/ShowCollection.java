@@ -102,7 +102,6 @@ public class ShowCollection {
         }
 
         showList.add(show);
-        Collections.sort(showList);
     }
 
     public List<Show> getShowList() {
@@ -159,6 +158,8 @@ public class ShowCollection {
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }
+
+        Collections.sort(showList);
     }
 
     public List<QLCFunction> getOriginalFunctionList(final String type, final String path){

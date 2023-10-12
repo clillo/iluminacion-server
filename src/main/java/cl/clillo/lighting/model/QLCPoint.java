@@ -7,10 +7,10 @@ import lombok.Getter;
 @Getter
 public class QLCPoint {
 
-    private QLCFixture fixture;
-    private int channel;
-    private int dmxChannel;
-    private int data;
+    private final QLCFixture fixture;
+    private final int channel;
+    private final int dmxChannel;
+    private final int data;
     private final QLCFixture.ChannelType channelType;
 
     QLCPoint(QLCFixture fixture, int channel, int dmxChannel, int data, QLCFixture.ChannelType channelType) {
@@ -30,7 +30,28 @@ public class QLCPoint {
     }
 
     public String toString() {
-        return "QLCPoint(fixture=" + this.getFixture().getId() + ", channel=" + this.getChannel() + ", dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
+        return "QLCPoint(fixture=" + this.getFixture().getId() + ",  dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
+    }
+
+    public QLCPoint replaceDimmerValue(final int value){
+        if (fixture==null)
+            return null;
+
+        int dmxChannel = fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER);
+
+        if (dmxChannel==-1)
+            return null;
+
+        if (this.dmxChannel!=dmxChannel)
+            return null;
+
+        return QLCPoint.builder()
+                .fixture(fixture)
+                .dmxChannel(dmxChannel)
+                .channel(channel)
+                .data(value)
+                .build();
+
     }
 
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data) {
@@ -47,7 +68,6 @@ public class QLCPoint {
         int dmxChannel = fixture.getDMXChannel(channel);
         return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
     }
-
 
     public static class QLCPointBuilder {
         private QLCFixture fixture;

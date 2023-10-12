@@ -13,11 +13,10 @@ public class QLCSequenceExecutor implements IQLCStepExecutor {
     private final Dmx dmx = Dmx.getInstance();
     private int actualStep;
     private final Show show;
-    private int[] dimmerChannels;
 
     public QLCSequenceExecutor(final Show show) {
         this.show = show;
-        dimmerChannels = show.getDimmerChannels();
+
     }
 
     @Override
@@ -30,7 +29,7 @@ public class QLCSequenceExecutor implements IQLCStepExecutor {
         final QLCSequence sequence = show.getFunction();
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
-        log.info("executing {} sequence {}: [{}] [{}]", show.getName(), actualStep, sequence.getId(), step.getId());
+//        log.info("executing {} sequence {}: [{}] [{}] {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
 
         for (QLCPoint point: step.getPointList())
             dmx.send(point);

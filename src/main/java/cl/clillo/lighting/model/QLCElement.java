@@ -70,4 +70,8 @@ public class QLCElement {
     public void setBlackout(boolean blackout) {
         this.blackout = blackout;
     }
+
+    protected int[] getDimmerChannels(){
+        return new int[0];
+    }
 }

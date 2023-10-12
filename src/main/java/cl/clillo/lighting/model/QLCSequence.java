@@ -16,7 +16,9 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @ToString
 @Getter
@@ -28,40 +30,103 @@ public class QLCSequence extends QLCFunction{
     private final QLCScene boundScene;
     private final QLCSpeed qlcSpeed;
     private Show show;
+    private final Set<Integer> dimmerChannelSet;
 
     public QLCSequence(final int id, final String type, final String name, final String path,
                        final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
                        final QLCScene boundScene, final QLCSpeed qlcSpeed) {
         super(id, type, name, path);
-        this.qlcStepList = qlcStepList;
+
         this.direction = direction;
         this.runOrder = runOrder;
         this.boundScene = boundScene;
         this.qlcSpeed = qlcSpeed;
 
-        if (boundScene!=null)
-            for (QLCPoint boundPoint: boundScene.getQlcPointList()){
+        dimmerChannelSet = new HashSet<>();
+
+        if (boundScene != null)
+            for (QLCPoint boundPoint : boundScene.getQlcPointList()) {
                 final String operationalBoundId = boundPoint.getOperationalId();
-                for (QLCStep step: qlcStepList){
+                for (QLCStep step : qlcStepList) {
                     boolean found = false;
-                    for (QLCPoint stepPoint: step.getPointList()) {
-                          if (stepPoint.getOperationalId().equals(operationalBoundId))
-                              found = true;
+                    for (QLCPoint stepPoint : step.getPointList()) {
+                        if (stepPoint.getOperationalId().equals(operationalBoundId))
+                            found = true;
                     }
                     if (!found)
                         step.getPointList().add(boundPoint);
 
                 }
             }
-        for (QLCStep step: qlcStepList) {
-            if (step.getFadeIn()==0)
+
+        final Set<QLCFixture> fixtures = new HashSet<>();
+
+        for (QLCStep step : qlcStepList) {
+            if (step.getFadeIn() == 0)
                 step.setFadeIn(qlcSpeed.getFadeIn());
-            if (step.getFadeOut()==0)
+            if (step.getFadeOut() == 0)
                 step.setFadeOut(qlcSpeed.getFadeOut());
-            if (step.getHold()==0)
+            if (step.getHold() == 0)
                 step.setHold(qlcSpeed.getDuration() - qlcSpeed.getFadeIn());
+          //  for (QLCPoint point : step.getPointList())
+            //    fixtures.add(point.getFixture());
+        }
+/*
+        for (QLCFixture fixture : fixtures) {
+            if (fixture != null && fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER) >= 0)
+                dimmerChannelSet.add(fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER));
+        }
+*/
+        this.qlcStepList = new ArrayList<>();
+
+        for (QLCStep step : qlcStepList)
+            buildFakeSteps(step);
+
+        if (this.id==25)
+            System.out.println("AQUI");
+    }
+
+    private static final int MIN_STEP_DURATION = 10; // in millis
+
+    private void buildFakeSteps(final QLCStep step){
+        if (step.getFadeIn() == 0 && step.getFadeOut() == 0)
+            this.qlcStepList.add(step);
+
+        if (step.getFadeIn()!=0){
+            int numberOfFakeSteps = step.getFadeIn()/MIN_STEP_DURATION;
+            int deltaDimmer = 255 / numberOfFakeSteps;
+            int valueDimmer = 0;
+
+            for (int i=0; i<numberOfFakeSteps; i++) {
+                this.qlcStepList.add(QLCStep.builder()
+                        .id(this.qlcStepList.size()+1)
+                        .fadeIn(0)
+                        .fadeOut(0)
+                        .hold(MIN_STEP_DURATION)
+                        .pointList(i==0?step.replaceDimmerValue(valueDimmer):step.onlyDimmerValue(valueDimmer))
+                        .build());
+                valueDimmer+=deltaDimmer;
+            }
         }
 
+        this.qlcStepList.add(step);
+
+        if (step.getFadeOut()!=0){
+            int numberOfFakeSteps = step.getFadeOut()/MIN_STEP_DURATION;
+            int deltaDimmer = 255 / numberOfFakeSteps;
+            int valueDimmer = 255;
+
+            for (int i=0; i<numberOfFakeSteps; i++) {
+                this.qlcStepList.add(QLCStep.builder()
+                        .id(this.qlcStepList.size()+1)
+                        .fadeIn(0)
+                        .fadeOut(0)
+                        .hold(MIN_STEP_DURATION)
+                        .pointList(i==0?step.replaceDimmerValue(valueDimmer):step.onlyDimmerValue(valueDimmer))
+                        .build());
+                valueDimmer-=deltaDimmer;
+            }
+        }
     }
 
     public void setShow(Show show) {
@@ -97,8 +162,6 @@ public class QLCSequence extends QLCFunction{
         super.writeElements(out);
         writeSteps(out);
     }
-
-
 
     protected void writeSteps(final XMLStreamWriter out) throws XMLStreamException {
         out.writeStartElement("steps");
@@ -153,21 +216,22 @@ public class QLCSequence extends QLCFunction{
         final QLCDirection direction = QLCDirection.FORWARD;
         final QLCRunOrder runOrder = QLCRunOrder.LOOP;
         final QLCSpeed qlcSpeed = QLCSpeed.builder().build();
-        final QLCSequence sequence = new QLCSequence(function.getId(), function.getType(), function.getName(),
-                function.getPath(), direction, runOrder, qlcStepList, null, qlcSpeed);
 
         final Node common = doc.getElementsByTagName("steps").item(0);
         final NodeList list = common.getChildNodes();
+
         for (int temp = 0; temp < list.getLength(); temp++) {
             Node node = list.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
                 final QLCStep step = buildStep(fixtureListBuilder, node);
-                if (step!=null)
+                if (step!=null) {
                     qlcStepList.add(step);
+                }
             }
         }
 
-        return sequence;
+        return new QLCSequence(function.getId(), function.getType(), function.getName(),
+                function.getPath(), direction, runOrder, qlcStepList, null, qlcSpeed);
     }
 
     protected static QLCStep buildStep(final FixtureListBuilder fixtureListBuilder, final Node node){
@@ -185,10 +249,12 @@ public class QLCSequence extends QLCFunction{
             int channel = XMLParser.getNodeInt(point, "channel");
             if (data!=-1 && channel!=-1) {
        //         System.out.println("Point data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
+                final QLCFixture fixture = fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture"));
+
                 points.add(QLCPoint.builder()
                         .data(data)
                         .dmxChannel(channel)
-                        .fixture(fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture")))
+                        .fixture(fixture)
                         .build());
             }else{
               //  System.out.println(qlcStep+"\tPoint data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
@@ -196,5 +262,14 @@ public class QLCSequence extends QLCFunction{
         }
 
         return qlcStep.build();
+    }
+
+    protected int[] getDimmerChannels(){
+        final int [] dimmerChannels = new int[dimmerChannelSet.size()];
+        int i=0;
+        for (int channel: dimmerChannelSet)
+            dimmerChannels[i++]= channel;
+
+        return dimmerChannels;
     }
 }

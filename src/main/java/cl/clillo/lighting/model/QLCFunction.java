@@ -197,10 +197,10 @@ public class QLCFunction extends QLCElement{
             if ("Collection".equalsIgnoreCase(type))
                 return new QLCCollection(this.id, this.type, this.name, this.path, this.qlcFunctionList);
 
-            if ("Sequence".equalsIgnoreCase(type))
+         /*   if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                         this.qlcStepList, boundScene, qlcSpeed);
-
+*/
             if ("EFX".equalsIgnoreCase(type)){
 
                 if ( QLCAlgorithm.CIRCLE==algorithm)

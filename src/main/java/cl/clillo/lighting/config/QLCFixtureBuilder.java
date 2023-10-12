@@ -14,35 +14,23 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
 
     private final Map<Integer, QLCFixture> fixtureMap;
 
-    private String manufacturer = "manufacturer";
-    private String model = "model";
-    private String mode = "mode";
-    private String name = "name";
-    private int universe = 0;
-
     public QLCFixtureBuilder(List<QLCFixtureModel> fixtureModelList) {
         this.fixtureMap = new HashMap<>();
 
         QLCFixtureModel fixtureModelA = null;
         QLCFixtureModel fixtureModelB = null;
         QLCFixtureModel fixtureModelC = null;
-        QLCFixtureModel fixtureLaser = null;
+
         for (QLCFixtureModel fixtureModel1: fixtureModelList) {
             if ("MovingHead".equalsIgnoreCase(fixtureModel1.getManufacturer()))
                fixtureModelB = fixtureModel1;
-       //     if ("Moving Head 2".equalsIgnoreCase(fixtureModel1.getModel()))
-        //        fixtureModelB = fixtureModel1;
             if ("Moving Head 2".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelA = fixtureModel1;
             if ("beam+spot".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelC = fixtureModel1;
-
-
         }
 
-        fixtureLaser = new QLCFixtureModel("Generic", "Generic", "Laser", new String[24], false);
-
-        List<QLCFixture> fixtureList = buildDefaultFixtures(fixtureModelA, fixtureModelB, fixtureModelC, fixtureLaser);
+        List<QLCFixture> fixtureList = buildDefaultFixtures(fixtureModelA, fixtureModelB, fixtureModelC);
         for (QLCFixture fixture: fixtureList)
             fixtureMap.put(fixture.getId(), fixture);
 
@@ -50,8 +38,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
 
     public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA,
                                                  QLCFixtureModel fixtureModelB,
-                                                 QLCFixtureModel fixtureModelC,
-                                                 QLCFixtureModel fixtureLaser){
+                                                 QLCFixtureModel fixtureModelC){
         final List<QLCFixture> list = new ArrayList<>();
 
         list.add(QLCRoboticFixture.build(101, 260, fixtureModelA));
@@ -67,17 +54,19 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         list.add(QLCRoboticFixture.build(11, 90, fixtureModelC));
         list.add(QLCRoboticFixture.build(18, 40, fixtureModelC));
 
-   //     QLCFixtureModel fixtureSpider = new QLCFixtureModel("Generic", "Generic", "Spider", new String[]{
-   //             "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r", "pan fine", "tilt fine"}, false);
-
         QLCFixtureModel fixtureSpider = new QLCFixtureModel("Generic", "Generic", "Spider", new String[]{
                 "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r"}, false);
 
         list.add(QLCSimpleRoboticFixture.build(4, 300, fixtureSpider)); // spider
         list.add(QLCSimpleRoboticFixture.build(5, 320, fixtureSpider));
 
-        list.add(QLCFixture.build(6, 150, fixtureLaser)); // derby
-        list.add(QLCFixture.build(7, 181, fixtureLaser));
+        QLCFixtureModel fixtureDerby = new QLCFixtureModel("Generic", "Generic", "Derby", new String[]{
+                "master dimmer", "red", "green", "blue", "white", "strobe", "Gobo wheel", "auto"}, false);
+
+        list.add(QLCFixture.build(7, 150, fixtureDerby)); // derby
+        list.add(QLCFixture.build(6, 181, fixtureDerby));
+
+        QLCFixtureModel fixtureLaser = new QLCFixtureModel("Generic", "Generic", "Laser", new String[24], false);
 
         list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser
         return list;

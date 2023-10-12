@@ -37,6 +37,7 @@ public class Show implements Comparable<Show> {
         this.firstTimeExecution = firstTimeExecution;
         this.function = function;
         this.uniqueShow = uniqueShow;
+        dimmerChannels = function.getDimmerChannels();
     }
 
     public Show() {
