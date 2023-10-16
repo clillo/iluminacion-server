@@ -31,7 +31,8 @@ public class MidiButtonFunctionRepository {
         QLCButtonGroup qlcButtonGroup = createRows(1, 2, "Scene", "Derby", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
         createRows(1, 2, "Sequence", "Derby", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
 
-        createRows(1, 6, "Sequence", "RGBW", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        qlcButtonGroup = createRows(1, 6, "Sequence", "RGBW", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows(1, 6, "Scene", "RGBW", 1, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, qlcButtonGroup);
 
         qlcButtonGroup = createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
 
@@ -45,6 +46,21 @@ public class MidiButtonFunctionRepository {
 
         createRows(3, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
+        consistencyCheck();
+    }
+
+    private void consistencyCheck(){
+        for (Map.Entry<Integer, List<QLCButtonGroup>> panel: buttonGroupMap.entrySet()){
+
+            for (QLCButtonGroup buttonGroup: panel.getValue()) {
+                QLCScene blackoutScene = null;
+                if (buttonGroup.getGlobalOff()!=null)
+                    blackoutScene = buttonGroup.getGlobalOff();
+
+                if (blackoutScene == null)
+                    System.out.println("Panel: " + panel.getKey() + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
+            }
+        }
     }
 
     private QLCButtonGroup createRows(final int panelId, final int groupId, final String type, final String path, int matrixX,
@@ -67,11 +83,11 @@ public class MidiButtonFunctionRepository {
                 blackoutScene = (QLCScene)function;
         }
 
-        if (blackoutScene==null)
-            System.out.println(panelId+"\t"+groupId+"\tNo tiene off");
-
         if (qlcButtonGroup==null)
-            qlcButtonGroup = new QLCButtonGroup(panelId, groupId, type, new ArrayList<>(), blackoutScene);
+            qlcButtonGroup = new QLCButtonGroup(panelId, groupId, type, new ArrayList<>());
+
+        if (qlcButtonGroup.getGlobalOff()==null && blackoutScene!=null)
+            qlcButtonGroup.setGlobalOff(blackoutScene);
 
         final List<QLCButton> laserButtons = qlcButtonGroup.getButtonList();
 
@@ -91,7 +107,7 @@ public class MidiButtonFunctionRepository {
         if (!buttonGroupMap.containsKey(panelId))
             buttonGroupMap.put(panelId, new ArrayList<>());
 
-         buttonGroupMap.get(panelId).add(qlcButtonGroup);
+        buttonGroupMap.get(panelId).add(qlcButtonGroup);
         return qlcButtonGroup;
     }
 

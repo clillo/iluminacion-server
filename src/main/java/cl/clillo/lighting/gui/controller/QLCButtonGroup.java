@@ -10,15 +10,14 @@ public class QLCButtonGroup {
     private final int idPanel;
     private final String name;
     private final List<QLCButton> buttonList;
-    private final QLCScene globalOff;
+    private QLCScene globalOff;
     private int finalOffReview;
 
-    public QLCButtonGroup(final int idPanel, final int id, final String name, final List<QLCButton> buttonList, final QLCScene globalOff) {
+    public QLCButtonGroup(final int idPanel, final int id, final String name, final List<QLCButton> buttonList) {
         this.idPanel = idPanel;
         this.id = id;
         this.name = name;
         this.buttonList = buttonList;
-        this.globalOff = globalOff;
     }
 
     public List<QLCButton> getButtonList() {
@@ -41,4 +40,11 @@ public class QLCButtonGroup {
         return globalOff;
     }
 
+    public void setGlobalOff(QLCScene globalOff) {
+        this.globalOff = globalOff;
+    }
+
+    public int getId() {
+        return id;
+    }
 }

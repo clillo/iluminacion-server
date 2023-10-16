@@ -69,6 +69,15 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         QLCFixtureModel fixtureLaser = new QLCFixtureModel("Generic", "Generic", "Laser", new String[24], false);
 
         list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser
+
+        QLCFixtureModel fixtureRGBW = new QLCFixtureModel("Generic", "Generic", "RGBW", new String[]{
+                "master dimmer", "red", "green", "blue", "white", "strobe", "color change"}, false);
+
+        list.add(QLCFixture.build(0, 400, fixtureRGBW));
+        list.add(QLCFixture.build(1, 410, fixtureRGBW));
+        list.add(QLCFixture.build(2, 420, fixtureRGBW));
+        list.add(QLCFixture.build(3, 430, fixtureRGBW));
+
         return list;
     }
 
