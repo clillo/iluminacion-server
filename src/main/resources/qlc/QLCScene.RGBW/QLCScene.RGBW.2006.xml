@@ -1,15 +1,41 @@
 <?xml version="1.0" ?>
 <doc>
-    <title>QLCSequence.RGBW.2000</title>
+    <title>QLCSequence.RGBW.2006</title>
     <common>
-        <id>2000</id>
+        <id>2006</id>
         <type>Scene</type>
         <path>RGBW</path>
-        <name>Off</name>
-        <blackout>true</blackout>
+        <name>All Yellow</name>
     </common>
     <points>
-
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>0</fixture>
+            <value>255</value>
+            <channel>0</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>1</fixture>
+            <value>255</value>
+            <channel>0</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>2</fixture>
+            <value>255</value>
+            <channel>0</channel>
+        </point>
+        <point>
+            <type>RAW</type>
+            <fixture-robotic>false</fixture-robotic>
+            <fixture>3</fixture>
+            <value>255</value>
+            <channel>0</channel>
+        </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
@@ -102,28 +128,28 @@
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>0</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>1</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>2</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>3</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
 
@@ -132,28 +158,28 @@
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>0</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>1</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>2</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>3</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
     </points>

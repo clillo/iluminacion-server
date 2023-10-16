@@ -68,18 +68,31 @@ public class MidiButtonFunctionRepository {
         return createRows(panelId, groupId, type, path,  matrixX, matrixY, onState,  offState,null );
     }
 
+    private int[] getShowsId(final List<QLCFunction> list){
+        final List<QLCFunction> finalList = new ArrayList<>();
+        for (QLCFunction function: list){
+            if(!function.isBlackout())
+                finalList.add(function);
+        }
+
+        int[] showIds = new int[finalList.size()];
+        int i=0;
+        for (QLCFunction function: finalList)
+            showIds[i++]=function.getId();
+
+        return showIds;
+    }
+
     private QLCButtonGroup createRows(final int panelId, final int groupId, final String type, final String path, int matrixX,
                             int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState,
                                       QLCButtonGroup qlcButtonGroup ){
         final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList(type, path);
-        int[] showIds = new int[list.size()];
+        int[] showIds = getShowsId(list);
         int i=0;
 
         QLCScene blackoutScene = null;
         for (QLCFunction function: list){
-            if(!function.isBlackout())
-                showIds[i++]=function.getId();
-            else
+            if(function.isBlackout())
                 blackoutScene = (QLCScene)function;
         }
 
