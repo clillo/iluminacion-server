@@ -26,7 +26,7 @@ public class QLCButton implements ItemListener {
     private boolean state;
     private final MidiHandler midiHandler;
     private final Show show;
-    private int groupId;
+    private final int groupId;
     private final int getGlobalId;
 
     private ButtonSelectedListener buttonSelectedListener;
@@ -55,10 +55,11 @@ public class QLCButton implements ItemListener {
         state = false;
 
         this.show = show;
-        if (show != null)
+        if (show != null) {
             text = show.getFunction().getPath() + "\n" + show.getFunction().getName();
+          //  button.setSelected(show.isExecuting());
+        }
 
-        button.setText("<html><center>" + text.replaceAll("\\n", "<br>") + "</center></html>");
 
     }
 
@@ -66,8 +67,8 @@ public class QLCButton implements ItemListener {
         return button;
     }
 
-    public String getText() {
-        return text;
+    public void setText() {
+        button.setText("<html><center>" + text.replaceAll("\\n", "<br>") + "</center></html>");
     }
 
     public void toggle() {
@@ -80,7 +81,12 @@ public class QLCButton implements ItemListener {
         refresh();
     }
 
+    private void internalRefresh(){
+
+    }
+
     public void refresh() {
+        setText();
         if (show == null)
             return;
         if (buttonSelectedListener != null) {

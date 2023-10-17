@@ -166,9 +166,13 @@ public class KeyData {
             return posY;
 
         if (midiInputType == MidiInputType.SLIDER_BUTTON)
-            return  posX;
+            return posX;
 
         return -1;
+    }
+
+    public double getSliderValue(){
+        return value;
     }
 
     public ShortMessage getMessage(final StateLight stateLight){
@@ -201,5 +205,9 @@ public class KeyData {
 
     public int getMatrixY() {
         return matrixY;
+    }
+
+    public int getPosX() {
+        return posX;
     }
 }

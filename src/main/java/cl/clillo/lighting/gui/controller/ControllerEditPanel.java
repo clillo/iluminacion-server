@@ -5,6 +5,7 @@ import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -81,6 +82,9 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
                 add(qlcButton.getButton());
             }
 
+     //   this.setOpaque(true);
+      //  this.setBackground(Color.black);
+
     }
 
     public void activePanel(){
@@ -88,8 +92,9 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
         for (int matrixX=0; matrixX<8; matrixX++)
             for (int matrixY=0; matrixY<8; matrixY++){
                 final QLCButton button = buttonMapByPos.get(matrixX + "-" + matrixY);
-                button.setButtonSelectedListener(this);
+                button.setButtonSelectedListener(null);
                 button.refresh();
+                button.setButtonSelectedListener(this);
             }
     }
 
@@ -117,7 +122,7 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
     @Override
     public void selected(final QLCButton qlcButton) {
-        QLCButtonGroup buttonGroup = buttonMapGroupId.get(qlcButton);
+        final QLCButtonGroup buttonGroup = buttonMapGroupId.get(qlcButton);
         if (buttonGroup==null)
             return ;
 

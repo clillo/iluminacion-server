@@ -1,12 +1,15 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
+import cl.clillo.lighting.model.ShowCollection;
 
 import javax.swing.JPanel;
+import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
-import javax.swing.event.AncestorListener;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.util.ArrayList;
@@ -20,24 +23,30 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     public static final int HEIGHT1 = 900;
 
     private final List<ControllerEditPanel> pnlList;
+    private final List<JSlider> pnlListDimmer;
     private final MidiHandler midiHandler;
     private final JTabbedPane tabbedPane;
     private final ControllerEditPanel[] controllerEditPanels;
     private int activeIndex = -1;
+    private final JSlider masterDimmer;
+    private final Dmx dmx = Dmx.getInstance();
+
+    private final int[] masterDimmerChannels;
 
     public ControllerMainPanel() {
 
         pnlList = new ArrayList<>();
+        pnlListDimmer = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
         tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
-        tabbedPane.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
+        tabbedPane.setBounds(0, 0, WIDTH1 + 200, HEIGHT1-300);
         cleanMatrix();
         add(tabbedPane);
         controllerEditPanels = new ControllerEditPanel[8];
         for (int i=0; i<8; i++) {
             final ControllerEditPanel editPanel = buildPanel(i+1);
             controllerEditPanels[i] = editPanel;
-            editPanel.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
+            editPanel.setBounds(0, 0, WIDTH1 + 200, HEIGHT1-400);
             tabbedPane.addTab(editPanel.getName(), editPanel);
             pnlList.add(editPanel);
         }
@@ -47,6 +56,38 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         this.setLayout(null);
         selectPanel(7);
 
+        final JPanel panelDimmers = new JPanel();
+        panelDimmers.setLayout(null);
+     //   panelDimmers.setOpaque(true);
+     //   panelDimmers.setBackground(Color.blue);
+        panelDimmers.setBounds(0, HEIGHT1-300, WIDTH1 + 200, 400);
+
+        for (int i=0; i<9; i++) {
+            final JSlider slider = new JSlider();
+            slider.setOrientation(JSlider.VERTICAL);
+            slider.setBounds(i * 110, 10, 100, 380);
+            slider.setMinimum(0);
+            slider.setMaximum(255);
+            panelDimmers.add(slider);
+            pnlListDimmer.add(slider);
+        }
+
+        masterDimmer = pnlListDimmer.get(pnlListDimmer.size()-1);
+
+        this.add(panelDimmers);
+
+        final List<Integer> channels = new ArrayList<>();
+        final ShowCollection showCollection = ShowCollection.getInstance();
+        final List<QLCFixture> fixtureList = showCollection.getQlcModel().getFixtureList();
+        for (QLCFixture fixture: fixtureList) {
+            int dmxMasterDimmer = fixture.getDMXChannel(QLCFixture.ChannelType.MASTER_DIMMER);
+            if (dmxMasterDimmer > 0 && "RGBW".equals(fixture.getFixtureModel().getType()))
+                channels.add(dmxMasterDimmer);
+        }
+        masterDimmerChannels = new int[channels.size()];
+        int i=0;
+        for (int dmx: channels)
+            masterDimmerChannels[i++]=dmx;
     }
 
     private ControllerEditPanel buildPanel(final int index) {
@@ -84,8 +125,14 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     }
 
     @Override
-    public void onSlide(KeyData keyData) {
+    public void onSlide(final KeyData keyData) {
+        double value = keyData.getSliderValue()*255.0;
+        final JSlider slider = pnlListDimmer.get(keyData.getPosX());
+        slider.setValue((int)value);
+        if (slider==masterDimmer)
+            adjustMasterDimmer();
 
+        //System.out.println(value+"\t"+(keyData.getValue())+"\t"+((int)(keyData.getValue()*255.0)));
     }
 
     @Override
@@ -104,5 +151,11 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         midiHandler.sendSide(7-index, KeyData.StateLight.RED);
         controllerEditPanels[index].activePanel();
         activeIndex = index;
+    }
+
+    private void adjustMasterDimmer(){
+        for (int dmxMasterDimmer: masterDimmerChannels) {
+            dmx.send(dmxMasterDimmer, masterDimmer.getValue());
+        }
     }
 }

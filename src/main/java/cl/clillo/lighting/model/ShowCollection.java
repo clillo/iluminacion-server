@@ -188,4 +188,8 @@ public class ShowCollection {
                 return show;
         return null;
     }
+
+    public QLCFixtureBuilder getQlcModel() {
+        return qlcModel;
+    }
 }

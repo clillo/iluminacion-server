@@ -37,7 +37,7 @@ public class QLCPoint {
         if (fixture==null)
             return null;
 
-        int dmxChannel = fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER);
+        int dmxChannel = fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER, QLCFixture.ChannelType.MASTER_DIMMER);
 
         if (dmxChannel==-1)
             return null;

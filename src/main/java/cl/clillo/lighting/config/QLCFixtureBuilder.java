@@ -13,6 +13,7 @@ import java.util.Map;
 public class QLCFixtureBuilder implements FixtureListBuilder{
 
     private final Map<Integer, QLCFixture> fixtureMap;
+    private final List<QLCFixture> fixtureList;
 
     public QLCFixtureBuilder(List<QLCFixtureModel> fixtureModelList) {
         this.fixtureMap = new HashMap<>();
@@ -29,8 +30,8 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
             if ("beam+spot".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelC = fixtureModel1;
         }
-
-        List<QLCFixture> fixtureList = buildDefaultFixtures(fixtureModelA, fixtureModelB, fixtureModelC);
+        fixtureList = new ArrayList<>();
+        fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelB, fixtureModelC));
         for (QLCFixture fixture: fixtureList)
             fixtureMap.put(fixture.getId(), fixture);
 
@@ -84,5 +85,9 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
     @Override
     public <T extends QLCFixture> T getFixture(final int id){
         return (T)fixtureMap.get(id);
+    }
+
+    public List<QLCFixture> getFixtureList() {
+        return fixtureList;
     }
 }

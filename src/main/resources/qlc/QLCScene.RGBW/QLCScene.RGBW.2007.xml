@@ -128,28 +128,28 @@
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>0</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>1</fixture>
-            <value>255</value>
+            <value>0</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>2</fixture>
-            <value>255</value>
+            <value>0</value>
             <channel>2</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>3</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>2</channel>
         </point>
 
@@ -158,28 +158,28 @@
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>0</fixture>
-            <value>255</value>
+            <value>0</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>1</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>2</fixture>
-            <value>0</value>
+            <value>255</value>
             <channel>1</channel>
         </point>
         <point>
             <type>RAW</type>
             <fixture-robotic>false</fixture-robotic>
             <fixture>3</fixture>
-            <value>255</value>
+            <value>0</value>
             <channel>1</channel>
         </point>
     </points>

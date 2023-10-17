@@ -14,13 +14,13 @@ import java.util.Map;
 @ToString
 public class QLCFixture {
 
-    public enum ChannelType {GLOBAL_DIMMER, DIMMER, STROBE, COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW ;
+    public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE, COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW ;
 
         public static ChannelType of(String name){
             if ("dimmer".equalsIgnoreCase(name))
                 return DIMMER;
             if ("master dimmer".equalsIgnoreCase(name))
-                return DIMMER;
+                return MASTER_DIMMER;
             if ("strobe".equalsIgnoreCase(name))
                 return STROBE;
             return RAW;
@@ -59,6 +59,13 @@ public class QLCFixture {
 
     public int getDMXChannel(ChannelType channelType){
         return getChannel(channelType) + address - 1;
+    }
+
+    public int getDMXChannel(ChannelType channelType, ChannelType channelType2){
+        if (getChannel(channelType)>0)
+            return getChannel(channelType) + address - 1;
+
+        return getChannel(channelType2) + address - 1;
     }
 
     public int getDMXChannel(int channel){
