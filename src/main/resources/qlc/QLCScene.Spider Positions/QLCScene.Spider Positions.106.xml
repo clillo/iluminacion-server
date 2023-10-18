@@ -1,1 +1,16 @@
-<?xml version="1.0" ?><doc><title>QLCScene.Spider Positions.106</title><common><id>106</id><type>Scene</type><path>Spider Positions</path><name>Spider - L C L C</name></common><points><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>4</fixture><value>10</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>4</fixture><value>92</value><channel>1</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>5</fixture><value>10</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>5</fixture><value>92</value><channel>1</channel></point></points></doc>
+
+<doc>
+   <title>QLCScene.Spider Positions.106</title>
+   <common>
+      <id>106</id>
+      <type>Scene</type>
+      <path>Spider Positions</path>
+      <name>Spider - L C L C</name>
+   </common>
+   <points>
+      <point fixture="4" channel="0" value="10"/>
+      <point fixture="4" channel="1" value="92"/>
+      <point fixture="5" channel="0" value="10"/>
+      <point fixture="5" channel="1" value="92"/>
+   </points>
+</doc>

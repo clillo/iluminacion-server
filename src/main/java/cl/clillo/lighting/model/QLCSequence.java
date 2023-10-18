@@ -247,7 +247,7 @@ public class QLCSequence extends QLCFunction{
         for(Node point: XMLParser.getNodeList(node, "points")){
             int data = XMLParser.getNodeInt(point, "data");
             int channel = XMLParser.getNodeInt(point, "channel");
-            if (data!=-1 && channel!=-1) {
+            if (data!=-1 && channel!=-1 && channel!=399 && channel!=409 && channel!=419&& channel!=429) {
        //         System.out.println("Point data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
                 final QLCFixture fixture = fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture"));
 

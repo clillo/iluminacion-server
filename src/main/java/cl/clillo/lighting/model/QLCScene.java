@@ -72,42 +72,34 @@ public class QLCScene extends QLCFunction{
 
     protected static QLCPoint buildPoint(final FixtureListBuilder fixtureListBuilder, final Node node){
         final boolean isRobotic = XMLParser.getNodeBoolean(node, "fixture-robotic");
-        int fixtureId = XMLParser.getNodeInt(node, "fixture");
+        int fixtureId = XMLParser.getInt(node, "fixture");
+        int value = XMLParser.getInt(node, "value");
 
         if (!isRobotic) {
             return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(fixtureId),
-                    XMLParser.getNodeInt(node, "channel"),
-                    XMLParser.getNodeInt(node, "value"));
+                    XMLParser.getInt(node, "channel"),
+                    value);
         }
 
         return QLCPoint.buildRoboticPoint(fixtureListBuilder.getFixture(fixtureId),
                 QLCFixture.ChannelType.of(XMLParser.getNodeString(node, "type")),
-                XMLParser.getNodeInt(node, "value"));
+                value);
     }
 
     protected void writePoints(final XMLStreamWriter out, final List<QLCPoint> points) throws XMLStreamException {
         out.writeStartElement("points");
         for (QLCPoint data: points) {
             out.writeStartElement("point");
-                out.writeStartElement("type");
-                if (data.getChannelType()==null)
-                    out.writeCharacters("RAW");
-                else
-                    out.writeCharacters(String.valueOf(data.getChannelType()));
-                out.writeEndElement();
-                out.writeStartElement("fixture-robotic");
-                out.writeCharacters(String.valueOf(data.getFixture() instanceof QLCRoboticFixture));
-                out.writeEndElement();
-                out.writeStartElement("fixture");
-                out.writeCharacters(String.valueOf(data.getFixture().getId()));
-                out.writeEndElement();
-                out.writeStartElement("value");
-                out.writeCharacters(String.valueOf(data.getData()));
-                out.writeEndElement();
 
-                out.writeStartElement("channel");
-                out.writeCharacters(String.valueOf(data.getChannel()));
-                out.writeEndElement();
+            if (data.getChannelType()!=null && data.getChannelType()!= QLCFixture.ChannelType.RAW)
+                out.writeAttribute("type",String.valueOf(data.getChannelType()));
+
+            if (data.getFixture() instanceof QLCRoboticFixture)
+                out.writeAttribute("fixture-robotic", "true");
+
+            out.writeAttribute("fixture", String.valueOf(data.getFixture().getId()));
+            out.writeAttribute("channel", String.valueOf(data.getChannel()));
+            out.writeAttribute("value", String.valueOf(data.getData()));
 
             out.writeEndElement();
         }

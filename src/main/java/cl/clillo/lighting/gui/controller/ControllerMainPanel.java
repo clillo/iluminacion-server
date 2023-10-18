@@ -5,17 +5,23 @@ import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
+import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
+import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.ShowCollection;
+import cl.clillo.lighting.repository.StateRepository;
 
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener {
+public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -30,8 +36,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private int activeIndex = -1;
     private final JSlider masterDimmer;
     private final Dmx dmx = Dmx.getInstance();
+    protected JButton btnSave;
 
     private final int[] masterDimmerChannels;
+    final StateRepository stateRepository = StateRepository.getInstance();
 
     public ControllerMainPanel() {
 
@@ -88,6 +96,17 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         int i=0;
         for (int dmx: channels)
             masterDimmerChannels[i++]=dmx;
+
+
+        btnSave = new JButton();
+        btnSave.setText("Save");
+        btnSave.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 50, 120, 20);
+
+        panelDimmers.add(btnSave);
+        btnSave.addActionListener(this);
+
+        masterDimmer.setValue(stateRepository.getRgbwMasterDimmer());
+        adjustMasterDimmer();
     }
 
     private ControllerEditPanel buildPanel(final int index) {
@@ -157,5 +176,23 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         for (int dmxMasterDimmer: masterDimmerChannels) {
             dmx.send(dmxMasterDimmer, masterDimmer.getValue());
         }
+    }
+
+    private void save(){
+
+   /*     final List<Point> limitMasterDimmer = new ArrayList<>();
+        for (int dmxMasterDimmer: masterDimmerChannels)
+            limitMasterDimmer.add(Point.builder()
+                            .canal(dmxMasterDimmer)
+                            .dmx(masterDimmer.getValue())
+                    .build());
+        stateRepository.setLimitMasterDimmer(limitMasterDimmer);*/
+        stateRepository.setRgbwMasterDimmer(masterDimmer.getValue());
+        stateRepository.write();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        save();
     }
 }

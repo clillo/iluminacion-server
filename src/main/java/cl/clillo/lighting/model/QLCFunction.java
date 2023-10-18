@@ -11,6 +11,7 @@ import org.w3c.dom.Node;
 import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -50,6 +51,13 @@ public class QLCFunction extends QLCElement{
         out.writeStartElement("name");
         out.writeCharacters(name);
         out.writeEndElement();
+
+        if (isBlackout()){
+            out.writeStartElement("blackout");
+            out.writeCharacters("true");
+            out.writeEndElement();
+        }
+
         out.writeEndElement();
     }
 
@@ -74,7 +82,7 @@ public class QLCFunction extends QLCElement{
     }
 
     public void writeToConfigFile(){
-        OutputStream outputStream;
+        ByteArrayOutputStream outputStream;
         try {
             String name = this.getClass().getSimpleName() + "." ;
 
@@ -84,7 +92,7 @@ public class QLCFunction extends QLCElement{
                 String fakePath = path.replace('/','.');
                 name = name + fakePath + "." + id;
             }
-            outputStream = new FileOutputStream(QLCReader.repoBase  + "/" + name + ".xml");
+            outputStream = new ByteArrayOutputStream();
             XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
                     new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
 
@@ -101,7 +109,10 @@ public class QLCFunction extends QLCElement{
             out.writeEndDocument();
 
             out.close();
-        } catch (IOException | XMLStreamException e) {
+
+            XMLParser.writeXMLFile(QLCReader.repoBase  + "/" + name + ".xml", outputStream);
+
+        } catch (XMLStreamException e) {
             throw new RuntimeException(e);
         }
     }

@@ -21,8 +21,9 @@ public class Dmx {
 	}
 
 	public void send(final int channel, final int data){
-		//notificablesCollection.enviar(channel, data);
-		//System.out.println(channel+"\t"+data);
+		//if (channel==399 || channel==409 || channel==419 || channel==429)
+	//		System.out.println("CHAMO: "+data);
+
 		artNet.send(channel, data);
 	}
 

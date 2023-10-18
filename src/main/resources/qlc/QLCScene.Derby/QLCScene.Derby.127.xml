@@ -1,1 +1,28 @@
-<?xml version="1.0" ?><doc><title>QLCScene.Derby.127</title><common><id>127</id><type>Scene</type><path>Derby</path><name>Red Rotating</name></common><points><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>255</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>255</value><channel>1</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>0</value><channel>2</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>0</value><channel>3</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>0</value><channel>4</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>0</value><channel>5</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>128</value><channel>6</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>7</fixture><value>0</value><channel>7</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>255</value><channel>0</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>255</value><channel>1</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>0</value><channel>2</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>0</value><channel>3</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>0</value><channel>4</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>0</value><channel>5</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>128</value><channel>6</channel></point><point><type>RAW</type><fixture-robotic>false</fixture-robotic><fixture>6</fixture><value>0</value><channel>7</channel></point></points></doc>
+
+<doc>
+   <title>QLCScene.Derby.127</title>
+   <common>
+      <id>127</id>
+      <type>Scene</type>
+      <path>Derby</path>
+      <name>Red Rotating</name>
+   </common>
+   <points>
+      <point fixture="7" channel="0" value="255"/>
+      <point fixture="7" channel="1" value="255"/>
+      <point fixture="7" channel="2" value="0"/>
+      <point fixture="7" channel="3" value="0"/>
+      <point fixture="7" channel="4" value="0"/>
+      <point fixture="7" channel="5" value="0"/>
+      <point fixture="7" channel="6" value="128"/>
+      <point fixture="7" channel="7" value="0"/>
+      <point fixture="6" channel="0" value="255"/>
+      <point fixture="6" channel="1" value="255"/>
+      <point fixture="6" channel="2" value="0"/>
+      <point fixture="6" channel="3" value="0"/>
+      <point fixture="6" channel="4" value="0"/>
+      <point fixture="6" channel="5" value="0"/>
+      <point fixture="6" channel="6" value="128"/>
+      <point fixture="6" channel="7" value="0"/>
+   </points>
+</doc>

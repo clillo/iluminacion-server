@@ -162,6 +162,9 @@ public class MidiHandler {
     }
 */
     public ShortMessage getShortMessage(final int matrixX, final int matrixY, final KeyData.StateLight stateLight){
+        if(!keyDataMapByPos.containsKey(matrixX+"-"+matrixY)){
+            System.out.println(matrixX+"-"+matrixY);
+        }
         return keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
     }
 

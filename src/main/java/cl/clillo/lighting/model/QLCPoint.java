@@ -55,17 +55,26 @@ public class QLCPoint {
     }
 
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data) {
-        if (fixture == null)
+        if (fixture == null) {
+            System.out.println("Robotic point without fixture");
+
             System.exit(0);
+        }
         int channel = fixture.getChannel(channelType);
         int dmxChannel = fixture.getDMXChannel(channelType);
         return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
     }
 
     public static QLCPoint buildRawPoint(final QLCFixture fixture, final int channel, final int data) {
-        if (fixture == null)
+        if (fixture == null) {
+            System.out.println("Raw point without fixture");
+
             System.exit(0);
+        }
         int dmxChannel = fixture.getDMXChannel(channel);
+        if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429)
+            return null;
+
         return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
     }
 
