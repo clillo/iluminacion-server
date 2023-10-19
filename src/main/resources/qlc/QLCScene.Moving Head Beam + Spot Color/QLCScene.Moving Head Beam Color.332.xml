@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Color.332</title>
+   <common>
+      <id>332</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Color</path>
+      <name>All On</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" channel="8" value="255"/>
+      <point fixture-robotic="true" fixture="14" channel="9" value="0"/>
+      <point fixture-robotic="true" fixture="15" channel="8" value="255"/>
+      <point fixture-robotic="true" fixture="15" channel="9" value="0"/>
+      <point fixture-robotic="true" fixture="16" channel="8" value="255"/>
+      <point fixture-robotic="true" fixture="16" channel="9" value="0"/>
+      <point fixture-robotic="true" fixture="17" channel="8" value="255"/>
+      <point fixture-robotic="true" fixture="17" channel="9" value="0"/>
+   </points>
+</doc>

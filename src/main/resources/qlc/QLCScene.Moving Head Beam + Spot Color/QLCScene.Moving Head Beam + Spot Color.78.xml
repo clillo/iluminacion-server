@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Color.78</title>
+   <common>
+      <id>78</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Color</path>
+      <name>White</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="8" channel="7" value="0"/>
+      <point fixture-robotic="true" fixture="10" channel="7" value="0"/>
+      <point fixture-robotic="true" fixture="11" channel="7" value="0"/>
+      <point fixture-robotic="true" fixture="18" channel="7" value="0"/>
+   </points>
+</doc>
