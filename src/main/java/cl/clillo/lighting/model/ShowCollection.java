@@ -146,8 +146,8 @@ public class ShowCollection {
                     addQLCEfx(QLCEfxCircle.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxSpline"))
                     addQLCEfx(QLCEfxSpline.read(qlcModel, f));
-                if (f.getName().startsWith("QLCEfxMultiLine"))
-                    addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
+             //   if (f.getName().startsWith("QLCEfxMultiLine"))
+            //        addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxLine"))
                     addQLCEfx(QLCEfxLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCScene"))

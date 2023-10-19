@@ -9,32 +9,32 @@
     </common>
     <fixtures>
         <fixture>
-            <id>101</id>
+            <id>9</id>
             <offset>0.0</offset>
             <reverse>false</reverse>
         </fixture>
         <fixture>
-            <id>102</id>
+            <id>12</id>
             <offset>36.0</offset>
             <reverse>true</reverse>
         </fixture>
         <fixture>
-            <id>201</id>
+            <id>14</id>
             <offset>72.0</offset>
             <reverse>false</reverse>
         </fixture>
         <fixture>
-            <id>202</id>
+            <id>15</id>
             <offset>108.0</offset>
             <reverse>true</reverse>
         </fixture>
         <fixture>
-            <id>203</id>
+            <id>16</id>
             <offset>144.0</offset>
             <reverse>false</reverse>
         </fixture>
         <fixture>
-            <id>204</id>
+            <id>17</id>
             <offset>180.0</offset>
             <reverse>true</reverse>
         </fixture>

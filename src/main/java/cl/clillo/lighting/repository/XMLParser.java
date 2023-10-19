@@ -140,7 +140,7 @@ public class XMLParser {
     }
 
     public static String getStringAttributeValue(final Node node, final String name) {
-        if (node.getAttributes() != null)
+        if (node.getAttributes() != null && node.getAttributes().getNamedItem(name)!=null)
             return node.getAttributes().getNamedItem(name).getTextContent();
 
         return null;
@@ -160,5 +160,13 @@ public class XMLParser {
             value =  XMLParser.getIntAttributeValue(node, name);
 
         return value;
+    }
+
+    public static boolean getBoolean(final Node node, final String name) {
+        String value = XMLParser.getNodeString(node, name);
+        if (value==null)
+            value =  XMLParser.getStringAttributeValue(node, name);
+
+        return ("true".equalsIgnoreCase(value));
     }
 }

@@ -94,6 +94,8 @@ public class QLCSequence extends QLCFunction{
 
         if (step.getFadeIn()!=0){
             int numberOfFakeSteps = step.getFadeIn()/MIN_STEP_DURATION;
+            if (numberOfFakeSteps==0)
+                System.out.println("AQUI");
             int deltaDimmer = 255 / numberOfFakeSteps;
             int valueDimmer = 0;
 
@@ -167,40 +169,13 @@ public class QLCSequence extends QLCFunction{
         out.writeStartElement("steps");
         for (QLCStep step: qlcStepList) {
             out.writeStartElement("step");
-            out.writeStartElement("common");
-            out.writeStartElement("id");
-            out.writeCharacters(String.valueOf(step.getId()));
-            out.writeEndElement();
-                out.writeStartElement("fadeIn");
-                    out.writeCharacters(String.valueOf(step.getFadeIn()));
-                out.writeEndElement();
+            out.writeAttribute("id", String.valueOf(step.getId()));
+            out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));
+            out.writeAttribute("hold", String.valueOf(step.getHold()));
+            out.writeAttribute("fadeOut", String.valueOf(step.getFadeOut()));
 
-                out.writeStartElement("hold");
-                    out.writeCharacters(String.valueOf(step.getHold()));
-                out.writeEndElement();
+            QLCPoint.write(out, step.getPointList());
 
-                out.writeStartElement("fadeOut");
-                    out.writeCharacters(String.valueOf(step.getFadeOut()));
-                out.writeEndElement();
-            out.writeEndElement();
-
-            out.writeStartElement("points");
-            for (QLCPoint point: step.getPointList()){
-                out.writeStartElement("point");
-                out.writeStartElement("fixture");
-                out.writeCharacters(String.valueOf(point.getFixture().getId()));
-                out.writeEndElement();
-
-                out.writeStartElement("channel");
-                out.writeCharacters(String.valueOf(point.getDmxChannel()));
-                out.writeEndElement();
-
-                out.writeStartElement("data");
-                out.writeCharacters(String.valueOf(point.getData()));
-                out.writeEndElement();
-                out.writeEndElement();
-            }
-            out.writeEndElement();
             out.writeEndElement();
         }
         out.writeEndElement();
@@ -235,30 +210,19 @@ public class QLCSequence extends QLCFunction{
     }
 
     protected static QLCStep buildStep(final FixtureListBuilder fixtureListBuilder, final Node node){
-        final Node common = XMLParser.getNode(node, "common");
         final List<QLCPoint> points = new ArrayList<>();
         QLCStep.QLCStepBuilder qlcStep = QLCStep.builder()
-                .fadeIn(XMLParser.getNodeInt(common, "fadeIn"))
-                .hold(XMLParser.getNodeInt(common, "hold"))
-                .fadeOut(XMLParser.getNodeInt(common, "fadeOut"))
-                .id(XMLParser.getNodeInt(common, "id"))
+                .fadeIn(XMLParser.getIntAttributeValue(node, "fadeIn"))
+                .hold(XMLParser.getIntAttributeValue(node, "hold"))
+                .fadeOut(XMLParser.getIntAttributeValue(node, "fadeOut"))
+                .id(XMLParser.getIntAttributeValue(node, "id"))
                 .pointList(points);
 
-        for(Node point: XMLParser.getNodeList(node, "points")){
-            int data = XMLParser.getNodeInt(point, "data");
-            int channel = XMLParser.getNodeInt(point, "channel");
-            if (data!=-1 && channel!=-1 && channel!=399 && channel!=409 && channel!=419&& channel!=429) {
-       //         System.out.println("Point data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
-                final QLCFixture fixture = fixtureListBuilder.getFixture(XMLParser.getNodeInt(point, "fixture"));
+        for(Node pointXML: XMLParser.getNodeList(node, "points")){
+            final QLCPoint point = QLCPoint.build(fixtureListBuilder, pointXML);
+            if (point!=null)
+                points.add(point);
 
-                points.add(QLCPoint.builder()
-                        .data(data)
-                        .dmxChannel(channel)
-                        .fixture(fixture)
-                        .build());
-            }else{
-              //  System.out.println(qlcStep+"\tPoint data inconsistency: Fixture:"+XMLParser.getNodeInt(point, "fixture"));
-            }
         }
 
         return qlcStep.build();

@@ -20,22 +20,28 @@ public class StandAlone {
 
         final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
-/*
-        final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Derby");
+
+        //final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Scene", "Moving Head Beam + Spot Gobos Prism");
         //list.addAll(ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single"));
-        for (QLCFunction function: list){
-            System.out.println(function.getId()+"\t"+function.getName());
+     //   for (QLCFunction function: list){
+         //   System.out.println(function.getPath()+"\t"+function.getId()+"\t"+function.getName());
          //   function.writeToConfigFile();
-       }*/
+     //  }
 
         StateRepository stateRepository = StateRepository.getInstance();
         stateRepository.read();
-      //  stateRepository.write();*/
 
+
+
+      //  stateRepository.write();*/
+/*
         for (Show show: ShowCollection.getInstance().getShowList())
-            if (show.getFunction().getType().equals("Scene") && show.getFunction().getPath().equals("RGBW")) {
-               // System.out.println(show.getFunction());
-              //  show.getFunction().writeToConfigFile();
+            if (show.getFunction().getType().equals("Sequence") && show.getFunction().getPath().equals("RGBW")) {
+              //  System.out.println(show.getFunction());
+            //    show.getFunction().writeToConfigFile();
             }
+  */
+
+
     }
 }

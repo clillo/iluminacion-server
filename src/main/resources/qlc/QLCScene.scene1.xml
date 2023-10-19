@@ -11,37 +11,37 @@
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>101</fixture>
+            <fixture>9</fixture>
             <value>255</value>
         </point>
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>102</fixture>
+            <fixture>12</fixture>
             <value>255</value>
         </point>
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>201</fixture>
+            <fixture>14</fixture>
             <value>128</value>
         </point>
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>202</fixture>
+            <fixture>15</fixture>
             <value>128</value>
         </point>
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>203</fixture>
+            <fixture>16</fixture>
             <value>128</value>
         </point>
         <point>
             <type>DIMMER</type>
             <fixture-robotic>true</fixture-robotic>
-            <fixture>204</fixture>
+            <fixture>17</fixture>
             <value>128</value>
         </point>
         <point>

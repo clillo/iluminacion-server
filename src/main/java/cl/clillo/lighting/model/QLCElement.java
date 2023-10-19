@@ -25,9 +25,9 @@ public class QLCElement {
     }
 
     public static QLCElement read(final Document doc) {
-        Node common = doc.getElementsByTagName("common").item(0);
+        final Node common = doc.getElementsByTagName("common").item(0);
 
-        QLCElement qlcElement =  new QLCElement(XMLParser.getNodeInt(common, "id"), XMLParser.getNodeString(common, "type"),
+        final QLCElement qlcElement = new QLCElement(XMLParser.getNodeInt(common, "id"), XMLParser.getNodeString(common, "type"),
                 XMLParser.getNodeString(common, "name"), XMLParser.getNodeString(common, "path"));
         qlcElement.blackout = XMLParser.getNodeBoolean(common, "blackout");
 

@@ -1,8 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.fixture.qlc.QLCFixture;
-import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.ToString;
@@ -61,7 +59,7 @@ public class QLCScene extends QLCFunction{
         for (int temp = 0; temp < list.getLength(); temp++) {
             Node node = list.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                final QLCPoint point = buildPoint(fixtureListBuilder, node);
+                final QLCPoint point = QLCPoint.build(fixtureListBuilder, node);
                 if (point!=null)
                     qlcPointList.add(point);
             }
@@ -70,46 +68,11 @@ public class QLCScene extends QLCFunction{
         return scene;
     }
 
-    protected static QLCPoint buildPoint(final FixtureListBuilder fixtureListBuilder, final Node node){
-        final boolean isRobotic = XMLParser.getNodeBoolean(node, "fixture-robotic");
-        int fixtureId = XMLParser.getInt(node, "fixture");
-        int value = XMLParser.getInt(node, "value");
 
-        if (!isRobotic) {
-            return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(fixtureId),
-                    XMLParser.getInt(node, "channel"),
-                    value);
-        }
-
-        return QLCPoint.buildRoboticPoint(fixtureListBuilder.getFixture(fixtureId),
-                QLCFixture.ChannelType.of(XMLParser.getNodeString(node, "type")),
-                value);
-    }
-
-    protected void writePoints(final XMLStreamWriter out, final List<QLCPoint> points) throws XMLStreamException {
-        out.writeStartElement("points");
-        for (QLCPoint data: points) {
-            out.writeStartElement("point");
-
-            if (data.getChannelType()!=null && data.getChannelType()!= QLCFixture.ChannelType.RAW)
-                out.writeAttribute("type",String.valueOf(data.getChannelType()));
-
-            if (data.getFixture() instanceof QLCRoboticFixture)
-                out.writeAttribute("fixture-robotic", "true");
-
-            out.writeAttribute("fixture", String.valueOf(data.getFixture().getId()));
-            out.writeAttribute("channel", String.valueOf(data.getChannel()));
-            out.writeAttribute("value", String.valueOf(data.getData()));
-
-            out.writeEndElement();
-        }
-        out.writeEndElement();
-
-    }
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
-        writePoints(out, qlcPointList);
+        QLCPoint.write(out, qlcPointList);
     }
 
     public void setShow(Show show) {

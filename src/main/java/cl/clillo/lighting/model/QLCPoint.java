@@ -1,11 +1,19 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
+import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
+import org.w3c.dom.Node;
+
+import javax.xml.stream.XMLStreamException;
+import javax.xml.stream.XMLStreamWriter;
+import java.util.Collections;
+import java.util.List;
 
 @Getter
-public class QLCPoint {
+public class QLCPoint implements Comparable<QLCPoint>{
 
     private final QLCFixture fixture;
     private final int channel;
@@ -55,11 +63,6 @@ public class QLCPoint {
     }
 
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data) {
-        if (fixture == null) {
-            System.out.println("Robotic point without fixture");
-
-            System.exit(0);
-        }
         int channel = fixture.getChannel(channelType);
         int dmxChannel = fixture.getDMXChannel(channelType);
         return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
@@ -67,15 +70,79 @@ public class QLCPoint {
 
     public static QLCPoint buildRawPoint(final QLCFixture fixture, final int channel, final int data) {
         if (fixture == null) {
-            System.out.println("Raw point without fixture");
-
-            System.exit(0);
+           return null;
         }
         int dmxChannel = fixture.getDMXChannel(channel);
-        if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429)
-            return null;
+    //    if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429)
+      //      return null;
 
         return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
+    }
+
+    public void write(final XMLStreamWriter out) throws XMLStreamException {
+        out.writeStartElement("point");
+
+        if (channelType!=null && channelType!= QLCFixture.ChannelType.RAW)
+            out.writeAttribute("type",String.valueOf(channelType));
+
+        if (fixture instanceof QLCRoboticFixture)
+            out.writeAttribute("fixture-robotic", "true");
+
+        out.writeAttribute("fixture", String.valueOf(fixture.getId()));
+        out.writeAttribute("channel", String.valueOf(channel));
+    //   out.writeAttribute("channelDMX", String.valueOf(dmxChannel));
+        out.writeAttribute("value", String.valueOf(data));
+
+        out.writeEndElement();
+    }
+
+    public static void write(final XMLStreamWriter out, final List<QLCPoint> qlcPointList) throws XMLStreamException {
+        out.writeStartElement("points");
+        Collections.sort(qlcPointList);
+        for (QLCPoint point: qlcPointList)
+            point.write(out);
+
+        out.writeEndElement();
+
+    }
+
+    @Override
+    public int compareTo(QLCPoint o) {
+        if (fixture.getId()<o.getFixture().getId())
+            return -1;
+
+        if (fixture.getId()>o.getFixture().getId())
+            return 1;
+
+        return channel - o.channel;
+    }
+
+    protected static QLCPoint build(final FixtureListBuilder fixtureListBuilder, final Node node){
+        final boolean isRobotic = XMLParser.getBoolean(node, "fixture-robotic");
+        int fixtureId = XMLParser.getInt(node, "fixture");
+        int value = XMLParser.getInt(node, "value");
+
+        if (value==-1)
+            value = XMLParser.getInt(node, "data");
+
+        if (!isRobotic) {
+            int channel = XMLParser.getInt(node, "channel");
+            if (value==-1 && channel==-1)
+                return null;
+            return QLCPoint.buildRawPoint(fixtureListBuilder.getFixture(fixtureId), channel, value);
+        }
+
+        final QLCRoboticFixture qlcFixture = fixtureListBuilder.getFixture(fixtureId);
+        if (qlcFixture==null){
+
+            System.out.println("Robotic point without fixture: "+ fixtureId);
+            return null;
+            //System.exit(0);
+
+        }
+        return QLCPoint.buildRoboticPoint(qlcFixture,
+                QLCFixture.ChannelType.of(XMLParser.getNodeString(node, "type")),
+                value);
     }
 
     public static class QLCPointBuilder {
@@ -120,10 +187,6 @@ public class QLCPoint {
 
         public QLCPoint build() {
             return new QLCPoint(this.fixture, this.channel, this.dmxChannel, this.data, this.channelType);
-        }
-
-        public String toString() {
-            return "QLCPoint.QLCPointBuilder(fixture=" + this.fixture + ", channel=" + this.channel + ", dmxChannel=" + this.dmxChannel + ", data=" + this.data + ", channelType=" + this.channelType + ")";
         }
     }
 }

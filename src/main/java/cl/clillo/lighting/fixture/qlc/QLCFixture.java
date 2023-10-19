@@ -72,6 +72,10 @@ public class QLCFixture {
         return channel + address;
     }
 
+    public QLCFixtureModel getFixtureModel() {
+        return fixtureModel;
+    }
+
     public static QLCFixtureBuilder builder() {
         return new QLCFixtureBuilder();
     }

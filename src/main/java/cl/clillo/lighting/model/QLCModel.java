@@ -3,6 +3,8 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
+import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
+import cl.clillo.lighting.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -16,6 +18,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -303,5 +306,33 @@ public class QLCModel {
 
     public List<QLCFunction> getFunctionList() {
         return functionList;
+    }
+
+    private static void printFixtures(){
+        //ShowCollection showCollection = ShowCollection.getInstance();
+        QLCModel qlcModel = new QLCModel();
+        final List<String> fixtures = new ArrayList<>();
+        for (int i=0; i<1000; i++) {
+            QLCFixture fixture = qlcModel.getFixture(i);
+            if (fixture!=null) {
+            //    if (fixture instanceof QLCRoboticFixture)
+                    //System.out.println(i + "\t" + fixture.getAddress()+"\t"+fixture.getFixtureModel().getType());
+                    fixtures.add(StringUtils.buildString3Digits(fixture.getAddress()+1) + " - "
+                        //  +  StringUtils.buildString3Digits(fixture.getAddress() + fixture.getFixtureModel().getChannels().length)
+                            + "\t[" + i + "]\t"
+                        //            +fixture.getFixtureModel().getType()
+                       //     +"\t"+fixture.getFixtureModel().getModel());
+                    );
+            }
+        }
+        Collections.sort(fixtures);
+        for (String str: fixtures)
+            System.out.println(str);
+    }
+
+
+
+    public static void main(String[] args) {
+        printFixtures();
     }
 }
