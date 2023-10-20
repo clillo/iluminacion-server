@@ -67,7 +67,10 @@ public class QLCFunction extends QLCElement{
             out.writeStartElement("fixture");
 
             out.writeStartElement("id");
-            out.writeCharacters(String.valueOf(data.getRoboticFixture().getId()));
+            if (data.getRoboticFixture()!=null)
+                out.writeCharacters(String.valueOf(data.getRoboticFixture().getId()));
+            else
+                out.writeCharacters(String.valueOf(data.getFixture().getId()));
             out.writeEndElement();
             out.writeStartElement("offset");
             out.writeCharacters(String.valueOf(data.getStartOffset()));
@@ -81,7 +84,7 @@ public class QLCFunction extends QLCElement{
 
     }
 
-    public void writeToConfigFile(){
+    public void writeToConfigFile(final String dir){
         ByteArrayOutputStream outputStream;
         try {
             String name = this.getClass().getSimpleName() + "." ;
@@ -110,7 +113,7 @@ public class QLCFunction extends QLCElement{
 
             out.close();
 
-            XMLParser.writeXMLFile(QLCReader.repoBase  + "/" + name + ".xml", outputStream);
+            XMLParser.writeXMLFile(dir  + "/" + name + ".xml", outputStream);
 
         } catch (XMLStreamException e) {
             throw new RuntimeException(e);
@@ -208,10 +211,10 @@ public class QLCFunction extends QLCElement{
             if ("Collection".equalsIgnoreCase(type))
                 return new QLCCollection(this.id, this.type, this.name, this.path, this.qlcFunctionList);
 
-         /*   if ("Sequence".equalsIgnoreCase(type))
+            if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                         this.qlcStepList, boundScene, qlcSpeed);
-*/
+
             if ("EFX".equalsIgnoreCase(type)){
 
                 if ( QLCAlgorithm.CIRCLE==algorithm)

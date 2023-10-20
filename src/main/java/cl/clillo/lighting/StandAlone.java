@@ -18,29 +18,28 @@ public class StandAlone {
         ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
-        final ControllerJFrame controllerJFrame = new ControllerJFrame();
+       final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
 
-        //final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Scene", "Moving Head Beam + Spot Gobos Prism");
+      //  final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single");
         //list.addAll(ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single"));
-     //   for (QLCFunction function: list){
-         //   System.out.println(function.getPath()+"\t"+function.getId()+"\t"+function.getName());
-         //   function.writeToConfigFile();
+      //  for (QLCFunction function: list){
+      //      System.out.println(function.getPath()+"\t"+function.getId()+"\t"+function.getName());
+     //       function.writeToConfigFile("src/main/resources/qlc");
      //  }
 
         StateRepository stateRepository = StateRepository.getInstance();
         stateRepository.read();
 
 
-
       //  stateRepository.write();*/
-/*
-        for (Show show: ShowCollection.getInstance().getShowList())
-            if (show.getFunction().getType().equals("Sequence") && show.getFunction().getPath().equals("RGBW")) {
-              //  System.out.println(show.getFunction());
+
+      //  for (Show show: ShowCollection.getInstance().getShowList())
+       //     if (show.getFunction().getType().equals("Sequence") && show.getFunction().getPath().equals("Derby")) {
+        //        System.out.println(show.getFunction());
             //    show.getFunction().writeToConfigFile();
-            }
-  */
+         //   }
+
 
 
     }

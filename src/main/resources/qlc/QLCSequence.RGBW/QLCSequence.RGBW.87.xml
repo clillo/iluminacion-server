@@ -5,807 +5,167 @@
       <id>87</id>
       <type>Sequence</type>
       <path>RGBW</path>
-      <name>Blue Sequence</name>
+      <name>Blue Secuence</name>
    </common>
    <steps>
-      <step id="1" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="255"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="2" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="3" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="4" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="5" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
       <step id="0" fadeIn="50" hold="166" fadeOut="50">
          <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="255"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="7" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="255"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="8" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
-      <step id="9" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="10" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="11" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="12" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="204"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="102"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="13" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="14" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="15" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="16" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
+            <point fixture="0" channel="0" value="0"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="0"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="0"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="0"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="255"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="255"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
       <step id="1" fadeIn="50" hold="166" fadeOut="50">
          <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="204"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="102"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="18" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="204"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="102"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="19" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
-      <step id="20" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="21" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="22" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="23" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="153"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="77"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="24" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="25" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="26" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="27" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
+            <point fixture="0" channel="0" value="0"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="0"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="0"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="255"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="204"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="255"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="102"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
       <step id="2" fadeIn="50" hold="166" fadeOut="50">
          <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="153"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="77"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="29" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="0"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="153"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="77"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="30" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
-      <step id="31" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="32" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="33" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="34" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="102"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="51"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="35" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="36" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="37" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="38" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
+            <point fixture="0" channel="0" value="0"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="0"/>
+            <point fixture="1" channel="3" value="153"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="255"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="77"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
       <step id="3" fadeIn="50" hold="166" fadeOut="50">
          <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="102"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="51"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="40" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="102"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="51"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="41" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
-      <step id="42" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="43" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="44" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="45" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="0"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="26"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="46" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
-         </points>
-      </step>
-      <step id="47" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="48" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="49" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
+            <point fixture="0" channel="0" value="255"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="102"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="0"/>
+            <point fixture="1" channel="3" value="51"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="0"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
       <step id="4" fadeIn="50" hold="166" fadeOut="50">
          <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="26"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="0"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="0"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="0"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="51" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="255"/>
-            <point fixture="0" channel="1" channelDMX="400" value="0"/>
-            <point fixture="0" channel="2" channelDMX="401" value="0"/>
-            <point fixture="0" channel="3" channelDMX="402" value="26"/>
-            <point fixture="0" channel="4" channelDMX="403" value="0"/>
-            <point fixture="0" channel="5" channelDMX="404" value="0"/>
-            <point fixture="0" channel="6" channelDMX="405" value="0"/>
-            <point fixture="1" channel="0" channelDMX="409" value="255"/>
-            <point fixture="1" channel="1" channelDMX="410" value="0"/>
-            <point fixture="1" channel="2" channelDMX="411" value="0"/>
-            <point fixture="1" channel="3" channelDMX="412" value="0"/>
-            <point fixture="1" channel="4" channelDMX="413" value="0"/>
-            <point fixture="1" channel="5" channelDMX="414" value="0"/>
-            <point fixture="1" channel="6" channelDMX="415" value="0"/>
-            <point fixture="2" channel="0" channelDMX="419" value="255"/>
-            <point fixture="2" channel="1" channelDMX="420" value="0"/>
-            <point fixture="2" channel="2" channelDMX="421" value="0"/>
-            <point fixture="2" channel="3" channelDMX="422" value="0"/>
-            <point fixture="2" channel="4" channelDMX="423" value="0"/>
-            <point fixture="2" channel="5" channelDMX="424" value="0"/>
-            <point fixture="2" channel="6" channelDMX="425" value="0"/>
-            <point fixture="3" channel="0" channelDMX="429" value="255"/>
-            <point fixture="3" channel="1" channelDMX="430" value="0"/>
-            <point fixture="3" channel="2" channelDMX="431" value="0"/>
-            <point fixture="3" channel="3" channelDMX="432" value="0"/>
-            <point fixture="3" channel="4" channelDMX="433" value="0"/>
-            <point fixture="3" channel="5" channelDMX="434" value="0"/>
-            <point fixture="3" channel="6" channelDMX="435" value="0"/>
-         </points>
-      </step>
-      <step id="52" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="204"/>
-            <point fixture="1" channel="0" channelDMX="409" value="204"/>
-            <point fixture="2" channel="0" channelDMX="419" value="204"/>
-            <point fixture="3" channel="0" channelDMX="429" value="204"/>
-         </points>
-      </step>
-      <step id="53" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="153"/>
-            <point fixture="1" channel="0" channelDMX="409" value="153"/>
-            <point fixture="2" channel="0" channelDMX="419" value="153"/>
-            <point fixture="3" channel="0" channelDMX="429" value="153"/>
-         </points>
-      </step>
-      <step id="54" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="102"/>
-            <point fixture="1" channel="0" channelDMX="409" value="102"/>
-            <point fixture="2" channel="0" channelDMX="419" value="102"/>
-            <point fixture="3" channel="0" channelDMX="429" value="102"/>
-         </points>
-      </step>
-      <step id="55" fadeIn="0" hold="10" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" channelDMX="399" value="51"/>
-            <point fixture="1" channel="0" channelDMX="409" value="51"/>
-            <point fixture="2" channel="0" channelDMX="419" value="51"/>
-            <point fixture="3" channel="0" channelDMX="429" value="51"/>
+            <point fixture="0" channel="0" value="255"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="26"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="0"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="0"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="0"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
    </steps>

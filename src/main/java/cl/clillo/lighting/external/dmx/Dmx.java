@@ -2,29 +2,42 @@ package cl.clillo.lighting.external.dmx;
 
 import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.QLCPoint;
+import cl.clillo.lighting.model.ShowCollection;
 
 public class Dmx {
-	
+
+	private ShowCollection showCollection;
 	private final NotificablesCollection notificablesCollection;
 	private final ArtNet artNet = ArtNet.getInstance();
 
 	private static final class InstanceHolder {
-		private static final Dmx instance = new Dmx();
+		private static Dmx instance;
+
+		public static Dmx getInstance() {
+			if (instance == null) {
+				instance = new Dmx();
+				instance.setShowCollection(ShowCollection.getInstance());
+			}
+			return instance;
+		}
+
 	}
 
 	public static Dmx getInstance() {
-		return Dmx.InstanceHolder.instance;
+		return Dmx.InstanceHolder.getInstance();
+	}
+
+	public void setShowCollection(ShowCollection showCollection) {
+		this.showCollection = showCollection;
 	}
 
 	private Dmx(){
-    	notificablesCollection = new NotificablesCollection();
+		notificablesCollection = new NotificablesCollection();
 	}
 
-	public void send(final int channel, final int data){
-		//if (channel==399 || channel==409 || channel==419 || channel==429)
-	//		System.out.println("CHAMO: "+data);
+	public void send(final int dmxChannel, final int dmxValue){
+		artNet.send(dmxChannel, showCollection.getRealDMXValue(dmxChannel, dmxValue));
 
-		artNet.send(channel, data);
 	}
 
 	public void send(final Point point){

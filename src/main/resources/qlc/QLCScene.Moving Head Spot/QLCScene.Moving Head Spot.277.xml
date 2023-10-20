@@ -1,0 +1,30 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot.277</title>
+   <common>
+      <id>277</id>
+      <type>Scene</type>
+      <path>Moving Head Spot</path>
+      <name>Pink Gobo1</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="50"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="191"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="50"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="191"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+   </points>
+</doc>

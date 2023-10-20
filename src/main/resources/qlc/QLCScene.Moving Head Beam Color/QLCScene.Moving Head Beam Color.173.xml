@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Color.173</title>
+   <common>
+      <id>173</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Color</path>
+      <name>Green</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" channel="1" value="45"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="45"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="45"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="45"/>
+   </points>
+</doc>

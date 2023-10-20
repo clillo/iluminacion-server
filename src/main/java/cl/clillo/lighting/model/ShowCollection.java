@@ -2,6 +2,7 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.Scheduler;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
+import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
 
@@ -14,17 +15,22 @@ import java.util.List;
 
 public class ShowCollection {
 
+    public static final String BASE_DIR = "src/main/resources/qlc";
     private final List<Show> showList = new ArrayList<>();
     private final List<Show> showQLCEfxList = new ArrayList<>();
     private final QLCModel qlcModelOriginal;
     private final QLCFixtureBuilder qlcModel;
-    private final Scheduler scheduler;
+    private final StateRepository stateRepository = StateRepository.getInstance();
 
     private ShowCollection(){
+        System.out.println("Building original Model");
         qlcModelOriginal = new QLCModel();
+        System.out.println("Building new Model");
         qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
-        scheduler = new Scheduler(showList);
-        addFromDirectory("src/main/resources/qlc");
+        Scheduler scheduler = new Scheduler(showList);
+        System.out.println("Reading new shows");
+        addFromDirectory(BASE_DIR);
+        System.out.println("Starting scheduler");
         scheduler.start();
     }
 
@@ -41,6 +47,17 @@ public class ShowCollection {
 
     public static ShowCollection getInstance() {
         return InstanceHolder.getInstance();
+    }
+
+    public int getRealDMXValue(final int dmxChannel, final int dmxValue){
+        // TODO: Esto hay que hacerlo mejor
+        if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429) {
+   //         System.out.println(dmxValue + "\t" +stateRepository.getRgbwMasterDimmer()+"\t"+Math.min(dmxValue, stateRepository.getRgbwMasterDimmer()));
+           return Math.min(dmxValue, stateRepository.getRgbwMasterDimmer());
+
+        }
+
+        return dmxValue;
     }
 
     public void addQLCEfx(final QLCEfx qlcEfx){
@@ -145,12 +162,12 @@ public class ShowCollection {
                 if (f.getName().startsWith("QLCEfxCircle"))
                     addQLCEfx(QLCEfxCircle.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxSpline"))
-                    addQLCEfx(QLCEfxSpline.read(qlcModel, f));
-             //   if (f.getName().startsWith("QLCEfxMultiLine"))
-            //        addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
+                     addQLCEfx(QLCEfxSpline.read(qlcModel, f));
+                 if (f.getName().startsWith("QLCEfxMultiLine"))
+                    addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxLine"))
                     addQLCEfx(QLCEfxLine.read(qlcModel, f));
-                if (f.getName().startsWith("QLCScene"))
+                 if (f.getName().startsWith("QLCScene"))
                     addQLCScene(QLCScene.read(qlcModel, f));
                 if (f.getName().startsWith("QLCSequence"))
                     addQLCSequence(QLCSequence.read(qlcModel, f));
@@ -191,5 +208,14 @@ public class ShowCollection {
 
     public QLCFixtureBuilder getQlcModel() {
         return qlcModel;
+    }
+
+    public void save(){
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            String dir = FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
+            System.out.println(dir);
+            function.writeToConfigFile(dir);
+        }
     }
 }

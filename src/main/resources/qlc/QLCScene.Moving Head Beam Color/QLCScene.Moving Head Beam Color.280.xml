@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Color.280</title>
+   <common>
+      <id>280</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Color</path>
+      <name>White Strobo 1</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="119"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="119"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="119"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="119"/>
+   </points>
+</doc>

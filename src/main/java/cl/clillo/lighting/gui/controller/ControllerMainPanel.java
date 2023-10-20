@@ -6,7 +6,6 @@ import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
-import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.repository.StateRepository;
 
@@ -173,6 +172,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     }
 
     private void adjustMasterDimmer(){
+        stateRepository.setRgbwMasterDimmer(masterDimmer.getValue());
         for (int dmxMasterDimmer: masterDimmerChannels) {
             dmx.send(dmxMasterDimmer, masterDimmer.getValue());
         }

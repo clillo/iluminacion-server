@@ -51,8 +51,9 @@ public class ArtNet {
             dmxData[i] = 0;
     }
 
-    public void send(final int channel, final int data){
-        send(channel, (byte) data);
+    public void send(final int dmxChannel, final int dmxValue){
+
+        send(dmxChannel, (byte) dmxValue);
     }
 
     public void send(final int channel, final byte data){
@@ -67,10 +68,10 @@ public class ArtNet {
 
     private static class ArtNetHttpProxy extends ArtNet{
 
-        public void send(final int channel, final int data){
-           // send(channel, (byte) data);
+        public void send(final int dmxChannel, final int dmxValue){
+
             try {
-                final URL url = new URL("http://192.168.1.141:8090/dmx/"+ channel +"/"+data);
+                final URL url = new URL("http://192.168.1.141:8090/dmx/"+ dmxChannel +"/"+dmxValue);
 
                 final HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");

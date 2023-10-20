@@ -43,4 +43,18 @@ public class FileUtils {
         }
         return new File(dir.getAbsolutePath()+"/"+name);
     }
+
+    public static File getDirectory(final String baseName){
+        final File dir = new File(baseName);
+
+        if (dir.exists())
+            return dir;
+
+        try {
+            new File(baseName).mkdirs();
+        }catch (Exception e){
+
+        }
+        return new File(baseName);
+    }
 }

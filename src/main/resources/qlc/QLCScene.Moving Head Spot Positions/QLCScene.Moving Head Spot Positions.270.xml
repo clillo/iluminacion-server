@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot Positions.270</title>
+   <common>
+      <id>270</id>
+      <type>Scene</type>
+      <path>Moving Head Spot Positions</path>
+      <name>Y One</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" channel="1" value="227"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="132"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="204"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="178"/>
+   </points>
+</doc>

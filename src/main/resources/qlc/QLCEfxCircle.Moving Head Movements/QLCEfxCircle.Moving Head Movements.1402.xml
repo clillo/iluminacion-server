@@ -1,0 +1,68 @@
+
+<doc>
+   <title>QLCEfxCircle.Moving Head Movements.1402</title>
+   <common>
+      <id>1402</id>
+      <type>QLCEfxCircle</type>
+      <path>Moving Head Movements</path>
+      <name>circle 2</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>12</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>9</id>
+         <offset>36.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>14</id>
+         <offset>72.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>14</id>
+         <offset>108.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>16</id>
+         <offset>144.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>17</id>
+         <offset>180.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>8</id>
+         <offset>216.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>10</id>
+         <offset>252.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>11</id>
+         <offset>288.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>18</id>
+         <offset>314.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <centerX>51776.0</centerX>
+      <centerY>16820.906666666666</centerY>
+      <width>8520.0</width>
+      <height>13190.0</height>
+   </dimensions>
+</doc>

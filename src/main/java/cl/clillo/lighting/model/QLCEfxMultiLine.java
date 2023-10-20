@@ -62,7 +62,7 @@ public class QLCEfxMultiLine extends QLCEfx{
     }
 
     protected List<QLCEfxPosition> buildPositions(){
-        if (realPoints==null)
+        if (realPoints==null || realPoints.size()==0)
             return List.of();
 
         final List<QLCEfxPosition> positions = new ArrayList<>();

@@ -96,13 +96,8 @@ public abstract class QLCEfx extends QLCFunction{
                 final QLCEfxPosition position = positions.get(fixtureIndexPosition);
 
                 screenPoints[positionFixture] = position.buildScreenPoint();
-
                 channels.add(fixtureData.getChannels());
-
-             //   if (fixtureData.getChannels().length==4)
-              //      data.add(position.buildSimpleDataArray());
-              //  else
-                    data.add(position.buildDataArray());
+                data.add(position.buildDataArray());
             }
 
             final QLCExecutionNode node = QLCExecutionNode.builder()

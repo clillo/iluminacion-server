@@ -68,8 +68,8 @@ public class QLCSequence extends QLCFunction{
                 step.setFadeOut(qlcSpeed.getFadeOut());
             if (step.getHold() == 0)
                 step.setHold(qlcSpeed.getDuration() - qlcSpeed.getFadeIn());
-          //  for (QLCPoint point : step.getPointList())
-            //    fixtures.add(point.getFixture());
+         //  for (QLCPoint point : step.getPointList())
+           //     fixtures.add(point.getFixture());
         }
 /*
         for (QLCFixture fixture : fixtures) {
@@ -82,8 +82,8 @@ public class QLCSequence extends QLCFunction{
         for (QLCStep step : qlcStepList)
             buildFakeSteps(step);
 
-        if (this.id==25)
-            System.out.println("AQUI");
+     //   if (this.id==25)
+       //     System.out.println("AQUI");
     }
 
     private static final int MIN_STEP_DURATION = 10; // in millis
@@ -94,8 +94,8 @@ public class QLCSequence extends QLCFunction{
 
         if (step.getFadeIn()!=0){
             int numberOfFakeSteps = step.getFadeIn()/MIN_STEP_DURATION;
-            if (numberOfFakeSteps==0)
-                System.out.println("AQUI");
+            //if (numberOfFakeSteps==0)
+              //  System.out.println("AQUI");
             int deltaDimmer = 255 / numberOfFakeSteps;
             int valueDimmer = 0;
 
@@ -106,7 +106,7 @@ public class QLCSequence extends QLCFunction{
                         .fadeOut(0)
                         .hold(MIN_STEP_DURATION)
                         .pointList(i==0?step.replaceDimmerValue(valueDimmer):step.onlyDimmerValue(valueDimmer))
-                        .build());
+                        .buildFake());
                 valueDimmer+=deltaDimmer;
             }
         }
@@ -125,7 +125,7 @@ public class QLCSequence extends QLCFunction{
                         .fadeOut(0)
                         .hold(MIN_STEP_DURATION)
                         .pointList(i==0?step.replaceDimmerValue(valueDimmer):step.onlyDimmerValue(valueDimmer))
-                        .build());
+                        .buildFake());
                 valueDimmer-=deltaDimmer;
             }
         }
@@ -168,6 +168,8 @@ public class QLCSequence extends QLCFunction{
     protected void writeSteps(final XMLStreamWriter out) throws XMLStreamException {
         out.writeStartElement("steps");
         for (QLCStep step: qlcStepList) {
+            if (step instanceof QLCFakeStep)
+                continue;
             out.writeStartElement("step");
             out.writeAttribute("id", String.valueOf(step.getId()));
             out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));

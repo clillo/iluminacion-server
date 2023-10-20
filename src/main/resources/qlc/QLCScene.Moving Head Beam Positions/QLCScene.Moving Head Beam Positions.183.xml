@@ -1,0 +1,28 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Positions.183</title>
+   <common>
+      <id>183</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Positions</path>
+      <name>Disco Ball</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" channel="1" value="181"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="22"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="185"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="21"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="186"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="26"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="189"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="18"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="0"/>
+   </points>
+</doc>

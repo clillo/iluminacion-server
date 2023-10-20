@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot Positions.71</title>
+   <common>
+      <id>71</id>
+      <type>Scene</type>
+      <path>Moving Head Spot Positions</path>
+      <name>Cross Two</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" channel="1" value="193"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="196"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="132"/>
+      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="231"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="196"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="1" value="178"/>
+   </points>
+</doc>

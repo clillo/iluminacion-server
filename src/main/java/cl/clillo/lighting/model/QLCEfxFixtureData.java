@@ -22,6 +22,10 @@ public class QLCEfxFixtureData {
 
     public int[] getChannels(){
         if (roboticFixture==null){
+            if (fixture==null){
+                System.out.println("null fixture");
+            }
+
             final QLCSimpleRoboticFixture simpleRoboticFixture = (QLCSimpleRoboticFixture)fixture;
             return new int[]{simpleRoboticFixture.getPanDmxChannel(), simpleRoboticFixture.getTiltDmxChannel()};
         }

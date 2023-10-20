@@ -1,0 +1,32 @@
+
+<doc>
+   <title>QLCEfxLine.QLCEfx Spiders.1004</title>
+   <common>
+      <id>1004</id>
+      <type>QLCEfxLine</type>
+      <path>QLCEfx Spiders</path>
+      <name>Spiders 4</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>4</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>5</id>
+         <offset>0.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+   </fixtures>
+   <points>
+      <origin>
+         <x>100.0</x>
+         <y>100.0</y>
+      </origin>
+      <destiny>
+         <x>65000.0</x>
+         <y>61000.0</y>
+      </destiny>
+   </points>
+</doc>

@@ -1,0 +1,24 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Color.301</title>
+   <common>
+      <id>301</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Color</path>
+      <name>Rotating Center</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" channel="1" value="200"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="14" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="200"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="15" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="200"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="255"/>
+      <point fixture-robotic="true" fixture="16" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="200"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="0"/>
+      <point fixture-robotic="true" fixture="17" channel="1" value="0"/>
+   </points>
+</doc>
