@@ -1,0 +1,15 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.2</title>
+   <common>
+      <id>2</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>sec mv white</name>
+   </common>
+   <functions>
+      <function id="296" path="Moving Head Beams" name="Eigth 2 Fast"/>
+      <function id="192" path="Moving Heads" name="Secuencial MH"/>
+      <function id="148" path="Multiple" name="Spiders Mover en Secuencia"/>
+   </functions>
+</doc>

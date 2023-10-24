@@ -11,7 +11,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ShowCollection {
 
@@ -97,6 +99,19 @@ public class ShowCollection {
         addShow(show);
     }
 
+    private void addQLCCollection(final QLCCollection collection){
+        final Show show = Show.builder()
+                .name(collection.getName())
+                .executing(false)
+                .firstTimeExecution(true)
+                .stepList(List.of())
+                .function(collection)
+                .build(collection.getId());
+        collection.setShow(show);
+        addShow(show);
+    }
+
+
     private void addShow(final Show show){
         if (show.getId()<=0) {
             System.out.println("Show con id 0: "+show.getName());
@@ -152,6 +167,10 @@ public class ShowCollection {
             if (dir.listFiles()!=null)
                   addFromDirectory(dir);
 
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                addCollectionFromDir(dir);
+
     }
 
     private void addFromDirectory(final File file){
@@ -171,6 +190,23 @@ public class ShowCollection {
                     addQLCScene(QLCScene.read(qlcModel, f));
                 if (f.getName().startsWith("QLCSequence"))
                     addQLCSequence(QLCSequence.read(qlcModel, f));
+
+            }
+
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw new RuntimeException(e);
+        }
+
+        Collections.sort(showList);
+    }
+
+    private void addCollectionFromDir(final File file){
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
+        try {
+            final Map<Integer, QLCFunction> functionMap = getFunctionMap();
+            for (File f: files){
+                if (f.getName().startsWith("QLCCollection"))
+                    addQLCCollection(QLCCollection.read(functionMap, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
@@ -188,6 +224,14 @@ public class ShowCollection {
         return functionList;
     }
 
+    public List<QLCFunction> getOriginalFunctionList(final String type){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (QLCFunction function: qlcModelOriginal.getFunctionList())
+            if (type.equalsIgnoreCase(function.getType()) )
+                functionList.add(function);
+
+        return functionList;
+    }
     public List<QLCFunction> getFunctionList(final String type, final String path){
         final List<QLCFunction> functionList = new ArrayList<>();
         for (Show show: showList) {
@@ -197,6 +241,15 @@ public class ShowCollection {
         }
 
         return functionList;
+    }
+    public Map<Integer, QLCFunction> getFunctionMap(){
+        final Map<Integer, QLCFunction> functionMap = new HashMap<>();
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            functionMap.put(function.getId(), function);
+        }
+
+        return functionMap;
     }
 
     public Show getShow(final int sceneId){

@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCCollection.Sec1.297</title>
+   <common>
+      <id>297</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Mirror Ball 1</name>
+   </common>
+   <functions>
+      <function id="183" path="Moving Head Beam Positions" name="Disco Ball"/>
+      <function id="171" path="Moving Head Beam Color" name="White"/>
+   </functions>
+</doc>

@@ -1,0 +1,15 @@
+
+<doc>
+   <title>QLCCollection.Sec1.15</title>
+   <common>
+      <id>15</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Circle Pink Mid</name>
+   </common>
+   <functions>
+      <function id="67" path="Moving Head Spot" name="Open Pink"/>
+      <function id="286" path="Moving Heads Spot" name="Circle Mid"/>
+      <function id="288" path="Moving Head Beams" name="Circle Mid"/>
+   </functions>
+</doc>

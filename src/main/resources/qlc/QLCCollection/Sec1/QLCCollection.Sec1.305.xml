@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCCollection.Sec1.305</title>
+   <common>
+      <id>305</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Spoting Yellow</name>
+   </common>
+   <functions>
+      <function id="292" path="Moving Head Beams" name="Eigth 3  Slow"/>
+      <function id="291" path="Moving Heads Spot" name="Eight Slow"/>
+      <function id="175" path="Moving Head Beam Color" name="Yellow"/>
+      <function id="76" path="Moving Head Spot" name="Rotating Yellow"/>
+   </functions>
+</doc>

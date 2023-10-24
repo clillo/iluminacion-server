@@ -1,0 +1,15 @@
+
+<doc>
+   <title>QLCCollection.Sec2.152</title>
+   <common>
+      <id>152</id>
+      <type>Collection</type>
+      <path>Sec2</path>
+      <name>Rainbow 1</name>
+   </common>
+   <functions>
+      <function id="150" path="Multiple" name="Spider 1 Derby Color"/>
+      <function id="301" path="Moving Head Beam Color" name="Rotating Center"/>
+      <function id="183" path="Moving Head Beam Positions" name="Disco Ball"/>
+   </functions>
+</doc>

@@ -1,0 +1,13 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.3</title>
+   <common>
+      <id>3</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Strobo Azul</name>
+   </common>
+   <functions>
+      <function id="146" path="Multiple" name="Stobo Blue random"/>
+   </functions>
+</doc>

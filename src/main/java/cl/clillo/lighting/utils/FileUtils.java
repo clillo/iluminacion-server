@@ -4,17 +4,36 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Stack;
 
 public class FileUtils {
 
     public static List<File> getDirectories(final String baseName){
+        final List<File> dirs = new ArrayList<>();
         final File file = new File(baseName);
+        Stack<File> toReview = new Stack<>();
 
-        final File[] listFiles = Arrays.stream(Objects.requireNonNull(file.listFiles())).filter(File::isDirectory).toArray(File[]::new);
-        return Lists.newArrayList(listFiles);
+        toReview.push(file);
+
+        while (!toReview.isEmpty()){
+            File actualFile = toReview.pop();
+            if (actualFile.isDirectory())
+                dirs.add(actualFile);
+
+            if (actualFile.listFiles()==null)
+                continue;
+
+            for(File f: actualFile.listFiles()){
+                if (f.isDirectory())
+                    toReview.push(f);
+            }
+        }
+
+        return dirs;
     }
 
     public static List<File> getFiles(final String baseName, final String prefix, final String suffix){

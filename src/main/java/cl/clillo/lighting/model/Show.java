@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.executor.IQLCStepExecutor;
+import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
 import cl.clillo.lighting.executor.QLCSequenceExecutor;
@@ -215,6 +216,9 @@ public class Show implements Comparable<Show> {
 
             if (function instanceof QLCScene)
                 show.setStepExecutor(new QLCSceneExecutor(show));
+
+            if (function instanceof QLCCollection)
+                show.setStepExecutor(new QLCCollectionExecutor(show));
             return show;
         }
 

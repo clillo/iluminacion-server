@@ -45,13 +45,13 @@ public class QLCModel {
             Node engine = doc.getElementsByTagName("Engine").item(0);
 
             readFixtureList(engine);
-      /*      readFunctionList(engine, "Scene");
+            readFunctionList(engine, "Scene");
             readFunctionList(engine, "Sequence");
             readFunctionList(engine, "Chaser");
             readFunctionList(engine, "Efx");
             readFunctionList(engine, "RGBMatrix");
             readFunctionList(engine, "Collection");
-*/
+
             NodeList list = engine.getChildNodes();
 
             for (int temp = 0; temp < list.getLength(); temp++) {
@@ -284,7 +284,7 @@ public class QLCModel {
                             .build();
 
                     pointList.add(qlcPoint);
-                    System.out.println(fixtureId + "\t" + dxmChannel+"\t"+dmxValue);
+                  //  System.out.println(fixtureId + "\t" + dxmChannel+"\t"+dmxValue);
                 }
             }
         }

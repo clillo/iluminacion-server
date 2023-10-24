@@ -1,0 +1,19 @@
+
+<doc>
+   <title>QLCCollection.Sec1.307</title>
+   <common>
+      <id>307</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Spoting Red Extreme</name>
+   </common>
+   <functions>
+      <function id="292" path="Moving Head Beams" name="Eigth 3  Slow"/>
+      <function id="291" path="Moving Heads Spot" name="Eight Slow"/>
+      <function id="172" path="Moving Head Beam Color" name="Red"/>
+      <function id="12" path="Moving Head Spot" name="Open Red"/>
+      <function id="127" path="Derby" name="Red Rotating"/>
+      <function id="115" path="Spider" name="Spider- Dimmer Rojo"/>
+      <function id="31" path="Spider" name="Spider23 - Mov 4"/>
+   </functions>
+</doc>

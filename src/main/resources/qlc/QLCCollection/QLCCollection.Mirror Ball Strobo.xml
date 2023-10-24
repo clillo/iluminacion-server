@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCCollection.Mirror Ball Strobo</title>
+   <common>
+      <id>300</id>
+      <type>Collection</type>
+      <path/>
+      <name>Mirror Ball Strobo</name>
+   </common>
+   <functions>
+      <function id="183" path="Moving Head Beam Positions" name="Disco Ball"/>
+      <function id="77" path="Moving Head Spot Positions" name="Mirror Ball"/>
+      <function id="275" path="Moving Head Spot" name="White Strobo 1"/>
+      <function id="281" path="Moving Head Beam Color" name="White Strobo 2"/>
+   </functions>
+</doc>
