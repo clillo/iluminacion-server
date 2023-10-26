@@ -21,17 +21,17 @@ public class StandAlone {
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
 /*
-        final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Collection");
+        final List<QLCFunction> list = ShowCollection.getInstance().getOriginalFunctionList("Chaser");
         //list.addAll(ShowCollection.getInstance().getOriginalFunctionList("Sequence", "Spiders/Single"));
         for (QLCFunction function: list){
-          //  System.out.println(function.getPath()+"\t"+function.getId()+"\t"+function.getName());
-        //    function.writeToConfigFile("src/main/resources/qlc");
+            System.out.println(function.getPath()+"\t"+function.getId()+"\t"+function.getName());
+            function.writeToConfigFile("src/main/resources/qlc");
        }
-*/
+
         StateRepository stateRepository = StateRepository.getInstance();
         stateRepository.read();
 
-
+*/
       //  stateRepository.write();*/
 
       //  for (Show show: ShowCollection.getInstance().getShowList())

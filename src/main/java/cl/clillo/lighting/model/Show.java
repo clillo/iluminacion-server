@@ -19,22 +19,21 @@ public class Show implements Comparable<Show> {
     private boolean executing;
     private IQLCStepExecutor stepExecutor;
     private int pasoActual;
-    private List<Step> stepList;
     private boolean firstTimeExecution;
     private QLCFunction function;
     private List<Show> uniqueShow;
     private int[] dimmerChannels;
 
-    public Show(int id, String name, long nextExecutionTime, boolean executing, IQLCStepExecutor stepExecutor,
-                int pasoActual, List<Step> stepList, boolean firstTimeExecution, QLCFunction function,
+    public Show(int id, String name,  boolean executing, IQLCStepExecutor stepExecutor,
+                int pasoActual, boolean firstTimeExecution, QLCFunction function,
                 List<Show> uniqueShow) {
         this.id = id;
         this.name = name;
-        this.nextExecutionTime = nextExecutionTime;
+
         this.executing = executing;
         this.stepExecutor = stepExecutor;
         this.pasoActual = pasoActual;
-        this.stepList = stepList;
+
         this.firstTimeExecution = firstTimeExecution;
         this.function = function;
         this.uniqueShow = uniqueShow;
@@ -50,22 +49,6 @@ public class Show implements Comparable<Show> {
 
     public static ShowBuilder builder() {
         return new ShowBuilder();
-    }
-
-    public Step nextStep() {
-        pasoActual++;
-
-        if (pasoActual >= stepList.size())
-            pasoActual = 0;
-
-        final Step step = stepList.get(pasoActual);
-
-        if (step.isNextExecution()) {
-            nextExecutionTime = System.currentTimeMillis() + step.getNextExecutionTime();
-        } else {
-            nextExecutionTime = System.currentTimeMillis() + NEXT_EXECUTION_DEFAULT;
-        }
-        return step;
     }
 
     public int getId() {
@@ -130,10 +113,6 @@ public class Show implements Comparable<Show> {
         this.stepExecutor = stepExecutor;
     }
 
-    public void setStepList(List<Step> stepList) {
-        this.stepList = stepList;
-    }
-
     public void setFirstTimeExecution(boolean firstTimeExecution) {
         this.firstTimeExecution = firstTimeExecution;
     }
@@ -167,10 +146,8 @@ public class Show implements Comparable<Show> {
         private static int idCount = 1;
 
         private String name;
-        private long nextExecutionTime;
-        private boolean executing;
-        private List<Step> stepList;
-        private boolean firstTimeExecution;
+        private boolean executing = false;
+        private boolean firstTimeExecution = true;
         private QLCFunction function;
 
         ShowBuilder() {
@@ -183,11 +160,6 @@ public class Show implements Comparable<Show> {
 
         public ShowBuilder executing(boolean executing) {
             this.executing = executing;
-            return this;
-        }
-
-        public ShowBuilder stepList(List<Step> stepList) {
-            this.stepList = stepList;
             return this;
         }
 
@@ -204,8 +176,8 @@ public class Show implements Comparable<Show> {
         public Show build(int id) {
             IQLCStepExecutor executor = null;
 
-            Show show = new Show(id == -1 ? idCount++ : id, this.name, this.nextExecutionTime, this.executing, executor,
-                    0, this.stepList,
+            Show show = new Show(id == -1 ? idCount++ : id, this.name,  this.executing, executor,
+                    0,
                     this.firstTimeExecution, this.function, new ArrayList<>());
 
             if (function instanceof QLCSequence)

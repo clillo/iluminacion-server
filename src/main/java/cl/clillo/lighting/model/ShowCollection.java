@@ -65,9 +65,6 @@ public class ShowCollection {
     public void addQLCEfx(final QLCEfx qlcEfx){
         Show show = Show.builder()
                 .name(qlcEfx.getName())
-                .executing(false)
-                .firstTimeExecution(true)
-                .stepList(List.of())
                 .function(qlcEfx)
                 .build(qlcEfx.getId());
         show.setUniqueShow(showQLCEfxList);
@@ -75,42 +72,14 @@ public class ShowCollection {
         showQLCEfxList.add(show);
     }
 
-    private void addQLCScene(final QLCScene qlcScene){
+    private void addQLCFunction(final QLCFunction chaser){
         final Show show = Show.builder()
-                .name(qlcScene.getName())
-                .executing(false)
-                .firstTimeExecution(true)
-                .stepList(List.of())
-                .function(qlcScene)
-                .build(qlcScene.getId());
-        qlcScene.setShow(show);
+                .name(chaser.getName())
+                .function(chaser)
+                .build(chaser.getId());
+        chaser.setShow(show);
         addShow(show);
     }
-
-    private void addQLCSequence(final QLCSequence qlcSequence){
-        final Show show = Show.builder()
-                .name(qlcSequence.getName())
-                .executing(false)
-                .firstTimeExecution(true)
-                .stepList(List.of())
-                .function(qlcSequence)
-                .build(qlcSequence.getId());
-        qlcSequence.setShow(show);
-        addShow(show);
-    }
-
-    private void addQLCCollection(final QLCCollection collection){
-        final Show show = Show.builder()
-                .name(collection.getName())
-                .executing(false)
-                .firstTimeExecution(true)
-                .stepList(List.of())
-                .function(collection)
-                .build(collection.getId());
-        collection.setShow(show);
-        addShow(show);
-    }
-
 
     private void addShow(final Show show){
         if (show.getId()<=0) {
@@ -187,9 +156,9 @@ public class ShowCollection {
                 if (f.getName().startsWith("QLCEfxLine"))
                     addQLCEfx(QLCEfxLine.read(qlcModel, f));
                  if (f.getName().startsWith("QLCScene"))
-                    addQLCScene(QLCScene.read(qlcModel, f));
+                     addQLCFunction(QLCScene.read(qlcModel, f));
                 if (f.getName().startsWith("QLCSequence"))
-                    addQLCSequence(QLCSequence.read(qlcModel, f));
+                    addQLCFunction(QLCSequence.read(qlcModel, f));
 
             }
 
@@ -206,7 +175,9 @@ public class ShowCollection {
             final Map<Integer, QLCFunction> functionMap = getFunctionMap();
             for (File f: files){
                 if (f.getName().startsWith("QLCCollection"))
-                    addQLCCollection(QLCCollection.read(functionMap, f));
+                    addQLCFunction(QLCCollection.read(functionMap, f));
+                if (f.getName().startsWith("QLCChaser"))
+                    addQLCFunction(QLCChaser.read(functionMap, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

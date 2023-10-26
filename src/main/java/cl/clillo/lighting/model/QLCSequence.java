@@ -29,7 +29,6 @@ public class QLCSequence extends QLCFunction{
     private final List<QLCStep> qlcStepList;
     private final QLCScene boundScene;
     private final QLCSpeed qlcSpeed;
-    private Show show;
     private final Set<Integer> dimmerChannelSet;
 
     public QLCSequence(final int id, final String type, final String name, final String path,
@@ -129,10 +128,6 @@ public class QLCSequence extends QLCFunction{
                 valueDimmer-=deltaDimmer;
             }
         }
-    }
-
-    public void setShow(Show show) {
-        this.show = show;
     }
 
     public String toSmallString(){

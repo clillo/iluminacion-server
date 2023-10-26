@@ -4,6 +4,7 @@ import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
+import cl.clillo.lighting.repository.XMLParser;
 import cl.clillo.lighting.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -47,7 +48,7 @@ public class QLCModel {
             readFixtureList(engine);
             readFunctionList(engine, "Scene");
             readFunctionList(engine, "Sequence");
-            readFunctionList(engine, "Chaser");
+
             readFunctionList(engine, "Efx");
             readFunctionList(engine, "RGBMatrix");
             readFunctionList(engine, "Collection");
@@ -77,6 +78,8 @@ public class QLCModel {
 
                 }
             }
+
+            readFunctionList(engine, "Chaser");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -205,17 +208,22 @@ public class QLCModel {
                 builder.addFunctionList(function);
             }
 
-            if ("Sequence".equalsIgnoreCase(type) && "Step".equals(eElement.getNodeName())) {
+            if ("Sequence".equalsIgnoreCase(type)&& "Step".equals(eElement.getNodeName())) {
                 builder.addStepList(getSequenceStep(node));
 
             }
 
-            if ("Sequence".equalsIgnoreCase(type) && "Direction".equals(eElement.getNodeName())) {
+            if ("Chaser".equalsIgnoreCase(type) && "Step".equals(eElement.getNodeName())) {
+                builder.addStepChaser(getChaserStep(node));
+
+            }
+
+            if (("Sequence".equalsIgnoreCase(type) || "Chaser".equalsIgnoreCase(type))  && "Direction".equals(eElement.getNodeName())) {
                 builder.direction(QLCDirection.valueOf(eElement.getTextContent().toUpperCase()));
 
             }
 
-            if ("Sequence".equalsIgnoreCase(type) && "RunOrder".equals(eElement.getNodeName())) {
+            if (("Sequence".equalsIgnoreCase(type) || "Chaser".equalsIgnoreCase(type))  && "RunOrder".equals(eElement.getNodeName())) {
                 builder.runOrder(QLCRunOrder.valueOf(eElement.getTextContent().toUpperCase()));
 
             }
@@ -225,7 +233,7 @@ public class QLCModel {
 
             }
 
-            if ("Sequence".equalsIgnoreCase(type) && "Speed".equals(eElement.getNodeName())) {
+            if (("Sequence".equalsIgnoreCase(type) || "Chaser".equalsIgnoreCase(type))  && "Speed".equals(eElement.getNodeName())) {
                 builder.speed(getSequenceSpeed(node));
 
             }
@@ -291,6 +299,22 @@ public class QLCModel {
 
         return builder.build();
     }
+
+    private QLCChaserStep getChaserStep(final Node node){
+        final QLCChaserStep.QLCStepBuilder builder = QLCChaserStep.builder();
+        builder.id(getAttributeInt(node, "Number"));
+        builder.fadeIn(getAttributeInt(node, "FadeIn"));
+        builder.hold(getAttributeInt(node, "Hold"));
+        builder.fadeOut(getAttributeInt(node, "FadeOut"));
+
+        final Element eElement = (Element) node;
+        String collectionId = eElement.getTextContent();
+        final int fixtureId = Integer.parseInt(collectionId);
+        builder.collection(functionMap.get(fixtureId));
+
+        return builder.build();
+    }
+
 
     public <T extends QLCFunction> T getFunction(final int id){
         return (T)functionMap.get(id);

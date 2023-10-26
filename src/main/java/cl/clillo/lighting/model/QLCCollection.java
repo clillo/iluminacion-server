@@ -19,7 +19,6 @@ import java.util.Map;
 public class QLCCollection extends QLCFunction {
 
     private final List<QLCFunction> qlcFunctionList;
-    private Show show;
 
     public QLCCollection(final int id, final String type, final String name, final String path, final List<QLCFunction> qlcFunctionList) {
         super(id, type, name, path);
@@ -32,10 +31,6 @@ public class QLCCollection extends QLCFunction {
         for (QLCFunction scene : qlcFunctionList)
             sb.append('{').append(scene.getId()).append('}');
         return sb.toString();
-    }
-
-    public void setShow(Show show) {
-        this.show = show;
     }
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {

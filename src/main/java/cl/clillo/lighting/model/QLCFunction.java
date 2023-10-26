@@ -1,7 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
@@ -12,9 +11,6 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -23,6 +19,8 @@ import java.util.List;
 @Getter
 @ToString
 public class QLCFunction extends QLCElement{
+
+    private Show show;
 
     QLCFunction(int id, String type, String name, String path) {
         super(id, type, name, path);
@@ -127,6 +125,14 @@ public class QLCFunction extends QLCElement{
                 .build();
     }
 
+    public void setShow(Show show) {
+        this.show = show;
+    }
+
+    public Show getShow() {
+        return show;
+    }
+
     public static class QLCFunctionBuilder {
         private int id;
         private String type;
@@ -141,6 +147,7 @@ public class QLCFunction extends QLCElement{
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
         private final List<QLCEfxFixtureData> roboticFixtureList = new ArrayList<>();
+        private final List<QLCChaserStep> chaserSteps = new ArrayList<>();
 
         QLCFunctionBuilder() {
         }
@@ -204,6 +211,11 @@ public class QLCFunction extends QLCElement{
             return this;
         }
 
+        public QLCFunctionBuilder addStepChaser(final QLCChaserStep step) {
+            this.chaserSteps.add(step);
+            return this;
+        }
+
         public QLCFunction build() {
             if ("Scene".equalsIgnoreCase(type))
                 return new QLCScene(this.id, this.type, this.name, this.path, this.qlcPointList);
@@ -225,8 +237,18 @@ public class QLCFunction extends QLCElement{
                     return new QLCEfxLine(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                             this.qlcStepList, boundScene, roboticFixtureList);
             }
+
+
+            if ("Chaser".equalsIgnoreCase(type))
+                return this.chaserSteps.size()>0? new QLCChaser(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
+                        this.qlcSpeed, this.chaserSteps): null;
+
+
+
             return new QLCFunction(this.id, this.type, this.name, this.path);
         }
 
     }
+
+
 }

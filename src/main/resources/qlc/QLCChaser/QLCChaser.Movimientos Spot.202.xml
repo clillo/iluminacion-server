@@ -1,0 +1,19 @@
+
+<doc>
+   <title>QLCChaser.Movimientos Spot.202</title>
+   <common>
+      <id>202</id>
+      <type>Chaser</type>
+      <path>Movimientos Spot</path>
+      <name>UpDown Multi</name>
+   </common>
+   <functions>
+      <function id="184" fadeIn="1000" hold="0" fadeOut="0"/>
+      <function id="180" fadeIn="0" hold="1500" fadeOut="0"/>
+      <function id="182" fadeIn="0" hold="1500" fadeOut="0"/>
+      <function id="178" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="185" fadeIn="0" hold="1500" fadeOut="0"/>
+      <function id="181" fadeIn="0" hold="1500" fadeOut="0"/>
+      <function id="179" fadeIn="0" hold="1500" fadeOut="0"/>
+   </functions>
+</doc>

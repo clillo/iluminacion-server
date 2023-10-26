@@ -22,7 +22,6 @@ import java.util.List;
 public class QLCScene extends QLCFunction{
 
     private final List<QLCPoint> qlcPointList;
-    private Show show;
 
     public QLCScene(final int id, final String type, final String name, final String path, final List<QLCPoint> qlcPointList) {
         super(id, type, name, path);
@@ -68,15 +67,9 @@ public class QLCScene extends QLCFunction{
         return scene;
     }
 
-
-
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
         QLCPoint.write(out, qlcPointList);
-    }
-
-    public void setShow(Show show) {
-        this.show = show;
     }
 
 }

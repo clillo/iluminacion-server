@@ -1,0 +1,19 @@
+
+<doc>
+   <title>QLCChaser.Generales.11</title>
+   <common>
+      <id>11</id>
+      <type>Chaser</type>
+      <path>Generales</path>
+      <name>Secuencia 2</name>
+   </common>
+   <functions>
+      <function id="80" fadeIn="0" hold="30000" fadeOut="0"/>
+      <function id="304" fadeIn="0" hold="80000" fadeOut="0"/>
+      <function id="298" fadeIn="0" hold="80000" fadeOut="0"/>
+      <function id="308" fadeIn="0" hold="30000" fadeOut="0"/>
+      <function id="152" fadeIn="0" hold="80000" fadeOut="0"/>
+      <function id="142" fadeIn="0" hold="80000" fadeOut="0"/>
+      <function id="306" fadeIn="0" hold="80000" fadeOut="0"/>
+   </functions>
+</doc>
