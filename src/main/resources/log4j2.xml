@@ -25,7 +25,7 @@
 
     <Loggers>
         <!-- LOG everything at WARN level to Console and Log File -->
-        <Root level="DEBUG">
+        <Root level="WARN">
             <AppenderRef ref="Console"/>
             <AppenderRef ref="RollingFile"/>
         </Root>
