@@ -45,9 +45,14 @@ public class VirtualDJFrame extends JFrame {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        final String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("windows"))
+            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        else
+            setLocation(-2250, 200);
+
         setLocationRelativeTo(null);
-        setLocation(-2250, 200);
+      // setLocation(-2250, 200);
         setVisible(true);
 
     }

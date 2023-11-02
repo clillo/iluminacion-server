@@ -45,7 +45,12 @@ public class EFXMConfigureJFrame extends JFrame {
         }
         // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         setLocationRelativeTo(null);
-        setLocation(-2250, 200);
+        final String os = System.getProperty("os.name");
+        if (os.toLowerCase().startsWith("windows"))
+            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+        else
+            setLocation(-2250, 200);
+
         setVisible(true);
 
     }
