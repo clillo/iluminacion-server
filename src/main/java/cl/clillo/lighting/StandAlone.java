@@ -1,5 +1,8 @@
 package cl.clillo.lighting;
 
+import ch.qos.logback.classic.Level;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
 import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.gui.controller.ControllerJFrame;
 import cl.clillo.lighting.model.Point;
@@ -8,14 +11,20 @@ import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.repository.StateRepository;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
 public class StandAlone {
 
     public static void main(String[] args) {
-      //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
-        ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
+        LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
+
+        Logger root = context.getLogger(Logger.ROOT_LOGGER_NAME);
+        root.setLevel(Level.INFO);
+
+        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+     //   ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
       //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();

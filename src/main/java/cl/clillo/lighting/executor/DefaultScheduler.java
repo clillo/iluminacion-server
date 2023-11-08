@@ -1,15 +1,15 @@
-package cl.clillo.lighting;
+package cl.clillo.lighting.executor;
 
 import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.model.Show;
 
 import java.util.List;
 
-public class Scheduler extends Thread {
+public class DefaultScheduler extends Thread {
 
     private final List<Show> showList;
 
-    public Scheduler(final List<Show> showList) {
+    public DefaultScheduler(final List<Show> showList) {
         this.showList = showList;
     }
 
@@ -20,7 +20,7 @@ public class Scheduler extends Thread {
 
                 for (Show show : showList) {
                     if (show.isExecuting() && show.getNextExecutionTime() < now) {
-                        show.getStepExecutor().execute();
+                        show.getStepExecutor().executeDefaultScheduler();
                     }
 
                 }

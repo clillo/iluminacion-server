@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.executor.IQLCStepExecutor;
+import cl.clillo.lighting.executor.IStepExecutor;
+import cl.clillo.lighting.executor.OS2LStepExecutor;
 import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
@@ -17,14 +18,14 @@ public class Show implements Comparable<Show> {
     private String name;
     private long nextExecutionTime;
     private boolean executing;
-    private IQLCStepExecutor stepExecutor;
+    private IStepExecutor stepExecutor;
     private int pasoActual;
     private boolean firstTimeExecution;
     private QLCFunction function;
     private List<Show> uniqueShow;
     private int[] dimmerChannels;
 
-    public Show(int id, String name,  boolean executing, IQLCStepExecutor stepExecutor,
+    public Show(int id, String name,  boolean executing, IStepExecutor stepExecutor,
                 int pasoActual, boolean firstTimeExecution, QLCFunction function,
                 List<Show> uniqueShow) {
         this.id = id;
@@ -67,7 +68,7 @@ public class Show implements Comparable<Show> {
         return this.executing;
     }
 
-    public IQLCStepExecutor getStepExecutor() {
+    public IStepExecutor getStepExecutor() {
         return this.stepExecutor;
     }
 
@@ -109,7 +110,7 @@ public class Show implements Comparable<Show> {
             setFirstTimeExecution(true);
     }
 
-    public void setStepExecutor(IQLCStepExecutor stepExecutor) {
+    public void setStepExecutor(IStepExecutor stepExecutor) {
         this.stepExecutor = stepExecutor;
     }
 
@@ -174,15 +175,16 @@ public class Show implements Comparable<Show> {
         }
 
         public Show build(int id) {
-            IQLCStepExecutor executor = null;
+            IStepExecutor executor = null;
 
             Show show = new Show(id == -1 ? idCount++ : id, this.name,  this.executing, executor,
                     0,
                     this.firstTimeExecution, this.function, new ArrayList<>());
 
-            if (function instanceof QLCSequence)
+            if (function instanceof QLCSequence) {
                 show.setStepExecutor(new QLCSequenceExecutor(show));
 
+            }
             if (function instanceof QLCEfx)
                 show.setStepExecutor(new QLCEfxExecutor(show));
 

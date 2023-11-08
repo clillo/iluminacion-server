@@ -1,6 +1,7 @@
 package cl.clillo.lighting.gui.virtualdj;
 
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
+import cl.clillo.lighting.utils.SystemUtils;
 
 import javax.swing.JFrame;
 import javax.swing.UIManager;
@@ -45,14 +46,13 @@ public class VirtualDJFrame extends JFrame {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        final String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith("windows"))
-            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-        else
+
+        if (SystemUtils.getSO() == SystemUtils.SO.MAC_OS)
             setLocation(-2250, 200);
+        else
+            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
         setLocationRelativeTo(null);
-      // setLocation(-2250, 200);
         setVisible(true);
 
     }

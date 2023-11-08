@@ -7,7 +7,7 @@ import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class QLCEfxExecutor implements IQLCStepExecutor {
+public class QLCEfxExecutor implements IStepExecutor {
 
     private final Show show;
     private final QLCEfx efx;
@@ -23,7 +23,7 @@ public class QLCEfxExecutor implements IQLCStepExecutor {
     }
 
     @Override
-    public void execute() {
+    public void executeDefaultScheduler() {
         if (show.isFirstTimeExecution()){
             show.setFirstTimeExecution(false);
         }

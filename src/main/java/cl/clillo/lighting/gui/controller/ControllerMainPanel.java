@@ -1,5 +1,6 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiEvent;
@@ -13,14 +14,16 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
+import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener {
+public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener, IOS2LEventListener {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -35,8 +38,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private int activeIndex = -1;
     private final JSlider masterDimmer;
     private final Dmx dmx = Dmx.getInstance();
-    protected JButton btnSave;
-
+    private JButton btnSave;
+    private JTextField txtActualBPM = new JTextField();
+    private JTextField txtTime = new JTextField();
+    private JTextField txtTimeX2 = new JTextField();
     private final int[] masterDimmerChannels;
     final StateRepository stateRepository = StateRepository.getInstance();
 
@@ -106,6 +111,20 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         masterDimmer.setValue(stateRepository.getRgbwMasterDimmer());
         adjustMasterDimmer();
+
+        txtActualBPM.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 80, 120, 20);
+        txtActualBPM.setFont(new Font("serif", Font.BOLD, 18));
+        panelDimmers.add(txtActualBPM);
+
+        txtTime.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 130, 120, 20);
+        txtTime.setFont(new Font("serif", Font.BOLD, 18));
+        panelDimmers.add(txtTime);
+
+        txtTimeX2.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 180, 120, 20);
+        txtTimeX2.setFont(new Font("serif", Font.BOLD, 18));
+        panelDimmers.add(txtTimeX2);
+
+        ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
     }
 
     private ControllerEditPanel buildPanel(final int index) {
@@ -194,5 +213,16 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     @Override
     public void actionPerformed(ActionEvent e) {
         save();
+    }
+
+    @Override
+    public void changeBPM(double bpm) {
+        txtActualBPM.setText(String.valueOf(bpm));
+    }
+
+    @Override
+    public void changeTimes(long time, long timex2) {
+        txtTime.setText(String.valueOf(time));
+        txtTimeX2.setText(String.valueOf(timex2));
     }
 }

@@ -63,7 +63,9 @@ public class ArtNet {
     public void broadCast(){
       //  System.out.println(dmxData[120]);
       // artNetClient.broadcastDmx(0, 0, dmxData);
-        artNetClient.unicastDmx("169.254.255.255", 0, 0, dmxData);
+        artNetClient.unicastDmx("169.254.0.255", 0, 0, dmxData);
+      //  artNetClient.unicastDmx("169.254.215.1", 0, 0, dmxData);
+
     }
 
     private static class ArtNetHttpProxy extends ArtNet{

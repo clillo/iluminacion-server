@@ -1,7 +1,8 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.Scheduler;
+import cl.clillo.lighting.executor.DefaultScheduler;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
+import cl.clillo.lighting.executor.OS2LScheduler;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
@@ -23,17 +24,23 @@ public class ShowCollection {
     private final QLCModel qlcModelOriginal;
     private final QLCFixtureBuilder qlcModel;
     private final StateRepository stateRepository = StateRepository.getInstance();
+    private final OS2LScheduler os2LScheduler;
 
     private ShowCollection(){
         System.out.println("Building original Model");
         qlcModelOriginal = new QLCModel();
         System.out.println("Building new Model");
         qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
-        Scheduler scheduler = new Scheduler(showList);
+        DefaultScheduler scheduler = new DefaultScheduler(showList);
         System.out.println("Reading new shows");
         addFromDirectory(BASE_DIR);
-        System.out.println("Starting scheduler");
+        System.out.println("Starting default scheduler");
         scheduler.start();
+
+        System.out.println("Starting OS2L scheduler");
+        os2LScheduler = new OS2LScheduler(showList);
+        os2LScheduler.start();
+
     }
 
     private static final class InstanceHolder {
@@ -49,6 +56,10 @@ public class ShowCollection {
 
     public static ShowCollection getInstance() {
         return InstanceHolder.getInstance();
+    }
+
+    public OS2LScheduler getOs2LScheduler() {
+        return os2LScheduler;
     }
 
     public int getRealDMXValue(final int dmxChannel, final int dmxValue){

@@ -1,5 +1,7 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.utils.SystemUtils;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import java.awt.Dimension;
@@ -47,14 +49,13 @@ public class ControllerJFrame extends JFrame {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        final String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith("windows"))
-            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
+
+        if (SystemUtils.getSO() == SystemUtils.SO.MAC_OS)
+            setLocation(-2250, 200);
         else
-             setLocation(-2250, 200);
+            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
         setLocationRelativeTo(null);
-
         setVisible(true);
 
     }

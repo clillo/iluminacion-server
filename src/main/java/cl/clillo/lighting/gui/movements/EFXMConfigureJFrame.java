@@ -1,5 +1,7 @@
 package cl.clillo.lighting.gui.movements;
 
+import cl.clillo.lighting.utils.SystemUtils;
+
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import java.awt.Dimension;
@@ -43,13 +45,12 @@ public class EFXMConfigureJFrame extends JFrame {
         if (frameSize.width > screenSize.width) {
             frameSize.width = screenSize.width;
         }
-        // vp.setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
         setLocationRelativeTo(null);
-        final String os = System.getProperty("os.name");
-        if (os.toLowerCase().startsWith("windows"))
-            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
-        else
+
+        if (SystemUtils.getSO() == SystemUtils.SO.MAC_OS)
             setLocation(-2250, 200);
+        else
+            setLocation((screenSize.width - frameSize.width) / 2, (screenSize.height - frameSize.height) / 2);
 
         setVisible(true);
 
