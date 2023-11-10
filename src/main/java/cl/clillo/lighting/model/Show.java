@@ -44,6 +44,10 @@ public class Show implements Comparable<Show> {
     public Show() {
     }
 
+    public boolean isStatic(){
+        return !(getFunction() instanceof QLCSequence);
+    }
+
     public <T extends QLCFunction> T getFunction() {
         return (T) function;
     }

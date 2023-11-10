@@ -17,6 +17,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -30,7 +31,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     public static final int WIDTH1 = 1424;
     public static final int HEIGHT1 = 900;
 
-    private final List<ControllerEditPanel> pnlList;
     private final List<JSlider> pnlListDimmer;
     private final MidiHandler midiHandler;
     private final JTabbedPane tabbedPane;
@@ -38,29 +38,28 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private int activeIndex = -1;
     private final JSlider masterDimmer;
     private final Dmx dmx = Dmx.getInstance();
-    private JButton btnSave;
-    private JTextField txtActualBPM = new JTextField();
-    private JTextField txtTime = new JTextField();
-    private JTextField txtTimeX2 = new JTextField();
+    private final JTextField txtActualBPM = new JTextField();
+    private final JTextField txtTime = new JTextField();
+    private final JTextField txtTimeX2 = new JTextField();
     private final int[] masterDimmerChannels;
     final StateRepository stateRepository = StateRepository.getInstance();
 
     public ControllerMainPanel() {
 
-        pnlList = new ArrayList<>();
         pnlListDimmer = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
         tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
-        tabbedPane.setBounds(0, 0, WIDTH1 + 200, HEIGHT1-300);
+        tabbedPane.setBounds(0, 0, WIDTH1 + 50, HEIGHT1-300);
         cleanMatrix();
         add(tabbedPane);
+
         controllerEditPanels = new ControllerEditPanel[8];
+        String []names = {"Laser", "Derby", "RGBW", "Spider", "MH Trad", "MH Beam", "AUTO", ""};
         for (int i=0; i<8; i++) {
             final ControllerEditPanel editPanel = buildPanel(i+1);
             controllerEditPanels[i] = editPanel;
-            editPanel.setBounds(0, 0, WIDTH1 + 200, HEIGHT1-400);
-            tabbedPane.addTab(editPanel.getName(), editPanel);
-            pnlList.add(editPanel);
+            editPanel.setBounds(0, 0, WIDTH1 + 40, HEIGHT1-400);
+            tabbedPane.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
         }
 
         tabbedPane.addChangeListener(this);
@@ -68,10 +67,15 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         this.setLayout(null);
         selectPanel(7);
 
+        final JPanel panelSeq = new ControllerSeqPanel();
+        panelSeq.setBounds(WIDTH1 + 70, 0,  220, HEIGHT1-300);
+        this.add(panelSeq);
+
         final JPanel panelDimmers = new JPanel();
         panelDimmers.setLayout(null);
-     //   panelDimmers.setOpaque(true);
-     //   panelDimmers.setBackground(Color.blue);
+
+        panelDimmers.setOpaque(true);
+        panelDimmers.setBackground(Color.BLACK);
         panelDimmers.setBounds(0, HEIGHT1-300, WIDTH1 + 200, 400);
 
         for (int i=0; i<9; i++) {
@@ -102,7 +106,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
             masterDimmerChannels[i++]=dmx;
 
 
-        btnSave = new JButton();
+        JButton btnSave = new JButton();
         btnSave.setText("Save");
         btnSave.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 50, 120, 20);
 

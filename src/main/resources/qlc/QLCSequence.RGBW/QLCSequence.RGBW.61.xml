@@ -40,7 +40,7 @@
             <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
-      <step id="0" fadeIn="0" hold="166" fadeOut="0">
+      <step id="1" fadeIn="0" hold="166" fadeOut="0">
          <points>
             <point fixture="0" channel="0" value="255"/>
             <point fixture="0" channel="1" value="0"/>
@@ -72,7 +72,7 @@
             <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
-      <step id="1" fadeIn="0" hold="166" fadeOut="0">
+      <step id="2" fadeIn="0" hold="166" fadeOut="0">
          <points>
             <point fixture="0" channel="0" value="0"/>
             <point fixture="0" channel="1" value="0"/>
@@ -104,7 +104,7 @@
             <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
-      <step id="1" fadeIn="0" hold="166" fadeOut="0">
+      <step id="3" fadeIn="0" hold="166" fadeOut="0">
          <points>
             <point fixture="0" channel="0" value="0"/>
             <point fixture="0" channel="1" value="0"/>
@@ -130,134 +130,6 @@
             <point fixture="3" channel="0" value="255"/>
             <point fixture="3" channel="1" value="0"/>
             <point fixture="3" channel="2" value="68"/>
-            <point fixture="3" channel="3" value="0"/>
-            <point fixture="3" channel="4" value="0"/>
-            <point fixture="3" channel="5" value="0"/>
-            <point fixture="3" channel="6" value="0"/>
-         </points>
-      </step>
-      <step id="2" fadeIn="0" hold="166" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" value="0"/>
-            <point fixture="0" channel="1" value="0"/>
-            <point fixture="0" channel="2" value="0"/>
-            <point fixture="0" channel="3" value="0"/>
-            <point fixture="0" channel="4" value="0"/>
-            <point fixture="0" channel="5" value="0"/>
-            <point fixture="0" channel="6" value="0"/>
-            <point fixture="1" channel="0" value="255"/>
-            <point fixture="1" channel="1" value="0"/>
-            <point fixture="1" channel="2" value="255"/>
-            <point fixture="1" channel="3" value="0"/>
-            <point fixture="1" channel="4" value="0"/>
-            <point fixture="1" channel="5" value="0"/>
-            <point fixture="1" channel="6" value="0"/>
-            <point fixture="2" channel="0" value="255"/>
-            <point fixture="2" channel="1" value="0"/>
-            <point fixture="2" channel="2" value="66"/>
-            <point fixture="2" channel="3" value="0"/>
-            <point fixture="2" channel="4" value="0"/>
-            <point fixture="2" channel="5" value="0"/>
-            <point fixture="2" channel="6" value="0"/>
-            <point fixture="3" channel="0" value="0"/>
-            <point fixture="3" channel="1" value="0"/>
-            <point fixture="3" channel="2" value="0"/>
-            <point fixture="3" channel="3" value="0"/>
-            <point fixture="3" channel="4" value="0"/>
-            <point fixture="3" channel="5" value="0"/>
-            <point fixture="3" channel="6" value="0"/>
-         </points>
-      </step>
-      <step id="2" fadeIn="0" hold="166" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" value="0"/>
-            <point fixture="0" channel="1" value="0"/>
-            <point fixture="0" channel="2" value="0"/>
-            <point fixture="0" channel="3" value="0"/>
-            <point fixture="0" channel="4" value="0"/>
-            <point fixture="0" channel="5" value="0"/>
-            <point fixture="0" channel="6" value="0"/>
-            <point fixture="1" channel="0" value="255"/>
-            <point fixture="1" channel="1" value="0"/>
-            <point fixture="1" channel="2" value="255"/>
-            <point fixture="1" channel="3" value="0"/>
-            <point fixture="1" channel="4" value="0"/>
-            <point fixture="1" channel="5" value="0"/>
-            <point fixture="1" channel="6" value="0"/>
-            <point fixture="2" channel="0" value="255"/>
-            <point fixture="2" channel="1" value="0"/>
-            <point fixture="2" channel="2" value="66"/>
-            <point fixture="2" channel="3" value="0"/>
-            <point fixture="2" channel="4" value="0"/>
-            <point fixture="2" channel="5" value="0"/>
-            <point fixture="2" channel="6" value="0"/>
-            <point fixture="3" channel="0" value="0"/>
-            <point fixture="3" channel="1" value="0"/>
-            <point fixture="3" channel="2" value="0"/>
-            <point fixture="3" channel="3" value="0"/>
-            <point fixture="3" channel="4" value="0"/>
-            <point fixture="3" channel="5" value="0"/>
-            <point fixture="3" channel="6" value="0"/>
-         </points>
-      </step>
-      <step id="3" fadeIn="0" hold="166" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" value="255"/>
-            <point fixture="0" channel="1" value="0"/>
-            <point fixture="0" channel="2" value="255"/>
-            <point fixture="0" channel="3" value="0"/>
-            <point fixture="0" channel="4" value="0"/>
-            <point fixture="0" channel="5" value="0"/>
-            <point fixture="0" channel="6" value="0"/>
-            <point fixture="1" channel="0" value="255"/>
-            <point fixture="1" channel="1" value="0"/>
-            <point fixture="1" channel="2" value="160"/>
-            <point fixture="1" channel="3" value="0"/>
-            <point fixture="1" channel="4" value="0"/>
-            <point fixture="1" channel="5" value="0"/>
-            <point fixture="1" channel="6" value="0"/>
-            <point fixture="2" channel="0" value="0"/>
-            <point fixture="2" channel="1" value="0"/>
-            <point fixture="2" channel="2" value="0"/>
-            <point fixture="2" channel="3" value="0"/>
-            <point fixture="2" channel="4" value="0"/>
-            <point fixture="2" channel="5" value="0"/>
-            <point fixture="2" channel="6" value="0"/>
-            <point fixture="3" channel="0" value="0"/>
-            <point fixture="3" channel="1" value="0"/>
-            <point fixture="3" channel="2" value="0"/>
-            <point fixture="3" channel="3" value="0"/>
-            <point fixture="3" channel="4" value="0"/>
-            <point fixture="3" channel="5" value="0"/>
-            <point fixture="3" channel="6" value="0"/>
-         </points>
-      </step>
-      <step id="3" fadeIn="0" hold="166" fadeOut="0">
-         <points>
-            <point fixture="0" channel="0" value="255"/>
-            <point fixture="0" channel="1" value="0"/>
-            <point fixture="0" channel="2" value="255"/>
-            <point fixture="0" channel="3" value="0"/>
-            <point fixture="0" channel="4" value="0"/>
-            <point fixture="0" channel="5" value="0"/>
-            <point fixture="0" channel="6" value="0"/>
-            <point fixture="1" channel="0" value="255"/>
-            <point fixture="1" channel="1" value="0"/>
-            <point fixture="1" channel="2" value="160"/>
-            <point fixture="1" channel="3" value="0"/>
-            <point fixture="1" channel="4" value="0"/>
-            <point fixture="1" channel="5" value="0"/>
-            <point fixture="1" channel="6" value="0"/>
-            <point fixture="2" channel="0" value="0"/>
-            <point fixture="2" channel="1" value="0"/>
-            <point fixture="2" channel="2" value="0"/>
-            <point fixture="2" channel="3" value="0"/>
-            <point fixture="2" channel="4" value="0"/>
-            <point fixture="2" channel="5" value="0"/>
-            <point fixture="2" channel="6" value="0"/>
-            <point fixture="3" channel="0" value="0"/>
-            <point fixture="3" channel="1" value="0"/>
-            <point fixture="3" channel="2" value="0"/>
             <point fixture="3" channel="3" value="0"/>
             <point fixture="3" channel="4" value="0"/>
             <point fixture="3" channel="5" value="0"/>
@@ -265,6 +137,134 @@
          </points>
       </step>
       <step id="4" fadeIn="0" hold="166" fadeOut="0">
+         <points>
+            <point fixture="0" channel="0" value="0"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="255"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="255"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="66"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
+         </points>
+      </step>
+      <step id="5" fadeIn="0" hold="166" fadeOut="0">
+         <points>
+            <point fixture="0" channel="0" value="0"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="0"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="255"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="255"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="66"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
+         </points>
+      </step>
+      <step id="6" fadeIn="0" hold="166" fadeOut="0">
+         <points>
+            <point fixture="0" channel="0" value="255"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="255"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="160"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="0"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
+         </points>
+      </step>
+      <step id="7" fadeIn="0" hold="166" fadeOut="0">
+         <points>
+            <point fixture="0" channel="0" value="255"/>
+            <point fixture="0" channel="1" value="0"/>
+            <point fixture="0" channel="2" value="255"/>
+            <point fixture="0" channel="3" value="0"/>
+            <point fixture="0" channel="4" value="0"/>
+            <point fixture="0" channel="5" value="0"/>
+            <point fixture="0" channel="6" value="0"/>
+            <point fixture="1" channel="0" value="255"/>
+            <point fixture="1" channel="1" value="0"/>
+            <point fixture="1" channel="2" value="160"/>
+            <point fixture="1" channel="3" value="0"/>
+            <point fixture="1" channel="4" value="0"/>
+            <point fixture="1" channel="5" value="0"/>
+            <point fixture="1" channel="6" value="0"/>
+            <point fixture="2" channel="0" value="0"/>
+            <point fixture="2" channel="1" value="0"/>
+            <point fixture="2" channel="2" value="0"/>
+            <point fixture="2" channel="3" value="0"/>
+            <point fixture="2" channel="4" value="0"/>
+            <point fixture="2" channel="5" value="0"/>
+            <point fixture="2" channel="6" value="0"/>
+            <point fixture="3" channel="0" value="0"/>
+            <point fixture="3" channel="1" value="0"/>
+            <point fixture="3" channel="2" value="0"/>
+            <point fixture="3" channel="3" value="0"/>
+            <point fixture="3" channel="4" value="0"/>
+            <point fixture="3" channel="5" value="0"/>
+            <point fixture="3" channel="6" value="0"/>
+         </points>
+      </step>
+      <step id="8" fadeIn="0" hold="166" fadeOut="0">
          <points>
             <point fixture="0" channel="0" value="255"/>
             <point fixture="0" channel="1" value="0"/>
@@ -296,7 +296,7 @@
             <point fixture="3" channel="6" value="0"/>
          </points>
       </step>
-      <step id="4" fadeIn="0" hold="166" fadeOut="0">
+      <step id="9" fadeIn="0" hold="166" fadeOut="0">
          <points>
             <point fixture="0" channel="0" value="255"/>
             <point fixture="0" channel="1" value="0"/>

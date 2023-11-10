@@ -28,41 +28,42 @@ public class MidiButtonFunctionRepository {
         buttonGroupMap = new HashMap<>();
 
         createRows(1, 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
-        QLCButtonGroup qlcButtonGroup = createRows(1, 2, "Scene", "Derby", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
-        createRows(1, 2, "Sequence", "Derby", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
 
-        qlcButtonGroup = createRows(1, 6, "Sequence", "RGBW", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
-        createRows(1, 6, "Scene", "RGBW", 1, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, qlcButtonGroup);
+        QLCButtonGroup qlcButtonGroup = createRows(2, 2, "Scene", "Derby", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        createRows(2, 2, "Sequence", "Derby", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
 
-        qlcButtonGroup = createRows(2, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        qlcButtonGroup = createRows(3, 6, "Sequence", "RGBW", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows(3, 6, "Scene", "RGBW", 1, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, qlcButtonGroup);
 
-        createRows(2, 3, "Sequence", "Spiders/Multiple", 5, 4,
+        qlcButtonGroup = createRows(4, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+
+        createRows(4, 3, "Sequence", "Spiders/Multiple", 5, 4,
                 KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
 
-        qlcButtonGroup = createRows(2, 7, "Scene", "Spider Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        qlcButtonGroup = createRows(4, 7, "Scene", "Spider Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
 
-        createRows(2, 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
+        createRows(4, 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
                 KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
 
-        createRows(3, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows(5, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
-        createRows(3, 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows(5, 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
-        createRows(3, 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows(5, 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
 
-        createRows(4, 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
-        createRows(4, 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        createRows(6, 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        createRows(6, 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
 
-        createRows(4, 10, "Scene", "Moving Head Spot", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
-        createRows(4, 11, "Scene", "Moving Head Spot Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows(6, 10, "Scene", "Moving Head Spot", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows(6, 11, "Scene", "Moving Head Spot Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
 
-        createRows(5, 12, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows(7, 12, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
 
-        qlcButtonGroup = createRows(5, 13, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        qlcButtonGroup = createRows(7, 13, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
 
-        createRows(5, 14, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
+        createRows(7, 14, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
 
-        createRows(5, 14, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
+        createRows(7, 14, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
 
         consistencyCheck();
     }

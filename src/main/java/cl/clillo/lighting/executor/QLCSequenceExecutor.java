@@ -29,7 +29,7 @@ public class QLCSequenceExecutor implements IStepExecutor {
         final QLCSequence sequence = show.getFunction();
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
-        log.info("executing {} sequence {}: [{}] [{}] {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
+        log.info("executing {} sequence {}: id [{}] step id[{}] Points: {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
 
         for (QLCPoint point: step.getPointList())
             dmx.send(point);

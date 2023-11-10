@@ -7,6 +7,7 @@ import cl.clillo.lighting.model.ShowCollection;
 
 import javax.sound.midi.ShortMessage;
 import javax.swing.JToggleButton;
+import javax.swing.plaf.metal.MetalToggleButtonUI;
 import java.awt.Color;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -42,7 +43,7 @@ public class QLCButton implements ItemListener {
         this.matrixY = matrixY;
         this.button = new JToggleButton();
         this.groupId = groupId;
-        this.text = matrixX + "," + matrixY;
+        this.text = "";//matrixX + "," + matrixY;
 
         midiHandler = MidiHandler.getInstance();
         onMessage = midiHandler.getShortMessage(this.matrixX, this.matrixY, onState);
@@ -51,7 +52,24 @@ public class QLCButton implements ItemListener {
 
         button.setBounds(matrixX * 175 + 20, (7 - matrixY) * 70 + 10, 165, 60);
         button.addItemListener(this);
+        button.setBackground(Color.LIGHT_GRAY);
+        button.setOpaque(true);
+        button.setContentAreaFilled(true);
+        button.setBorderPainted(true);
+        button.setUI(new MetalToggleButtonUI() {
+            @Override
+            protected Color getSelectColor() {
+                if (onState == KeyData.StateLight.RED_BLINK)
+                    return Color.RED;
+                if (onState == KeyData.StateLight.YELLOW_BLINK)
+                    return Color.YELLOW;
+                if (onState == KeyData.StateLight.GREEN_BLINK)
+                    return Color.GREEN;
+                return Color.BLACK;
+            }
 
+
+        });
         state = false;
 
         this.show = show;
@@ -100,19 +118,9 @@ public class QLCButton implements ItemListener {
         show.setExecuting(state);
         ShowCollection.getInstance().executeShow(show);
         if (state) {
-            button.setBackground(Color.RED);
-            button.setOpaque(true);
-            button.setContentAreaFilled(true);
-            button.setBorderPainted(true);
             midiHandler.send(onMessage);
-
         } else {
-            button.setBackground(Color.GRAY);
-            button.setOpaque(true);
-            button.setContentAreaFilled(true);
-            button.setBorderPainted(true);
             midiHandler.send(offMessage);
-
         }
 
         if (buttonSelectedListener != null)
@@ -143,6 +151,4 @@ public class QLCButton implements ItemListener {
             return false;
         return getGlobalId == ((QLCButton)obj).getGlobalId;
     }
-
-
 }

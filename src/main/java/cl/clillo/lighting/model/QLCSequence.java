@@ -1,7 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,9 +23,12 @@ import java.util.Set;
 @Getter
 public class QLCSequence extends QLCFunction{
 
+    private static final int MIN_STEP_DURATION = 10; // in millis
+
     private final QLCDirection direction;
     private final QLCRunOrder runOrder;
     private final List<QLCStep> qlcStepList;
+    private final List<QLCStep> qlcStepWithoutFade;
     private final QLCScene boundScene;
     private final QLCSpeed qlcSpeed;
     private final Set<Integer> dimmerChannelSet;
@@ -58,8 +60,6 @@ public class QLCSequence extends QLCFunction{
                 }
             }
 
-        final Set<QLCFixture> fixtures = new HashSet<>();
-
         for (QLCStep step : qlcStepList) {
             if (step.getFadeIn() == 0)
                 step.setFadeIn(qlcSpeed.getFadeIn());
@@ -67,34 +67,26 @@ public class QLCSequence extends QLCFunction{
                 step.setFadeOut(qlcSpeed.getFadeOut());
             if (step.getHold() == 0)
                 step.setHold(qlcSpeed.getDuration() - qlcSpeed.getFadeIn());
-         //  for (QLCPoint point : step.getPointList())
-           //     fixtures.add(point.getFixture());
         }
-/*
-        for (QLCFixture fixture : fixtures) {
-            if (fixture != null && fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER) >= 0)
-                dimmerChannelSet.add(fixture.getDMXChannel(QLCFixture.ChannelType.DIMMER));
-        }
-*/
+
         this.qlcStepList = new ArrayList<>();
+        this.qlcStepWithoutFade = new ArrayList<>();
 
-        for (QLCStep step : qlcStepList)
+        for (QLCStep step : qlcStepList) {
             buildFakeSteps(step);
-
-     //   if (this.id==25)
-       //     System.out.println("AQUI");
+            qlcStepWithoutFade.add(step);
+        }
     }
 
-    private static final int MIN_STEP_DURATION = 10; // in millis
-
     private void buildFakeSteps(final QLCStep step){
-        if (step.getFadeIn() == 0 && step.getFadeOut() == 0)
+        boolean includeOriginalStep = false;
+        if (step.getFadeIn() == 0 && step.getFadeOut() == 0) {
             this.qlcStepList.add(step);
+            includeOriginalStep = true;
+        }
 
         if (step.getFadeIn()!=0){
             int numberOfFakeSteps = step.getFadeIn()/MIN_STEP_DURATION;
-            //if (numberOfFakeSteps==0)
-              //  System.out.println("AQUI");
             int deltaDimmer = 255 / numberOfFakeSteps;
             int valueDimmer = 0;
 
@@ -110,7 +102,8 @@ public class QLCSequence extends QLCFunction{
             }
         }
 
-        this.qlcStepList.add(step);
+        if (!includeOriginalStep)
+            this.qlcStepList.add(step);
 
         if (step.getFadeOut()!=0){
             int numberOfFakeSteps = step.getFadeOut()/MIN_STEP_DURATION;

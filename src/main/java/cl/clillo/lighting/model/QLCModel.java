@@ -39,6 +39,8 @@ public class QLCModel {
             readFixtureModelsList();
 
             File inputFile = new File(QLCReader.repoBase +"config.qxw");
+            if (!inputFile.exists())
+                return;
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             Document doc = docBuilder.parse(inputFile);
