@@ -4,12 +4,14 @@ import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.ShowCollection;
+import lombok.extern.log4j.Log4j2;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Log4j2
 public class MidiButtonFunctionRepository {
 
     private static final class InstanceHolder {
@@ -20,71 +22,69 @@ public class MidiButtonFunctionRepository {
         return InstanceHolder.instance;
     }
 
-    private final Map<String, QLCButton> buttonMap;
-    private final Map<Integer, List<QLCButtonGroup>> buttonGroupMap;
+    private final Map<String, PageConfig> buttonGroupMapByCategory;
 
     MidiButtonFunctionRepository(){
-        buttonMap = new HashMap<>();
-        buttonGroupMap = new HashMap<>();
+        buttonGroupMapByCategory = new HashMap<>();
 
-        createRows(1, 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows( 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Laser");
 
-        QLCButtonGroup qlcButtonGroup = createRows(2, 2, "Scene", "Derby", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
-        createRows(2, 2, "Sequence", "Derby", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
+        ButtonGroup buttonGroup = createRows( 2, "Scene", "Derby", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Derby");
+        createRows( 2, "Sequence", "Derby", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Derby");
 
-        qlcButtonGroup = createRows(3, 6, "Sequence", "RGBW", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
-        createRows(3, 6, "Scene", "RGBW", 1, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, qlcButtonGroup);
+        buttonGroup = createRows( 6, "Sequence", "RGBW", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "RGBW");
+        createRows( 6, "Scene", "RGBW", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "RGBW");
 
-        qlcButtonGroup = createRows(4, 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        buttonGroup = createRows( 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Spider");
 
-        createRows(4, 3, "Sequence", "Spiders/Multiple", 5, 4,
-                KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, qlcButtonGroup);
+        createRows( 3, "Sequence", "Spiders/Multiple", 5, 4,
+                KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Spider");
 
-        qlcButtonGroup = createRows(4, 7, "Scene", "Spider Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        buttonGroup = createRows( 7, "Scene", "Spider Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Spider");
 
-        createRows(4, 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
-                KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
+        createRows( 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
+                KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Spider");
 
-        createRows(5, 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
 
-        createRows(5, 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
 
-        createRows(5, 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN);
+        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
 
-        createRows(6, 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
-        createRows(6, 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW);
+        createRows( 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        createRows( 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
 
-        createRows(6, 10, "Scene", "Moving Head Spot", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
-        createRows(6, 11, "Scene", "Moving Head Spot Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows( 10, "Scene", "Moving Head Spot", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 11, "Scene", "Moving Head Spot Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
 
-        createRows(7, 12, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        createRows( 12, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
 
-        qlcButtonGroup = createRows(7, 13, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED);
+        buttonGroup = createRows( 13, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
 
-        createRows(7, 14, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
+        createRows( 14, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");
 
-        createRows(7, 14, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, qlcButtonGroup);
+        createRows(14, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");
 
         consistencyCheck();
     }
 
     private void consistencyCheck(){
-        for (Map.Entry<Integer, List<QLCButtonGroup>> panel: buttonGroupMap.entrySet()){
+        for (Map.Entry<String, PageConfig> panel: buttonGroupMapByCategory.entrySet()){
 
-            for (QLCButtonGroup buttonGroup: panel.getValue()) {
+            for (ButtonGroup buttonGroup: panel.getValue().getButtonGroups()) {
                 QLCScene blackoutScene = null;
                 if (buttonGroup.getGlobalOff()!=null)
                     blackoutScene = buttonGroup.getGlobalOff();
 
                 if (blackoutScene == null)
-                    System.out.println("Panel: " + panel.getKey() + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
+                    log.debug("Panel: " + panel.getKey() + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
             }
         }
     }
 
-    private QLCButtonGroup createRows(final int panelId, final int groupId, final String type, final String path, int matrixX,
-                                      int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState) {
-        return createRows(panelId, groupId, type, path,  matrixX, matrixY, onState,  offState,null );
+    private ButtonGroup createRows(final int groupId, final String type, final String path, int matrixX,
+                                   int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState, final String category) {
+        return createRows(groupId, type, path,  matrixX, matrixY, onState,  offState, null, category );
     }
 
     private int[] getShowsId(final List<QLCFunction> list){
@@ -102,12 +102,12 @@ public class MidiButtonFunctionRepository {
         return showIds;
     }
 
-    private QLCButtonGroup createRows(final int panelId, final int groupId, final String type, final String path, int matrixX,
-                            int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState,
-                                      QLCButtonGroup qlcButtonGroup ){
+    private ButtonGroup createRows(final int groupId, final String type, final String path, int matrixX,
+                                   int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState,
+                                   ButtonGroup buttonGroup, final String category){
         final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList(type, path);
         int[] showIds = getShowsId(list);
-        int i=0;
+        int i;
 
         QLCScene blackoutScene = null;
         for (QLCFunction function: list){
@@ -115,20 +115,19 @@ public class MidiButtonFunctionRepository {
                 blackoutScene = (QLCScene)function;
         }
 
-        if (qlcButtonGroup==null)
-            qlcButtonGroup = new QLCButtonGroup(panelId, groupId, type, new ArrayList<>());
+        if (buttonGroup ==null)
+            buttonGroup = new ButtonGroup(groupId, type, new ArrayList<>());
 
-        if (qlcButtonGroup.getGlobalOff()==null && blackoutScene!=null)
-            qlcButtonGroup.setGlobalOff(blackoutScene);
+        if (buttonGroup.getGlobalOff()==null && blackoutScene!=null)
+            buttonGroup.setGlobalOff(blackoutScene);
 
-        final List<QLCButton> laserButtons = qlcButtonGroup.getButtonList();
+        final List<QLCButton> laserButtons = buttonGroup.getButtonList();
 
         for (i=0; i<showIds.length; i++){
             QLCButton qlcButton = new QLCButton(matrixX, matrixY, ShowCollection.getInstance().getShow(showIds[i]),1,
                     onState, offState, KeyData.StateLight.OFF);
 
             laserButtons.add(qlcButton);
-            buttonMap.put(matrixX+"-"+matrixY, qlcButton);
             matrixX++;
             if (matrixX>7){
                 matrixX=0;
@@ -136,21 +135,17 @@ public class MidiButtonFunctionRepository {
             }
         }
 
-        if (!buttonGroupMap.containsKey(panelId))
-            buttonGroupMap.put(panelId, new ArrayList<>());
+        if (!buttonGroupMapByCategory.containsKey(category))
+            buttonGroupMapByCategory.put(category, new PageConfig(new ArrayList<>()));
 
-        buttonGroupMap.get(panelId).add(qlcButtonGroup);
-        return qlcButtonGroup;
+        buttonGroupMapByCategory.get(category).getButtonGroups().add(buttonGroup);
+        return buttonGroup;
     }
 
-    public Map<String, QLCButton> getButtonMap() {
-        return buttonMap;
-    }
+    public PageConfig getButtonGroupMap(final String category) {
+        if (!buttonGroupMapByCategory.containsKey(category))
+            return new PageConfig(List.of());
 
-    public List<QLCButtonGroup> getButtonGroupMap(final int panel) {
-        if (!buttonGroupMap.containsKey(panel))
-            return List.of();
-
-        return buttonGroupMap.get(panel);
+        return buttonGroupMapByCategory.get(category);
     }
 }

@@ -49,16 +49,16 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         pnlListDimmer = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
         tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
-        tabbedPane.setBounds(0, 0, WIDTH1 + 50, HEIGHT1-300);
+        tabbedPane.setBounds(0, 0, WIDTH1 + 250, HEIGHT1-300);
         cleanMatrix();
         add(tabbedPane);
 
         controllerEditPanels = new ControllerEditPanel[8];
-        String []names = {"Laser", "Derby", "RGBW", "Spider", "MH Trad", "MH Beam", "AUTO", ""};
+        String []names = {"AUTO", "Laser", "Derby", "RGBW", "Spider", "MHead Beam", "MHead Spot",  ""};
         for (int i=0; i<8; i++) {
-            final ControllerEditPanel editPanel = buildPanel(i+1);
+            final ControllerEditPanel editPanel = new ControllerEditPanel(i+1, names[i]);
             controllerEditPanels[i] = editPanel;
-            editPanel.setBounds(0, 0, WIDTH1 + 40, HEIGHT1-400);
+            editPanel.setBounds(0, 0, WIDTH1 + 140, HEIGHT1-400);
             tabbedPane.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
         }
 
@@ -66,10 +66,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
         selectPanel(7);
-
-        final JPanel panelSeq = new ControllerSeqPanel();
-        panelSeq.setBounds(WIDTH1 + 70, 0,  220, HEIGHT1-300);
-        this.add(panelSeq);
 
         final JPanel panelDimmers = new JPanel();
         panelDimmers.setLayout(null);
@@ -129,10 +125,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(txtTimeX2);
 
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
-    }
-
-    private ControllerEditPanel buildPanel(final int index) {
-        return new ControllerEditPanel(index){ };
     }
 
     @Override

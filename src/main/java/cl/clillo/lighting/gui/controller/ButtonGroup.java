@@ -4,17 +4,15 @@ import cl.clillo.lighting.model.QLCScene;
 
 import java.util.List;
 
-public class QLCButtonGroup {
+public class ButtonGroup {
 
     private final int id;
-    private final int idPanel;
     private final String name;
     private final List<QLCButton> buttonList;
     private QLCScene globalOff;
     private int finalOffReview;
 
-    public QLCButtonGroup(final int idPanel, final int id, final String name, final List<QLCButton> buttonList) {
-        this.idPanel = idPanel;
+    public ButtonGroup(final int id, final String name, final List<QLCButton> buttonList) {
         this.id = id;
         this.name = name;
         this.buttonList = buttonList;

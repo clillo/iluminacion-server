@@ -74,7 +74,7 @@ public class QLCButton implements ItemListener {
 
         this.show = show;
         if (show != null) {
-            text = show.getFunction().getPath() + "\n" + show.getFunction().getName();
+            text = show.getFunction().getName();
           //  button.setSelected(show.isExecuting());
         }
 
