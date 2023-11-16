@@ -1,12 +1,13 @@
 
 <doc>
-   <title>QLCSequence.RGBW.91</title>
+   <title>QLCSequence.RGBW.424</title>
    <common>
-      <id>91</id>
+      <id>424</id>
       <type>Sequence</type>
       <path>RGBW</path>
-      <name>RGBW - Purple Ping Pong Sequence</name>
+      <name>Purple Ping Pong Sequence</name>
    </common>
+   <behaviour order="LOOP" direction="FORWARD"/>
    <steps>
       <step id="0" fadeIn="0" hold="288" fadeOut="0">
          <points>

@@ -5,8 +5,9 @@
       <id>405</id>
       <type>Sequence</type>
       <path>RGBW</path>
-      <name>Bouncing pink</name>
+      <name>Bouncing Pink</name>
    </common>
+   <behaviour order="LOOP" direction="FORWARD"/>
    <steps>
       <step id="0" fadeIn="0" hold="1000" fadeOut="0">
          <points>

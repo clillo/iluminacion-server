@@ -15,6 +15,7 @@ import cl.clillo.lighting.model.QLCSpeed;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
+import cl.clillo.lighting.utils.FileUtils;
 import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
@@ -246,9 +247,19 @@ public class StandAlone {
     }
 
 
+    private void writeFunctions(final String type, final String path){
+          for (Show show: ShowCollection.getInstance().getShowList())
+             if (show.getFunction().getType().equals(type) && show.getFunction().getPath().equals(path)) {
+                System.out.println(show.getFunction());
+                 String dir = FileUtils.getDirectory(ShowCollection.BASE_DIR+"/"+show.getFunction().getClass().getSimpleName()+"."+show.getFunction().getPath()).getAbsolutePath();
+
+                 show.getFunction().writeToConfigFile(dir);
+           }
+    }
 
     public static void main(String[] args) {
         StandAlone standAlone = new StandAlone();
+       // standAlone.writeFunctions("Sequence", "RGBW");
         //  standAlone.exportSequenceToCSV();
        // standAlone.printFunctionIds();
        // standAlone.readCSVFunctionDefinition("/Users/carlos.lillo/IdeaProjects/iluminacion-server/src/main/resources/qlc/QLCSequence.RGBW/RGBW - Sheet2.csv");
@@ -259,7 +270,7 @@ public class StandAlone {
 
         ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
      //   ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-      //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+       // ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
@@ -278,11 +289,7 @@ public class StandAlone {
 */
       //  stateRepository.write();*/
 
-      //  for (Show show: ShowCollection.getInstance().getShowList())
-       //     if (show.getFunction().getType().equals("Sequence") && show.getFunction().getPath().equals("Derby")) {
-        //        System.out.println(show.getFunction());
-            //    show.getFunction().writeToConfigFile();
-         //   }
+
 
 
 

@@ -8,41 +8,26 @@ import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class OS2LStepExecutor implements IStepExecutor{
+public class OS2LStepExecutor extends IStepExecutor{
 
-    private final Dmx dmx = Dmx.getInstance();
-    private int actualStep;
-    private final Show show;
+    private final QLCSequence sequence;
 
     public OS2LStepExecutor(Show show) {
-        this.show = show;
+        super(show, ((QLCSequence)show.getFunction()).getQlcStepList());
+        sequence = show.getFunction();
+        direction = sequence.getDirection();
+        runOrder = sequence.getRunOrder();
     }
 
-    @Override
-    public void executeDefaultScheduler() {
-
-    }
     @Override
     public void executeOS2LScheduler() {
-        if (show.isFirstTimeExecution()){
-            actualStep = 0;
-            show.setFirstTimeExecution(false);
-        }
+        preExecuteDefaultScheduler();
 
-        final QLCSequence sequence = show.getFunction();
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
        // log.info("executing {} sequence {}: [{}] [{}] {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
 
-        for (QLCPoint point: step.getPointList())
-            dmx.send(point);
-
-        actualStep++;
-
-        if (actualStep>=sequence.getQlcStepList().size()){
-            actualStep=0;
-
-        }
+        postExecuteDefaultScheduler(step);
 
     }
 }

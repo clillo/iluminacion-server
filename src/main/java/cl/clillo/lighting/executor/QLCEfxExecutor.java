@@ -6,14 +6,17 @@ import cl.clillo.lighting.model.QLCExecutionNode;
 import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
+
 @Log4j2
-public class QLCEfxExecutor implements IStepExecutor {
+public class QLCEfxExecutor extends IStepExecutor {
 
     private final Show show;
     private final QLCEfx efx;
     private RoboticNotifiable roboticNotifiable;
 
     public QLCEfxExecutor(final Show show) {
+        super(show, List.of());
         this.show = show;
         this.efx = show.getFunction();
     }

@@ -25,7 +25,7 @@ public class QLCSequence extends QLCFunction{
 
     private static final int MIN_STEP_DURATION = 10; // in millis
 
-    private final QLCDirection direction;
+    private QLCDirection direction;
     private final QLCRunOrder runOrder;
     private final List<QLCStep> qlcStepList;
     private final List<QLCStep> qlcStepWithoutFade;
@@ -76,6 +76,10 @@ public class QLCSequence extends QLCFunction{
             buildFakeSteps(step);
             qlcStepWithoutFade.add(step);
         }
+    }
+
+    public void setDirection(QLCDirection direction) {
+        this.direction = direction;
     }
 
     private void buildFakeSteps(final QLCStep step){
@@ -150,6 +154,10 @@ public class QLCSequence extends QLCFunction{
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
+        out.writeStartElement("behaviour");
+        out.writeAttribute("order", String.valueOf(runOrder));
+        out.writeAttribute("direction", String.valueOf(direction));
+        out.writeEndElement();
         writeSteps(out);
     }
 
@@ -178,8 +186,15 @@ public class QLCSequence extends QLCFunction{
 
         final List<QLCStep> qlcStepList = new ArrayList<>();
 
-        final QLCDirection direction = QLCDirection.FORWARD;
-        final QLCRunOrder runOrder = QLCRunOrder.LOOP;
+        final Node behaviour = doc.getElementsByTagName("behaviour").item(0);
+
+        QLCDirection direction = QLCDirection.FORWARD;
+        QLCRunOrder runOrder = QLCRunOrder.LOOP;
+        if (behaviour!=null) {
+            direction = QLCDirection.valueOf(XMLParser.getStringAttributeValue(behaviour, "direction"));
+            runOrder = QLCRunOrder.valueOf(XMLParser.getStringAttributeValue(behaviour, "order"));
+        }
+
         final QLCSpeed qlcSpeed = QLCSpeed.builder().build();
 
         final Node common = doc.getElementsByTagName("steps").item(0);

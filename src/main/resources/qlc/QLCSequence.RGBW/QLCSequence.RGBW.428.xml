@@ -1,12 +1,13 @@
 
 <doc>
-   <title>QLCSequence.RGBW.61</title>
+   <title>QLCSequence.RGBW.428</title>
    <common>
-      <id>61</id>
+      <id>428</id>
       <type>Sequence</type>
       <path>RGBW</path>
       <name>Green Secuence</name>
    </common>
+   <behaviour order="LOOP" direction="FORWARD"/>
    <steps>
       <step id="0" fadeIn="0" hold="166" fadeOut="0">
          <points>

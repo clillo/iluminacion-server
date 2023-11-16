@@ -6,14 +6,17 @@ import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
+import java.util.List;
+
 @Log4j2
-public class QLCSceneExecutor implements IStepExecutor {
+public class QLCSceneExecutor extends IStepExecutor {
 
     private final Dmx dmx = Dmx.getInstance();
     private final Show show;
     private int sendNumber;
 
     public QLCSceneExecutor(final Show show) {
+        super(show, List.of());
         this.show = show;
     }
 
