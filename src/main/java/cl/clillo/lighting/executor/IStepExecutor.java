@@ -7,10 +7,12 @@ import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;
 
+import java.security.SecureRandom;
 import java.util.List;
 
 public abstract class IStepExecutor {
 
+    private SecureRandom random = new SecureRandom();
     private final Dmx dmx = Dmx.getInstance();
     protected final Show show;
     private final List<QLCStep> stepList;
@@ -44,6 +46,11 @@ public abstract class IStepExecutor {
     protected void postExecuteDefaultScheduler(final QLCStep step){
         for (QLCPoint point: step.getPointList())
             dmx.send(point);
+
+        if (runOrder == QLCRunOrder.RANDOM){
+            actualStep = random.nextInt(totalSteps);
+            return;
+        }
 
         if (direction==QLCDirection.FORWARD)
             forward();

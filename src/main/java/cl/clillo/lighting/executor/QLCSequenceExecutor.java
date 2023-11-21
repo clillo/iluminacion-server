@@ -13,18 +13,19 @@ public class QLCSequenceExecutor extends IStepExecutor {
     public QLCSequenceExecutor(final Show show) {
         super(show, ((QLCSequence)show.getFunction()).getQlcStepList());
         sequence = show.getFunction();
-        direction = sequence.getDirection();
-        runOrder = sequence.getRunOrder();
+
     }
 
     @Override
     public void executeDefaultScheduler() {
+        direction = sequence.getDirection();
+        runOrder = sequence.getRunOrder();
         preExecuteDefaultScheduler();
 
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
    //     log.info("executing {} sequence {}: id [{}] step id[{}] Points: {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
-        log.info("executing {} sequence {}: id [{}] step id[{}] Direction: {}", show.getName(), actualStep, sequence.getId(), step.getId(), sequence.getDirection());
+        log.info("executing {} sequence {}: id [{}] step id[{}] Direction: {} Run Order: {}", show.getName(), actualStep, sequence.getId(), step.getId(), sequence.getDirection(), sequence.getRunOrder());
 
         postExecuteDefaultScheduler(step);
 

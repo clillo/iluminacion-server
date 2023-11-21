@@ -26,7 +26,7 @@ public class QLCSequence extends QLCFunction{
     private static final int MIN_STEP_DURATION = 10; // in millis
 
     private QLCDirection direction;
-    private final QLCRunOrder runOrder;
+    private QLCRunOrder runOrder;
     private final List<QLCStep> qlcStepList;
     private final List<QLCStep> qlcStepWithoutFade;
     private final QLCScene boundScene;
@@ -80,6 +80,10 @@ public class QLCSequence extends QLCFunction{
 
     public void setDirection(QLCDirection direction) {
         this.direction = direction;
+    }
+
+    public void setRunOrder(QLCRunOrder runOrder) {
+        this.runOrder = runOrder;
     }
 
     private void buildFakeSteps(final QLCStep step){

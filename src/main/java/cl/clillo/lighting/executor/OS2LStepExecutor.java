@@ -1,7 +1,5 @@
 package cl.clillo.lighting.executor;
 
-import cl.clillo.lighting.external.dmx.Dmx;
-import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;

@@ -1,5 +1,6 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.model.QLCSequence;
 import lombok.extern.log4j.Log4j2;
 
 import javax.swing.JPanel;
@@ -9,11 +10,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Log4j2
-public class ControllerEditPanel extends JPanel implements ActionListener, ButtonSelectedListener {
+public class ControllerEditPanel extends JPanel implements ActionListener, ButtonSelectedListener, ChangeDirectionRunOrderListener {
 
     private final int index;
     private final Map<String, QLCButton> buttonMapByPos;
     private final Map<QLCButton, ButtonGroup> buttonMapGroupId;
+    private final ControllerSeqPanel panelSeq;
+    private QLCSequence sequenceSelected;
 
     public ControllerEditPanel(final int index, final String fixtureGroupName) {
         setLayout(null);
@@ -46,9 +49,11 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
         this.setOpaque(true);
 
-        final JPanel panelSeq = new ControllerSeqPanel(fixtureGroupName);
+        panelSeq = new ControllerSeqPanel(fixtureGroupName);
         panelSeq.setBounds( 1420, 0,  220, 300);
         this.add(panelSeq);
+        panelSeq.setChangeDirectionRunOrderListener(this);
+        sequenceSelected = null;
     }
 
     public void activePanel(){
@@ -79,9 +84,27 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
     @Override
     public void selected(final QLCButton qlcButton) {
+        internalSelected(qlcButton,true);
+
+    }
+
+    private void internalSelected(final QLCButton qlcButton, boolean selected){
+
         final ButtonGroup buttonGroup = buttonMapGroupId.get(qlcButton);
         if (buttonGroup==null)
             return ;
+
+        if (selected){
+            sequenceSelected = null;
+            if (qlcButton.getShow().getFunction() instanceof QLCSequence) {
+                sequenceSelected = qlcButton.getShow().getFunction();
+
+            }
+
+            change();
+        }
+
+
 
         buttonGroup.addFinalOffReview();
         for (QLCButton qlcButtonIdx: buttonGroup.getButtonList()) {
@@ -90,12 +113,11 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
             }
         }
         buttonGroup.minusFinalOffReview();
-
     }
 
     @Override
     public void unSelected(final QLCButton qlcButton) {
-        selected(qlcButton);
+        internalSelected(qlcButton, false);
 
     }
 
@@ -111,5 +133,15 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
         if (buttonGroup.getGlobalOff()!=null)
             buttonGroup.getGlobalOff().getShow().setExecuteOneTime(true);
+    }
+
+    @Override
+    public void change() {
+        if (sequenceSelected == null)
+            return;
+
+        sequenceSelected.setDirection(panelSeq.getDirectionSelected());
+        sequenceSelected.setRunOrder(panelSeq.getRunOrderSelected());
+
     }
 }
