@@ -7,24 +7,28 @@ import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
+import cl.clillo.lighting.model.QLCDirection;
+import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.repository.StateRepository;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener, IOS2LEventListener {
+public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener, IOS2LEventListener  {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
@@ -42,7 +46,20 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final JTextField txtTime = new JTextField();
     private final JTextField txtTimeX2 = new JTextField();
     private final int[] masterDimmerChannels;
-    final StateRepository stateRepository = StateRepository.getInstance();
+    private final StateRepository stateRepository = StateRepository.getInstance();
+
+    private final JRadioButton loopForward = new JRadioButton("Loop Forward");
+    private final JRadioButton loopBackward = new JRadioButton("Loop Backward");
+    private final JRadioButton pingPong = new JRadioButton("Ping Pong");
+    private final JRadioButton random = new JRadioButton("Random");
+
+    private final JRadioButton universalTime = new JRadioButton("Universal Time");
+    private final JRadioButton beatX1 = new JRadioButton("Beat x 1");
+    private final JRadioButton beatX2 = new JRadioButton("Beat x 2");
+    private final JRadioButton beatX4 = new JRadioButton("Beat x 4");
+
+    private final Map<Integer, ChangeDirectionRunOrderListener>  changeDirectionRunOrderListener;
+    private final JTextField txtPos = new JTextField();
 
     public ControllerMainPanel() {
 
@@ -52,12 +69,14 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         tabbedPane.setBounds(0, 0, WIDTH1 + 250, HEIGHT1-300);
         cleanMatrix();
         add(tabbedPane);
+        changeDirectionRunOrderListener = new HashMap<>();
 
         controllerEditPanels = new ControllerEditPanel[8];
         String []names = {"AUTO", "Laser", "Derby", "RGBW", "Spider", "MHead Beam", "MHead Spot",  ""};
         for (int i=0; i<8; i++) {
             final ControllerEditPanel editPanel = new ControllerEditPanel(i+1, names[i]);
             controllerEditPanels[i] = editPanel;
+            changeDirectionRunOrderListener.put(i, editPanel);
             editPanel.setBounds(0, 0, WIDTH1 + 140, HEIGHT1-400);
             tabbedPane.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
         }
@@ -71,7 +90,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.setLayout(null);
 
         panelDimmers.setOpaque(true);
-        panelDimmers.setBackground(Color.BLACK);
+     //   panelDimmers.setBackground(Color.BLACK);
         panelDimmers.setBounds(0, HEIGHT1-300, WIDTH1 + 200, 400);
 
         for (int i=0; i<9; i++) {
@@ -112,19 +131,48 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         masterDimmer.setValue(stateRepository.getRgbwMasterDimmer());
         adjustMasterDimmer();
 
-        txtActualBPM.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 80, 120, 20);
+        txtActualBPM.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 80, 120, 30);
+        txtTime.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 115, 120, 30);
+        txtTimeX2.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 150, 120, 30);
+        txtPos.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 185, 120, 30);
+
         txtActualBPM.setFont(new Font("serif", Font.BOLD, 18));
-        panelDimmers.add(txtActualBPM);
-
-        txtTime.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 130, 120, 20);
         txtTime.setFont(new Font("serif", Font.BOLD, 18));
-        panelDimmers.add(txtTime);
-
-        txtTimeX2.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 180, 120, 20);
         txtTimeX2.setFont(new Font("serif", Font.BOLD, 18));
+        txtPos.setFont(new Font("serif", Font.BOLD, 18));
+
+        panelDimmers.add(txtActualBPM);
+        panelDimmers.add(txtTime);
         panelDimmers.add(txtTimeX2);
+        panelDimmers.add(txtPos);
 
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
+
+        loopForward.setBounds(EFXMConfigureMainPanel.WIDTH1- 200,80,140,30);
+        loopBackward.setBounds(EFXMConfigureMainPanel.WIDTH1 - 200,115,140,30);
+        pingPong.setBounds(EFXMConfigureMainPanel.WIDTH1 - 200,150,100,30);
+        random.setBounds(EFXMConfigureMainPanel.WIDTH1 - 200,185,100,30);
+
+        universalTime.setBounds(EFXMConfigureMainPanel.WIDTH1- 400,80,140,30);
+        beatX1.setBounds(EFXMConfigureMainPanel.WIDTH1 - 400,115,140,30);
+        beatX2.setBounds(EFXMConfigureMainPanel.WIDTH1 - 400,150,100,30);
+        beatX4.setBounds(EFXMConfigureMainPanel.WIDTH1 - 400,185,100,30);
+
+        addToButtonGroup(panelDimmers, loopForward, loopBackward, pingPong, random);
+        addToButtonGroup(panelDimmers, universalTime, beatX1, beatX2, beatX4);
+
+        universalTime.setSelected(true);
+        loopForward.setSelected(true);
+    }
+
+    private void addToButtonGroup(final JPanel panelDimmers, final JRadioButton... buttons){
+        javax.swing.ButtonGroup bg = new javax.swing.ButtonGroup();
+        for (JRadioButton rb: buttons) {
+            bg.add(rb);
+            rb.addChangeListener(this);
+            panelDimmers.add(rb);
+        }
+
     }
 
     @Override
@@ -166,13 +214,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
             adjustMasterDimmer();
 
         //System.out.println(value+"\t"+(keyData.getValue())+"\t"+((int)(keyData.getValue()*255.0)));
-    }
-
-    @Override
-    public void stateChanged(ChangeEvent e) {
-        tabbedPane.removeChangeListener(this);
-        activePanel(tabbedPane.getSelectedIndex());
-        tabbedPane.addChangeListener(this);
     }
 
     private void activePanel(int index){
@@ -218,7 +259,56 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     @Override
     public void changeTimes(long time, long timex2) {
-        txtTime.setText(String.valueOf(time));
-        txtTimeX2.setText(String.valueOf(timex2));
+        txtTime.setText(time + " ms");
+        txtTimeX2.setText(timex2 + " ms 1/2");
     }
+
+    @Override
+    public void pos(int pos) {
+        int beat = Math.abs((int)(pos % 16.0) + 1 );
+        txtPos.setText(pos + " - " + beat);
+    }
+
+    @Override
+    public void stateChanged(ChangeEvent e) {
+        changeDirectionRunOrderListener.get(activeIndex).change(getRunOrderSelected(), getDirectionSelected(), getType());
+
+        tabbedPane.removeChangeListener(this);
+        activePanel(tabbedPane.getSelectedIndex());
+        tabbedPane.addChangeListener(this);
+    }
+
+    private IOS2LEventListener.Type getType(){
+        if (universalTime.isSelected())
+            return Type.UNIVERSAL;
+
+        if (beatX1.isSelected())
+            return Type.BEAT_X_1;
+
+        if (beatX2.isSelected())
+            return Type.BEAT_X_2;
+
+        if (beatX4.isSelected())
+            return Type.BEAT_X_4;
+
+        return null;
+    }
+
+    private QLCRunOrder getRunOrderSelected(){
+       if (loopForward.isSelected() || loopBackward.isSelected())
+            return QLCRunOrder.LOOP;
+
+        if (random.isSelected())
+            return QLCRunOrder.RANDOM;
+
+        return QLCRunOrder.PINGPONG;
+    }
+
+    private QLCDirection getDirectionSelected(){
+       if (loopForward.isSelected())
+            return QLCDirection.FORWARD;
+
+        return QLCDirection.BACKWARD;
+    }
+
 }

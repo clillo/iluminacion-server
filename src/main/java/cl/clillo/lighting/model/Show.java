@@ -1,7 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.executor.IStepExecutor;
-import cl.clillo.lighting.executor.OS2LStepExecutor;
 import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;

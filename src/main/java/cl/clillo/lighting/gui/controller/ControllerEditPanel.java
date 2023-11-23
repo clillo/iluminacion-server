@@ -1,5 +1,10 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.executor.IOS2LEventListener;
+import cl.clillo.lighting.executor.OS2LStepExecutor;
+import cl.clillo.lighting.executor.QLCSequenceExecutor;
+import cl.clillo.lighting.model.QLCDirection;
+import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCSequence;
 import lombok.extern.log4j.Log4j2;
 
@@ -30,6 +35,7 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
         buttonMapByPos = new HashMap<>();
         buttonMapGroupId = new HashMap<>();
 
+        assert pageConfig != null;
         for (ButtonGroup group: pageConfig.getButtonGroups())
             for (QLCButton button: group.getButtonList()) {
                 buttonMapByPos.put(button.getMapKey(), button);
@@ -52,7 +58,7 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
         panelSeq = new ControllerSeqPanel(fixtureGroupName);
         panelSeq.setBounds( 1420, 0,  220, 300);
         this.add(panelSeq);
-        panelSeq.setChangeDirectionRunOrderListener(this);
+
         sequenceSelected = null;
     }
 
@@ -101,10 +107,8 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
             }
 
-            change();
+           // change();
         }
-
-
 
         buttonGroup.addFinalOffReview();
         for (QLCButton qlcButtonIdx: buttonGroup.getButtonList()) {
@@ -136,12 +140,19 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
     }
 
     @Override
-    public void change() {
+    public void change(final QLCRunOrder runOrder, final QLCDirection direction, final IOS2LEventListener.Type type) {
         if (sequenceSelected == null)
             return;
 
-        sequenceSelected.setDirection(panelSeq.getDirectionSelected());
-        sequenceSelected.setRunOrder(panelSeq.getRunOrderSelected());
+        sequenceSelected.setDirection(direction);
+        sequenceSelected.setRunOrder(runOrder);
+
+        sequenceSelected.getShow().setExecuting(false);
+        if (type!= IOS2LEventListener.Type.UNIVERSAL)
+            sequenceSelected.getShow().setStepExecutor(new OS2LStepExecutor(sequenceSelected.getShow()));
+        else
+            sequenceSelected.getShow().setStepExecutor(new QLCSequenceExecutor(sequenceSelected.getShow()));
+        sequenceSelected.getShow().setExecuting(true);
 
     }
 }

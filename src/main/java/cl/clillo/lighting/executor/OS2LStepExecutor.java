@@ -23,7 +23,7 @@ public class OS2LStepExecutor extends IStepExecutor{
 
         final QLCStep step = sequence.getQlcStepList().get(actualStep);
 
-       // log.info("executing {} sequence {}: [{}] [{}] {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
+       log.info("executing {} sequence {}: [{}] [{}] {}", show.getName(), actualStep, sequence.getId(), step.getId(), step.getPointList());
 
         postExecuteDefaultScheduler(step);
 

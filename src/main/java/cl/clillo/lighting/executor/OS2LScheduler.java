@@ -18,11 +18,8 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     public OS2LScheduler(final List<Show> showList) {
         this.showList = new ArrayList<>();
-        for (Show show: showList)
-            if (show.getId()==155 || show.getId()==153) {
-                show.setStepExecutor(new OS2LStepExecutor(show));
-                this.showList.add(show);
-            }
+        this.showList.addAll(showList);
+
         OS2LServer.getInstance().addListener(this);
         previousCount = System.currentTimeMillis();
     }
@@ -34,14 +31,18 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
     public void run() {
         while (true) {
             try {
-                if (ios2LEventListener!=null )
-                    ios2LEventListener.changeTimes(time, ((long)(time / 2.0)));
-                //System.out.println(time+"\t"+((long)(time / 16.0)));
+                if (ios2LEventListener!=null ) {
+                    ios2LEventListener.changeTimes(time, ((long) (time / 2.0)));
+
+                }
+                String a = String.valueOf((long)(time / 16.0));
+
                 if (time<1000 && time>100) {
                     Thread.sleep((long)(time / 8.0));
                     beatX4();
                 }
             } catch (InterruptedException e) {
+                e.printStackTrace();
                 throw new RuntimeException(e);
             }
         }
@@ -50,9 +51,10 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
     @Override
     public void beat(boolean change, int pos, double bpm, double strength) {
         actualBPM = bpm;
-        if (ios2LEventListener!=null )//&& actualBPM!=bpm)
+        if (ios2LEventListener!=null ) {//&& actualBPM!=bpm)
             ios2LEventListener.changeBPM(actualBPM);
-
+            ios2LEventListener.pos(pos);
+        }
     }
 
     @Override
@@ -90,11 +92,6 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void beatX2(int beat) {
-
-    }
-
-    @Override
-    public void beatX4() {
         for (Show show : showList) {
             if (show.isExecuting()) {
                 show.getStepExecutor().executeOS2LScheduler();
@@ -103,6 +100,11 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
 
         ArtNet.getInstance().broadCast();
+    }
+
+    @Override
+    public void beatX4() {
+
     }
 
     @Override
