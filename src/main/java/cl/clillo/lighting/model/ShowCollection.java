@@ -248,9 +248,13 @@ public class ShowCollection {
     public void save(){
         for (Show show: showList) {
             QLCFunction function = show.getFunction();
-            String dir = FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
+            String dir = getDirectory(function);
             System.out.println(dir);
             function.writeToConfigFile(dir);
         }
+    }
+
+    public String getDirectory(final QLCFunction function){
+        return FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
     }
 }

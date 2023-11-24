@@ -20,8 +20,8 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
     private final int index;
     private final Map<String, QLCButton> buttonMapByPos;
     private final Map<QLCButton, ButtonGroup> buttonMapGroupId;
-    private final ControllerSeqPanel panelSeq;
     private QLCSequence sequenceSelected;
+    private ControllerSeqPanel panelSeq;
 
     public ControllerEditPanel(final int index, final String fixtureGroupName) {
         setLayout(null);
@@ -56,10 +56,11 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
         this.setOpaque(true);
 
         panelSeq = new ControllerSeqPanel(fixtureGroupName);
-        panelSeq.setBounds( 1420, 0,  220, 300);
+        panelSeq.setBounds( 1420, 0,  220, 800);
         this.add(panelSeq);
 
         sequenceSelected = null;
+        panelSeq.setChangeDirectionRunOrderListener(this);
     }
 
     public void activePanel(){
@@ -106,8 +107,8 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
                 sequenceSelected = qlcButton.getShow().getFunction();
 
             }
+            panelSeq.setShowSelected(qlcButton.getShow());
 
-           // change();
         }
 
         buttonGroup.addFinalOffReview();
@@ -146,12 +147,16 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
         sequenceSelected.setDirection(direction);
         sequenceSelected.setRunOrder(runOrder);
+        sequenceSelected.setVdjType(type);
 
         sequenceSelected.getShow().setExecuting(false);
-        if (type!= IOS2LEventListener.Type.UNIVERSAL)
+
+        if (type!= IOS2LEventListener.Type.UNIVERSAL) {
+            sequenceSelected.getShow().setVdjType(type);
             sequenceSelected.getShow().setStepExecutor(new OS2LStepExecutor(sequenceSelected.getShow()));
-        else
+        }else
             sequenceSelected.getShow().setStepExecutor(new QLCSequenceExecutor(sequenceSelected.getShow()));
+
         sequenceSelected.getShow().setExecuting(true);
 
     }

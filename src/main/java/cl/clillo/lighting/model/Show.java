@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.executor.IStepExecutor;
 import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
@@ -23,6 +24,7 @@ public class Show implements Comparable<Show> {
     private QLCFunction function;
     private List<Show> uniqueShow;
     private int[] dimmerChannels;
+    private IOS2LEventListener.Type vdjType;
 
     public Show(int id, String name,  boolean executing, IStepExecutor stepExecutor,
                 int pasoActual, boolean firstTimeExecution, QLCFunction function,
@@ -139,6 +141,14 @@ public class Show implements Comparable<Show> {
 
     public void setDimmerChannels(int[] dimmerChannels) {
         this.dimmerChannels = dimmerChannels;
+    }
+
+    public void setVdjType(IOS2LEventListener.Type vdjType) {
+        this.vdjType = vdjType;
+    }
+
+    public IOS2LEventListener.Type getVdjType() {
+        return vdjType;
     }
 
     @Override

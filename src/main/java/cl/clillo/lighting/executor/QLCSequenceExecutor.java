@@ -18,8 +18,7 @@ public class QLCSequenceExecutor extends IStepExecutor {
 
     @Override
     public void executeDefaultScheduler() {
-        direction = sequence.getDirection();
-        runOrder = sequence.getRunOrder();
+
         preExecuteDefaultScheduler();
 
         final QLCStep step = sequence.getQlcStepList().get(actualStep);

@@ -82,6 +82,7 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void beat() {
+       broadcastBeat(IOS2LEventListener.Type.BEAT_X_1);
 
     }
 
@@ -92,14 +93,7 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void beatX2(int beat) {
-        for (Show show : showList) {
-            if (show.isExecuting()) {
-                show.getStepExecutor().executeOS2LScheduler();
-            }
-        }
-
-
-        ArtNet.getInstance().broadCast();
+        broadcastBeat(IOS2LEventListener.Type.BEAT_X_2);
     }
 
     @Override
@@ -109,6 +103,7 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void beatX4(int beat) {
+        broadcastBeat(IOS2LEventListener.Type.BEAT_X_4);
 
     }
 
@@ -125,5 +120,15 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
     @Override
     public void beatX16() {
 
+    }
+
+    private void broadcastBeat(IOS2LEventListener.Type type){
+        for (Show show : showList) {
+            if (show.isExecuting() && show.getVdjType() == type) {
+                show.getStepExecutor().executeOS2LScheduler();
+            }
+        }
+
+        ArtNet.getInstance().broadCast();
     }
 }

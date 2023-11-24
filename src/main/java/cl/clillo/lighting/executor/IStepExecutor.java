@@ -4,6 +4,7 @@ import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCRunOrder;
+import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Show;
 
@@ -44,8 +45,14 @@ public abstract class IStepExecutor {
     }
 
     protected void postExecuteDefaultScheduler(final QLCStep step){
-        for (QLCPoint point: step.getPointList())
+        for (QLCPoint point: step.getPointList()) {
             dmx.send(point);
+        }
+
+        if (show.getFunction() instanceof QLCSequence) {
+            direction = ((QLCSequence)show.getFunction()).getDirection();
+            runOrder  = ((QLCSequence)show.getFunction()).getRunOrder();
+        }
 
         if (runOrder == QLCRunOrder.RANDOM){
             actualStep = random.nextInt(totalSteps);
@@ -64,7 +71,10 @@ public abstract class IStepExecutor {
     private void forward(){
         actualStep++;
         if (actualStep==totalSteps && runOrder == QLCRunOrder.PINGPONG){
-            direction = QLCDirection.BACKWARD;
+             if (show.getFunction() instanceof QLCSequence)
+               ((QLCSequence)show.getFunction()).setDirection(QLCDirection.BACKWARD);
+
+
             show.setNextExecutionTime(System.currentTimeMillis());
             return;
         }
@@ -78,7 +88,8 @@ public abstract class IStepExecutor {
         actualStep--;
 
         if (actualStep==0 && runOrder == QLCRunOrder.PINGPONG){
-            direction = QLCDirection.FORWARD;
+            if (show.getFunction() instanceof QLCSequence)
+                ((QLCSequence)show.getFunction()).setDirection(QLCDirection.FORWARD);
             show.setNextExecutionTime(System.currentTimeMillis());
             return;
         }

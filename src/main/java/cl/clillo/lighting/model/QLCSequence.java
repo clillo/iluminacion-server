@@ -1,6 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
+import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
 import lombok.ToString;
@@ -32,6 +33,7 @@ public class QLCSequence extends QLCFunction{
     private final QLCScene boundScene;
     private final QLCSpeed qlcSpeed;
     private final Set<Integer> dimmerChannelSet;
+    private IOS2LEventListener.Type vdjType;
 
     public QLCSequence(final int id, final String type, final String name, final String path,
                        final QLCDirection direction, final QLCRunOrder runOrder, final List<QLCStep> qlcStepList,
@@ -76,6 +78,10 @@ public class QLCSequence extends QLCFunction{
             buildFakeSteps(step);
             qlcStepWithoutFade.add(step);
         }
+    }
+
+    public void setVdjType(IOS2LEventListener.Type vdjType) {
+        this.vdjType = vdjType;
     }
 
     public void setDirection(QLCDirection direction) {
@@ -161,6 +167,7 @@ public class QLCSequence extends QLCFunction{
         out.writeStartElement("behaviour");
         out.writeAttribute("order", String.valueOf(runOrder));
         out.writeAttribute("direction", String.valueOf(direction));
+        out.writeAttribute("vdjType", String.valueOf(vdjType));
         out.writeEndElement();
         writeSteps(out);
     }
@@ -194,9 +201,12 @@ public class QLCSequence extends QLCFunction{
 
         QLCDirection direction = QLCDirection.FORWARD;
         QLCRunOrder runOrder = QLCRunOrder.LOOP;
+        IOS2LEventListener.Type vdjType = IOS2LEventListener.Type.UNIVERSAL;
         if (behaviour!=null) {
             direction = QLCDirection.valueOf(XMLParser.getStringAttributeValue(behaviour, "direction"));
             runOrder = QLCRunOrder.valueOf(XMLParser.getStringAttributeValue(behaviour, "order"));
+            if (XMLParser.getStringAttributeValue(behaviour, "vdjType")!=null)
+                vdjType = IOS2LEventListener.Type.valueOf(XMLParser.getStringAttributeValue(behaviour, "vdjType"));
         }
 
         final QLCSpeed qlcSpeed = QLCSpeed.builder().build();
@@ -214,8 +224,10 @@ public class QLCSequence extends QLCFunction{
             }
         }
 
-        return new QLCSequence(function.getId(), function.getType(), function.getName(),
+        final QLCSequence sequence = new QLCSequence(function.getId(), function.getType(), function.getName(),
                 function.getPath(), direction, runOrder, qlcStepList, null, qlcSpeed);
+        sequence.setVdjType(vdjType);
+        return sequence;
     }
 
     protected static QLCStep buildStep(final FixtureListBuilder fixtureListBuilder, final Node node){
