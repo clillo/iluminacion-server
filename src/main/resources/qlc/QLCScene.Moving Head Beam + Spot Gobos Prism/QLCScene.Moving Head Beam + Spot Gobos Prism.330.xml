@@ -8,9 +8,9 @@
       <name>Prisma Rotating Fast</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" channel="1" value="215"/>
-      <point fixture-robotic="true" fixture="10" channel="1" value="215"/>
-      <point fixture-robotic="true" fixture="11" channel="1" value="215"/>
-      <point fixture-robotic="true" fixture="18" channel="1" value="215"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="8" channel="9" value="215"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="10" channel="9" value="215"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="11" channel="9" value="215"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="18" channel="9" value="215"/>
    </points>
 </doc>

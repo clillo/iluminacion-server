@@ -8,9 +8,9 @@
       <name>Yellow</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" channel="1" value="60"/>
-      <point fixture-robotic="true" fixture="10" channel="1" value="60"/>
-      <point fixture-robotic="true" fixture="11" channel="1" value="60"/>
-      <point fixture-robotic="true" fixture="18" channel="1" value="60"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="8" channel="7" value="60"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="10" channel="7" value="60"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="11" channel="7" value="60"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="18" channel="7" value="60"/>
    </points>
 </doc>

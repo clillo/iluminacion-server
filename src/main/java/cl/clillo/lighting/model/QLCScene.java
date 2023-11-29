@@ -58,7 +58,7 @@ public class QLCScene extends QLCFunction{
         for (int temp = 0; temp < list.getLength(); temp++) {
             Node node = list.item(temp);
             if (node.getNodeType() == Node.ELEMENT_NODE) {
-                final QLCPoint point = QLCPoint.build(fixtureListBuilder, node);
+                final QLCPoint point = QLCPoint.build(function.getId(), fixtureListBuilder, node);
                 if (point!=null)
                     qlcPointList.add(point);
             }

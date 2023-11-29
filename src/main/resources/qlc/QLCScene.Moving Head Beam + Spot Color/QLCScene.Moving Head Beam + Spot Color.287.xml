@@ -8,9 +8,9 @@
       <name>All Off</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="10" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="11" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="18" channel="1" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="8" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="10" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="11" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="18" channel="5" value="0"/>
    </points>
 </doc>

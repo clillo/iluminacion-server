@@ -7,8 +7,6 @@ import lombok.ToString;
 @Getter
 public class QLCRoboticFixture extends QLCFixture{
 
-    public enum ChannelType {PAN, TILT, PAN_FINE, TILT_FINE};
-
     private int panDmxChannel;
     private int tiltDmxChannel;
     private int panFineDmxChannel;
@@ -64,5 +62,21 @@ public class QLCRoboticFixture extends QLCFixture{
 
         return new QLCRoboticFixture(manufacturer, model, mode, id, "fixture: "+id, universe, dmxAddress-1,
                 fixtureModel.getChannels().length, fixtureModel);
+    }
+
+    public QLCFixture.ChannelType getChannelType(int dmxChannel){
+        if (dmxChannel == panDmxChannel)
+             return ChannelType.PAN;
+
+        if (dmxChannel == tiltDmxChannel)
+            return ChannelType.TILT;
+
+        if (dmxChannel == panFineDmxChannel)
+            return ChannelType.PAN_FINE;
+
+        if (dmxChannel == tiltFineDmxChannel)
+            return ChannelType.TILT_FINE;
+
+        return null;
     }
 }

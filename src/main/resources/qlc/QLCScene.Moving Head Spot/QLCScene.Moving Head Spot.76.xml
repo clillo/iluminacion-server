@@ -8,23 +8,23 @@
       <name>Rotating Yellow</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" channel="1" value="255"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="45"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="42"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="99"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="109"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="255"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="45"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="42"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="99"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="0"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="85"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="9" channel="2" value="255"/>
+      <point type="STROBE" fixture-robotic="true" fixture="9" channel="3" value="0"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="9" channel="4" value="45"/>
+      <point fixture-robotic="true" fixture="9" channel="5" value="42"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="9" channel="6" value="99"/>
+      <point fixture-robotic="true" fixture="9" channel="7" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="8" value="0"/>
+      <point fixture-robotic="true" fixture="9" channel="9" value="0"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="9" channel="11" value="109"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="12" channel="2" value="255"/>
+      <point type="STROBE" fixture-robotic="true" fixture="12" channel="3" value="0"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="12" channel="4" value="45"/>
+      <point fixture-robotic="true" fixture="12" channel="5" value="42"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="12" channel="6" value="99"/>
+      <point fixture-robotic="true" fixture="12" channel="7" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="8" value="0"/>
+      <point fixture-robotic="true" fixture="12" channel="9" value="0"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="12" channel="11" value="85"/>
    </points>
 </doc>

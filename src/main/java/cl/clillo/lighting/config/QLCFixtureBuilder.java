@@ -49,6 +49,8 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                 "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r"}, false);
         QLCFixtureModel fixtureRGBW = new QLCFixtureModel("Generic", "Generic", "RGBW", new String[]{
                 "master dimmer", "red", "green", "blue", "white", "strobe", "color change"}, false);
+        QLCFixtureModel movingHeadBeam = new QLCFixtureModel("Wild Pro", "Moving Head Spot", "Moving Head", new String[]{
+                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "nc", "nc2", "color wheel", "dimmer", "strobo", "macro"}, false);
 
         //010 - 033	[13]	Laser	Generic
         list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser
@@ -90,10 +92,10 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         //452 - 462	[15]	Moving Head	Beam
         //464 - 474	[16]	Moving Head	Beam
         //476 - 486	[17]	Moving Head	Beam
-        list.add(QLCRoboticFixture.build(14, 440, fixtureModelB)); // 201
-        list.add(QLCRoboticFixture.build(15, 452, fixtureModelB)); // 202
-        list.add(QLCRoboticFixture.build(16, 464, fixtureModelB)); // 203
-        list.add(QLCRoboticFixture.build(17, 476, fixtureModelB)); // 204
+        list.add(QLCRoboticFixture.build(14, 440, movingHeadBeam)); // 201
+        list.add(QLCRoboticFixture.build(15, 452, movingHeadBeam)); // 202
+        list.add(QLCRoboticFixture.build(16, 464, movingHeadBeam)); // 203
+        list.add(QLCRoboticFixture.build(17, 476, movingHeadBeam)); // 204
 
         return list;
     }

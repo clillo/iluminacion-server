@@ -240,7 +240,7 @@ public class QLCSequence extends QLCFunction{
                 .pointList(points);
 
         for(Node pointXML: XMLParser.getNodeList(node, "points")){
-            final QLCPoint point = QLCPoint.build(fixtureListBuilder, pointXML);
+            final QLCPoint point = QLCPoint.build(0, fixtureListBuilder, pointXML);
             if (point!=null)
                 points.add(point);
 

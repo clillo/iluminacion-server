@@ -8,9 +8,9 @@
       <name>Gobo 6</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" channel="1" value="70"/>
-      <point fixture-robotic="true" fixture="10" channel="1" value="70"/>
-      <point fixture-robotic="true" fixture="11" channel="1" value="70"/>
-      <point fixture-robotic="true" fixture="18" channel="1" value="70"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="8" channel="8" value="70"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="10" channel="8" value="70"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="11" channel="8" value="70"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="18" channel="8" value="70"/>
    </points>
 </doc>

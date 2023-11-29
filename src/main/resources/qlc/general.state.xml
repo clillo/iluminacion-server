@@ -2,6 +2,6 @@
 <doc>
    <title>StateRepository</title>
    <masterDimmer>
-      <rgbw>22</rgbw>
+      <rgbw>255</rgbw>
    </masterDimmer>
 </doc>

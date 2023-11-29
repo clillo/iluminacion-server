@@ -14,15 +14,26 @@ import java.util.Map;
 @ToString
 public class QLCFixture {
 
-    public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE, COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW ;
+    public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE,
+        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO ;
 
         public static ChannelType of(String name){
+            if ("color wheel".equalsIgnoreCase(name))
+                return COLOR_WHEEL;
+            if ("pan".equalsIgnoreCase(name))
+                return PAN;
             if ("dimmer".equalsIgnoreCase(name))
                 return DIMMER;
             if ("master dimmer".equalsIgnoreCase(name))
-                return MASTER_DIMMER;
+                return DIMMER;
             if ("strobe".equalsIgnoreCase(name))
                 return STROBE;
+            if ("gobo wheel".equalsIgnoreCase(name))
+                return ChannelType.GOBO_WHEEL;
+            if ("auto".equalsIgnoreCase(name))
+                return ChannelType.AUTO;
+            if ("prism rotation".equalsIgnoreCase(name))
+                return ChannelType.PRISM_ROTATION;
             return RAW;
         }
     };
@@ -55,6 +66,20 @@ public class QLCFixture {
                 return i+1;
 
         return -1;
+    }
+
+    public ChannelType getChannel(int channel){
+        if (fixtureModel==null)
+            return null;
+
+        for (int i=0; i<fixtureModel.getChannels().length; i++){
+            if (channel!=i)
+                continue;
+            String strChannel = fixtureModel.getChannels()[i];
+            return ChannelType.of(strChannel);
+        }
+
+        return null;
     }
 
     public int getDMXChannel(ChannelType channelType){

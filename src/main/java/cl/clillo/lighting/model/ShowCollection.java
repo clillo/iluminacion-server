@@ -214,6 +214,7 @@ public class ShowCollection {
 
         return functionList;
     }
+
     public List<QLCFunction> getFunctionList(final String type, final String path){
         final List<QLCFunction> functionList = new ArrayList<>();
         for (Show show: showList) {

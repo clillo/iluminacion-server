@@ -13,7 +13,7 @@ import java.util.List;
 
 public abstract class IStepExecutor {
 
-    private SecureRandom random = new SecureRandom();
+    private final SecureRandom random = new SecureRandom();
     private final Dmx dmx = Dmx.getInstance();
     protected final Show show;
     private final List<QLCStep> stepList;
@@ -55,7 +55,10 @@ public abstract class IStepExecutor {
         }
 
         if (runOrder == QLCRunOrder.RANDOM){
-            actualStep = random.nextInt(totalSteps);
+            int next = actualStep;
+            while (next==actualStep)
+                next = random.nextInt(totalSteps+1);
+            actualStep = next;
             return;
         }
 

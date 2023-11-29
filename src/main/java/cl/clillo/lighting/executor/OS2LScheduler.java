@@ -33,14 +33,16 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
             try {
                 if (ios2LEventListener!=null ) {
                     ios2LEventListener.changeTimes(time, ((long) (time / 2.0)));
-
+                  //  this.beatD2();
                 }
                 String a = String.valueOf((long)(time / 16.0));
-
+              //  System.out.println(myBeat);
                 if (time<1000 && time>100) {
-                    Thread.sleep((long)(time / 8.0));
-                    beatX4();
+                    Thread.sleep((long)(time ));
+                    //this.beatD2();
                 }
+
+
             } catch (InterruptedException e) {
                 e.printStackTrace();
                 throw new RuntimeException(e);
@@ -114,12 +116,24 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void beatX8(int beat) {
+        broadcastBeat(IOS2LEventListener.Type.BEAT_X_8);
 
     }
 
     @Override
     public void beatX16() {
+        broadcastBeat(IOS2LEventListener.Type.BEAT_X_16);
 
+    }
+
+    @Override
+    public void beatD2() {
+        broadcastBeat(IOS2LEventListener.Type.BEAT_D_2);
+    }
+
+    @Override
+    public void beatD4() {
+        broadcastBeat(IOS2LEventListener.Type.BEAT_D_4);
     }
 
     private void broadcastBeat(IOS2LEventListener.Type type){

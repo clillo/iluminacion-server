@@ -45,11 +45,11 @@ public class MidiButtonFunctionRepository {
         createRows( 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
                 KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Spider");
 
-        createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
+        createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
 
-        createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
+        createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
 
-        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Beam");
+        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
 
         createRows( 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
         createRows( 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");

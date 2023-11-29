@@ -28,9 +28,14 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     private final JRadioButton random = new JRadioButton("Random");
 
     private final JRadioButton universalTime = new JRadioButton("Universal Time");
+    private final JRadioButton beatD4 = new JRadioButton("Beat / 4");
+    private final JRadioButton beatD2 = new JRadioButton("Beat / 2");
     private final JRadioButton beatX1 = new JRadioButton("Beat x 1");
     private final JRadioButton beatX2 = new JRadioButton("Beat x 2");
     private final JRadioButton beatX4 = new JRadioButton("Beat x 4");
+    private final JRadioButton beatX8 = new JRadioButton("Beat x 8");
+    private final JRadioButton beatX16 = new JRadioButton("Beat x 16");
+
 
     private ChangeDirectionRunOrderListener changeDirectionRunOrderListener;
     private final JButton btnSave = new JButton();
@@ -50,12 +55,16 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         random.setBounds(10,170,100,30);
 
         universalTime.setBounds(10,250,140,30);
-        beatX1.setBounds(10,280,140,30);
-        beatX2.setBounds(10,310,100,30);
-        beatX4.setBounds(10,340,100,30);
+        beatD4.setBounds(10,280,140,30);
+        beatD2.setBounds(10,310,140,30);
+        beatX1.setBounds(10,340,140,30);
+        beatX2.setBounds(10,370,140,30);
+        beatX4.setBounds(10,400,140,30);
+        beatX8.setBounds(10,430,140,30);
+        beatX16.setBounds(10,460,140,30);
 
         addToButtonGroup(this, loopForward, loopBackward, pingPong, random);
-        addToButtonGroup(this, universalTime, beatX1, beatX2, beatX4);
+        addToButtonGroup(this, universalTime, beatD4, beatD2, beatX1, beatX2, beatX4, beatX8, beatX16);
 
         universalTime.setSelected(true);
         loopForward.setSelected(true);
@@ -140,6 +149,18 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
         if (beatX4.isSelected())
             return IOS2LEventListener.Type.BEAT_X_4;
+
+        if (beatX8.isSelected())
+            return IOS2LEventListener.Type.BEAT_X_8;
+
+        if (beatX16.isSelected())
+            return IOS2LEventListener.Type.BEAT_X_16;
+
+        if (beatD2.isSelected())
+            return IOS2LEventListener.Type.BEAT_D_2;
+
+        if (beatD4.isSelected())
+            return IOS2LEventListener.Type.BEAT_D_4;
 
         return null;
     }

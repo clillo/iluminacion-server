@@ -238,6 +238,16 @@ public class VirtualDJMainPanel extends JPanel implements VDJBMPEvent {
         beat16=!beat16;
     }
 
+    @Override
+    public void beatD2() {
+
+    }
+
+    @Override
+    public void beatD4() {
+
+    }
+
     private void getSongName(){
         String node = httpClient.getString(baseUrl + "query?script=get_filepath", Map.of(), Map.of());
         txtSongName.setText(node);

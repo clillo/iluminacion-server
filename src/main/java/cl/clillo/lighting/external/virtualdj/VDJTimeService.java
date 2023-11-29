@@ -163,4 +163,14 @@ public class VDJTimeService extends Thread  implements VDJBMPEvent {
     public void beatX16() {
 
     }
+
+    @Override
+    public void beatD2() {
+
+    }
+
+    @Override
+    public void beatD4() {
+
+    }
 }

@@ -28,5 +28,8 @@ public interface VDJBMPEvent {
 
     void beatX16();
 
+    void beatD2();
+
+    void beatD4();
 
 }

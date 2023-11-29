@@ -26,6 +26,19 @@ public class QLCPoint implements Comparable<QLCPoint>{
         this.channel = channel;
         this.dmxChannel = dmxChannel;
         this.data = data;
+
+  //      if (dmxChannel==241)
+   //         System.out.println(122);
+
+        if (channelType==null && fixture instanceof QLCRoboticFixture) {
+            QLCRoboticFixture qlcRoboticFixture = (QLCRoboticFixture)fixture;
+            channelType = qlcRoboticFixture.getChannelType(dmxChannel);
+        }
+
+        if (channelType==null) {
+            channelType = fixture.getChannel(channel);
+
+        }
         this.channelType = channelType;
     }
 
@@ -117,7 +130,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
         return channel - o.channel;
     }
 
-    protected static QLCPoint build(final FixtureListBuilder fixtureListBuilder, final Node node){
+    protected static QLCPoint build(final int functionId, final FixtureListBuilder fixtureListBuilder, final Node node){
         final boolean isRobotic = XMLParser.getBoolean(node, "fixture-robotic");
         int fixtureId = XMLParser.getInt(node, "fixture");
         int value = XMLParser.getInt(node, "value");
@@ -140,8 +153,12 @@ public class QLCPoint implements Comparable<QLCPoint>{
             //System.exit(0);
 
         }
+        if (fixtureId==14 && functionId==171)
+            System.out.println("14");
+        final String nodeTypeStr = XMLParser.getStringAttributeValue(node, "type");
+        final QLCFixture.ChannelType channelType = QLCFixture.ChannelType.of(nodeTypeStr);
         return QLCPoint.buildRoboticPoint(qlcFixture,
-                QLCFixture.ChannelType.of(XMLParser.getNodeString(node, "type")),
+                channelType,
                 value);
     }
 
