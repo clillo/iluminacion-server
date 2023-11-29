@@ -18,21 +18,27 @@ public class QLCFixture {
         COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO ;
 
         public static ChannelType of(String name){
-            if ("color wheel".equalsIgnoreCase(name))
+            if ("color wheel".equalsIgnoreCase(name) || "color_wheel".equalsIgnoreCase(name))
                 return COLOR_WHEEL;
             if ("pan".equalsIgnoreCase(name))
                 return PAN;
+            if ("tilt".equalsIgnoreCase(name))
+                return TILT;
+            if ("pan_fine".equalsIgnoreCase(name))
+                return PAN_FINE;
+            if ("tilt_fine".equalsIgnoreCase(name))
+                return TILT_FINE;
             if ("dimmer".equalsIgnoreCase(name))
                 return DIMMER;
-            if ("master dimmer".equalsIgnoreCase(name))
+            if ("master dimmer".equalsIgnoreCase(name) || "master_dimmer".equalsIgnoreCase(name))
                 return DIMMER;
             if ("strobe".equalsIgnoreCase(name))
                 return STROBE;
-            if ("gobo wheel".equalsIgnoreCase(name))
+            if ("gobo wheel".equalsIgnoreCase(name) || "gobo_wheel".equalsIgnoreCase(name))
                 return ChannelType.GOBO_WHEEL;
             if ("auto".equalsIgnoreCase(name))
                 return ChannelType.AUTO;
-            if ("prism rotation".equalsIgnoreCase(name))
+            if ("prism rotation".equalsIgnoreCase(name) || "prism_rotation".equalsIgnoreCase(name))
                 return ChannelType.PRISM_ROTATION;
             return RAW;
         }
