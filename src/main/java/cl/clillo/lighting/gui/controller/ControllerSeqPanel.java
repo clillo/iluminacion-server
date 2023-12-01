@@ -2,7 +2,9 @@ package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.model.QLCDirection;
+import cl.clillo.lighting.model.QLCEfxScene;
 import cl.clillo.lighting.model.QLCRunOrder;
+import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
@@ -39,6 +41,7 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
     private ChangeDirectionRunOrderListener changeDirectionRunOrderListener;
     private final JButton btnSave = new JButton();
+    private final JButton btnEdit = new JButton();
 
     private Show showSelected;
 
@@ -71,9 +74,12 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
         btnSave.setText("Save");
         btnSave.setBounds(10, 500, 120, 20);
-
+        btnEdit.setText("Edit");
+        btnEdit.setBounds(10, 540, 120, 20);
         this.add(btnSave);
+        this.add(btnEdit);
         btnSave.addActionListener(this);
+        btnEdit.addActionListener(this);
 
     }
 
@@ -121,15 +127,36 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (!e.getSource().equals(btnSave))
+        if (e.getSource().equals(btnSave))
+            save();
+
+        if (e.getSource().equals(btnEdit))
+            edit();
+
+    }
+
+    private void save(){
+        if (showSelected==null || !(showSelected.getFunction() instanceof QLCSequence))
             return;
 
-        if (showSelected.getFunction() instanceof QLCSequence) {
-            final QLCSequence sequence = showSelected.getFunction();
-            final String dir = ShowCollection.getInstance().getDirectory(sequence);
-            sequence.writeToConfigFile(dir);
-        }
+        final QLCSequence sequence = showSelected.getFunction();
+        final String dir = ShowCollection.getInstance().getDirectory(sequence);
+        sequence.writeToConfigFile(dir);
     }
+
+    private void edit(){
+        if (showSelected==null ||  !(showSelected.getFunction() instanceof QLCScene))
+            return;
+
+        final QLCScene scene = showSelected.getFunction();
+        if (scene.getQlcEfxScene()==null)
+            return;
+        final String dir = ShowCollection.getInstance().getDirectory(scene);
+        //scene.writeToConfigFile(dir);
+        EFXMConfigureJFrame efxmConfigureJFrame = new EFXMConfigureJFrame(showSelected);
+        efxmConfigureJFrame.start();
+    }
+
     @Override
     public void stateChanged(ChangeEvent e) {
         if (changeDirectionRunOrderListener!=null)

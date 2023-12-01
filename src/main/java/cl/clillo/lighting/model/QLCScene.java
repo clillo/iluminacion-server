@@ -15,6 +15,7 @@ import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @ToString
@@ -22,10 +23,32 @@ import java.util.List;
 public class QLCScene extends QLCFunction{
 
     private final List<QLCPoint> qlcPointList;
+    private final QLCEfxScene qlcEfxScene;
 
     public QLCScene(final int id, final String type, final String name, final String path, final List<QLCPoint> qlcPointList) {
         super(id, type, name, path);
         this.qlcPointList = qlcPointList;
+        if (isEfx()) {
+            final List<QLCEfxFixtureData> fixtureList = new ArrayList<>();
+            for (QLCPoint qlcPoint: qlcPointList ){
+                QLCEfxFixtureData fixtureData = QLCEfxFixtureData.builder().fixture(qlcPoint.getFixture())
+                        .startOffset(0)
+                        .reverse(false)
+                        .build();
+
+                boolean exist = false;
+                for (QLCEfxFixtureData qlcEfxFixtureData: fixtureList)
+                    if (qlcEfxFixtureData.getRoboticFixture().equals(fixtureData.getRoboticFixture())) {
+                        exist = true;
+                        break;
+                    }
+
+                if (!exist)
+                    fixtureList.add(fixtureData);
+            }
+            qlcEfxScene = new QLCEfxScene(id, type, "scene: " + id, path, qlcPointList, fixtureList);
+        }else
+            qlcEfxScene = null;
     }
 
     public String toSmallString(){
@@ -38,11 +61,12 @@ public class QLCScene extends QLCFunction{
         return sb.toString();
     }
 
-    public static QLCScene build(final int id, final List<QLCPoint> qlcPointList){
-        String type = "type";
-        String path = "path";
+    private boolean isEfx(){
+        for(QLCPoint qlcPoint: qlcPointList)
+            if (!qlcPoint.isMovement())
+                return false;
 
-        return new QLCScene(id, type, "scene: "+id, path, qlcPointList);
+        return true;
     }
 
     public static QLCScene read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
@@ -50,8 +74,6 @@ public class QLCScene extends QLCFunction{
         final QLCElement function = QLCElement.read(doc);
 
         final List<QLCPoint> qlcPointList = new ArrayList<>();
-        final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList);
-        scene.setBlackout(function.isBlackout());
 
         Node common = doc.getElementsByTagName("points").item(0);
         NodeList list = common.getChildNodes();
@@ -64,6 +86,10 @@ public class QLCScene extends QLCFunction{
             }
         }
 
+        Collections.sort(qlcPointList);
+        final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList);
+        scene.setBlackout(function.isBlackout());
+
         return scene;
     }
 
@@ -72,4 +98,7 @@ public class QLCScene extends QLCFunction{
         QLCPoint.write(out, qlcPointList);
     }
 
+    public QLCEfxScene getQlcEfxScene() {
+        return qlcEfxScene;
+    }
 }

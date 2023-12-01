@@ -16,6 +16,8 @@ public class ScreenPoint {
     private final int screenX;
     private final int screenY;
 
+    private int fixtureId;
+
     public ScreenPoint(final double realX, final double realY) {
         this.realX = realX;
         this.realY = realY;
@@ -40,5 +42,13 @@ public class ScreenPoint {
 
     public boolean isEquals(final ScreenPoint screenPoint){
         return Math.abs(screenPoint.realX - realX)<500 && Math.abs(screenPoint.realY - realY)<500;
+    }
+
+    public int getFixtureId() {
+        return fixtureId;
+    }
+
+    public void setFixtureId(int fixtureId) {
+        this.fixtureId = fixtureId;
     }
 }

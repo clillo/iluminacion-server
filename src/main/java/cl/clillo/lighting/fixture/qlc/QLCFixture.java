@@ -24,9 +24,9 @@ public class QLCFixture {
                 return PAN;
             if ("tilt".equalsIgnoreCase(name))
                 return TILT;
-            if ("pan_fine".equalsIgnoreCase(name))
+            if ("pan_fine".equalsIgnoreCase(name) || "pan fine".equalsIgnoreCase(name))
                 return PAN_FINE;
-            if ("tilt_fine".equalsIgnoreCase(name))
+            if ("tilt_fine".equalsIgnoreCase(name) || "tilt fine".equalsIgnoreCase(name))
                 return TILT_FINE;
             if ("dimmer".equalsIgnoreCase(name))
                 return DIMMER;

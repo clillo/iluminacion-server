@@ -3,6 +3,8 @@ package cl.clillo.lighting.fixture.qlc;
 import lombok.Getter;
 import lombok.ToString;
 
+import java.util.Objects;
+
 @ToString
 @Getter
 public class QLCRoboticFixture extends QLCFixture{
@@ -78,5 +80,18 @@ public class QLCRoboticFixture extends QLCFixture{
             return ChannelType.TILT_FINE;
 
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof QLCRoboticFixture)) return false;
+        QLCRoboticFixture that = (QLCRoboticFixture) o;
+        return getPanDmxChannel() == that.getPanDmxChannel() && getTiltDmxChannel() == that.getTiltDmxChannel() && getPanFineDmxChannel() == that.getPanFineDmxChannel() && getTiltFineDmxChannel() == that.getTiltFineDmxChannel();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getPanDmxChannel(), getTiltDmxChannel(), getPanFineDmxChannel(), getTiltFineDmxChannel());
     }
 }

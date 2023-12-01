@@ -18,7 +18,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     private final QLCFixture fixture;
     private final int channel;
     private final int dmxChannel;
-    private final int data;
+    private int data;
     private final QLCFixture.ChannelType channelType;
 
     QLCPoint(QLCFixture fixture, int channel, int dmxChannel, int data, QLCFixture.ChannelType channelType) {
@@ -40,6 +40,10 @@ public class QLCPoint implements Comparable<QLCPoint>{
 
         }
         this.channelType = channelType;
+    }
+
+    public void setData(int data) {
+        this.data = data;
     }
 
     public static QLCPointBuilder builder() {
@@ -76,7 +80,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     }
 
     public static QLCPoint buildRoboticPoint(final QLCRoboticFixture fixture, final QLCFixture.ChannelType channelType, final int data) {
-        int channel = fixture.getChannel(channelType);
+        int channel = fixture.getChannel(channelType) - 1;
         int dmxChannel = fixture.getDMXChannel(channelType);
         return new QLCPoint(fixture, channel, dmxChannel, data, channelType);
     }
@@ -119,6 +123,13 @@ public class QLCPoint implements Comparable<QLCPoint>{
 
     }
 
+    public boolean isMovement(){
+        return channelType == QLCFixture.ChannelType.PAN ||
+                channelType == QLCFixture.ChannelType.PAN_FINE ||
+                channelType == QLCFixture.ChannelType.TILT ||
+                channelType == QLCFixture.ChannelType.TILT_FINE;
+    }
+
     @Override
     public int compareTo(QLCPoint o) {
         if (fixture.getId()<o.getFixture().getId())
@@ -153,7 +164,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
             //System.exit(0);
 
         }
-        if (fixtureId==14 && functionId==171)
+        if (fixtureId==14 && functionId==178)
             System.out.println("14");
         final String nodeTypeStr = XMLParser.getStringAttributeValue(node, "type");
         final QLCFixture.ChannelType channelType = QLCFixture.ChannelType.of(nodeTypeStr);
