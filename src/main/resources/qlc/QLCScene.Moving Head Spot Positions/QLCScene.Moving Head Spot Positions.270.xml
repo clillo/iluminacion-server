@@ -8,13 +8,13 @@
       <name>Y One</name>
    </common>
    <points>
-      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="227"/>
-      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="255"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="132"/>
+      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="178"/>
+      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="5"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="176"/>
       <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="0"/>
-      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="204"/>
-      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="255"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="0"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="178"/>
+      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="161"/>
+      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="6"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="8"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="222"/>
    </points>
 </doc>

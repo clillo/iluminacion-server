@@ -8,13 +8,13 @@
       <name>Front</name>
    </common>
    <points>
-      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="215"/>
-      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="234"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="132"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="0"/>
-      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="212"/>
-      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="237"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="0"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="178"/>
+      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="170"/>
+      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="17"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="152"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="52"/>
+      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="172"/>
+      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="16"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="240"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="254"/>
    </points>
 </doc>
