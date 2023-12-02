@@ -47,6 +47,7 @@ public class QLCScene extends QLCFunction{
                     fixtureList.add(fixtureData);
             }
             qlcEfxScene = new QLCEfxScene(id, type, "scene: " + id, path, qlcPointList, fixtureList);
+
         }else
             qlcEfxScene = null;
     }
@@ -100,5 +101,12 @@ public class QLCScene extends QLCFunction{
 
     public QLCEfxScene getQlcEfxScene() {
         return qlcEfxScene;
+    }
+
+    @Override
+    public void setShow(Show show) {
+        super.setShow(show);
+        if (qlcEfxScene!=null)
+            qlcEfxScene.setShow(getShow());
     }
 }

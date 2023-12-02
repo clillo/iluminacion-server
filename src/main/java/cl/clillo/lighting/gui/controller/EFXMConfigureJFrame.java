@@ -1,6 +1,5 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.utils.SystemUtils;
 
@@ -22,8 +21,8 @@ public class EFXMConfigureJFrame extends JFrame {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        setSize(EFXMConfigureMainPanel.WIDTH1 + 600, EFXMConfigureMainPanel.HEIGHT1 + 150);
-        EFXMConfigureMainPanel EFXMConfigureMainPanel = new EFXMConfigureMainPanel(showSelected);
+        setSize(EFXMConfigureMainPanel.WIDTH1 + 300, EFXMConfigureMainPanel.HEIGHT1 + 150);
+        EFXMConfigureMainPanel EFXMConfigureMainPanel = new EFXMConfigureMainPanel(showSelected, this);
         setContentPane(EFXMConfigureMainPanel);
 
     }

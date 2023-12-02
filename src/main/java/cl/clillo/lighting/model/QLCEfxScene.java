@@ -45,6 +45,33 @@ public class QLCEfxScene extends QLCEfx{
         setNodes(buildNodes());
     }
 
+    public void updateParameters(final List<ScreenPoint> scenePoints){
+        for (ScreenPoint screenPoint: scenePoints)
+            updateParameters(screenPoint.getFixtureId(), screenPoint.getRealX(), screenPoint.getRealY());
+
+        getShow().setFirstTimeExecution(true);
+        getShow().getStepExecutor().executeDefaultScheduler();
+    }
+
+    protected List<QLCExecutionNode> buildNodes() {
+        final List<QLCExecutionNode> nodes = new ArrayList<>();
+        for (QLCEfxPosition position: buildPositions()) {
+            position.buildScreenPoint(position.getIndex());
+
+            final QLCExecutionNode node = QLCExecutionNode.builder()
+                    .channel(List.of())
+                    .data(List.of())
+                    .screenPoints(new ScreenPoint[]{position.buildScreenPoint(position.getIndex())})
+                    .holdTime(0)
+                    .build();
+
+            node.setId(nodes.size());
+            nodes.add(node);
+        }
+
+        return nodes;
+    }
+
     protected List<QLCEfxPosition> buildPositions(){
         final List<QLCEfxPosition> positions = new ArrayList<>();
 

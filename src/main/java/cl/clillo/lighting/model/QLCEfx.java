@@ -77,7 +77,7 @@ public abstract class QLCEfx extends QLCFunction{
         return sb.toString();
     }
 
-    protected final List<QLCExecutionNode> buildNodes(){
+    protected List<QLCExecutionNode> buildNodes(){
 
         final List<QLCEfxPosition> positions = buildPositions();
         final int positionsSize = positions.size();

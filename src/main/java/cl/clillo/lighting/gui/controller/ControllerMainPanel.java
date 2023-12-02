@@ -27,7 +27,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     private static final long serialVersionUID = -5869553409971473557L;
 
-    public static final int WIDTH1 = 1424;
+    public static final int WIDTH1 = 1364;
     public static final int HEIGHT1 = 900;
 
     private final List<JSlider> pnlListDimmer;

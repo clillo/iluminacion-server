@@ -11,10 +11,10 @@ public class ScreenPoint {
     private final int CANVAS_WIDTH = EFXMConfigureMainPanel.WIDTH1;
     private final int CANVAS_HEIGHT = EFXMConfigureMainPanel.HEIGHT1;
 
-    private final double realX;
-    private final double realY;
-    private final int screenX;
-    private final int screenY;
+    private double realX;
+    private double realY;
+    private int screenX;
+    private int screenY;
 
     private int fixtureId;
 
@@ -50,5 +50,20 @@ public class ScreenPoint {
 
     public void setFixtureId(int fixtureId) {
         this.fixtureId = fixtureId;
+    }
+
+    @Override
+    public String toString() {
+        return realX+","+realY;
+    }
+
+    public void setRealX(double realX) {
+        this.realX = realX;
+        screenX = (int) ((CANVAS_WIDTH * realX)/MAX);
+    }
+
+    public void setRealY(double realY) {
+        this.realY = realY;
+        screenY = (int) ((CANVAS_HEIGHT * realY)/MAX);
     }
 }

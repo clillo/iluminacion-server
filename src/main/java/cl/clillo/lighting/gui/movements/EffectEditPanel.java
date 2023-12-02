@@ -2,6 +2,7 @@ package cl.clillo.lighting.gui.movements;
 
 import cl.clillo.lighting.gui.ScreenPoint;
 import cl.clillo.lighting.external.midi.RoboticNotifiable;
+import cl.clillo.lighting.gui.controller.EFXMConfigureJFrame;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCExecutionNode;
 import cl.clillo.lighting.model.Show;
@@ -39,6 +40,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     protected JPanel canvas;
     protected JButton btnSave;
     protected JButton btnRun;
+    protected JButton btnClose;
 
     private static final double MAX_X = 65536;
     private static final double MAX_Y = 65536;
@@ -46,6 +48,7 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     private ScreenPoint[] screenPoints;
     private final QLCEfx qlcEf;
     private final Show show;
+    protected EFXMConfigureJFrame parent;
 
     public EffectEditPanel(final QLCEfx qlcEfx, final Show show) {
         setLayout(null);
@@ -133,6 +136,14 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
         btnRun.addActionListener(e -> run());
         add(btnRun);
+
+
+        btnClose = new JButton();
+        btnClose.setText("Close");
+        btnClose.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 90, 120, 20);
+        btnClose.addActionListener(e -> close());
+        add(btnClose);
+
         setQlcEfx(qlcEfx);
     }
 
@@ -188,6 +199,10 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
             btnRun.setText("Start");*/
     }
 
+    protected void close() {
+        parent.dispose();
+    }
+
 
     @Override
     public void notify(final QLCExecutionNode node) {
@@ -206,5 +221,9 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
     }
     public QLCEfx getQlcEf() {
         return qlcEf;
+    }
+
+    public void setParent(EFXMConfigureJFrame parent) {
+        this.parent = parent;
     }
 }
