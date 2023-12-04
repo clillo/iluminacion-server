@@ -1,24 +1,24 @@
 
 <doc>
-   <title>QLCScene.Moving Head Beam Color.293</title>
+   <title>QLCScene.Moving Head Beam Color.3207</title>
    <common>
-      <id>293</id>
+      <id>3207</id>
       <type>Scene</type>
       <path>Moving Head Beam Color</path>
-      <name>Red Green Front Extreme</name>
+      <name>Rotating Center</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="45"/>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="255"/>
+      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="200"/>
       <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="30"/>
+      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="200"/>
       <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="255"/>
       <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="30"/>
+      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="200"/>
       <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="255"/>
       <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="45"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="255"/>
+      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="200"/>
+      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="0"/>
       <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="0"/>
    </points>
 </doc>

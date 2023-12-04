@@ -5,7 +5,7 @@
       <id>179</id>
       <type>Scene</type>
       <path>Moving Head Beam Positions</path>
-      <name>front cross 1</name>
+      <name>Front cross 1</name>
    </common>
    <points>
       <point type="PAN" fixture-robotic="true" fixture="14" channel="0" value="156"/>

@@ -127,7 +127,7 @@ public class CSVSupport {
 
     }
 
-    private void printFunctionIds(){
+    public void printFunctionIds(){
         final Set<Integer> functionIds = new HashSet<>();
 
         for (Show show: ShowCollection.getInstance().getShowList())

@@ -51,8 +51,11 @@ public class MidiButtonFunctionRepository {
 
         createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 3, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
 
-        createRows( 10, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
-        createRows( 11, "Scene", "Moving Head Beam Positions", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        createRows( 20, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        createRows( 21, "Scene", "Moving Head Beam Positions", 0, 4,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+
+        createRows( 22, "EfxMultiLine", "Moving Head Beam EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+
 
         createRows( 10, "Scene", "Moving Head Spot", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
         createRows( 11, "Scene", "Moving Head Spot Positions", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");

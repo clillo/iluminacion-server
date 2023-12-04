@@ -5,7 +5,7 @@
       <id>185</id>
       <type>Scene</type>
       <path>Moving Head Beam Positions</path>
-      <name>down full</name>
+      <name>Down full</name>
    </common>
    <points>
       <point type="PAN" fixture-robotic="true" fixture="14" channel="0" value="171"/>

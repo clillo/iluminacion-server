@@ -1,20 +1,16 @@
 
 <doc>
-   <title>QLCScene.Moving Head Beam Color.280</title>
+   <title>QLCScene.Moving Head Beam Color.3100</title>
    <common>
-      <id>280</id>
+      <id>3100</id>
       <type>Scene</type>
       <path>Moving Head Beam Color</path>
-      <name>White Strobo 1</name>
+      <name>White</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="119"/>
       <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="119"/>
       <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="119"/>
       <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="0"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="119"/>
    </points>
 </doc>
