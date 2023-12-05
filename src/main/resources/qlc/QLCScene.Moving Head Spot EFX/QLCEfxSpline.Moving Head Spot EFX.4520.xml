@@ -1,0 +1,52 @@
+
+<doc>
+   <title>QLCEfxSpline.Moving Head Spot EFX.4520</title>
+   <common>
+      <id>4520</id>
+      <type>QLCEfxSpline</type>
+      <path>Moving Head Spot EFX</path>
+      <name>Eight</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>9</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>12</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <realPoints>
+      <point>
+         <x>49984.0</x>
+         <y>23301.68888888889</y>
+      </point>
+      <point>
+         <x>44800.0</x>
+         <y>25413.404444444444</y>
+      </point>
+      <point>
+         <x>38464.0</x>
+         <y>18422.897777777776</y>
+      </point>
+      <point>
+         <x>51712.0</x>
+         <y>6917.688888888889</y>
+      </point>
+      <point>
+         <x>45056.0</x>
+         <y>1456.3555555555556</y>
+      </point>
+      <point>
+         <x>37440.0</x>
+         <y>7208.96</y>
+      </point>
+      <point>
+         <x>51328.0</x>
+         <y>18204.444444444445</y>
+      </point>
+   </realPoints>
+</doc>

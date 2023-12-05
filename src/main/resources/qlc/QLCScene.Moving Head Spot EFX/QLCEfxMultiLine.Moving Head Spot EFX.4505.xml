@@ -1,0 +1,32 @@
+
+<doc>
+   <title>QLCEfxMultiLine.Moving Head Spot EFX.4505</title>
+   <common>
+      <id>4505</id>
+      <type>EfxMultiLine</type>
+      <path>Moving Head Spot EFX</path>
+      <name>Bouncing Top</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>9</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>12</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <leftUp>
+         <x>35328.0</x>
+         <y>1966.08</y>
+      </leftUp>
+      <rightDown>
+         <x>55936.0</x>
+         <y>25704.675555555557</y>
+      </rightDown>
+   </dimensions>
+</doc>

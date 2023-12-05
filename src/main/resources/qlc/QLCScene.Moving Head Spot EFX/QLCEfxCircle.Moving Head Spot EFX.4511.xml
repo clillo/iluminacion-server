@@ -1,0 +1,28 @@
+
+<doc>
+   <title>QLCEfxCircle.Moving Head Spot EFX.4511</title>
+   <common>
+      <id>4511</id>
+      <type>EfxCircle</type>
+      <path>Moving Head Spot EFX</path>
+      <name>Circle 2</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>9</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>12</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <centerX>51776.0</centerX>
+      <centerY>16820.906666666666</centerY>
+      <width>8520.0</width>
+      <height>13190.0</height>
+   </dimensions>
+</doc>
