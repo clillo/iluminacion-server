@@ -1,0 +1,28 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Positions.3607</title>
+   <common>
+      <id>3607</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Positions</path>
+      <name>Disco Ball</name>
+   </common>
+   <points>
+      <point type="PAN" fixture-robotic="true" fixture="14" channel="0" value="181"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="14" channel="1" value="255"/>
+      <point type="TILT" fixture-robotic="true" fixture="14" channel="2" value="22"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="14" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="15" channel="0" value="185"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="15" channel="1" value="255"/>
+      <point type="TILT" fixture-robotic="true" fixture="15" channel="2" value="21"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="15" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="16" channel="0" value="186"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="16" channel="1" value="255"/>
+      <point type="TILT" fixture-robotic="true" fixture="16" channel="2" value="26"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="16" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="17" channel="0" value="189"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="17" channel="1" value="255"/>
+      <point type="TILT" fixture-robotic="true" fixture="17" channel="2" value="18"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="17" channel="3" value="0"/>
+   </points>
+</doc>

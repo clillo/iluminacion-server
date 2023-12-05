@@ -1,0 +1,28 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Positions.2600</title>
+   <common>
+      <id>2600</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Positions</path>
+      <name>Front</name>
+   </common>
+   <points>
+      <point type="PAN" fixture-robotic="true" fixture="8" channel="0" value="171"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="8" channel="1" value="0"/>
+      <point type="TILT" fixture-robotic="true" fixture="8" channel="2" value="16"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="8" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="10" channel="0" value="171"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="10" channel="1" value="0"/>
+      <point type="TILT" fixture-robotic="true" fixture="10" channel="2" value="16"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="10" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="11" channel="0" value="171"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="11" channel="1" value="0"/>
+      <point type="TILT" fixture-robotic="true" fixture="11" channel="2" value="16"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="11" channel="3" value="0"/>
+      <point type="PAN" fixture-robotic="true" fixture="18" channel="0" value="171"/>
+      <point type="PAN_FINE" fixture-robotic="true" fixture="18" channel="1" value="0"/>
+      <point type="TILT" fixture-robotic="true" fixture="18" channel="2" value="16"/>
+      <point type="TILT_FINE" fixture-robotic="true" fixture="18" channel="3" value="0"/>
+   </points>
+</doc>

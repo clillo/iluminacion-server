@@ -7,6 +7,7 @@ import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.gui.controller.ControllerJFrame;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
+import cl.clillo.lighting.utils.CSVSupport;
 import cl.clillo.lighting.utils.FileUtils;
 import org.slf4j.LoggerFactory;
 
@@ -25,9 +26,10 @@ public class StandAlone {
 
     public static void main(String[] args) {
         StandAlone standAlone = new StandAlone();
+        CSVSupport csvSupport = new CSVSupport();
        // standAlone.writeFunctions("Sequence", "RGBW");
         //  standAlone.exportSequenceToCSV();
-       // standAlone.printFunctionIds();
+        csvSupport.printFunctionIds();
        // standAlone.readCSVFunctionDefinition("/Users/carlos.lillo/IdeaProjects/iluminacion-server/src/main/resources/qlc/QLCSequence.RGBW/RGBW - Sheet2.csv");
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 

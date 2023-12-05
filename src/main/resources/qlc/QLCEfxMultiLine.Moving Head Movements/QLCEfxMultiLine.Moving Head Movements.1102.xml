@@ -7,6 +7,10 @@
       <path>Moving Head Movements</path>
       <name>Bouncing Bottom</name>
    </common>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
    <fixtures>
       <fixture>
          <id>12</id>

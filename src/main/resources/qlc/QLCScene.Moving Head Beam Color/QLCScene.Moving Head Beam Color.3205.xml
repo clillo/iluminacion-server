@@ -9,16 +9,16 @@
    </common>
    <points>
       <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="90"/>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="255"/>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="22"/>
+      <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="14" type="STROBO" value="22"/>
       <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="90"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="255"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="37"/>
+      <point fixture-robotic="true" fixture="15" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="15" type="STROBO" value="37"/>
       <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="90"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="255"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="37"/>
+      <point fixture-robotic="true" fixture="16" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="16" type="STROBO" value="37"/>
       <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="90"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="255"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="22"/>
+      <point fixture-robotic="true" fixture="17" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="17" type="STROBO" value="22"/>
    </points>
 </doc>

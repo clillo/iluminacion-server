@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Gobos.2305</title>
+   <common>
+      <id>2305</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Gobos</path>
+      <name>Gobo 4</name>
+   </common>
+   <points>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="8" channel="8" value="50"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="10" channel="8" value="50"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="11" channel="8" value="50"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="18" channel="8" value="50"/>
+   </points>
+</doc>

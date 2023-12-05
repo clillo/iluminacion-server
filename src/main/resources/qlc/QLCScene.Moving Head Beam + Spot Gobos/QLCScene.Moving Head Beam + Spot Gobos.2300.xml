@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Gobos.2300</title>
+   <common>
+      <id>2300</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Gobos</path>
+      <name>Open Wide</name>
+   </common>
+   <points>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="8" channel="8" value="0"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="10" channel="8" value="0"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="11" channel="8" value="0"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="18" channel="8" value="0"/>
+   </points>
+</doc>

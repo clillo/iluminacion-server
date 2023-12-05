@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Color.2001</title>
+   <common>
+      <id>2001</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Color</path>
+      <name>All Off</name>
+   </common>
+   <points>
+      <point type="DIMMER" fixture-robotic="true" fixture="8" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="10" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="11" channel="5" value="0"/>
+      <point type="DIMMER" fixture-robotic="true" fixture="18" channel="5" value="0"/>
+   </points>
+</doc>

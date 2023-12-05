@@ -129,15 +129,18 @@ public class CSVSupport {
 
     public void printFunctionIds(){
         final Set<Integer> functionIds = new HashSet<>();
+        final HashMap<Integer, String> names = new HashMap<>();
 
-        for (Show show: ShowCollection.getInstance().getShowList())
+        for (Show show: ShowCollection.getInstance().getShowList()) {
             functionIds.add(show.getFunction().getId());
+            names.put(show.getFunction().getId(), show.getFunction().getPath()+ "."+ show.getFunction().getName());
+        }
 
         final List<Integer> finalList = new ArrayList<>(functionIds);
 
         Collections.sort(finalList);
         for (int functionId: finalList)
-            System.out.println(functionId);
+            System.out.println(functionId + "\t" + names.get(functionId));
 
     }
 

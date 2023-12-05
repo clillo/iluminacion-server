@@ -1,0 +1,36 @@
+
+<doc>
+   <title>QLCScene.RGBW.1801</title>
+   <common>
+      <id>1801</id>
+      <type>Scene</type>
+      <path>RGBW</path>
+      <name>All Red</name>
+   </common>
+   <points>
+      <point fixture="0" channel="0" value="255"/>
+      <point fixture="0" channel="1" value="255"/>
+      <point fixture="0" channel="2" value="0"/>
+      <point fixture="0" channel="3" value="0"/>
+      <point fixture="0" channel="4" value="0"/>
+      <point fixture="0" channel="5" value="0"/>
+      <point fixture="1" channel="0" value="255"/>
+      <point fixture="1" channel="1" value="255"/>
+      <point fixture="1" channel="2" value="0"/>
+      <point fixture="1" channel="3" value="0"/>
+      <point fixture="1" channel="4" value="0"/>
+      <point fixture="1" channel="5" value="0"/>
+      <point fixture="2" channel="0" value="255"/>
+      <point fixture="2" channel="1" value="255"/>
+      <point fixture="2" channel="2" value="0"/>
+      <point fixture="2" channel="3" value="0"/>
+      <point fixture="2" channel="4" value="0"/>
+      <point fixture="2" channel="5" value="0"/>
+      <point fixture="3" channel="0" value="255"/>
+      <point fixture="3" channel="1" value="255"/>
+      <point fixture="3" channel="2" value="0"/>
+      <point fixture="3" channel="3" value="0"/>
+      <point fixture="3" channel="4" value="0"/>
+      <point fixture="3" channel="5" value="0"/>
+   </points>
+</doc>

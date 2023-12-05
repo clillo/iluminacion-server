@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam + Spot Gobos Prism.2403</title>
+   <common>
+      <id>2403</id>
+      <type>Scene</type>
+      <path>Moving Head Beam + Spot Gobos Prism</path>
+      <name>Prisma Rotating Slow</name>
+   </common>
+   <points>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="8" channel="9" value="137"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="10" channel="9" value="137"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="11" channel="9" value="137"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="18" channel="9" value="137"/>
+   </points>
+</doc>
