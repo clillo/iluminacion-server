@@ -61,9 +61,9 @@ public class MidiButtonFunctionRepository {
 
         createRows( 30, "Scene", "Moving Head Spot", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
         buttonGroup = createRows( 31, "Scene", "Moving Head Spot Positions", 0, 4,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
-        createRows( 31, "EfxMultiLine", "Moving Head Spot EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Beam");
-        createRows( 31, "EfxCircle", "Moving Head Spot EFX", 6, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");
-        createRows( 31, "QLCEfxSpline", "Moving Head Spot EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");
+        createRows( 31, "EfxMultiLine", "Moving Head Spot EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Spot");
+        createRows( 31, "EfxCircle", "Moving Head Spot EFX", 6, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
+        createRows( 31, "QLCEfxSpline", "Moving Head Spot EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
 
         createRows( 32, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
         buttonGroup = createRows( 33, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
