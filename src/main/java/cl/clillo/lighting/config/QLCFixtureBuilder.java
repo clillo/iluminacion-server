@@ -19,26 +19,22 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         this.fixtureMap = new HashMap<>();
 
         QLCFixtureModel fixtureModelA = null;
-        QLCFixtureModel fixtureModelB = null;
         QLCFixtureModel fixtureModelC = null;
 
         for (QLCFixtureModel fixtureModel1: fixtureModelList) {
-            if ("MovingHead".equalsIgnoreCase(fixtureModel1.getManufacturer()))
-               fixtureModelB = fixtureModel1;
             if ("Moving Head 2".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelA = fixtureModel1;
             if ("beam+spot".equalsIgnoreCase(fixtureModel1.getModel()))
                 fixtureModelC = fixtureModel1;
         }
         fixtureList = new ArrayList<>();
-        fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelB, fixtureModelC));
+        fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelC));
         for (QLCFixture fixture: fixtureList) {
             fixtureMap.put(fixture.getId(), fixture);
         }
     }
 
     public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA,
-                                                 QLCFixtureModel fixtureModelB,
                                                  QLCFixtureModel fixtureModelC){
         final List<QLCFixture> list = new ArrayList<>();
 

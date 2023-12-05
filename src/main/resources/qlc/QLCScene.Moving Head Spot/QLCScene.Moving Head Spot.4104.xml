@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot.4104</title>
+   <common>
+      <id>4104</id>
+      <type>Scene</type>
+      <path>Moving Head Spot</path>
+      <name>Yellow</name>
+   </common>
+   <points>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="9" channel="4" value="40"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="12" channel="4" value="40"/>
+   </points>
+</doc>

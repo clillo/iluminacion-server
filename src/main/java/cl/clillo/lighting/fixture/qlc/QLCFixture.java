@@ -15,7 +15,8 @@ import java.util.Map;
 public class QLCFixture {
 
     public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE,
-        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO ;
+        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO, GOBO_CRISTAL, GOBO_SHAKE,
+        GOBO_INDEX, GOBO_NORMAL_SHAKE ;
 
         public static ChannelType of(String name){
             if ("color wheel".equalsIgnoreCase(name) || "color_wheel".equalsIgnoreCase(name))
@@ -36,6 +37,14 @@ public class QLCFixture {
                 return STROBE;
             if ("gobo wheel".equalsIgnoreCase(name) || "gobo_wheel".equalsIgnoreCase(name))
                 return ChannelType.GOBO_WHEEL;
+            if ("gobo cristal".equalsIgnoreCase(name) || "gobo_cristal".equalsIgnoreCase(name))
+                return ChannelType.GOBO_CRISTAL;
+            if ("gobo shake".equalsIgnoreCase(name) || "gobo_shake".equalsIgnoreCase(name))
+                return ChannelType.GOBO_SHAKE;
+            if ("gobo normal shake".equalsIgnoreCase(name) || "gobo_normal_shake".equalsIgnoreCase(name))
+                return ChannelType.GOBO_NORMAL_SHAKE;
+            if ("gobo index".equalsIgnoreCase(name) || "gobo_index".equalsIgnoreCase(name))
+                return ChannelType.GOBO_INDEX;
             if ("auto".equalsIgnoreCase(name))
                 return ChannelType.AUTO;
             if ("prism rotation".equalsIgnoreCase(name) || "prism_rotation".equalsIgnoreCase(name))

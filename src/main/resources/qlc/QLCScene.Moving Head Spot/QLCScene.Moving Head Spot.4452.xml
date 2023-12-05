@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot.4452</title>
+   <common>
+      <id>4452</id>
+      <type>Scene</type>
+      <path>Moving Head Spot</path>
+      <name>Strobo 2</name>
+   </common>
+   <points>
+      <point type="STROBE" fixture-robotic="true" fixture="9" channel="3" value="240"/>
+      <point type="STROBE" fixture-robotic="true" fixture="12" channel="3" value="240"/>
+   </points>
+</doc>

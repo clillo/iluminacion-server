@@ -1,11 +1,11 @@
 
 <doc>
-   <title>QLCScene.Moving Head Spot Positions.77</title>
+   <title>QLCScene.Moving Head Spot Positions.4620</title>
    <common>
-      <id>77</id>
+      <id>4620</id>
       <type>Scene</type>
       <path>Moving Head Spot Positions</path>
-      <name>Mirror Ball</name>
+      <name>Disco Ball</name>
    </common>
    <points>
       <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="155"/>

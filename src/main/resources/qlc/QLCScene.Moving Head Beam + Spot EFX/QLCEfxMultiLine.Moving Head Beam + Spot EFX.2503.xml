@@ -13,7 +13,7 @@
    </config>
    <fixtures>
       <fixture>
-         <id>14</id>
+         <id>8</id>
          <offset>0.0</offset>
          <reverse>false</reverse>
       </fixture>
@@ -23,12 +23,12 @@
          <reverse>true</reverse>
       </fixture>
       <fixture>
-         <id>16</id>
+         <id>11</id>
          <offset>180.0</offset>
          <reverse>false</reverse>
       </fixture>
       <fixture>
-         <id>17</id>
+         <id>18</id>
          <offset>270.0</offset>
          <reverse>true</reverse>
       </fixture>   </fixtures>

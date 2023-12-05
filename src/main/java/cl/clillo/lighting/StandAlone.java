@@ -26,10 +26,12 @@ public class StandAlone {
 
     public static void main(String[] args) {
         StandAlone standAlone = new StandAlone();
-        CSVSupport csvSupport = new CSVSupport();
-       // standAlone.writeFunctions("Sequence", "RGBW");
+       // CSVSupport csvSupport = new CSVSupport();
+      /*  standAlone.writeFunctions("EfxMultiLine", "Moving Head Spot EFX");
+        standAlone.writeFunctions("EfxCircle", "Moving Head Spot EFX");
+        standAlone.writeFunctions("QLCEfxSpline", "Moving Head Spot EFX");*/
         //  standAlone.exportSequenceToCSV();
-        csvSupport.printFunctionIds();
+       // csvSupport.printFunctionIds();
        // standAlone.readCSVFunctionDefinition("/Users/carlos.lillo/IdeaProjects/iluminacion-server/src/main/resources/qlc/QLCSequence.RGBW/RGBW - Sheet2.csv");
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 

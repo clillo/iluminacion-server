@@ -1,0 +1,31 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot.4001</title>
+   <common>
+      <id>4001</id>
+      <type>Scene</type>
+      <path>Moving Head Spot</path>
+      <name>All Off</name>
+   </common>
+   <points>
+      <point type="DIMMER" fixture-robotic="true" fixture="9" channel="2" value="0"/>
+      <point type="STROBE" fixture-robotic="true" fixture="9" channel="3" value="0"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="9" channel="4" value="0"/>
+      <point type="GOBO_CRISTAL" fixture-robotic="true" fixture="9" channel="5" value="0"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="9" channel="6" value="0"/>
+      <point type="GOBO_SHAKE" fixture-robotic="true" fixture="9" channel="7" value="0"/>
+      <point type="GOBO_INDEX" fixture-robotic="true" fixture="9" channel="8" value="0"/>
+      <point type="GOBO_NORMAL_SHAKE" fixture-robotic="true" fixture="9" channel="9" value="0"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="9" channel="11" value="0"/>
+
+      <point type="DIMMER" fixture-robotic="true" fixture="12" channel="2" value="0"/>
+      <point type="STROBE" fixture-robotic="true" fixture="12" channel="3" value="0"/>
+      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="12" channel="4" value="0"/>
+      <point type="GOBO_CRISTAL" fixture-robotic="true" fixture="12" channel="5" value="0"/>
+      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="12" channel="6" value="0"/>
+      <point type="GOBO_SHAKE"  fixture-robotic="true" fixture="12" channel="7" value="0"/>
+      <point type="GOBO_INDEX" fixture-robotic="true" fixture="12" channel="8" value="0"/>
+      <point type="GOBO_NORMAL_SHAKE" fixture-robotic="true" fixture="12" channel="9" value="0"/>
+      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="12" channel="11" value="0"/>
+   </points>
+</doc>
