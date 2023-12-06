@@ -1,14 +1,11 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
-import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
-import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.model.ShowCollection;
-import cl.clillo.lighting.repository.StateRepository;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -35,15 +32,14 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final JTabbedPane tabbedPane;
     private final ControllerEditPanel[] controllerEditPanels;
     private int activeIndex = -1;
-    private final JSlider masterDimmer;
-    private final Dmx dmx = Dmx.getInstance();
+
+
     private final JTextField txtActualBPM = new JTextField();
     private final JTextField txtTime = new JTextField();
     private final JTextField txtTimeX2 = new JTextField();
-    private final int[] masterDimmerChannels;
-    private final StateRepository stateRepository = StateRepository.getInstance();
 
     private final JTextField txtPos = new JTextField();
+    private final DimmerManager[] dimmers;
 
     public ControllerMainPanel() {
 
@@ -86,23 +82,11 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
             pnlListDimmer.add(slider);
         }
 
-        masterDimmer = pnlListDimmer.get(pnlListDimmer.size()-1);
+        dimmers = new DimmerManager[4];
+        for (int i=0; i<4; i++)
+            dimmers[i] = new DimmerManager(pnlListDimmer.get(pnlListDimmer.size() - i - 1), i);
 
         this.add(panelDimmers);
-
-        final List<Integer> channels = new ArrayList<>();
-        final ShowCollection showCollection = ShowCollection.getInstance();
-        final List<QLCFixture> fixtureList = showCollection.getQlcModel().getFixtureList();
-        for (QLCFixture fixture: fixtureList) {
-            int dmxMasterDimmer = fixture.getDMXChannel(QLCFixture.ChannelType.MASTER_DIMMER);
-            if (dmxMasterDimmer > 0 && "RGBW".equals(fixture.getFixtureModel().getType()))
-                channels.add(dmxMasterDimmer);
-        }
-        masterDimmerChannels = new int[channels.size()];
-        int i=0;
-        for (int dmx: channels)
-            masterDimmerChannels[i++]=dmx;
-
 
         JButton btnSave = new JButton();
         btnSave.setText("Save");
@@ -110,9 +94,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         panelDimmers.add(btnSave);
         btnSave.addActionListener(this);
-
-        masterDimmer.setValue(stateRepository.getRgbwMasterDimmer());
-        adjustMasterDimmer();
 
         txtActualBPM.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 80, 120, 30);
         txtTime.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 115, 120, 30);
@@ -131,7 +112,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
     }
-
 
     @Override
     public void onKeyPress(final KeyData keyData) {
@@ -165,13 +145,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     @Override
     public void onSlide(final KeyData keyData) {
-        double value = keyData.getSliderValue()*255.0;
-        final JSlider slider = pnlListDimmer.get(keyData.getPosX());
-        slider.setValue((int)value);
-        if (slider==masterDimmer)
-            adjustMasterDimmer();
-
-        //System.out.println(value+"\t"+(keyData.getValue())+"\t"+((int)(keyData.getValue()*255.0)));
+        for (DimmerManager dimmerManager: dimmers)
+            dimmerManager.onSlide(keyData, pnlListDimmer.get(keyData.getPosX()));
     }
 
     private void activePanel(int index){
@@ -185,24 +160,9 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         activeIndex = index;
     }
 
-    private void adjustMasterDimmer(){
-        stateRepository.setRgbwMasterDimmer(masterDimmer.getValue());
-        for (int dmxMasterDimmer: masterDimmerChannels) {
-            dmx.send(dmxMasterDimmer, masterDimmer.getValue());
-        }
-    }
-
     private void save(){
-
-   /*     final List<Point> limitMasterDimmer = new ArrayList<>();
-        for (int dmxMasterDimmer: masterDimmerChannels)
-            limitMasterDimmer.add(Point.builder()
-                            .canal(dmxMasterDimmer)
-                            .dmx(masterDimmer.getValue())
-                    .build());
-        stateRepository.setLimitMasterDimmer(limitMasterDimmer);*/
-        stateRepository.setRgbwMasterDimmer(masterDimmer.getValue());
-        stateRepository.write();
+        for (DimmerManager dimmerManager: dimmers)
+            dimmerManager.save();
     }
 
     @Override

@@ -61,6 +61,8 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
 
         sequenceSelected = null;
         panelSeq.setChangeDirectionRunOrderListener(this);
+
+        //show.setUniqueShow(showQLCEfxList);
     }
 
     public void activePanel(){

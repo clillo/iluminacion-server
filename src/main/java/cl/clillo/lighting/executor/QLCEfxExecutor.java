@@ -39,7 +39,7 @@ public class QLCEfxExecutor extends IStepExecutor {
 
         //roboticNotifiable.notify(node);
 
-      //  log.info("executing {} efx {} {} {}", show.getName(), node.getId(), node.getChannel(), node.getData());
+        log.info("executing {} efx {}", show.getName(), show.getFunction().getId());
 
         show.setNextExecutionTime(System.currentTimeMillis() + 25);
     }

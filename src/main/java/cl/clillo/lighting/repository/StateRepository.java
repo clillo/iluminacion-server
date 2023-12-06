@@ -23,13 +23,20 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class StateRepository {
 
     private static final String FILENAME = QLCReader.repoBase + "/general.state.xml";
+
     private List<Point> limitMasterDimmer = new ArrayList<>();
     private int rgbwMasterDimmer;
+    private int movingHeadSpotBeamMasterDimmer;
+    private int movingHeadSpotMasterDimmer;
+    private int movingHeadBeamMasterDimmer;
+
+    private HashMap<Integer, Integer> maxDimmerValues;
 
     private static final class InstanceHolder {
         private static StateRepository instance;
@@ -55,12 +62,51 @@ public class StateRepository {
         return limitMasterDimmer;
     }
 
-    public void setRgbwMasterDimmer(int rgbwMasterDimmer) {
-        this.rgbwMasterDimmer = rgbwMasterDimmer;
+    public void setRgbwMasterDimmer(int value, int[] masterDimmerChannels) {
+        for (int channel: masterDimmerChannels)
+            maxDimmerValues.put(channel, value);
+        this.rgbwMasterDimmer = value;
     }
 
     public int getRgbwMasterDimmer() {
         return rgbwMasterDimmer;
+    }
+
+    public int getMovingHeadSpotBeamMasterDimmer() {
+        return movingHeadSpotBeamMasterDimmer;
+    }
+
+    public int getMovingHeadSpotMasterDimmer() {
+        return movingHeadSpotMasterDimmer;
+    }
+
+    public int getMovingHeadBeamMasterDimmer() {
+        return movingHeadBeamMasterDimmer;
+    }
+
+    public void setMovingHeadBeamMasterDimmer(int value, int[] masterDimmerChannels) {
+        for (int channel: masterDimmerChannels)
+            maxDimmerValues.put(channel, value);
+        this.movingHeadBeamMasterDimmer = value;
+    }
+
+    public void setMovingHeadSpotBeamMasterDimmer(int value, int[] masterDimmerChannels) {
+        for (int channel: masterDimmerChannels)
+            maxDimmerValues.put(channel, value);
+        this.movingHeadSpotBeamMasterDimmer = value;
+    }
+
+    public void setMovingHeadSpotMasterDimmer(int value, int[] masterDimmerChannels) {
+        for (int channel: masterDimmerChannels)
+            maxDimmerValues.put(channel, value);
+        this.movingHeadSpotMasterDimmer = value;
+    }
+
+    public int getMaxValue(int channel){
+        if (maxDimmerValues.containsKey(channel))
+            return maxDimmerValues.get(channel);
+
+        return -1;
     }
 
     public void write(){
@@ -98,29 +144,29 @@ public class StateRepository {
         out.writeStartElement("rgbw");
         out.writeCharacters(String.valueOf(rgbwMasterDimmer));
         out.writeEndElement();
-     /*   for (Point point: limitMasterDimmer){
-            out.writeStartElement("point");
-            out.writeAttribute("channel",String.valueOf(point.getCanal()));
-            out.writeAttribute("value",String.valueOf(point.getDmx()));
-            out.writeEndElement();
-        }
-*/
+
+        out.writeStartElement("movingHeadSpotBeam");
+        out.writeCharacters(String.valueOf(movingHeadSpotBeamMasterDimmer));
+        out.writeEndElement();
+
+        out.writeStartElement("movingHeadSpot");
+        out.writeCharacters(String.valueOf(movingHeadSpotMasterDimmer));
+        out.writeEndElement();
+
+        out.writeStartElement("movingHeadBeam");
+        out.writeCharacters(String.valueOf(movingHeadBeamMasterDimmer));
+        out.writeEndElement();
         out.writeEndElement();
     }
 
-    public void read(){
+    private void read(){
         try {
+            maxDimmerValues = new HashMap<>();
             final Document doc = XMLParser.getDocument(new File(FILENAME));
-          /*  List<Node> nodeList = XMLParser.getNodeList(doc.getFirstChild(), "masterDimmer");
-            for (Node node: nodeList){
-                if (node.getAttributes()!=null)
-                    limitMasterDimmer.add(Point.builder()
-                                    .canal(Integer.parseInt(node.getAttributes().getNamedItem("channel").getTextContent()))
-                            .dmx(Integer.parseInt(node.getAttributes().getNamedItem("value").getTextContent()))
-                            .build());
-
-            }*/
             rgbwMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/rgbw");
+            movingHeadSpotBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpotBeam");
+            movingHeadSpotMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpot");
+            movingHeadBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadBeam");
         }  catch (ParserConfigurationException | IOException| SAXException e) {
             throw new RuntimeException(e);
         }

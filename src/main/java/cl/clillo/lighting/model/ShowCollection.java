@@ -64,11 +64,15 @@ public class ShowCollection {
 
     public int getRealDMXValue(final int dmxChannel, final int dmxValue){
         // TODO: Esto hay que hacerlo mejor
-        if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429) {
-   //         System.out.println(dmxValue + "\t" +stateRepository.getRgbwMasterDimmer()+"\t"+Math.min(dmxValue, stateRepository.getRgbwMasterDimmer()));
+     /*   if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429) {
+   //
            return Math.min(dmxValue, stateRepository.getRgbwMasterDimmer());
 
-        }
+        }*/
+        int maxValue = stateRepository.getMaxValue(dmxChannel);
+    //    System.out.println(dmxChannel+"\t"+dmxValue + "\t" +maxValue+"\t"+Math.min(dmxValue, maxValue));
+        if (maxValue>0)
+            return Math.min(dmxValue, maxValue);
 
         return dmxValue;
     }
@@ -78,7 +82,7 @@ public class ShowCollection {
                 .name(qlcEfx.getName())
                 .function(qlcEfx)
                 .build(qlcEfx.getId());
-        show.setUniqueShow(showQLCEfxList);
+
         addShow(show);
         showQLCEfxList.add(show);
     }

@@ -24,7 +24,7 @@ public class QLCButton implements ItemListener {
 
     private final int matrixX;
     private final int matrixY;
-    private boolean state;
+    private boolean executing;
     private final MidiHandler midiHandler;
     private final Show show;
     private final int groupId;
@@ -70,12 +70,11 @@ public class QLCButton implements ItemListener {
 
 
         });
-        state = false;
+        setExecuting(false);
 
         this.show = show;
         if (show != null) {
             text = show.getFunction().getName();
-          //  button.setSelected(show.isExecuting());
         }
 
 
@@ -90,12 +89,12 @@ public class QLCButton implements ItemListener {
     }
 
     public void toggle() {
-        button.setSelected(!state);
+        button.setSelected(!isExecuting());
     }
 
     @Override
     public void itemStateChanged(final ItemEvent itemEvent) {
-        this.state = itemEvent.getStateChange() == ItemEvent.SELECTED;
+        setExecuting(itemEvent.getStateChange() == ItemEvent.SELECTED);
         refresh();
     }
 
@@ -108,16 +107,16 @@ public class QLCButton implements ItemListener {
         if (show == null)
             return;
         if (buttonSelectedListener != null) {
-            if (state)
+            if (isExecuting())
                 buttonSelectedListener.selected(this);
             else
                 buttonSelectedListener.unSelected(this);
         }
        // System.out.println(show + "\tPrev: "+state);
 
-        show.setExecuting(state);
+        show.setExecuting(isExecuting());
         ShowCollection.getInstance().executeShow(show);
-        if (state) {
+        if (isExecuting()) {
             midiHandler.send(onMessage);
         } else {
             midiHandler.send(offMessage);
@@ -150,5 +149,13 @@ public class QLCButton implements ItemListener {
         if (!(obj instanceof QLCButton))
             return false;
         return getGlobalId == ((QLCButton)obj).getGlobalId;
+    }
+
+    public void setExecuting(boolean executing){
+        this.executing = executing;
+    }
+
+    public boolean isExecuting(){
+        return executing;
     }
 }
