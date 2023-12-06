@@ -7,6 +7,10 @@
       <path>Moving Head Spot EFX</path>
       <name>Bouncing Bottom</name>
    </common>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
    <fixtures>
       <fixture>
          <id>9</id>
