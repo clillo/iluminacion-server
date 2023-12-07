@@ -126,6 +126,14 @@ public class QLCEfxMultiLine extends QLCEfx{
             out.writeEndElement();
         out.writeEndElement();
 
+        out.writeStartElement("config");
+            out.writeStartElement("loops");
+            out.writeCharacters(String.valueOf(loops));
+            out.writeEndElement();
+            out.writeStartElement("type");
+             out.writeCharacters(String.valueOf(type));
+            out.writeEndElement();
+        out.writeEndElement();
         out.writeEndElement();
 
     }
