@@ -7,7 +7,7 @@
       <path>RGBW</path>
       <name>Yellow Secuence</name>
    </common>
-   <behaviour order="PINGPONG" direction="BACKWARD"/>
+   <behaviour order="PINGPONG" direction="BACKWARD" vdjType="UNIVERSAL"/>
    <steps>
       <step id="0" fadeIn="0" hold="166" fadeOut="0">
          <points>

@@ -7,6 +7,7 @@
       <path>Spiders/Multiple</path>
       <name>Spiders - Sec Slow</name>
    </common>
+   <behaviour order="LOOP" direction="FORWARD" vdjType="UNIVERSAL"/>
    <steps>
       <step id="0" fadeIn="2000" hold="500" fadeOut="2000">
          <points>

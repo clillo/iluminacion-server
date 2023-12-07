@@ -7,7 +7,7 @@
       <path>RGBW</path>
       <name>Gradient Sequence Slow</name>
    </common>
-   <behaviour order="LOOP" direction="FORWARD"/>
+   <behaviour order="LOOP" direction="FORWARD" vdjType="UNIVERSAL"/>
    <steps>
       <step id="0" fadeIn="62" hold="1" fadeOut="118">
          <points>

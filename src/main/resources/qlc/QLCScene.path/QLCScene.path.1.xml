@@ -8,15 +8,15 @@
       <name>scene: 1</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="9" channel="1" value="255"/>
-      <point fixture-robotic="true" fixture="10" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="11" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="12" channel="1" value="255"/>
-      <point fixture-robotic="true" fixture="14" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="15" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="16" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="17" channel="1" value="128"/>
-      <point fixture-robotic="true" fixture="18" channel="1" value="128"/>
+      <point fixture-robotic="true" fixture="8" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="9" channel="10" value="255"/>
+      <point fixture-robotic="true" fixture="10" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="11" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="12" channel="10" value="255"/>
+      <point fixture-robotic="true" fixture="14" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="15" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="16" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="17" channel="4" value="128"/>
+      <point fixture-robotic="true" fixture="18" channel="4" value="128"/>
    </points>
 </doc>
