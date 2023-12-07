@@ -46,10 +46,12 @@ public class QLCChaser extends QLCFunction {
         for (QLCChaserStep step : chaserSteps) {
 
             out.writeStartElement("function");
-            out.writeAttribute("id", String.valueOf(step.getCollection().getId()));
-            out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));
-            out.writeAttribute("hold", String.valueOf(step.getHold()));
-            out.writeAttribute("fadeOut", String.valueOf(step.getFadeOut()));
+            if (step.getCollection()!=null) {
+                out.writeAttribute("id", String.valueOf(step.getCollection().getId()));
+                out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));
+                out.writeAttribute("hold", String.valueOf(step.getHold()));
+                out.writeAttribute("fadeOut", String.valueOf(step.getFadeOut()));
+            }
             out.writeEndElement();
         }
         out.writeEndElement();
@@ -72,6 +74,6 @@ public class QLCChaser extends QLCFunction {
                         .build());
             }
 
-        return new QLCChaser(5000+function.getId(), function.getType(), function.getName(), function.getPath(), null, null, null, qlcFunctionList);
+        return new QLCChaser(function.getId(), function.getType(), function.getName(), function.getPath(), null, null, null, qlcFunctionList);
     }
 }

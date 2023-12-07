@@ -1,0 +1,36 @@
+
+<doc>
+   <title>QLCChaser.RGB.5269</title>
+   <common>
+      <id>5269</id>
+      <type>Chaser</type>
+      <path>RGB</path>
+      <name>Efectos Laser</name>
+   </common>
+   <functions>
+      <function id="159" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="164" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="162" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="169" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="161" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="163" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="165" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="264" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="167" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="166" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="257" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="258" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="256" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="168" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="266" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="265" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="259" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="262" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="261" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="260" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="263" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="158" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="267" fadeIn="0" hold="0" fadeOut="0"/>
+      <function id="268" fadeIn="0" hold="0" fadeOut="0"/>
+   </functions>
+</doc>

@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCChaser.Laser.5207</title>
+   <common>
+      <id>5207</id>
+      <type>Chaser</type>
+      <path>Laser</path>
+      <name>Primary colours chaser - RGBW</name>
+   </common>
+   <functions>
+      <function/>
+      <function/>
+      <function/>
+      <function/>
+   </functions>
+</doc>

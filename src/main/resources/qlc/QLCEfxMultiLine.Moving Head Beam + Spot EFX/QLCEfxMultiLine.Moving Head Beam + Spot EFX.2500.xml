@@ -7,10 +7,6 @@
       <path>Moving Head Beam + Spot EFX</path>
       <name>Bouncing Cross</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>CROSS</type>
-   </config>
    <fixtures>
       <fixture>
          <id>8</id>
@@ -32,7 +28,6 @@
          <offset>270.0</offset>
          <reverse>true</reverse>
       </fixture>
-
    </fixtures>
    <dimensions>
       <leftUp>
@@ -44,4 +39,8 @@
          <y>25704.675555555557</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
 </doc>

@@ -99,15 +99,16 @@ public class QLCPoint implements Comparable<QLCPoint>{
     public void write(final XMLStreamWriter out) throws XMLStreamException {
         out.writeStartElement("point");
 
-        if (channelType!=null && channelType!= QLCFixture.ChannelType.RAW)
-            out.writeAttribute("type",String.valueOf(channelType));
-
         if (fixture instanceof QLCRoboticFixture)
             out.writeAttribute("fixture-robotic", "true");
 
         out.writeAttribute("fixture", String.valueOf(fixture.getId()));
-        out.writeAttribute("channel", String.valueOf(channel));
-    //   out.writeAttribute("channelDMX", String.valueOf(dmxChannel));
+
+        if (channelType!=null && channelType!= QLCFixture.ChannelType.RAW)
+            out.writeAttribute("type",String.valueOf(channelType));
+        else
+            out.writeAttribute("channel", String.valueOf(channel));
+
         out.writeAttribute("value", String.valueOf(data));
 
         out.writeEndElement();
@@ -164,8 +165,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
             //System.exit(0);
 
         }
-        if (fixtureId==14 && functionId==178)
-            System.out.println("14");
+
         final String nodeTypeStr = XMLParser.getStringAttributeValue(node, "type");
         final QLCFixture.ChannelType channelType = QLCFixture.ChannelType.of(nodeTypeStr);
         return QLCPoint.buildRoboticPoint(qlcFixture,

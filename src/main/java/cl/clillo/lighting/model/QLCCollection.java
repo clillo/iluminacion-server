@@ -60,7 +60,7 @@ public class QLCCollection extends QLCFunction {
                     qlcFunctionList.add(qlcFunction);
             }
 
-        return new QLCCollection(5000+function.getId(), function.getType(), function.getName(), function.getPath(), qlcFunctionList);
+        return new QLCCollection(function.getId(), function.getType(), function.getName(), function.getPath(), qlcFunctionList);
     }
 
     public List<QLCFunction> getQlcFunctionList() {

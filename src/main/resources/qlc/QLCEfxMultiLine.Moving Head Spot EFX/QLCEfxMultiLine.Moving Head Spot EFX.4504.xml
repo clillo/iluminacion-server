@@ -1,16 +1,12 @@
 
 <doc>
-   <title>QLCEfxMultiLine.Moving Head Spot EFX.4503</title>
+   <title>QLCEfxMultiLine.Moving Head Spot EFX.4504</title>
    <common>
-      <id>4503</id>
+      <id>4504</id>
       <type>EfxMultiLine</type>
       <path>Moving Head Spot EFX</path>
-      <name>Bouncing Left</name>
+      <name>Bouncing Right</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>CROSS</type>
-   </config>
    <fixtures>
       <fixture>
          <id>9</id>
@@ -33,4 +29,8 @@
          <y>25704.675555555557</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
 </doc>

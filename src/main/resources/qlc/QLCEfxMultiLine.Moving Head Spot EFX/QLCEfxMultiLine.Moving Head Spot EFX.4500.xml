@@ -7,10 +7,6 @@
       <path>Moving Head Spot EFX</path>
       <name>Bouncing Cross</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>CROSS</type>
-   </config>
    <fixtures>
       <fixture>
          <id>9</id>
@@ -33,4 +29,8 @@
          <y>25704.675555555557</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
 </doc>

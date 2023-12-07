@@ -23,7 +23,7 @@ import java.util.Set;
 
 public class CSVSupport {
 
-    private void exportSequenceToCSVTransposed(final QLCSequence sequence){
+    private void exportSequenceToCSVTransposed(final QLCSequence sequence) {
         final List<Integer> fixtures = new ArrayList<>();
         final List<Integer> channelIds = new ArrayList<>();
         final Map<String, Integer> channels = new HashMap<>();
@@ -31,9 +31,9 @@ public class CSVSupport {
         final QLCFixtureBuilder fixtureModel = ShowCollection.getInstance().getQlcModel();
 
         int maxSteps = 0;
-        for (QLCStep step: sequence.getQlcStepWithoutFade()) {
-            if (maxSteps<step.getId()+1)
-                maxSteps = step.getId()+1;
+        for (QLCStep step : sequence.getQlcStepWithoutFade()) {
+            if (maxSteps < step.getId() + 1)
+                maxSteps = step.getId() + 1;
             for (QLCPoint point : step.getPointList()) {
                 if (!fixtures.contains(point.getFixture().getId()))
                     fixtures.add(point.getFixture().getId());
@@ -44,19 +44,19 @@ public class CSVSupport {
             }
         }
 
-        for (int fixtureId: fixtures)
+        for (int fixtureId : fixtures)
             channelDescription.put(fixtureId, fixtureModel.getFixture(fixtureId).getFixtureModel().getChannels());
 
         final Map<Integer, List<Integer>> steps = new HashMap<>();
-        for (Map.Entry<String, Integer> entry: channels.entrySet()) {
+        for (Map.Entry<String, Integer> entry : channels.entrySet()) {
             List<Integer> list = new ArrayList<>(maxSteps);
-            for (int i=0; i<maxSteps; i++)
+            for (int i = 0; i < maxSteps; i++)
                 list.add(0);
             steps.put(entry.getValue(), list);
 
         }
 
-        for (QLCStep step: sequence.getQlcStepWithoutFade()) {
+        for (QLCStep step : sequence.getQlcStepWithoutFade()) {
             for (QLCPoint point : step.getPointList()) {
                 Integer id = channels.get(point.getFixture().getId() + ";" + point.getChannel());
                 List<Integer> list = steps.get(id);
@@ -94,7 +94,7 @@ public class CSVSupport {
         output.add(sbChannels.toString());
         output.add(sbChannelDescription.toString());
 
-        for (int step=0; step<maxSteps; step++){
+        for (int step = 0; step < maxSteps; step++) {
             final StringBuilder sbValues = new StringBuilder();
             sbValues.append(step).append(';');
             for (int fixture : fixtures) {
@@ -109,15 +109,15 @@ public class CSVSupport {
             output.add(sbValues.toString());
         }
 
-        for (String str: output)
+        for (String str : output)
             System.out.println(str);
 
         System.out.println();
     }
 
 
-    private void exportSequenceToCSV(){
-        for (Show show: ShowCollection.getInstance().getShowList())
+    private void exportSequenceToCSV() {
+        for (Show show : ShowCollection.getInstance().getShowList())
             if (show.getFunction().getType().equals("Sequence") && show.getFunction().getPath().equals("RGBW")) {
                 // System.out.println(show.getFunction().getId());
                 //  if (show.getFunction().getId()==61)
@@ -127,19 +127,19 @@ public class CSVSupport {
 
     }
 
-    public void printFunctionIds(){
+    public void printFunctionIds() {
         final Set<Integer> functionIds = new HashSet<>();
         final HashMap<Integer, String> names = new HashMap<>();
 
-        for (Show show: ShowCollection.getInstance().getShowList()) {
+        for (Show show : ShowCollection.getInstance().getShowList()) {
             functionIds.add(show.getFunction().getId());
-            names.put(show.getFunction().getId(), show.getFunction().getPath()+ "."+ show.getFunction().getName());
+            names.put(show.getFunction().getId(), show.getFunction().getPath() + "." + show.getFunction().getName());
         }
 
         final List<Integer> finalList = new ArrayList<>(functionIds);
 
         Collections.sort(finalList);
-        for (int functionId: finalList)
+        for (int functionId : finalList)
             System.out.println(functionId + "\t" + names.get(functionId));
 
     }
@@ -148,16 +148,16 @@ public class CSVSupport {
         final List<Integer> fixtureIds = new ArrayList<>();
         final List<Integer> channelIds = new ArrayList<>();
         final List<List<Integer>> steps = new ArrayList<>();
-        int sequenceId=-1;
+        int sequenceId = -1;
 
         try (FileInputStream fstream = new FileInputStream(fileName);
 
              DataInputStream in = new DataInputStream(fstream);
-             BufferedReader br = new BufferedReader(new InputStreamReader(in));){
+             BufferedReader br = new BufferedReader(new InputStreamReader(in));) {
 
             String strLine;
 
-            while ((strLine = br.readLine()) != null)   {
+            while ((strLine = br.readLine()) != null) {
                 String[] content = strLine.split(",");
                 if ("ChannelDescription".equalsIgnoreCase(content[0])) {
                     continue;
@@ -167,20 +167,20 @@ public class CSVSupport {
                     continue;
                 }
                 if ("FixtureId".equalsIgnoreCase(content[0])) {
-                    for (int i=1; i<content.length; i++)
+                    for (int i = 1; i < content.length; i++)
                         try {
                             fixtureIds.add(Integer.parseInt(content[i]));
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
                     continue;
                 }
                 if ("ChannelId".equalsIgnoreCase(content[0])) {
-                    for (int i=1; i<content.length; i++)
+                    for (int i = 1; i < content.length; i++)
                         try {
                             channelIds.add(Integer.parseInt(content[i]));
-                        }catch (Exception e){
+                        } catch (Exception e) {
 
                         }
 
@@ -188,26 +188,26 @@ public class CSVSupport {
                 }
 
                 final List<Integer> values = new ArrayList<>();
-                for (int i=1; i<content.length; i++)
+                for (int i = 1; i < content.length; i++)
                     try {
                         values.add(Integer.parseInt(content[i]));
-                    }catch (Exception e){
+                    } catch (Exception e) {
 
                     }
                 steps.add(values);
             }
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
 
         final QLCFixtureBuilder fixtureModel = ShowCollection.getInstance().getQlcModel();
         final List<QLCStep> qlcStepList = new ArrayList<>();
-        int i=0;
-        for (List<Integer> step: steps){
+        int i = 0;
+        for (List<Integer> step : steps) {
             List<QLCPoint> pointList = new ArrayList<>();
-            int valueIndex=0;
-            for (int value: step){
+            int valueIndex = 0;
+            for (int value : step) {
                 pointList.add(QLCPoint.builder()
                         .fixture(fixtureModel.getFixture(fixtureIds.get(valueIndex)))
                         .data(value)
@@ -238,4 +238,17 @@ public class CSVSupport {
         // System.out.println(steps);
 
     }
+
+
+    public void rewriteFunctions() {
+
+        for (Show show : ShowCollection.getInstance().getShowList()) {
+            System.out.println(show.getFunction());
+            String dir = FileUtils.getDirectory(ShowCollection.BASE_DIR + "/" + show.getFunction().getClass().getSimpleName() + "." + show.getFunction().getPath()).getAbsolutePath();
+
+            show.getFunction().writeToConfigFile(dir);
+        }
+
+    }
+
 }

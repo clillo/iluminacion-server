@@ -7,10 +7,6 @@
       <path>Moving Head Beam + Spot EFX</path>
       <name>Bouncing Bottom</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>BOTTOM</type>
-   </config>
    <fixtures>
       <fixture>
          <id>8</id>
@@ -43,4 +39,8 @@
          <y>25704.675555555557</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>BOTTOM</type>
+   </config>
 </doc>
