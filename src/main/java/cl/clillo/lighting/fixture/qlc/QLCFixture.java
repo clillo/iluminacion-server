@@ -97,6 +97,21 @@ public class QLCFixture {
         return null;
     }
 
+    public int getDMXDimmerChannel(){
+        if (id==14 || id==15 || id==16 || id==17)
+            return getDMXChannel(ChannelType.DIMMER) - 2;
+
+        if (id==9 || id==12)
+            return getDMXChannel(ChannelType.DIMMER) - 2;
+
+        if (id==8 || id==10 || id==11 || id==18)
+            return getDMXChannel(ChannelType.DIMMER) - 2;
+
+
+        return getDMXChannel(ChannelType.DIMMER, ChannelType.MASTER_DIMMER) + 2;
+    }
+
+
     public int getDMXChannel(ChannelType channelType){
         return getChannel(channelType) + address - 1;
     }

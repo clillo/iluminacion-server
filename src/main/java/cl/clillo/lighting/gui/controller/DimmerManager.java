@@ -29,7 +29,7 @@ public class DimmerManager {
         final List<QLCFixture> fixtureList = showCollection.getQlcModel().getFixtureList();
 
         for (QLCFixture fixture : fixtureList) {
-            int dmxMasterDimmer = fixture.getDMXChannel(QLCFixture.ChannelType.MASTER_DIMMER);
+            int dmxMasterDimmer = fixture.getDMXDimmerChannel();
             if (dmxMasterDimmer > 0
                     && types[index].equals(fixture.getFixtureModel().getType())
                     && models[index].equals(fixture.getFixtureModel().getModel())) {
@@ -43,7 +43,8 @@ public class DimmerManager {
             masterDimmerChannels[i++] = dmx+2;
 
         sldrMasterDimmer.setValue(getRepositorySliderValue(index));
-        adjustMasterDimmer();
+        setRepositorySliderValue(index, sldrMasterDimmer.getValue());
+
     }
 
     public void onSlide(final KeyData keyData, final JSlider slider) {

@@ -74,7 +74,7 @@ public class ShowCollection {
 
         }*/
         int maxValue = stateRepository.getMaxValue(dmxChannel);
-    //    System.out.println(dmxChannel+"\t"+dmxValue + "\t" +maxValue+"\t"+Math.min(dmxValue, maxValue));
+   //    System.out.println(dmxChannel+"\t"+dmxValue + "\t" +maxValue+"\t"+Math.min(dmxValue, maxValue));
         if (maxValue>0)
             return Math.min(dmxValue, maxValue);
 

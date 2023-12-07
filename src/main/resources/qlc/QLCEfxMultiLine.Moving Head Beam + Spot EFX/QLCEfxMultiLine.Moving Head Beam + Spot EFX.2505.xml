@@ -1,10 +1,10 @@
 
 <doc>
-   <title>QLCEfxMultiLine.Moving Head Beam EFX.3505</title>
+   <title>QLCEfxMultiLine.Moving Head Beam + Spot EFX.2505</title>
    <common>
-      <id>3505</id>
+      <id>2505</id>
       <type>EfxMultiLine</type>
-      <path>Moving Head Beam EFX</path>
+      <path>Moving Head Beam + Spot EFX</path>
       <name>Bouncing Top</name>
    </common>
    <config>
@@ -13,34 +13,34 @@
    </config>
    <fixtures>
       <fixture>
-         <id>14</id>
+         <id>8</id>
          <offset>0.0</offset>
          <reverse>false</reverse>
       </fixture>
       <fixture>
-         <id>15</id>
+         <id>10</id>
          <offset>90.0</offset>
          <reverse>true</reverse>
       </fixture>
       <fixture>
-         <id>16</id>
+         <id>11</id>
          <offset>180.0</offset>
          <reverse>false</reverse>
       </fixture>
       <fixture>
-         <id>17</id>
+         <id>18</id>
          <offset>270.0</offset>
          <reverse>true</reverse>
       </fixture>
    </fixtures>
    <dimensions>
       <leftUp>
-         <x>35328.0</x>
-         <y>1966.08</y>
+         <x>34792.988764044945</x>
+         <y>728.1777777777778</y>
       </leftUp>
       <rightDown>
-         <x>55936.0</x>
-         <y>25704.675555555557</y>
+         <x>56331.50561797753</x>
+         <y>21189.97333333333</y>
       </rightDown>
    </dimensions>
 </doc>

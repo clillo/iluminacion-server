@@ -1,11 +1,11 @@
 
 <doc>
-   <title>QLCEfxCircle.Moving Head Beam + Spot EFX.2511</title>
+   <title>QLCEfxCircle.Moving Head Beam + Spot EFX.2510</title>
    <common>
-      <id>2511</id>
+      <id>2510</id>
       <type>EfxCircle</type>
       <path>Moving Head Beam + Spot EFX</path>
-      <name>Circle 2</name>
+      <name>Circle 1</name>
    </common>
    <fixtures>
       <fixture>
@@ -16,7 +16,7 @@
       <fixture>
          <id>10</id>
          <offset>90.0</offset>
-         <reverse>false</reverse>
+         <reverse>true</reverse>
       </fixture>
       <fixture>
          <id>11</id>
@@ -26,13 +26,13 @@
       <fixture>
          <id>18</id>
          <offset>270.0</offset>
-         <reverse>false</reverse>
+         <reverse>true</reverse>
       </fixture>
    </fixtures>
    <dimensions>
-      <centerX>51776.0</centerX>
-      <centerY>16820.906666666666</centerY>
-      <width>8520.0</width>
-      <height>13190.0</height>
+      <centerX>45952.0</centerX>
+      <centerY>14563.0</centerY>
+      <width>5940.0</width>
+      <height>9340.0</height>
    </dimensions>
 </doc>

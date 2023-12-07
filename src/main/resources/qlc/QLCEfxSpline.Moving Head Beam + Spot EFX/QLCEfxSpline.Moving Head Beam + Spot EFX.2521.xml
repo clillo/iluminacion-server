@@ -1,12 +1,16 @@
 
 <doc>
-   <title>QLCEfxSpline.Moving Head Beam + Spot EFX.2520</title>
+   <title>QLCEfxSpline.Moving Head Beam + Spot EFX.2521</title>
    <common>
-      <id>2520</id>
+      <id>2521</id>
       <type>QLCEfxSpline</type>
       <path>Moving Head Beam + Spot EFX</path>
-      <name>Eight</name>
+      <name>Eight 1</name>
    </common>
+   <config>
+      <loops>20</loops>
+      <type>BOTTOM</type>
+   </config>
    <fixtures>
       <fixture>
          <id>8</id>
@@ -16,7 +20,7 @@
       <fixture>
          <id>10</id>
          <offset>90.0</offset>
-         <reverse>true</reverse>
+         <reverse>false</reverse>
       </fixture>
       <fixture>
          <id>11</id>
@@ -26,37 +30,37 @@
       <fixture>
          <id>18</id>
          <offset>270.0</offset>
-         <reverse>true</reverse>
+         <reverse>false</reverse>
       </fixture>
    </fixtures>
    <realPoints>
       <point>
-         <x>49984.0</x>
-         <y>23301.68888888889</y>
+         <x>42478.74157303371</x>
+         <y>18641.35111111111</y>
       </point>
       <point>
          <x>44800.0</x>
          <y>25413.404444444444</y>
       </point>
       <point>
-         <x>38464.0</x>
-         <y>18422.897777777776</y>
+         <x>46666.786516853936</x>
+         <y>19442.346666666668</y>
       </point>
       <point>
-         <x>51712.0</x>
-         <y>6917.688888888889</y>
+         <x>54950.831460674155</x>
+         <y>5679.786666666667</y>
       </point>
       <point>
          <x>45056.0</x>
          <y>1456.3555555555556</y>
       </point>
       <point>
-         <x>37440.0</x>
-         <y>7208.96</y>
+         <x>34424.808988764045</x>
+         <y>6626.417777777778</y>
       </point>
       <point>
-         <x>51328.0</x>
-         <y>18204.444444444445</y>
+         <x>38612.85393258427</x>
+         <y>13398.471111111112</y>
       </point>
    </realPoints>
 </doc>

@@ -7,6 +7,10 @@
       <path>Moving Head Beam EFX</path>
       <name>Eight 1</name>
    </common>
+   <config>
+      <loops>20</loops>
+      <type>BOTTOM</type>
+   </config>
    <fixtures>
       <fixture>
          <id>14</id>
@@ -31,16 +35,16 @@
    </fixtures>
    <realPoints>
       <point>
-         <x>48829.84269662921</x>
-         <y>23520.14222222222</y>
+         <x>41788.40449438202</x>
+         <y>24612.408888888887</y>
       </point>
       <point>
-         <x>44800.0</x>
-         <y>25413.404444444444</y>
+         <x>45194.06741573034</x>
+         <y>30219.37777777778</y>
       </point>
       <point>
-         <x>38464.0</x>
-         <y>18422.897777777776</y>
+         <x>50762.786516853936</x>
+         <y>18786.986666666668</y>
       </point>
       <point>
          <x>51712.0</x>
@@ -55,8 +59,8 @@
          <y>7208.96</y>
       </point>
       <point>
-         <x>51328.0</x>
-         <y>18204.444444444445</y>
+         <x>38290.69662921348</x>
+         <y>18277.262222222223</y>
       </point>
    </realPoints>
 </doc>
