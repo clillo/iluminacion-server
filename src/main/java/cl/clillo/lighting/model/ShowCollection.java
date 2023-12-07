@@ -21,12 +21,16 @@ public class ShowCollection {
     public static final String BASE_DIR = "src/main/resources/qlc";
     private final List<Show> showList = new ArrayList<>();
     private final List<Show> showQLCEfxList = new ArrayList<>();
-    private final QLCModel qlcModelOriginal;
-    private final QLCFixtureBuilder qlcModel;
+    private QLCModel qlcModelOriginal;
+    private QLCFixtureBuilder qlcModel;
     private final StateRepository stateRepository = StateRepository.getInstance();
-    private final OS2LScheduler os2LScheduler;
+    private OS2LScheduler os2LScheduler;
 
     private ShowCollection(){
+
+    }
+
+    private void init(){
         System.out.println("Building original Model");
         qlcModelOriginal = new QLCModel();
         System.out.println("Building new Model");
@@ -40,7 +44,6 @@ public class ShowCollection {
         System.out.println("Starting OS2L scheduler");
         os2LScheduler = new OS2LScheduler(showList);
         os2LScheduler.start();
-
     }
 
     private static final class InstanceHolder {
@@ -49,6 +52,7 @@ public class ShowCollection {
         public static ShowCollection getInstance() {
             if (instance==null){
                 instance = new ShowCollection();
+                instance.init();
             }
             return instance;
         }

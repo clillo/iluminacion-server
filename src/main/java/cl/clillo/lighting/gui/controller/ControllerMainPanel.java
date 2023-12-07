@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,7 +34,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final ControllerEditPanel[] controllerEditPanels;
     private int activeIndex = -1;
 
-
     private final JTextField txtActualBPM = new JTextField();
     private final JTextField txtTime = new JTextField();
     private final JTextField txtTimeX2 = new JTextField();
@@ -45,8 +45,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         pnlListDimmer = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
-        tabbedPane = new JTabbedPane(JTabbedPane.RIGHT);
-        tabbedPane.setBounds(0, 0, WIDTH1 + 250, HEIGHT1-300);
+        tabbedPane = new JTabbedPane();
+        tabbedPane.setBounds(0, 0, WIDTH1 + 280, HEIGHT1-280);
         cleanMatrix();
         add(tabbedPane);
 
@@ -70,12 +70,12 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         panelDimmers.setOpaque(true);
      //   panelDimmers.setBackground(Color.BLACK);
-        panelDimmers.setBounds(0, HEIGHT1-300, WIDTH1 + 200, 400);
+        panelDimmers.setBounds(0, HEIGHT1-290, WIDTH1 + 200, 400);
 
         for (int i=0; i<9; i++) {
             final JSlider slider = new JSlider();
             slider.setOrientation(JSlider.VERTICAL);
-            slider.setBounds(i * 110, 10, 100, 380);
+            slider.setBounds(i * 60, 10, 100, 380);
             slider.setMinimum(0);
             slider.setMaximum(255);
             panelDimmers.add(slider);
@@ -110,6 +110,11 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(txtTimeX2);
         panelDimmers.add(txtPos);
 
+        ControllerCollections controllerCollections = new ControllerCollections();
+        controllerCollections.setBounds(600, 10, 800, 400);
+        controllerCollections.setOpaque(true);
+        controllerCollections.setBackground(Color.blue);
+        panelDimmers.add(controllerCollections);
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
     }
 

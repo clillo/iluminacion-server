@@ -2,7 +2,7 @@ package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.model.QLCDirection;
-import cl.clillo.lighting.model.QLCEfxScene;
+import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
@@ -48,8 +48,8 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     public ControllerSeqPanel(final String fixtureGroupName) {
         this.fixtureGroupName = fixtureGroupName;
         setLayout(null);
-        final Label lblTittle = new Label("<html><p style='display: block; text-align: center;font-family:\"Tahoma, sans-serif;\" font-size:30px;'>"+fixtureGroupName+"</p></html>");
-        lblTittle.setBounds(10, 10, 300, 40);
+        final Label lblTittle = new Label(fixtureGroupName);
+        lblTittle.setBounds(10, 10, 60, 40);
         this.add(lblTittle);
 
         loopForward.setBounds(10,80,140,30);
@@ -130,8 +130,10 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         if (e.getSource().equals(btnSave))
             save();
 
-        if (e.getSource().equals(btnEdit))
-            edit();
+        if (e.getSource().equals(btnEdit)) {
+            editScene();
+            editEFX();
+        }
 
     }
 
@@ -144,18 +146,27 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         sequence.writeToConfigFile(dir);
     }
 
-    private void edit(){
+    private void editScene(){
         if (showSelected==null ||  !(showSelected.getFunction() instanceof QLCScene))
             return;
 
         final QLCScene scene = showSelected.getFunction();
         if (scene.getQlcEfxScene()==null)
             return;
-        final String dir = ShowCollection.getInstance().getDirectory(scene);
-        //scene.writeToConfigFile(dir);
+
         EFXMConfigureJFrame efxmConfigureJFrame = new EFXMConfigureJFrame(showSelected);
         efxmConfigureJFrame.start();
     }
+
+
+    private void editEFX(){
+        if (showSelected==null ||  !(showSelected.getFunction() instanceof QLCEfx))
+            return;
+
+        EFXMConfigureJFrame efxmConfigureJFrame = new EFXMConfigureJFrame(showSelected);
+        efxmConfigureJFrame.start();
+    }
+
 
     @Override
     public void stateChanged(ChangeEvent e) {

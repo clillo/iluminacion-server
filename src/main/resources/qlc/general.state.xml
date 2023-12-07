@@ -2,9 +2,9 @@
 <doc>
    <title>StateRepository</title>
    <masterDimmer>
-      <rgbw>106</rgbw>
-      <movingHeadSpotBeam>134</movingHeadSpotBeam>
-      <movingHeadSpot>172</movingHeadSpot>
-      <movingHeadBeam>182</movingHeadBeam>
+      <rgbw>124</rgbw>
+      <movingHeadSpotBeam>100</movingHeadSpotBeam>
+      <movingHeadSpot>96</movingHeadSpot>
+      <movingHeadBeam>100</movingHeadBeam>
    </masterDimmer>
 </doc>

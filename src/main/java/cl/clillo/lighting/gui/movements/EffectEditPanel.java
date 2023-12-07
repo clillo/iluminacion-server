@@ -188,15 +188,12 @@ public abstract class EffectEditPanel extends JPanel implements MouseMotionListe
 
     protected void save(){
         System.out.println("saving efx: " +qlcEf.getName());
-       // qlcEf.writeToConfigFile();
+        String dir = ShowCollection.getInstance().getDirectory(qlcEf);
+        qlcEf.writeToConfigFile(dir);
     }
 
     protected void run() {
         ShowCollection.getInstance().toggleShow(show);
-    /*    if (show.isExecuting())
-            btnRun.setText("Stop");
-        else
-            btnRun.setText("Start");*/
     }
 
     protected void close() {
