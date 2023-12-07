@@ -1,0 +1,42 @@
+
+<doc>
+   <title>QLCEfxMultiLine.Moving Head Beam EFX.3504</title>
+   <common>
+      <id>3504</id>
+      <type>EfxMultiLine</type>
+      <path>Moving Head Beam EFX</path>
+      <name>Bouncing Right</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>14</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>15</id>
+         <offset>90.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>16</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>17</id>
+         <offset>270.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <leftUp>
+         <x>35328.0</x>
+         <y>1966.08</y>
+      </leftUp>
+      <rightDown>
+         <x>54122.426966292136</x>
+         <y>25340.586666666666</y>
+      </rightDown>
+   </dimensions>
+</doc>

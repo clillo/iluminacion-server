@@ -1,0 +1,38 @@
+
+<doc>
+   <title>QLCEfxCircle.Moving Head Beam EFX.3512</title>
+   <common>
+      <id>3512</id>
+      <type>EfxCircle</type>
+      <path>Moving Head Beam EFX</path>
+      <name>Circle 3</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>14</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>15</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>16</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>17</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <centerX>42800.89887640449</centerX>
+      <centerY>14709.191111111111</centerY>
+      <width>8520.0</width>
+      <height>13190.0</height>
+   </dimensions>
+</doc>
