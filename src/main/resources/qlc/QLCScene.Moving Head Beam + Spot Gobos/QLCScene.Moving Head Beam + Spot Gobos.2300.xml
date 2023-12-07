@@ -8,9 +8,9 @@
       <name>Open Wide</name>
    </common>
    <points>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="8" channel="8" value="0"/>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="10" channel="8" value="0"/>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="11" channel="8" value="0"/>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="18" channel="8" value="0"/>
+      <point fixture-robotic="true" fixture="8" type="GOBO_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="10" type="GOBO_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="11" type="GOBO_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="18" type="GOBO_WHEEL" value="0"/>
    </points>
 </doc>

@@ -8,13 +8,13 @@
       <name>Down</name>
    </common>
    <points>
-      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="172"/>
-      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="112"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="140"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="96"/>
-      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="169"/>
-      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="113"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="8"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="18"/>
+      <point fixture-robotic="true" fixture="9" type="PAN" value="172"/>
+      <point fixture-robotic="true" fixture="9" type="TILT" value="112"/>
+      <point fixture-robotic="true" fixture="9" type="PAN_FINE" value="140"/>
+      <point fixture-robotic="true" fixture="9" type="TILT_FINE" value="96"/>
+      <point fixture-robotic="true" fixture="12" type="PAN" value="169"/>
+      <point fixture-robotic="true" fixture="12" type="TILT" value="113"/>
+      <point fixture-robotic="true" fixture="12" type="PAN_FINE" value="8"/>
+      <point fixture-robotic="true" fixture="12" type="TILT_FINE" value="18"/>
    </points>
 </doc>

@@ -8,23 +8,23 @@
       <name>All On</name>
    </common>
    <points>
-      <point type="DIMMER" fixture-robotic="true" fixture="9" channel="2" value="255"/>
-      <point type="STROBE" fixture-robotic="true" fixture="9" channel="3" value="0"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="9" channel="4" value="0"/>
-      <point type="GOBO_CRISTAL" fixture-robotic="true" fixture="9" channel="5" value="0"/>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="9" channel="6" value="0"/>
-      <point type="GOBO_SHAKE" fixture-robotic="true" fixture="9" channel="7" value="0"/>
-      <point type="GOBO_INDEX" fixture-robotic="true" fixture="9" channel="8" value="0"/>
-      <point type="GOBO_NORMAL_SHAKE" fixture-robotic="true" fixture="9" channel="9" value="0"/>
-      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="9" channel="11" value="0"/>
-      <point type="DIMMER" fixture-robotic="true" fixture="12" channel="2" value="255"/>
-      <point type="STROBE" fixture-robotic="true" fixture="12" channel="3" value="0"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="12" channel="4" value="0"/>
-      <point type="GOBO_CRISTAL" fixture-robotic="true" fixture="12" channel="5" value="0"/>
-      <point type="GOBO_WHEEL" fixture-robotic="true" fixture="12" channel="6" value="0"/>
-      <point type="GOBO_SHAKE" fixture-robotic="true" fixture="12" channel="7" value="0"/>
-      <point type="GOBO_INDEX" fixture-robotic="true" fixture="12" channel="8" value="0"/>
-      <point type="GOBO_NORMAL_SHAKE" fixture-robotic="true" fixture="12" channel="9" value="0"/>
-      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="12" channel="11" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="9" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="COLOR_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_NORMAL_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="12" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="COLOR_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_NORMAL_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="PRISM_ROTATION" value="0"/>
    </points>
 </doc>

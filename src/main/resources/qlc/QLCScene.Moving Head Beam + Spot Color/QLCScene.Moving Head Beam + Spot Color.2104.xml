@@ -8,9 +8,9 @@
       <name>Blue</name>
    </common>
    <points>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="8" channel="7" value="100"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="10" channel="7" value="100"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="11" channel="7" value="100"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="18" channel="7" value="100"/>
+      <point fixture-robotic="true" fixture="8" type="COLOR_WHEEL" value="100"/>
+      <point fixture-robotic="true" fixture="10" type="COLOR_WHEEL" value="100"/>
+      <point fixture-robotic="true" fixture="11" type="COLOR_WHEEL" value="100"/>
+      <point fixture-robotic="true" fixture="18" type="COLOR_WHEEL" value="100"/>
    </points>
 </doc>

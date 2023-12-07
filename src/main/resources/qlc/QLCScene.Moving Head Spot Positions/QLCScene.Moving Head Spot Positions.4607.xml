@@ -8,13 +8,13 @@
       <name>Cross Three</name>
    </common>
    <points>
-      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="193"/>
-      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="68"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="132"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="64"/>
-      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="154"/>
-      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="66"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="212"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="254"/>
+      <point fixture-robotic="true" fixture="9" type="PAN" value="193"/>
+      <point fixture-robotic="true" fixture="9" type="TILT" value="68"/>
+      <point fixture-robotic="true" fixture="9" type="PAN_FINE" value="132"/>
+      <point fixture-robotic="true" fixture="9" type="TILT_FINE" value="64"/>
+      <point fixture-robotic="true" fixture="12" type="PAN" value="154"/>
+      <point fixture-robotic="true" fixture="12" type="TILT" value="66"/>
+      <point fixture-robotic="true" fixture="12" type="PAN_FINE" value="212"/>
+      <point fixture-robotic="true" fixture="12" type="TILT_FINE" value="254"/>
    </points>
 </doc>

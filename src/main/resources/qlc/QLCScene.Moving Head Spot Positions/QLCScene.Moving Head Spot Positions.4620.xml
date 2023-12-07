@@ -8,13 +8,13 @@
       <name>Disco Ball</name>
    </common>
    <points>
-      <point type="PAN" fixture-robotic="true" fixture="9" channel="0" value="155"/>
-      <point type="TILT" fixture-robotic="true" fixture="9" channel="1" value="24"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="9" channel="13" value="140"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="9" channel="14" value="16"/>
-      <point type="PAN" fixture-robotic="true" fixture="12" channel="0" value="169"/>
-      <point type="TILT" fixture-robotic="true" fixture="12" channel="1" value="22"/>
-      <point type="PAN_FINE" fixture-robotic="true" fixture="12" channel="13" value="20"/>
-      <point type="TILT_FINE" fixture-robotic="true" fixture="12" channel="14" value="218"/>
+      <point fixture-robotic="true" fixture="9" type="PAN" value="155"/>
+      <point fixture-robotic="true" fixture="9" type="TILT" value="24"/>
+      <point fixture-robotic="true" fixture="9" type="PAN_FINE" value="140"/>
+      <point fixture-robotic="true" fixture="9" type="TILT_FINE" value="16"/>
+      <point fixture-robotic="true" fixture="12" type="PAN" value="169"/>
+      <point fixture-robotic="true" fixture="12" type="TILT" value="22"/>
+      <point fixture-robotic="true" fixture="12" type="PAN_FINE" value="20"/>
+      <point fixture-robotic="true" fixture="12" type="TILT_FINE" value="218"/>
    </points>
 </doc>
