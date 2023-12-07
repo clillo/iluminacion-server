@@ -8,7 +8,7 @@
       <name>Rotating Gobos Off</name>
    </common>
    <points>
-      <point type="GOBO_INDEX" fixture-robotic="true" fixture="9" channel="8" value="0"/>
-      <point type="GOBO_INDEX" fixture-robotic="true" fixture="12" channel="8" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="0"/>
    </points>
 </doc>

@@ -8,7 +8,7 @@
       <name>Rotating Color</name>
    </common>
    <points>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="9" channel="4" value="167"/>
-      <point type="COLOR_WHEEL" fixture-robotic="true" fixture="12" channel="4" value="167"/>
+      <point fixture-robotic="true" fixture="9" type="COLOR_WHEEL" value="167"/>
+      <point fixture-robotic="true" fixture="12" type="COLOR_WHEEL" value="167"/>
    </points>
 </doc>

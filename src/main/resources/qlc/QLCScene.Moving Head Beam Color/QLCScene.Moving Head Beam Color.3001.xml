@@ -8,13 +8,13 @@
       <name>All Off</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
       <point fixture-robotic="true" fixture="14" type="STROBE" value="0"/>
-      <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
       <point fixture-robotic="true" fixture="15" type="STROBE" value="0"/>
-      <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
       <point fixture-robotic="true" fixture="16" type="STROBE" value="0"/>
-      <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
       <point fixture-robotic="true" fixture="17" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
    </points>
 </doc>

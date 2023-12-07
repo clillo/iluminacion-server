@@ -8,9 +8,9 @@
       <name>Pink</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="110"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="110"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="110"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="110"/>
+      <point fixture-robotic="true" fixture="14" type="COLOR_WHEEL" value="110"/>
+      <point fixture-robotic="true" fixture="15" type="COLOR_WHEEL" value="110"/>
+      <point fixture-robotic="true" fixture="16" type="COLOR_WHEEL" value="110"/>
+      <point fixture-robotic="true" fixture="17" type="COLOR_WHEEL" value="110"/>
    </points>
 </doc>

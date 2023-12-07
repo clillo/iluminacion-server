@@ -8,7 +8,7 @@
       <name>Prisma Rotation</name>
    </common>
    <points>
-      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="9" channel="11" value="161"/>
-      <point type="PRISM_ROTATION" fixture-robotic="true" fixture="12" channel="11" value="161"/>
+      <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="161"/>
+      <point fixture-robotic="true" fixture="12" type="PRISM_ROTATION" value="161"/>
    </points>
 </doc>

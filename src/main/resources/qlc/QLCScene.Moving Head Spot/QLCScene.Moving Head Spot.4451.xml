@@ -8,7 +8,7 @@
       <name>Strobo 1</name>
    </common>
    <points>
-      <point type="STROBE" fixture-robotic="true" fixture="9" channel="3" value="118"/>
-      <point type="STROBE" fixture-robotic="true" fixture="12" channel="3" value="118"/>
+      <point fixture-robotic="true" fixture="9" type="STROBE" value="118"/>
+      <point fixture-robotic="true" fixture="12" type="STROBE" value="118"/>
    </points>
 </doc>
