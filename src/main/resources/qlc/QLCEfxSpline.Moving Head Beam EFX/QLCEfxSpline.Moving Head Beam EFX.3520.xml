@@ -7,10 +7,6 @@
       <path>Moving Head Beam EFX</path>
       <name>Eight</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>BOTTOM</type>
-   </config>
    <fixtures>
       <fixture>
          <id>14</id>
