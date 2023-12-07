@@ -8,17 +8,17 @@
       <name>White Strobo 2</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="14" type="COLOR WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="14" type="STROBE" value="48"/>
+      <point fixture-robotic="true" fixture="14" type="COLOR_WHEEL" value="0"/>
       <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="14" type="STROBO" value="48"/>
-      <point fixture-robotic="true" fixture="15" type="COLOR WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="15" type="STROBE" value="50"/>
+      <point fixture-robotic="true" fixture="15" type="COLOR_WHEEL" value="0"/>
       <point fixture-robotic="true" fixture="15" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="15" type="STROBO" value="50"/>
-      <point fixture-robotic="true" fixture="16" type="COLOR WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="16" type="STROBE" value="52"/>
+      <point fixture-robotic="true" fixture="16" type="COLOR_WHEEL" value="0"/>
       <point fixture-robotic="true" fixture="16" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="16" type="STROBO" value="52"/>
-      <point fixture-robotic="true" fixture="17" type="COLOR WHEEL" value="0"/>
+      <point fixture-robotic="true" fixture="17" type="STROBE" value="39"/>
+      <point fixture-robotic="true" fixture="17" type="COLOR_WHEEL" value="0"/>
       <point fixture-robotic="true" fixture="17" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="17" type="STROBO" value="39"/>
    </points>
 </doc>
