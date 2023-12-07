@@ -39,4 +39,8 @@
          <y>25340.586666666666</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>RIGHT</type>
+   </config>
 </doc>
