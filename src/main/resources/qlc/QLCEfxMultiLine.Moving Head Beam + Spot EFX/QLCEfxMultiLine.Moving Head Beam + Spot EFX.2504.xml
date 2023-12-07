@@ -7,10 +7,6 @@
       <path>Moving Head Beam + Spot EFX</path>
       <name>Bouncing Right</name>
    </common>
-   <config>
-      <loops>20</loops>
-      <type>RIGHT</type>
-   </config>
    <fixtures>
       <fixture>
          <id>8</id>
@@ -43,4 +39,8 @@
          <y>25413.404444444444</y>
       </rightDown>
    </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>RIGHT</type>
+   </config>
 </doc>
