@@ -14,11 +14,13 @@ public class QLCEfxExecutor extends IStepExecutor {
     private final Show show;
     private final QLCEfx efx;
     private RoboticNotifiable roboticNotifiable;
+    private int speed;
 
     public QLCEfxExecutor(final Show show) {
         super(show, List.of());
         this.show = show;
         this.efx = show.getFunction();
+        speed = 25;
     }
 
     public void setRoboticNotifiable(final RoboticNotifiable roboticNotifiable) {
@@ -41,6 +43,11 @@ public class QLCEfxExecutor extends IStepExecutor {
 
         log.info("executing {} efx {}", show.getName(), show.getFunction().getId());
 
-        show.setNextExecutionTime(System.currentTimeMillis() + 25);
+        show.setNextExecutionTime(System.currentTimeMillis() + speed);
+    }
+
+
+    public void setSpeed(int speed) {
+        this.speed = speed;
     }
 }

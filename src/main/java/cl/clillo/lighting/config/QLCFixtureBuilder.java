@@ -46,7 +46,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         QLCFixtureModel fixtureRGBW = new QLCFixtureModel("Generic", "Generic", "RGBW", new String[]{
                 "master dimmer", "red", "green", "blue", "white", "strobe", "color change"}, false);
         QLCFixtureModel movingHeadBeam = new QLCFixtureModel("Wild Pro", "Moving Head Spot", "Moving Head", new String[]{
-                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "nc", "nc2", "color wheel", "dimmer", "strobo", "macro"}, false);
+                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "nc", "nc2", "color wheel", "dimmer", "strobe", "macro"}, false);
 
         //010 - 033	[13]	Laser	Generic
         list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser

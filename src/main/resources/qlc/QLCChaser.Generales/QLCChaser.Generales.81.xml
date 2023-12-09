@@ -8,12 +8,6 @@
       <name>Secuencia 3</name>
    </common>
    <functions>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
       <function id="1" fadeIn="0" hold="0" fadeOut="0"/>
-      <function/>
    </functions>
 </doc>

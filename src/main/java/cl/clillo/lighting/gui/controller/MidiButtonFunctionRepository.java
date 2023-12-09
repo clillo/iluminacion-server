@@ -53,8 +53,11 @@ public class MidiButtonFunctionRepository {
         createRows( 10, "EfxCircle", "Moving Head Beam + Spot EFX", 6, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");
         createRows( 10, "QLCEfxSpline", "Moving Head Beam + Spot EFX", 0, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");
 
-        createRows( 20, "Scene", "Moving Head Beam Color", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
-        buttonGroup = createRows( 21, "Scene", "Moving Head Beam Positions", 0, 4,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        buttonGroup = createRows( 19, "Scene", "Moving Head Beam On/Off", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        createRows( 19, "Sequence", "Moving Head Beam Sequence", 6, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,buttonGroup, "MHead Beam");
+        createRows( 19, "Scene", "Moving Head Beam Strobe", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        createRows( 20, "Scene", "Moving Head Beam Color", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        buttonGroup = createRows( 21, "Scene", "Moving Head Beam Positions", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
         createRows( 21, "EfxMultiLine", "Moving Head Beam EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Beam");
         createRows( 21, "EfxCircle", "Moving Head Beam EFX", 6, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");
         createRows( 21, "QLCEfxSpline", "Moving Head Beam EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");

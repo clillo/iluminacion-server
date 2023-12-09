@@ -7,5 +7,10 @@
       <path>Sec 3</path>
       <name>sec mv white</name>
    </common>
-   <functions/>
+   <functions>
+      <function id="3000" path="Moving Head Beam On/Off" name="All On"/>
+      <function id="3202" path="Moving Head Beam Color" name="Green/Red"/>
+      <function id="3210" path="Moving Head Beam Strobe" name="Strobe Off"/>
+      <function id="3520" path="Moving Head Beam EFX" name="Eight"/>
+   </functions>
 </doc>

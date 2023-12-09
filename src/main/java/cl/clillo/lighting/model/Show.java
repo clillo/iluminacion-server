@@ -40,6 +40,7 @@ public class Show implements Comparable<Show> {
         this.function = function;
         this.uniqueShow = uniqueShow;
         dimmerChannels = function.getDimmerChannels();
+
     }
 
     public Show() {
@@ -117,6 +118,8 @@ public class Show implements Comparable<Show> {
 
     public void setStepExecutor(IStepExecutor stepExecutor) {
         this.stepExecutor = stepExecutor;
+        if (function!=null && function instanceof QLCEfxSpline)
+            ((QLCEfxExecutor)stepExecutor).setSpeed(100);
     }
 
     public void setFirstTimeExecution(boolean firstTimeExecution) {

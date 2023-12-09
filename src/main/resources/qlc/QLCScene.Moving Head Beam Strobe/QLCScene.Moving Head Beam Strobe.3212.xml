@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Strobe.3212</title>
+   <common>
+      <id>3212</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Strobe</path>
+      <name>Strobo Medium</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" type="STROBE" value="40"/>
+      <point fixture-robotic="true" fixture="15" type="STROBE" value="40"/>
+      <point fixture-robotic="true" fixture="16" type="STROBE" value="40"/>
+      <point fixture-robotic="true" fixture="17" type="STROBE" value="40"/>
+   </points>
+</doc>
