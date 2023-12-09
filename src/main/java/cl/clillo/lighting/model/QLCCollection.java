@@ -66,4 +66,9 @@ public class QLCCollection extends QLCFunction {
     public List<QLCFunction> getQlcFunctionList() {
         return qlcFunctionList;
     }
+
+    public void addShow(Show show){
+        qlcFunctionList.add(show.getFunction());
+
+    }
 }

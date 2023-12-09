@@ -1,0 +1,13 @@
+
+<doc>
+   <title>QLCCollection.Sec2.142</title>
+   <common>
+      <id>142</id>
+      <type>Collection</type>
+      <path>Sec2</path>
+      <name>Spiders Rainbow Oscilante</name>
+   </common>
+   <functions>
+      <function id="143" path="Spiders/Multiple" name="Spiders - Sec Slow"/>
+   </functions>
+</doc>

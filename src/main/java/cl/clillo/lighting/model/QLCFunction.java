@@ -250,5 +250,9 @@ public class QLCFunction extends QLCElement{
 
     }
 
+    public void save(){
+        final String dir = ShowCollection.getInstance().getDirectory(this);
+        this.writeToConfigFile(dir);
+    }
 
 }

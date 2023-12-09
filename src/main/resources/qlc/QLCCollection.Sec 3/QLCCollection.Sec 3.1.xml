@@ -1,0 +1,15 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.1</title>
+   <common>
+      <id>1</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving Head Circle Pink</name>
+   </common>
+   <functions>
+      <function id="3000" path="Moving Head Beam Color" name="All On"/>
+      <function id="3511" path="Moving Head Beam EFX" name="Circle 2"/>
+      <function id="3105" path="Moving Head Beam Color" name="Pink"/>
+   </functions>
+</doc>

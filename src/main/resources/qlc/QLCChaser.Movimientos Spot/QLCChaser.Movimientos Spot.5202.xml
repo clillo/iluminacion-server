@@ -7,13 +7,5 @@
       <path>Movimientos Spot</path>
       <name>UpDown Multi</name>
    </common>
-   <functions>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-   </functions>
+   <functions/>
 </doc>

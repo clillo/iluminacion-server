@@ -1,0 +1,13 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.83</title>
+   <common>
+      <id>83</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>MVCXX</name>
+   </common>
+   <functions>
+      <function id="92" path="Derby" name="Pink Rotating"/>
+   </functions>
+</doc>

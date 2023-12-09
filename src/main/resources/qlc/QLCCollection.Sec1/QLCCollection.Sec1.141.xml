@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCCollection.Sec1.141</title>
+   <common>
+      <id>141</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Blue 1</name>
+   </common>
+   <functions>
+      <function id="97" path="Spider" name="Blue"/>
+      <function id="128" path="Derby" name="Blue Rotating"/>
+   </functions>
+</doc>

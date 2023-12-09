@@ -7,10 +7,5 @@
       <path>Laser</path>
       <name>Primary colours chaser - RGBW</name>
    </common>
-   <functions>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-   </functions>
+   <functions/>
 </doc>

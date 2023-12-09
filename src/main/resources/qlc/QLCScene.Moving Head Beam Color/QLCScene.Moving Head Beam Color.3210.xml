@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Moving Head Beam Color.3210</title>
+   <common>
+      <id>3210</id>
+      <type>Scene</type>
+      <path>Moving Head Beam Color</path>
+      <name>Strobe Off</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="15" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="16" type="STROBE" value="0"/>
+      <point fixture-robotic="true" fixture="17" type="STROBE" value="0"/>
+   </points>
+</doc>

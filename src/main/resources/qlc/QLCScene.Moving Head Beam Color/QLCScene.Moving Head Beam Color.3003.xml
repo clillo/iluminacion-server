@@ -1,16 +1,16 @@
 
 <doc>
-   <title>QLCScene.Moving Head Beam Color.3000</title>
+   <title>QLCScene.Moving Head Beam Color.3003</title>
    <common>
-      <id>3000</id>
+      <id>3003</id>
       <type>Scene</type>
       <path>Moving Head Beam Color</path>
-      <name>All On</name>
+      <name>Odd</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="15" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
       <point fixture-robotic="true" fixture="16" type="DIMMER" value="255"/>
-      <point fixture-robotic="true" fixture="17" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
    </points>
 </doc>

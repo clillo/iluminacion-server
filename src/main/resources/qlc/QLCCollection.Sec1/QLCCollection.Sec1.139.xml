@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCCollection.Sec1.139</title>
+   <common>
+      <id>139</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Red Green 3</name>
+   </common>
+   <functions>
+      <function id="105" path="Spider Positions" name="Spider - Center"/>
+      <function id="115" path="Spider" name="Spider- Dimmer Rojo"/>
+      <function id="294" path="Derby" name="Red/GreenRotating"/>
+      <function id="116" path="Spider" name="Green"/>
+   </functions>
+</doc>

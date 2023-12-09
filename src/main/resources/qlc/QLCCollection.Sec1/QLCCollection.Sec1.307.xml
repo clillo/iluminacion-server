@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCCollection.Sec1.307</title>
+   <common>
+      <id>307</id>
+      <type>Collection</type>
+      <path>Sec1</path>
+      <name>Spoting Red Extreme</name>
+   </common>
+   <functions>
+      <function id="127" path="Derby" name="Red Rotating"/>
+      <function id="115" path="Spider" name="Spider- Dimmer Rojo"/>
+   </functions>
+</doc>

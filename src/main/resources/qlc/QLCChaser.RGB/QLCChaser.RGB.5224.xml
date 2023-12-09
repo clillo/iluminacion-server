@@ -7,22 +7,5 @@
       <path>RGB</path>
       <name>16 Colours chaser - RGBW</name>
    </common>
-   <functions>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-      <function/>
-   </functions>
+   <functions/>
 </doc>
