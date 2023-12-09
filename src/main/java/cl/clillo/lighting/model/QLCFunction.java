@@ -221,7 +221,7 @@ public class QLCFunction extends QLCElement{
                 return new QLCScene(this.id, this.type, this.name, this.path, this.qlcPointList);
 
             if ("Collection".equalsIgnoreCase(type))
-                return new QLCCollection(this.id, this.type, this.name, this.path, this.qlcFunctionList);
+                return new QLCCollection(this.id, this.type, this.name, this.path, List.of());
 
             if ("Sequence".equalsIgnoreCase(type))
                 return new QLCSequence(this.id, this.type, this.name, this.path, this.direction, this.runOrder,

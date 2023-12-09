@@ -24,7 +24,7 @@ public class FunctionListWrapper {
             return function.getId()+"\t"+function.getName();
 
         if (function instanceof QLCCollection)
-            return function.getId()+"\t"+function.getName()+"\t"+((QLCCollection)function).getQlcFunctionList().size();
+            return function.getId()+"\t"+function.getName()+"\t"+((QLCCollection)function).getShowList().size();
 
         if (function instanceof QLCSequence)
             return function.getId()+"\t"+function.getName()+"\t("+((QLCSequence)function).getQlcStepList().size()+")";

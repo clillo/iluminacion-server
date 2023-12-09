@@ -7,9 +7,10 @@
       <path>Sec 3</path>
       <name>Moving Head Circle Pink</name>
    </common>
-   <functions>
-      <function id="3000" path="Moving Head Beam On/Off" name="All On"/>
-      <function id="3511" path="Moving Head Beam EFX" name="Circle 2"/>
-      <function id="3105" path="Moving Head Beam Color" name="Pink"/>
-   </functions>
+   <shows>
+      <show id="3000" name="All On"/>
+      <show id="3105" name="Pink"/>
+      <show id="3210" name="Strobe Off"/>
+      <show id="3510" name="Circle 1"/>
+   </shows>
 </doc>

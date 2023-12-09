@@ -13,62 +13,60 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @ToString
 public class QLCCollection extends QLCFunction {
 
-    private final List<QLCFunction> qlcFunctionList;
+    private final List<Show> showList;
 
-    public QLCCollection(final int id, final String type, final String name, final String path, final List<QLCFunction> qlcFunctionList) {
+    public QLCCollection(final int id, final String type, final String name, final String path, final List<Show> showList) {
         super(id, type, name, path);
-        this.qlcFunctionList = qlcFunctionList;
+        this.showList = showList;
     }
 
     public String toSmallString() {
         StringBuilder sb = new StringBuilder(super.toSmallString());
 
-        for (QLCFunction scene : qlcFunctionList)
+        for (Show scene : showList)
             sb.append('{').append(scene.getId()).append('}');
         return sb.toString();
     }
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
-        out.writeStartElement("functions");
-        for (QLCFunction qlcFunction : qlcFunctionList) {
+        out.writeStartElement("shows");
+        for (Show show : showList) {
 
-            out.writeStartElement("function");
-            out.writeAttribute("id", String.valueOf(qlcFunction.getId()));
-            out.writeAttribute("path", String.valueOf(qlcFunction.getPath()));
-            out.writeAttribute("name", String.valueOf(qlcFunction.getName()));
+            out.writeStartElement("show");
+            out.writeAttribute("id", String.valueOf(show.getId()));
+            out.writeAttribute("name", String.valueOf(show.getName()));
             out.writeEndElement();
         }
         out.writeEndElement();
     }
 
-    public static QLCCollection read(final Map<Integer, QLCFunction> functionMap, final File file) throws ParserConfigurationException, IOException, SAXException {
+    public static QLCCollection read(final ShowCollection collection, final File file) throws ParserConfigurationException, IOException, SAXException {
         final Document doc = XMLParser.getDocument(file);
         final QLCElement function = QLCElement.read(doc);
-        final List<QLCFunction> qlcFunctionList = new ArrayList<>();
+        final List<Show> shows = new ArrayList<>();
 
-        for(Node node: XMLParser.getNodeList(doc.getFirstChild(), "functions"))
+        for(Node node: XMLParser.getNodeList(doc.getFirstChild(), "shows"))
             if (node.hasAttributes()) {
-                final int fixtureId = XMLParser.getIntAttributeValue(node, "id");
-                QLCFunction qlcFunction = functionMap.get(fixtureId);
-                if (qlcFunction!=null)
-                    qlcFunctionList.add(qlcFunction);
+                final int showId = XMLParser.getIntAttributeValue(node, "id");
+                final Show show = collection.getShow(showId);
+                if (show!=null)
+                    shows.add(show);
             }
 
-        return new QLCCollection(function.getId(), function.getType(), function.getName(), function.getPath(), qlcFunctionList);
+        return new QLCCollection(function.getId(), function.getType(), function.getName(), function.getPath(), shows);
     }
 
-    public List<QLCFunction> getQlcFunctionList() {
-        return qlcFunctionList;
+    public List<Show> getShowList() {
+        return showList;
     }
 
     public void addShow(Show show){
-        qlcFunctionList.add(show.getFunction());
+        showList.add(show);
 
     }
 }

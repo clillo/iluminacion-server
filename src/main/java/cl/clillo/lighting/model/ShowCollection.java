@@ -1,8 +1,9 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.executor.DefaultScheduler;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
+import cl.clillo.lighting.executor.DefaultScheduler;
 import cl.clillo.lighting.executor.OS2LScheduler;
+import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
@@ -139,6 +140,8 @@ public class ShowCollection {
 
     public void executeShow(final Show show){
         boolean isExecuting = show.isExecuting();
+        if (!isExecuting && show.getStepExecutor().isExecuting())
+            show.getStepExecutor().stop();
 
         for (Show show1: show.getUniqueShow())
             show1.setExecuting(false);
@@ -194,7 +197,7 @@ public class ShowCollection {
             final Map<Integer, QLCFunction> functionMap = getFunctionMap();
             for (File f: files){
                 if (f.getName().startsWith("QLCCollection"))
-                    addQLCFunction(QLCCollection.read(functionMap, f));
+                    addQLCFunction(QLCCollection.read(this, f));
                 if (f.getName().startsWith("QLCChaser"))
                     addQLCFunction(QLCChaser.read(functionMap, f));
             }

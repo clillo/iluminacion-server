@@ -30,7 +30,9 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     private final List<JSlider> pnlListDimmer;
     private final MidiHandler midiHandler;
-    private final JTabbedPane tabbedPane;
+    private final JTabbedPane midiPages;
+    private final JTabbedPane chaserPages;
+
     private final ControllerEditPanel[] controllerEditPanels;
     private int activeIndex = -1;
 
@@ -45,10 +47,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         pnlListDimmer = new ArrayList<>();
         midiHandler = MidiHandler.getInstance(this);
-        tabbedPane = new JTabbedPane();
-        tabbedPane.setBounds(0, 0, WIDTH1 + 280, HEIGHT1-280);
+        midiPages = new JTabbedPane();
+        midiPages.setBounds(0, 0, WIDTH1 + 280, HEIGHT1-280);
         cleanMatrix();
-        add(tabbedPane);
+        add(midiPages);
 
         controllerEditPanels = new ControllerEditPanel[8];
         String []names = {"AUTO", "Laser", "Derby", "RGBW", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam"};
@@ -57,10 +59,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
             controllerEditPanels[i] = editPanel;
 
             editPanel.setBounds(0, 0, WIDTH1 + 140, HEIGHT1-400);
-            tabbedPane.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
+            midiPages.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
         }
 
-        tabbedPane.addChangeListener(this);
+        midiPages.addChangeListener(this);
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
         selectPanel(7);
@@ -110,11 +112,12 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(txtTimeX2);
         panelDimmers.add(txtPos);
 
-        ControllerCollections controllerCollections = new ControllerCollections();
-        controllerCollections.setBounds(600, 10, 800, 400);
-        controllerCollections.setOpaque(true);
-        controllerCollections.setBackground(Color.blue);
-        panelDimmers.add(controllerCollections);
+        chaserPages = new JTabbedPane();
+        chaserPages.setBounds(580, 0, 850, 400);
+        chaserPages.addTab("Chaser Executor",new ControllerChaser());
+        chaserPages.addTab("Collections Editor",new ControllerCollections());
+        panelDimmers.add(chaserPages);
+
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
     }
 
@@ -125,7 +128,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         }
 
         if (keyData.getMidiInputType() == KeyData.MidiInputType.MATRIX_BUTTON){
-            ControllerEditPanel panel = (ControllerEditPanel) tabbedPane.getSelectedComponent();
+            ControllerEditPanel panel = (ControllerEditPanel) midiPages.getSelectedComponent();
             panel.toggleButton(keyData.getMatrixX(), keyData.getMatrixY());
         }
     }
@@ -138,9 +141,9 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     private void selectPanel(int index){
         activePanel(7-index);
-        tabbedPane.removeChangeListener(this);
-        tabbedPane.setSelectedIndex(7-index);
-        tabbedPane.addChangeListener(this);
+        midiPages.removeChangeListener(this);
+        midiPages.setSelectedIndex(7-index);
+        midiPages.addChangeListener(this);
     }
 
     @Override
@@ -188,15 +191,15 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     @Override
     public void pos(int pos) {
-        int beat = Math.abs((int)(pos % 16.0) + 1 );
+        int beat = Math.abs((int)(pos % 16.0) + 1);
         txtPos.setText(pos + " - " + beat);
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        tabbedPane.removeChangeListener(this);
-        activePanel(tabbedPane.getSelectedIndex());
-        tabbedPane.addChangeListener(this);
+        midiPages.removeChangeListener(this);
+        activePanel(midiPages.getSelectedIndex());
+        midiPages.addChangeListener(this);
     }
 
 }

@@ -21,6 +21,7 @@ public abstract class IStepExecutor {
     private final int totalSteps;
     protected QLCDirection direction;
     protected QLCRunOrder runOrder;
+    protected boolean executing;
 
     protected IStepExecutor(final Show show, final List<QLCStep> stepList) {
         this.show = show;
@@ -100,5 +101,13 @@ public abstract class IStepExecutor {
         if (actualStep<0){
             actualStep=totalSteps;
         }
+    }
+
+    public boolean isExecuting() {
+        return executing;
+    }
+
+    public void stop(){
+
     }
 }

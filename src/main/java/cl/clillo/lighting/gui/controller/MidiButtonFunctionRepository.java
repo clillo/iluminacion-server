@@ -3,6 +3,7 @@ package cl.clillo.lighting.gui.controller;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
+import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,10 +23,12 @@ public class MidiButtonFunctionRepository {
         return InstanceHolder.instance;
     }
 
+    private final Map<Integer, QLCButton> buttonByShow;
     private final Map<String, PageConfig> buttonGroupMapByCategory;
 
     MidiButtonFunctionRepository(){
         buttonGroupMapByCategory = new HashMap<>();
+        buttonByShow = new HashMap<>();
 
         createRows( 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Laser");
 
@@ -86,6 +89,9 @@ public class MidiButtonFunctionRepository {
 
                 if (blackoutScene == null)
                     log.debug("Panel: " + panel.getKey() + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
+
+                for (QLCButton button: buttonGroup.getButtonList())
+                    buttonByShow.put(button.getShow().getId(), button);
             }
         }
     }
@@ -155,5 +161,9 @@ public class MidiButtonFunctionRepository {
             return new PageConfig(List.of());
 
         return buttonGroupMapByCategory.get(category);
+    }
+
+    public QLCButton getButton(int showId){
+        return buttonByShow.get(showId);
     }
 }

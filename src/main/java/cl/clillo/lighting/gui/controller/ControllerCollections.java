@@ -1,6 +1,5 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.model.QLCCollection;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.Show;
@@ -15,29 +14,30 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.Color;
 import java.util.Vector;
 import static javax.swing.JOptionPane.showMessageDialog;
-@Log4j2
+
 public class ControllerCollections extends JPanel implements ChangeListener, ListSelectionListener {
 
-    private JList<ShowListWrapper> lstCollection;
-    private JList<FunctionListWrapper> lstScenes;
-    private JList<FunctionListWrapper> lstActualRunningShows;
+    private final JList<ShowListWrapper> lstCollection;
+    private final JList<ShowListWrapper> lstScenes;
+    private final JList<FunctionListWrapper> lstActualRunningShows;
 
     public ControllerCollections() {
         setLayout(null);
+        this.setOpaque(true);
+        this.setBackground(Color.blue);
 
-        Vector<ShowListWrapper> collectionList = new Vector<>();
+        final Vector<ShowListWrapper> collectionList = new Vector<>();
         for (Show show: ShowCollection.getInstance().getShowList())
             if (show.getFunction() instanceof QLCCollection) {
                 collectionList.add(new ShowListWrapper(show));
             }
 
-        lstCollection = buildList(collectionList, 10, 10, 200, 350);
-        lstScenes = buildList(new Vector<>(), 230, 10, 200, 350);
-        lstActualRunningShows = buildList(new Vector<>(), 460, 10, 200, 350);
+        lstCollection = buildList(collectionList, 10, 10, 200, 330);
+        lstScenes = buildList(new Vector<>(), 230, 10, 200, 330);
+        lstActualRunningShows = buildList(new Vector<>(), 460, 10, 200, 330);
 
         final JButton btnRunningShows = new JButton("Capture");
         btnRunningShows.setBounds(670, 10, 120, 20);
@@ -107,9 +107,9 @@ public class ControllerCollections extends JPanel implements ChangeListener, Lis
 
         ShowListWrapper showSelected = lstCollection.getSelectedValue();
 
-        Vector<FunctionListWrapper> functionList = new Vector<>();
-        for (QLCFunction function: ((QLCCollection) showSelected.getShow().getFunction()).getQlcFunctionList())
-            functionList.add(new FunctionListWrapper(function));
+        Vector<ShowListWrapper> functionList = new Vector<>();
+        for (Show show: ((QLCCollection) showSelected.getShow().getFunction()).getShowList())
+            functionList.add(new ShowListWrapper(show));
 
         lstScenes.setListData(functionList);
     }

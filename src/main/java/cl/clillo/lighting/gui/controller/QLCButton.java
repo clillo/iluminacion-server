@@ -98,10 +98,6 @@ public class QLCButton implements ItemListener {
         refresh();
     }
 
-    private void internalRefresh(){
-
-    }
-
     public void refresh() {
         setText();
         if (show == null)
@@ -153,6 +149,11 @@ public class QLCButton implements ItemListener {
 
     public void setExecuting(boolean executing){
         this.executing = executing;
+
+        button.removeItemListener(this);
+        this.getButton().setSelected(executing);
+        button.addItemListener(this);
+
     }
 
     public boolean isExecuting(){

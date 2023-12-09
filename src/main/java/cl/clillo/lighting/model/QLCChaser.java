@@ -76,4 +76,8 @@ public class QLCChaser extends QLCFunction {
 
         return new QLCChaser(function.getId(), function.getType(), function.getName(), function.getPath(), null, null, null, qlcFunctionList);
     }
+
+    public List<QLCChaserStep> getChaserSteps() {
+        return chaserSteps;
+    }
 }
