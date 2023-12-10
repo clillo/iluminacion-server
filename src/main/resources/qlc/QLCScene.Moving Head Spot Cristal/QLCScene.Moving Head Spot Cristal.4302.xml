@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot Cristal.4302</title>
+   <common>
+      <id>4302</id>
+      <type>Scene</type>
+      <path>Moving Head Spot Cristal</path>
+      <name>Cristal 1</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="10"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="10"/>
+   </points>
+</doc>

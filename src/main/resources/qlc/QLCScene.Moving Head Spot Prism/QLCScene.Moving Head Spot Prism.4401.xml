@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot Prism.4401</title>
+   <common>
+      <id>4401</id>
+      <type>Scene</type>
+      <path>Moving Head Spot Prism</path>
+      <name>Prism On</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="10"/>
+      <point fixture-robotic="true" fixture="12" type="PRISM_ROTATION" value="10"/>
+   </points>
+</doc>

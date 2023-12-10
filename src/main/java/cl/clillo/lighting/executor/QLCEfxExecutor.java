@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import java.util.List;
 
 @Log4j2
-public class QLCEfxExecutor extends IStepExecutor {
+public class QLCEfxExecutor extends AbstractExecutor {
 
     private final Show show;
     private final QLCEfx efx;

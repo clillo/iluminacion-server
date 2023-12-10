@@ -1,10 +1,10 @@
 
 <doc>
-   <title>QLCScene.Moving Head Spot.4351</title>
+   <title>QLCScene.Moving Head Spot Gobos.4351</title>
    <common>
       <id>4351</id>
       <type>Scene</type>
-      <path>Moving Head Spot</path>
+      <path>Moving Head Spot Gobos</path>
       <name>Rotating Gobos</name>
    </common>
    <points>

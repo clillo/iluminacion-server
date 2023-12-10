@@ -7,7 +7,5 @@
       <path>Sec2</path>
       <name>Spiders Rainbow Oscilante</name>
    </common>
-   <functions>
-      <function id="143" path="Spiders/Multiple" name="Spiders - Sec Slow"/>
-   </functions>
+   <shows/>
 </doc>

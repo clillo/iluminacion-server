@@ -38,7 +38,7 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
                 String a = String.valueOf((long)(time / 16.0));
               //  System.out.println(myBeat);
                 if (time<1000 && time>100) {
-                    Thread.sleep((long)(time ));
+                    Thread.sleep(time);
                     //this.beatD2();
                 }
 

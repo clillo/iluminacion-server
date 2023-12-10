@@ -1,7 +1,7 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
-import cl.clillo.lighting.executor.IStepExecutor;
+import cl.clillo.lighting.executor.AbstractExecutor;
 import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.executor.QLCEfxExecutor;
 import cl.clillo.lighting.executor.QLCSceneExecutor;
@@ -12,31 +12,24 @@ import java.util.List;
 
 public class Show implements Comparable<Show> {
 
-    private static final long NEXT_EXECUTION_DEFAULT = 3000;
-
     private int id;
     private String name;
     private long nextExecutionTime;
     private boolean executing;
-    private IStepExecutor stepExecutor;
-    private int pasoActual;
+    private AbstractExecutor stepExecutor;
     private boolean firstTimeExecution;
     private QLCFunction function;
     private List<Show> uniqueShow;
     private int[] dimmerChannels;
     private IOS2LEventListener.Type vdjType;
 
-    public Show(int id, String name,  boolean executing, IStepExecutor stepExecutor,
-                int pasoActual, boolean firstTimeExecution, QLCFunction function,
-                List<Show> uniqueShow) {
+    public Show(final int id, final String name, final QLCFunction function, final List<Show> uniqueShow) {
         this.id = id;
         this.name = name;
 
-        this.executing = executing;
-        this.stepExecutor = stepExecutor;
-        this.pasoActual = pasoActual;
+        this.executing = false;
 
-        this.firstTimeExecution = firstTimeExecution;
+        this.firstTimeExecution = true;
         this.function = function;
         this.uniqueShow = uniqueShow;
         dimmerChannels = function.getDimmerChannels();
@@ -74,12 +67,8 @@ public class Show implements Comparable<Show> {
         return this.executing;
     }
 
-    public IStepExecutor getStepExecutor() {
+    public AbstractExecutor getStepExecutor() {
         return this.stepExecutor;
-    }
-
-    public int getPasoActual() {
-        return this.pasoActual;
     }
 
     public boolean isFirstTimeExecution() {
@@ -103,20 +92,22 @@ public class Show implements Comparable<Show> {
     }
 
     public void setExecuting(boolean executing) {
+        boolean isAlreadyExecuting = this.executing;
         this.executing = executing;
         this.nextExecutionTime = -1;
-        if (executing)
+        if (executing && !isAlreadyExecuting)
             setFirstTimeExecution(true);
     }
 
     public void setExecuteOneTime(boolean executing) {
+        boolean isAlreadyExecuting = this.executing;
         this.executing = executing;
         this.nextExecutionTime = -1;
-        if (executing)
+        if (executing && !isAlreadyExecuting)
             setFirstTimeExecution(true);
     }
 
-    public void setStepExecutor(IStepExecutor stepExecutor) {
+    public void setStepExecutor(AbstractExecutor stepExecutor) {
         this.stepExecutor = stepExecutor;
         if (function!=null && function instanceof QLCEfxSpline)
             ((QLCEfxExecutor)stepExecutor).setSpeed(100);
@@ -159,12 +150,17 @@ public class Show implements Comparable<Show> {
         return this.id - o.getId();
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Show))
+            return false;
+        return ((Show)obj).getId() == this.id;
+    }
+
     public static class ShowBuilder {
         private static int idCount = 1;
 
         private String name;
-        private boolean executing = false;
-        private boolean firstTimeExecution = true;
         private QLCFunction function;
 
         ShowBuilder() {
@@ -175,27 +171,13 @@ public class Show implements Comparable<Show> {
             return this;
         }
 
-        public ShowBuilder executing(boolean executing) {
-            this.executing = executing;
-            return this;
-        }
-
-        public ShowBuilder firstTimeExecution(boolean firstTimeExecution) {
-            this.firstTimeExecution = firstTimeExecution;
-            return this;
-        }
-
         public ShowBuilder function(QLCFunction function) {
             this.function = function;
             return this;
         }
 
         public Show build(int id) {
-            IStepExecutor executor = null;
-
-            Show show = new Show(id == -1 ? idCount++ : id, this.name,  this.executing, executor,
-                    0,
-                    this.firstTimeExecution, this.function, new ArrayList<>());
+            Show show = new Show(id == -1 ? idCount++ : id, this.name, this.function, new ArrayList<>());
 
             if (function instanceof QLCSequence) {
                 show.setStepExecutor(new QLCSequenceExecutor(show));

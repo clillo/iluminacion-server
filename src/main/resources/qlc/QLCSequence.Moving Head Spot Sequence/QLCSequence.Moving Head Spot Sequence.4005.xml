@@ -1,0 +1,37 @@
+
+<doc>
+   <title>QLCSequence.Moving Head Spot Sequence.4005</title>
+   <common>
+      <id>4005</id>
+      <type>Sequence</type>
+      <path>Moving Head Spot Sequence</path>
+      <name>Seq 1</name>
+   </common>
+   <behaviour order="PINGPONG" direction="BACKWARD" vdjType="BEAT_X_1"/>
+   <steps>
+      <step id="0" fadeIn="0" hold="2000" fadeOut="0">
+         <points>
+            <point fixture-robotic="true" fixture="9" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_NORMAL_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_NORMAL_SHAKE" value="0"/>
+         </points>
+      </step>
+      <step id="1" fadeIn="0" hold="2000" fadeOut="0">
+         <points>
+            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>
+            <point fixture-robotic="true" fixture="9" type="GOBO_NORMAL_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_SHAKE" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="0"/>
+            <point fixture-robotic="true" fixture="12" type="GOBO_NORMAL_SHAKE" value="0"/>
+         </points>
+      </step>
+   </steps>
+</doc>

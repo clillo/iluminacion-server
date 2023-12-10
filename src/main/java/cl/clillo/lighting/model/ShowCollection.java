@@ -3,7 +3,6 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.executor.DefaultScheduler;
 import cl.clillo.lighting.executor.OS2LScheduler;
-import cl.clillo.lighting.executor.QLCCollectionExecutor;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
@@ -21,7 +20,6 @@ public class ShowCollection {
 
     public static final String BASE_DIR = "src/main/resources/qlc";
     private final List<Show> showList = new ArrayList<>();
-    private final List<Show> showQLCEfxList = new ArrayList<>();
     private QLCModel qlcModelOriginal;
     private QLCFixtureBuilder qlcModel;
     private final StateRepository stateRepository = StateRepository.getInstance();
@@ -68,12 +66,6 @@ public class ShowCollection {
     }
 
     public int getRealDMXValue(final int dmxChannel, final int dmxValue){
-        // TODO: Esto hay que hacerlo mejor
-     /*   if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429) {
-   //
-           return Math.min(dmxValue, stateRepository.getRgbwMasterDimmer());
-
-        }*/
         int maxValue = stateRepository.getMaxValue(dmxChannel);
    //    System.out.println(dmxChannel+"\t"+dmxValue + "\t" +maxValue+"\t"+Math.min(dmxValue, maxValue));
         if (maxValue>0)
@@ -89,7 +81,6 @@ public class ShowCollection {
                 .build(qlcEfx.getId());
 
         addShow(show);
-        showQLCEfxList.add(show);
     }
 
     private void addQLCFunction(final QLCFunction chaser){
@@ -246,9 +237,9 @@ public class ShowCollection {
         return functionMap;
     }
 
-    public Show getShow(final int sceneId){
+    public Show getShow(final int showId){
         for (Show show: showList)
-            if (show.getId()==sceneId)
+            if (show.getId()==showId)
                 return show;
         return null;
     }

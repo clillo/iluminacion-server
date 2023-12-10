@@ -9,7 +9,7 @@ import lombok.extern.log4j.Log4j2;
 import java.util.List;
 
 @Log4j2
-public class QLCSceneExecutor extends IStepExecutor {
+public class QLCSceneExecutor extends AbstractExecutor {
 
     private final Dmx dmx = Dmx.getInstance();
     private final Show show;

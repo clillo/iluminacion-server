@@ -1,11 +1,11 @@
 
 <doc>
-   <title>QLCScene.Moving Head Spot.4452</title>
+   <title>QLCScene.Moving Head Spot Strobe.4452</title>
    <common>
       <id>4452</id>
       <type>Scene</type>
-      <path>Moving Head Spot</path>
-      <name>Strobo 2</name>
+      <path>Moving Head Spot Strobe</path>
+      <name>Strobe Fast</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="9" type="STROBE" value="240"/>

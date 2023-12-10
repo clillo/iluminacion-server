@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot On.Off.4002</title>
+   <common>
+      <id>4002</id>
+      <type>Scene</type>
+      <path>Moving Head Spot On/Off</path>
+      <name>Inner</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_NORMAL_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_SHAKE" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_NORMAL_SHAKE" value="0"/>
+   </points>
+</doc>

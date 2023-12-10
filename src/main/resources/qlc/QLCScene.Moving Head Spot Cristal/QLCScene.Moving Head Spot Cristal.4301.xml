@@ -1,10 +1,10 @@
 
 <doc>
-   <title>QLCScene.Moving Head Spot.4301</title>
+   <title>QLCScene.Moving Head Spot Cristal.4301</title>
    <common>
       <id>4301</id>
       <type>Scene</type>
-      <path>Moving Head Spot</path>
+      <path>Moving Head Spot Cristal</path>
       <name>Rotating Cristal</name>
    </common>
    <points>

@@ -11,21 +11,19 @@ import cl.clillo.lighting.model.Show;
 import java.security.SecureRandom;
 import java.util.List;
 
-public abstract class IStepExecutor {
+public abstract class AbstractExecutor {
 
     private final SecureRandom random = new SecureRandom();
     private final Dmx dmx = Dmx.getInstance();
     protected final Show show;
-    private final List<QLCStep> stepList;
     protected int actualStep;
     private final int totalSteps;
     protected QLCDirection direction;
     protected QLCRunOrder runOrder;
     protected boolean executing;
 
-    protected IStepExecutor(final Show show, final List<QLCStep> stepList) {
+    protected AbstractExecutor(final Show show, final List<QLCStep> stepList) {
         this.show = show;
-        this.stepList = stepList;
         totalSteps = stepList.size()-1;
         direction = QLCDirection.FORWARD;
         runOrder = QLCRunOrder.LOOP;
@@ -35,6 +33,7 @@ public abstract class IStepExecutor {
         if (show.isFirstTimeExecution()){
             actualStep = 0;
             show.setFirstTimeExecution(false);
+            start();
         }
     }
 
@@ -42,6 +41,7 @@ public abstract class IStepExecutor {
         if (show.isFirstTimeExecution()){
             actualStep = 0;
             show.setFirstTimeExecution(false);
+            start();
         }
     }
 
@@ -108,6 +108,10 @@ public abstract class IStepExecutor {
     }
 
     public void stop(){
+
+    }
+
+    public void start(){
 
     }
 }

@@ -1,11 +1,11 @@
 
 <doc>
-   <title>QLCScene.Moving Head Spot.4400</title>
+   <title>QLCScene.Moving Head Spot Prism.4400</title>
    <common>
       <id>4400</id>
       <type>Scene</type>
-      <path>Moving Head Spot</path>
-      <name>Prisma Off</name>
+      <path>Moving Head Spot Prism</path>
+      <name>Prism Off</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="0"/>

@@ -6,7 +6,7 @@ import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
 
 @Log4j2
-public class OS2LStepExecutor extends IStepExecutor{
+public class OS2LStepExecutor extends AbstractExecutor {
 
     private final QLCSequence sequence;
 

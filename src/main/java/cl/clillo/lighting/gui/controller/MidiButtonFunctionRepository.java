@@ -50,28 +50,34 @@ public class MidiButtonFunctionRepository {
 
         createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
         createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
-        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 0, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
-        buttonGroup = createRows( 10, "Scene", "Moving Head Beam + Spot Positions", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+        buttonGroup = createRows( 10, "Scene", "Moving Head Beam + Spot Positions", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
         createRows( 10, "EfxMultiLine", "Moving Head Beam + Spot EFX", 0, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Spot + Beam");
         createRows( 10, "EfxCircle", "Moving Head Beam + Spot EFX", 6, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");
         createRows( 10, "QLCEfxSpline", "Moving Head Beam + Spot EFX", 0, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");
 
-        buttonGroup = createRows( 19, "Scene", "Moving Head Beam On/Off", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
-        createRows( 19, "Sequence", "Moving Head Beam Sequence", 6, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,buttonGroup, "MHead Beam");
-        createRows( 19, "Scene", "Moving Head Beam Strobe", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
+        buttonGroup = createRows( 19, "Scene", "Moving Head Beam On/Off", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Beam");
+        createRows( 19, "Sequence", "Moving Head Beam Sequence", 6, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED,buttonGroup, "MHead Beam");
+        createRows( 19, "Scene", "Moving Head Beam Strobe", 1, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
         createRows( 20, "Scene", "Moving Head Beam Color", 0, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
         buttonGroup = createRows( 21, "Scene", "Moving Head Beam Positions", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Beam");
         createRows( 21, "EfxMultiLine", "Moving Head Beam EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Beam");
         createRows( 21, "EfxCircle", "Moving Head Beam EFX", 6, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");
         createRows( 21, "QLCEfxSpline", "Moving Head Beam EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Beam");
 
-        createRows( 30, "Scene", "Moving Head Spot", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
-        buttonGroup = createRows( 31, "Scene", "Moving Head Spot Positions", 0, 4,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
-        createRows( 31, "EfxMultiLine", "Moving Head Spot EFX", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Spot");
-        createRows( 31, "EfxCircle", "Moving Head Spot EFX", 6, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
-        createRows( 31, "QLCEfxSpline", "Moving Head Spot EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
+        buttonGroup = createRows( 30, "Scene", "Moving Head Spot On/Off", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 30, "Sequence", "Moving Head Spot Sequence", 4, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup,"MHead Spot");
+        createRows( 30, "Scene", "Moving Head Spot Strobe", 5, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup,"MHead Spot");
+        createRows( 30, "Scene", "Moving Head Spot", 0, 6,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 30, "Scene", "Moving Head Spot Cristal", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 30, "Scene", "Moving Head Spot Gobos", 0, 4,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 30, "Scene", "Moving Head Spot Prism", 1, 5,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "MHead Spot");
+        buttonGroup = createRows( 31, "Scene", "Moving Head Spot Positions", 0, 2,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Spot");
+        createRows( 31, "EfxMultiLine", "Moving Head Spot EFX", 1, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Spot");
+        createRows( 31, "EfxCircle", "Moving Head Spot EFX", 7, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
+        createRows( 31, "QLCEfxSpline", "Moving Head Spot EFX", 2, 0,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
 
-        createRows( 32, "Collection", "", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
+        createRows( 32, "Collection", "Mirror Ball", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
         buttonGroup = createRows( 33, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
         createRows( 34, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");
         createRows(34, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");

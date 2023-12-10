@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Moving Head Spot Gobos.4355</title>
+   <common>
+      <id>4355</id>
+      <type>Scene</type>
+      <path>Moving Head Spot Gobos</path>
+      <name>Gobo 4</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="40"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="40"/>
+   </points>
+</doc>
