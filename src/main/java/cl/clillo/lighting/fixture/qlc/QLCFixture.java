@@ -108,7 +108,7 @@ public class QLCFixture {
             return getDMXChannel(ChannelType.DIMMER) - 2;
 
 
-        return getDMXChannel(ChannelType.DIMMER, ChannelType.MASTER_DIMMER) + 2;
+        return getDMXChannel(ChannelType.DIMMER, ChannelType.MASTER_DIMMER) - 2 ;
     }
 
 

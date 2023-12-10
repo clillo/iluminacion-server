@@ -14,7 +14,6 @@ import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -86,7 +85,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
         dimmers = new DimmerManager[4];
         for (int i=0; i<4; i++)
-            dimmers[i] = new DimmerManager(pnlListDimmer.get(pnlListDimmer.size() - i - 1), i);
+            dimmers[i] = new DimmerManager(pnlListDimmer.get(pnlListDimmer.size() - i - 2), i);
 
         this.add(panelDimmers);
 
@@ -125,11 +124,45 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     public void onKeyPress(final KeyData keyData) {
         if (keyData.getMidiInputType() == KeyData.MidiInputType.SIDE_BUTTON){
             selectPanel(keyData.getValue());
+            return;
         }
 
         if (keyData.getMidiInputType() == KeyData.MidiInputType.MATRIX_BUTTON){
             ControllerEditPanel panel = (ControllerEditPanel) midiPages.getSelectedComponent();
             panel.toggleButton(keyData.getMatrixX(), keyData.getMatrixY());
+            return;
+        }
+
+        if (keyData.getMidiInputType() == KeyData.MidiInputType.SLIDER_BUTTON ){
+
+            for (DimmerManager dimmerManager: dimmers) {
+                switch (keyData.getValue()) {
+                    case 4:
+                        selectSlider(dimmerManager, 3, keyData.getValue());
+                        break;
+                    case 5:
+                        selectSlider(dimmerManager, 2, keyData.getValue());
+                        break;
+                    case 6:
+                        selectSlider(dimmerManager, 1, keyData.getValue());
+                        break;
+                    case 7:
+                        selectSlider(dimmerManager, 0, keyData.getValue());
+                        break;
+                }
+            }
+            return;
+        }
+
+    }
+
+    private void selectSlider(DimmerManager dimmerManager, int index, int slider){
+        if (dimmerManager.getIndex()==index) {
+            dimmerManager.setActive(!dimmerManager.isActive());
+            if (dimmerManager.isActive())
+                midiHandler.sendSlider(slider, KeyData.StateLight.GREEN_BLINK);
+            else
+                midiHandler.sendSlider(slider, KeyData.StateLight.OFF);
         }
     }
 
@@ -154,7 +187,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     @Override
     public void onSlide(final KeyData keyData) {
         for (DimmerManager dimmerManager: dimmers)
-            dimmerManager.onSlide(keyData, pnlListDimmer.get(keyData.getPosX()));
+            if (dimmerManager.isActive())
+                dimmerManager.onSlide(keyData, pnlListDimmer.get(keyData.getPosX()));
     }
 
     private void activePanel(int index){

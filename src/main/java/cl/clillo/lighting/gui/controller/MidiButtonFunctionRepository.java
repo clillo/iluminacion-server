@@ -3,7 +3,6 @@ package cl.clillo.lighting.gui.controller;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
-import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
 
@@ -48,10 +47,14 @@ public class MidiButtonFunctionRepository {
         createRows( 7, "QLCEfxLine", "QLCEfx Spiders", 4, 0,
                 KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Spider");
 
-        createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
-        createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
-        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
-        buttonGroup = createRows( 10, "Scene", "Moving Head Beam + Spot Positions", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+        buttonGroup = createRows( 5, "Scene", "Moving Head Beam + Spot Color On.Off", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+        createRows( 5, "Sequence", "Moving Head Beam + Spot Sequence", 6, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "MHead Spot + Beam");
+        createRows( 9, "Scene", "Moving Head Beam + Spot Gobos Prism", 1, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+
+        createRows( 5, "Scene", "Moving Head Beam + Spot Color", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+        createRows( 8, "Scene", "Moving Head Beam + Spot Gobos", 2, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
+
+        buttonGroup = createRows( 10, "Scene", "Moving Head Beam + Spot Positions", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Spot + Beam");
         createRows( 10, "EfxMultiLine", "Moving Head Beam + Spot EFX", 0, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup,"MHead Spot + Beam");
         createRows( 10, "EfxCircle", "Moving Head Beam + Spot EFX", 6, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");
         createRows( 10, "QLCEfxSpline", "Moving Head Beam + Spot EFX", 0, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot + Beam");

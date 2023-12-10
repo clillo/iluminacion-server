@@ -1,10 +1,10 @@
 
 <doc>
-   <title>QLCScene.Moving Head Beam + Spot Color.2001</title>
+   <title>QLCScene.Moving Head Beam + Spot Color On.Off.2009</title>
    <common>
-      <id>2001</id>
+      <id>2009</id>
       <type>Scene</type>
-      <path>Moving Head Beam + Spot Color</path>
+      <path>Moving Head Beam + Spot Color On.Off</path>
       <name>All Off</name>
    </common>
    <points>

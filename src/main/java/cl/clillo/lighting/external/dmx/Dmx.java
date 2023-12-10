@@ -7,7 +7,6 @@ import cl.clillo.lighting.model.ShowCollection;
 public class Dmx {
 
 	private ShowCollection showCollection;
-	private final NotificablesCollection notificablesCollection;
 	private final ArtNet artNet = ArtNet.getInstance();
 
 	private static final class InstanceHolder {
@@ -32,7 +31,6 @@ public class Dmx {
 	}
 
 	private Dmx(){
-		notificablesCollection = new NotificablesCollection();
 	}
 
 	public void send(final int dmxChannel, final int dmxValue){
@@ -50,11 +48,7 @@ public class Dmx {
 
 	}
 
-	public void registraEnviable(DmxEnviable enviable){
-		notificablesCollection.registraEnviable(enviable);
-	}
-	
-	public int obtieneValorActualCanal(int canal){
-		return notificablesCollection.obtieneValorActualCanal(canal);
+	public int getActualDmxValue(int channel){
+		return artNet.getDmxData(channel);
 	}
 }

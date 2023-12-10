@@ -60,6 +60,10 @@ public class ArtNet {
         dmxData[channel] = data;
     }
 
+    public byte getDmxData(int channel) {
+        return dmxData[channel];
+    }
+
     public void broadCast(){
       //  System.out.println(dmxData[120]);
       // artNetClient.broadcastDmx(0, 0, dmxData);

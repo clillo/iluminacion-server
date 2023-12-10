@@ -12,14 +12,15 @@ import java.util.List;
 
 public class DimmerManager {
 
-    String []types = {"RGBW", "Moving Head", "Moving Head", "Moving Head"};
-    String []models = {"Generic", "beam+spot", "Moving Head 2", "Moving Head Spot"};
+    private static final String []types = {"RGBW", "Moving Head", "Moving Head", "Moving Head"};
+    private static final String []models = {"Generic", "beam+spot", "Moving Head 2", "Moving Head Spot"};
 
     private final Dmx dmx = Dmx.getInstance();
     private final JSlider sldrMasterDimmer;
     private final int[] masterDimmerChannels;
     private final StateRepository stateRepository = StateRepository.getInstance();
     private final int index;
+    private boolean active;
 
     public DimmerManager(final JSlider sldrMasterDimmer, final int index) {
         this.sldrMasterDimmer = sldrMasterDimmer;
@@ -97,5 +98,17 @@ public class DimmerManager {
                 stateRepository.setMovingHeadSpotMasterDimmer(value, masterDimmerChannels);
         }
 
+    }
+
+    public void setActive(boolean active) {
+        this.active = active;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public int getIndex() {
+        return index;
     }
 }

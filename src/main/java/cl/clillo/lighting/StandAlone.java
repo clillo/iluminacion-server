@@ -26,8 +26,8 @@ public class StandAlone {
 
     public static void main(String[] args) {
         StandAlone standAlone = new StandAlone();
-      //  CSVSupport csvSupport = new CSVSupport();
-     //  csvSupport.rewriteFunctions();
+ //       CSVSupport csvSupport = new CSVSupport();
+  //     csvSupport.rewriteFunctions();
        // standAlone.readCSVFunctionDefinition("/Users/carlos.lillo/IdeaProjects/iluminacion-server/src/main/resources/qlc/QLCSequence.RGBW/RGBW - Sheet2.csv");
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 

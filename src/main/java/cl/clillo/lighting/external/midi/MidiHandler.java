@@ -203,6 +203,18 @@ public class MidiHandler {
 
     }
 
+    public void sendSlider(final int posX, final KeyData.StateLight stateLight) {
+        final Receiver receiver;
+        try {
+            receiver = MidiSystem.getReceiver();
+        } catch (MidiUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        final ShortMessage myMsg = keyDataMapByPos.get("X-"+posX).getMessage(stateLight);
+        receiver.send(myMsg, -1);
+
+    }
+
     public static class MidiInputReceiver implements Receiver {
         private final String name;
         private final Map<String, KeyData> keyDataMapByChannel;
