@@ -28,14 +28,15 @@ public class MidiButtonFunctionRepository {
     MidiButtonFunctionRepository(){
         buttonGroupMapByCategory = new HashMap<>();
         buttonByShow = new HashMap<>();
+        ButtonGroup buttonGroup;
 
-        createRows( 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Laser");
+        createRows( 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Laser-Derby-RGBW");
 
-        ButtonGroup buttonGroup = createRows( 2, "Scene", "Derby", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Derby");
-        createRows( 2, "Sequence", "Derby", 0, 6,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Derby");
+        buttonGroup = createRows( 2, "Scene", "Derby", 0, 4,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Laser-Derby-RGBW");
+        createRows( 2, "Sequence", "Derby", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Laser-Derby-RGBW");
 
-        buttonGroup = createRows( 6, "Sequence", "RGBW", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "RGBW");
-        createRows( 6, "Scene", "RGBW", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "RGBW");
+        buttonGroup = createRows( 6, "Sequence", "RGBW", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Laser-Derby-RGBW");
+        createRows( 6, "Scene", "RGBW", 0, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "Laser-Derby-RGBW");
 
         buttonGroup = createRows( 3, "Scene", "Spider", 0, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Spider");
 
@@ -80,10 +81,17 @@ public class MidiButtonFunctionRepository {
         createRows( 31, "EfxCircle", "Moving Head Spot EFX", 7, 1,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
         createRows( 31, "QLCEfxSpline", "Moving Head Spot EFX", 2, 0,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW,  buttonGroup,"MHead Spot");
 
-        createRows( 32, "Collection", "Mirror Ball", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
-        buttonGroup = createRows( 33, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "AUTO");
-        createRows( 34, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");
-        createRows(34, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "AUTO");
+        createRows( 32, "Collection", "Mirror Ball", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Collections");
+        buttonGroup = createRows( 33, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Collections");
+        createRows( 34, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
+        createRows(34, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
+
+        buttonGroup = createRows( 50, "Scene", "Moving Head On.Off", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
+        createRows( 50, "Sequence", "Moving Head Sequence", 6, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup, "Moving Heads");
+
+        buttonGroup = createRows( 50, "Scene", "Moving Head Color", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
+
+        buttonGroup = createRows( 50, "QLCEfxLine", "Moving Head EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
 
         consistencyCheck();
     }

@@ -8,7 +8,6 @@
       <name>Mirror Ball Beam Color Rotating</name>
    </common>
    <shows>
-      <show id="298" name="Mirror Ball 2"/>
       <show id="4000" name="All On"/>
       <show id="4200" name="Rotating Color"/>
       <show id="4620" name="Disco Ball"/>

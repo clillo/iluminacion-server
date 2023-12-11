@@ -1,0 +1,24 @@
+
+<doc>
+   <title>QLCScene.Moving Head Color.6103</title>
+   <common>
+      <id>6103</id>
+      <type>Scene</type>
+      <path>Moving Head Color</path>
+      <name>Yellow</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="8" type="COLOR_WHEEL" value="60"/>
+      <point fixture-robotic="true" fixture="10" type="COLOR_WHEEL" value="60"/>
+      <point fixture-robotic="true" fixture="11" type="COLOR_WHEEL" value="60"/>
+      <point fixture-robotic="true" fixture="18" type="COLOR_WHEEL" value="60"/>
+
+      <point fixture-robotic="true" fixture="9" type="COLOR_WHEEL" value="40"/>
+      <point fixture-robotic="true" fixture="12" type="COLOR_WHEEL" value="40"/>
+
+      <point fixture-robotic="true" fixture="14" type="COLOR_WHEEL" value="90"/>
+      <point fixture-robotic="true" fixture="15" type="COLOR_WHEEL" value="90"/>
+      <point fixture-robotic="true" fixture="16" type="COLOR_WHEEL" value="90"/>
+      <point fixture-robotic="true" fixture="17" type="COLOR_WHEEL" value="90"/>
+   </points>
+</doc>

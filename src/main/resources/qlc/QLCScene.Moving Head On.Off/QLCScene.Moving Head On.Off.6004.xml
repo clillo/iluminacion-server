@@ -1,0 +1,22 @@
+
+<doc>
+   <title>QLCScene.Moving Head On.Off.6004</title>
+   <common>
+      <id>6004</id>
+      <type>Scene</type>
+      <path>Moving Head On.Off</path>
+      <name>Even</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="15" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="18" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
+      <point fixture-robotic="true" fixture="8" type="DIMMER" value="255"/>
+      <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
+   </points>
+</doc>

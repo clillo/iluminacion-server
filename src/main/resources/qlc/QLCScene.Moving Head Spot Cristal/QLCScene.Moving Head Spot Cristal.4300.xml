@@ -9,9 +9,8 @@
    </common>
    <points>
       <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="0"/>
-      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="0"/>
       <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL_ROTATING" value="0"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="0"/>
       <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL_ROTATING" value="0"/>
-
    </points>
 </doc>

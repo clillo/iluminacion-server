@@ -1,0 +1,72 @@
+
+<doc>
+   <title>QLCEfxLine.Moving Head EFX.6700</title>
+   <common>
+      <id>6700</id>
+      <type>QLCEfxLine</type>
+      <path>Moving Head EFX</path>
+      <name>Up and Down</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>14</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>10</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>12</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>11</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>15</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>16</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>18</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>9</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>8</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>17</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <points>
+      <origin>
+         <x>43629.0</x>
+         <y>1383.0</y>
+      </origin>
+      <destiny>
+         <x>43491.23595505618</x>
+         <y>32112.64</y>
+      </destiny>
+   </points>
+</doc>
