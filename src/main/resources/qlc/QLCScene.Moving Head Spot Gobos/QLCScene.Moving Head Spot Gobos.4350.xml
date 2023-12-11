@@ -5,7 +5,7 @@
       <id>4350</id>
       <type>Scene</type>
       <path>Moving Head Spot Gobos</path>
-      <name>Rotating Gobos Off</name>
+      <name>Gobos Off</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="0"/>

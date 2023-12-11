@@ -7,5 +7,23 @@
       <path>Sec1</path>
       <name>Circle Pink Mid</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="3006" name="Seq 2"/>
+      <show id="3105" name="Pink"/>
+      <show id="3511" name="Circle 2"/>
+      <show id="2006" name="Seq 2"/>
+      <show id="2105" name="Magenta"/>
+      <show id="2511" name="Circle 2"/>
+      <show id="3006" name="Seq 2"/>
+      <show id="3105" name="Pink"/>
+      <show id="3511" name="Circle 2"/>
+      <show id="2006" name="Seq 2"/>
+      <show id="2105" name="Magenta"/>
+      <show id="2300" name="Open Wide"/>
+      <show id="2401" name="Prisma Off"/>
+      <show id="2511" name="Circle 2"/>
+      <show id="3006" name="Seq 2"/>
+      <show id="3105" name="Pink"/>
+      <show id="3511" name="Circle 2"/>
+   </shows>
 </doc>

@@ -5,10 +5,10 @@
       <id>4307</id>
       <type>Scene</type>
       <path>Moving Head Spot Cristal</path>
-      <name>Cristal 6</name>
+      <name>Cristal Rotating</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="60"/>
-      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="60"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="220"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="220"/>
    </points>
 </doc>

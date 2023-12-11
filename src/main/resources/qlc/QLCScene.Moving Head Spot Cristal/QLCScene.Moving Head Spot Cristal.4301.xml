@@ -8,7 +8,8 @@
       <name>Rotating Cristal</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL" value="104"/>
-      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL" value="104"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_CRISTAL_ROTATING" value="100"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_CRISTAL_ROTATING" value="100"/>
+
    </points>
 </doc>

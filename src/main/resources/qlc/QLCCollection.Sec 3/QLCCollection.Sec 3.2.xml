@@ -7,5 +7,31 @@
       <path>Sec 3</path>
       <name>sec mv white</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="2000" name="All On"/>
+      <show id="2102" name="Orange"/>
+      <show id="2305" name="Gobo 4"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2000" name="All On"/>
+      <show id="2102" name="Orange"/>
+      <show id="2305" name="Gobo 4"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="4000" name="All On"/>
+      <show id="4104" name="Yellow"/>
+      <show id="4300" name="Cristal Off"/>
+      <show id="4351" name="Rotating Gobos"/>
+      <show id="4403" name="Prism Rotation Slow"/>
+      <show id="4605" name="Cross Two"/>
+      <show id="2000" name="All On"/>
+      <show id="2102" name="Orange"/>
+      <show id="2305" name="Gobo 4"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2521" name="Eight 1"/>
+      <show id="4000" name="All On"/>
+      <show id="4104" name="Yellow"/>
+      <show id="4300" name="Cristal Off"/>
+      <show id="4351" name="Rotating Gobos"/>
+      <show id="4403" name="Prism Rotation Slow"/>
+      <show id="4520" name="Eight"/>
+   </shows>
 </doc>

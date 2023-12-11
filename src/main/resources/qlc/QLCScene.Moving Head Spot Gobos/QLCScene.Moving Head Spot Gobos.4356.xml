@@ -8,7 +8,7 @@
       <name>Gobo 5</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="50"/>
-      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="50"/>
+      <point fixture-robotic="true" fixture="9" type="GOBO_INDEX" value="147"/>
+      <point fixture-robotic="true" fixture="12" type="GOBO_INDEX" value="147"/>
    </points>
 </doc>

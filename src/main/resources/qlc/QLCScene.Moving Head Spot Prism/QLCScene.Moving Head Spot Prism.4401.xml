@@ -8,7 +8,7 @@
       <name>Prism On</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="10"/>
-      <point fixture-robotic="true" fixture="12" type="PRISM_ROTATION" value="10"/>
+      <point fixture-robotic="true" fixture="9" type="PRISM_ROTATION" value="50"/>
+      <point fixture-robotic="true" fixture="12" type="PRISM_ROTATION" value="50"/>
    </points>
 </doc>

@@ -15,7 +15,7 @@
  <Channel Name="Strobe" Preset="ShutterStrobeSlowFast"/>
  <Channel Name="Color wheel" Preset="ColorWheel"/>
  <Channel Name="Gobo cristal" Preset="GoboIndex"/>
- <Channel Name="Gobo wheel" Preset="GoboWheel"/>
+ <Channel Name="Gobo cristal rotating" Preset="GoboWheel"/>
  <Channel Name="Gobo shake" Preset="GoboWheel"/>
  <Channel Name="Gobo index" Preset="GoboIndex"/>
  <Channel Name="Gobo normal shake" Preset="GoboWheel"/>
@@ -33,7 +33,7 @@
   <Channel Number="3">Strobe</Channel>
   <Channel Number="4">Color wheel</Channel>
   <Channel Number="5">Gobo cristal</Channel>
-  <Channel Number="6">Gobo wheel</Channel>
+  <Channel Number="6">Gobo cristal rotating</Channel>
   <Channel Number="7">Gobo shake</Channel>
   <Channel Number="8">Gobo index</Channel>
   <Channel Number="9">Gobo normal shake</Channel>

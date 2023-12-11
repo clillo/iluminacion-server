@@ -5,7 +5,7 @@
       <id>2200</id>
       <type>Scene</type>
       <path>Moving Head Beam + Spot Color</path>
-      <name>Color Change</name>
+      <name>Color Change Slow</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="8" type="COLOR_WHEEL" value="160"/>

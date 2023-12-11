@@ -7,5 +7,11 @@
       <path>Sec1</path>
       <name>Red Green 2</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="2009" name="All Off"/>
+      <show id="4305" name="Cristal Violeta"/>
+      <show id="4400" name="Prism Off"/>
+      <show id="4452" name="Strobe Fast"/>
+      <show id="4512" name="Circle 3"/>
+   </shows>
 </doc>

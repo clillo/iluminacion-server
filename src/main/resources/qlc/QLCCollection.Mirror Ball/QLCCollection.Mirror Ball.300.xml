@@ -5,7 +5,12 @@
       <id>300</id>
       <type>Collection</type>
       <path>Mirror Ball</path>
-      <name>Mirror Ball Strobo</name>
+      <name>Mirror Ball Spot Color Rotating</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="3000" name="All On"/>
+      <show id="3200" name="Rotating"/>
+      <show id="3607" name="Disco Ball"/>
+      <show id="4009" name="All Off"/>
+   </shows>
 </doc>

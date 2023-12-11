@@ -15,7 +15,7 @@ import java.util.Map;
 public class QLCFixture {
 
     public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE,
-        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO, GOBO_CRISTAL, GOBO_SHAKE,
+        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO, GOBO_CRISTAL, GOBO_CRISTAL_ROTATING, GOBO_SHAKE,
         GOBO_INDEX, GOBO_NORMAL_SHAKE ;
 
         public static ChannelType of(String name){
@@ -39,6 +39,8 @@ public class QLCFixture {
                 return ChannelType.GOBO_WHEEL;
             if ("gobo cristal".equalsIgnoreCase(name) || "gobo_cristal".equalsIgnoreCase(name))
                 return ChannelType.GOBO_CRISTAL;
+            if ("gobo cristal rotating".equalsIgnoreCase(name) || "gobo_cristal_rotating".equalsIgnoreCase(name))
+                return ChannelType.GOBO_CRISTAL_ROTATING;
             if ("gobo shake".equalsIgnoreCase(name) || "gobo_shake".equalsIgnoreCase(name))
                 return ChannelType.GOBO_SHAKE;
             if ("gobo normal shake".equalsIgnoreCase(name) || "gobo_normal_shake".equalsIgnoreCase(name))

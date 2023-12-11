@@ -7,5 +7,13 @@
       <path>Sec 3</path>
       <name>Strobo Azul</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="3005" name="Seq 1"/>
+      <show id="3103" name="Blue"/>
+      <show id="3212" name="Strobo Medium"/>
+      <show id="3606" name="Down cross 2"/>
+      <show id="4005" name="Seq 1"/>
+      <show id="4103" name="Blue"/>
+      <show id="4605" name="Cross Two"/>
+   </shows>
 </doc>

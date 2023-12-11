@@ -5,7 +5,12 @@
       <id>297</id>
       <type>Collection</type>
       <path>Sec1</path>
-      <name>Mirror Ball 1</name>
+      <name>Mirror Ball Beam + Spot Color Rotating</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="2000" name="All On"/>
+      <show id="2200" name="Color Change Slow"/>
+      <show id="2300" name="Open Wide"/>
+      <show id="2607" name="Disco Ball"/>
+   </shows>
 </doc>
