@@ -25,35 +25,20 @@ public class StandAlone {
     }
 
     public static void main(String[] args) {
-        StandAlone standAlone = new StandAlone();
- //       CSVSupport csvSupport = new CSVSupport();
-  //     csvSupport.rewriteFunctions();
+   //     StandAlone standAlone = new StandAlone();
+     //   CSVSupport csvSupport = new CSVSupport();
+      // csvSupport.rewriteFunctions();
        // standAlone.readCSVFunctionDefinition("/Users/carlos.lillo/IdeaProjects/iluminacion-server/src/main/resources/qlc/QLCSequence.RGBW/RGBW - Sheet2.csv");
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
         Logger root = context.getLogger(Logger.ROOT_LOGGER_NAME);
         root.setLevel(Level.INFO);
 
-      //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
      //   ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+      //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
         controllerJFrame.start();
-
-   //     QLCFunctionsSupport support = new QLCFunctionsSupport();
-    //    support.readFunction("Scene", "Moving Head Beam + Spot Color");
-
-
-     //  StateRepository stateRepository = StateRepository.getInstance();
-      //  stateRepository.read();
-
-
-      //  stateRepository.write();*/
-
-
-
-
-
     }
 }
