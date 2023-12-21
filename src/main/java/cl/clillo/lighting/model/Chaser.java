@@ -42,6 +42,22 @@ public class Chaser extends QLCFunction implements Sequenceable{
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
+        out.writeStartElement("blackout");
+        out.writeAttribute("id", String.valueOf(blackoutShow.getId()));
+        out.writeEndElement();
+
+        out.writeStartElement("properties");
+            out.writeStartElement("runOrder");
+            out.writeCharacters(String.valueOf(runOrder));
+            out.writeEndElement();
+            out.writeStartElement("direction");
+            out.writeCharacters(String.valueOf(direction));
+            out.writeEndElement();
+            out.writeStartElement("speed");
+            out.writeCharacters(String.valueOf(qlcSpeed));
+            out.writeEndElement();
+        out.writeEndElement();
+
         out.writeStartElement("shows");
         for (ChaserStep step : chaserSteps) {
 

@@ -1,13 +1,13 @@
 
 <doc>
-   <title>QLCChaser.Laser.5207</title>
+   <title>Chaser.Laser.5207</title>
    <common>
       <id>5207</id>
       <type>Chaser</type>
       <path>Laser</path>
       <name>Efectos Laser</name>
    </common>
-   <blackout id="160" />
+   <blackout id="160"/>
    <properties>
       <runOrder>RANDOM</runOrder>
       <direction>FORWARD</direction>

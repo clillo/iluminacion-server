@@ -1,13 +1,13 @@
 
 <doc>
-   <title>QLCChaser.Generales.5081</title>
+   <title>Chaser.Generales.5081</title>
    <common>
       <id>5081</id>
       <type>Chaser</type>
       <path>Generales</path>
       <name>Secuencia 3</name>
    </common>
-   <blackout id="160" />
+   <blackout id="160"/>
    <properties>
       <runOrder>RANDOM</runOrder>
       <direction>FORWARD</direction>

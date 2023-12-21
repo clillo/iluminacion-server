@@ -200,12 +200,11 @@ public class ShowCollection {
     }
 
     private void addChaserFromDir(final File file){
-        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "Chaser", ".xml");
         try {
-            for (File f: files){
-                if (f.getName().startsWith("QLCChaser"))
-                    addQLCFunction(Chaser.read(this, f));
-            }
+            for (File f: files)
+                addQLCFunction(Chaser.read(this, f));
+
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);
         }

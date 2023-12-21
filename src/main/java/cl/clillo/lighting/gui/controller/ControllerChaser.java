@@ -7,6 +7,7 @@ import cl.clillo.lighting.model.ChaserStep;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 
+import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -48,6 +49,12 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
 
         runOrderTypePicker.setBounds(550,60,240,180);
         this.add(runOrderTypePicker);
+
+        final JButton btnSave = new JButton("Save");
+        btnSave.setBounds(555, 270, 120, 20);
+
+        this.add(btnSave);
+        btnSave.addActionListener(e ->save());
     }
 
     private <T> JList<T> buildList(final Vector<T> collectionList, int x, int y, int width, int height){
@@ -62,6 +69,13 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
         return list;
     }
 
+    private void save(){
+        final ShowListWrapper showSelected = lstChasers.getSelectedValue();
+        if (showSelected==null)
+            return;
+
+        showSelected.getShow().getFunction().save();
+    }
 
     @Override
     public void stateChanged(ChangeEvent e) {
