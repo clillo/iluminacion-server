@@ -5,7 +5,38 @@
       <id>5207</id>
       <type>Chaser</type>
       <path>Laser</path>
-      <name>Primary colours chaser - RGBW</name>
+      <name>Efectos Laser</name>
    </common>
-   <functions/>
+   <blackout id="160" />
+   <properties>
+      <runOrder>RANDOM</runOrder>
+      <direction>FORWARD</direction>
+      <speed>3</speed>
+   </properties>
+   <shows>
+      <show id="159" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="164" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="162" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="169" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="161" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="163" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="165" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="264" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="167" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="166" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="257" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="258" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="256" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="168" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="266" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="265" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="259" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="262" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="261" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="260" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="263" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="158" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="267" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="268" fadeIn="0" hold="5000" fadeOut="0"/>
+   </shows>
 </doc>

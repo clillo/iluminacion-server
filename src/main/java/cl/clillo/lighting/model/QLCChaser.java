@@ -13,18 +13,18 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @ToString
-public class QLCChaser extends QLCFunction {
+public class QLCChaser extends QLCFunction implements Sequenceable{
 
     private final List<QLCChaserStep> chaserSteps;
-    private final QLCDirection direction;
+    private QLCDirection direction;
     private final QLCRunOrder runOrder;
-    private final QLCSpeed qlcSpeed;
+    private int qlcSpeed;
+    private Show blackoutShow;
 
     public QLCChaser(final int id, final String type, final String name, final String path, final QLCDirection direction,
-                     final QLCRunOrder runOrder, final QLCSpeed qlcSpeed, final List<QLCChaserStep> chaserSteps) {
+                     final QLCRunOrder runOrder, final int qlcSpeed, final List<QLCChaserStep> chaserSteps) {
         super(id, type, name, path);
         this.direction = direction;
         this.runOrder = runOrder;
@@ -42,12 +42,12 @@ public class QLCChaser extends QLCFunction {
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
-        out.writeStartElement("functions");
+        out.writeStartElement("shows");
         for (QLCChaserStep step : chaserSteps) {
 
-            out.writeStartElement("function");
-            if (step.getCollection()!=null) {
-                out.writeAttribute("id", String.valueOf(step.getCollection().getId()));
+            out.writeStartElement("show");
+            if (step.getShow()!=null) {
+                out.writeAttribute("id", String.valueOf(step.getShow().getId()));
                 out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));
                 out.writeAttribute("hold", String.valueOf(step.getHold()));
                 out.writeAttribute("fadeOut", String.valueOf(step.getFadeOut()));
@@ -57,27 +57,87 @@ public class QLCChaser extends QLCFunction {
         out.writeEndElement();
     }
 
-    public static QLCChaser read(final Map<Integer, QLCFunction> functionMap, final File file) throws ParserConfigurationException, IOException, SAXException {
+    public static QLCChaser read(final ShowCollection collection, final File file) throws ParserConfigurationException, IOException, SAXException {
         final Document doc = XMLParser.getDocument(file);
         final QLCElement function = QLCElement.read(doc);
         final List<QLCChaserStep> qlcFunctionList = new ArrayList<>();
+        final Node blackout = XMLParser.getNode(doc.getFirstChild(), "blackout");
+        Show blackoutShow = null;
+        if (blackout!=null && blackout.hasAttributes()) {
+            final int showId = XMLParser.getIntAttributeValue(blackout, "id");
+            blackoutShow = collection.getShow(showId);
+        }
 
-        for(Node node: XMLParser.getNodeList(doc.getFirstChild(), "functions"))
+        QLCDirection qlcDirection = QLCDirection.FORWARD;
+        QLCRunOrder qlcRunOrder = QLCRunOrder.RANDOM;
+        int qlcSpeed = 1;
+        for(Node node: XMLParser.getNodeList(doc.getFirstChild(), "properties")){
+
+            if ("direction".equalsIgnoreCase(node.getNodeName()))
+                qlcDirection = QLCDirection.valueOf(node.getTextContent());
+
+            if ("runOrder".equalsIgnoreCase(node.getNodeName()))
+                qlcRunOrder = QLCRunOrder.valueOf(node.getTextContent());
+
+            if ("speed".equalsIgnoreCase(node.getNodeName()))
+                qlcSpeed = Integer.parseInt(node.getTextContent());
+
+        }
+
+        for(Node node: XMLParser.getNodeList(doc.getFirstChild(), "shows"))
             if (node.hasAttributes()) {
-                final int fixtureId = XMLParser.getIntAttributeValue(node, "id");
-                QLCFunction qlcFunction = functionMap.get(fixtureId);
+                final int showId = XMLParser.getIntAttributeValue(node, "id");
+                final Show show = collection.getShow(showId);
+
                 qlcFunctionList.add(QLCChaserStep.builder()
+                                .id(showId)
                                 .fadeIn(XMLParser.getIntAttributeValue(node, "fadeIn"))
                                 .hold(XMLParser.getIntAttributeValue(node, "hold"))
                                 .fadeOut(XMLParser.getIntAttributeValue(node, "fadeOut"))
-                        .collection(qlcFunction)
+                        .show(show)
                         .build());
             }
 
-        return new QLCChaser(function.getId(), function.getType(), function.getName(), function.getPath(), null, null, null, qlcFunctionList);
+        final QLCChaser chaser = new QLCChaser(function.getId(), function.getType(), function.getName(),
+                function.getPath(), qlcDirection, qlcRunOrder, qlcSpeed, qlcFunctionList);
+        chaser.setBlackoutShow(blackoutShow);
+        return chaser;
     }
 
     public List<QLCChaserStep> getChaserSteps() {
         return chaserSteps;
+    }
+
+    @Override
+    public QLCDirection getDirection() {
+        return direction;
+    }
+
+    @Override
+    public QLCRunOrder getRunOrder() {
+        return runOrder;
+    }
+
+    @Override
+    public void setDirection(QLCDirection direction) {
+        this.direction = direction;
+    }
+
+    @Override
+    public int getSpeed() {
+        return qlcSpeed;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+        this.qlcSpeed = speed;
+    }
+
+    public void setBlackoutShow(Show blackoutShow) {
+        this.blackoutShow = blackoutShow;
+    }
+
+    public Show getBlackoutShow() {
+        return blackoutShow;
     }
 }

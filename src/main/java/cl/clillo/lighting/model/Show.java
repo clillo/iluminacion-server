@@ -1,5 +1,6 @@
 package cl.clillo.lighting.model;
 
+import cl.clillo.lighting.executor.ChaserExecutor;
 import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.executor.AbstractExecutor;
 import cl.clillo.lighting.executor.QLCCollectionExecutor;
@@ -191,6 +192,9 @@ public class Show implements Comparable<Show> {
 
             if (function instanceof QLCCollection)
                 show.setStepExecutor(new QLCCollectionExecutor(show));
+
+            if (function instanceof QLCChaser)
+                show.setStepExecutor(new ChaserExecutor(show));
             return show;
         }
 

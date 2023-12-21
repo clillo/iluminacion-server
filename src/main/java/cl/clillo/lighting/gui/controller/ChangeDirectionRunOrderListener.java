@@ -6,5 +6,5 @@ import cl.clillo.lighting.model.QLCRunOrder;
 
 public interface ChangeDirectionRunOrderListener {
 
-    void change(QLCRunOrder runOrder, QLCDirection direction, IOS2LEventListener.Type type);
+    void change(QLCRunOrder runOrder, QLCDirection direction, IOS2LEventListener.Type type, int speed);
 }

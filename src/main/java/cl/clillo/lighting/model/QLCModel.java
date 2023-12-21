@@ -309,10 +309,10 @@ public class QLCModel {
         builder.hold(getAttributeInt(node, "Hold"));
         builder.fadeOut(getAttributeInt(node, "FadeOut"));
 
-        final Element eElement = (Element) node;
-        String collectionId = eElement.getTextContent();
-        final int fixtureId = Integer.parseInt(collectionId);
-        builder.collection(functionMap.get(fixtureId));
+       // final Element eElement = (Element) node;
+     //   String collectionId = eElement.getTextContent();
+      //  final int fixtureId = Integer.parseInt(collectionId);
+        //builder.collection(functionMap.get(fixtureId));
 
         return builder.build();
     }

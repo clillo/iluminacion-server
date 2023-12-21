@@ -185,12 +185,11 @@ public class ShowCollection {
     private void addCollectionFromDir(final File file){
         final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
         try {
-            final Map<Integer, QLCFunction> functionMap = getFunctionMap();
             for (File f: files){
                 if (f.getName().startsWith("QLCCollection"))
                     addQLCFunction(QLCCollection.read(this, f));
                 if (f.getName().startsWith("QLCChaser"))
-                    addQLCFunction(QLCChaser.read(functionMap, f));
+                    addQLCFunction(QLCChaser.read(this, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

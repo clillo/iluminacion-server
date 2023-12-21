@@ -6,6 +6,7 @@ import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
+import cl.clillo.lighting.model.Sequenceable;
 import cl.clillo.lighting.model.Show;
 
 import java.security.SecureRandom;
@@ -25,6 +26,13 @@ public abstract class AbstractExecutor {
     protected AbstractExecutor(final Show show, final List<QLCStep> stepList) {
         this.show = show;
         totalSteps = stepList.size()-1;
+        direction = QLCDirection.FORWARD;
+        runOrder = QLCRunOrder.LOOP;
+    }
+
+    protected AbstractExecutor(final Show show, final int totalSteps) {
+        this.show = show;
+        this.totalSteps = totalSteps - 1;
         direction = QLCDirection.FORWARD;
         runOrder = QLCRunOrder.LOOP;
     }
@@ -50,9 +58,15 @@ public abstract class AbstractExecutor {
             dmx.send(point);
         }
 
-        if (show.getFunction() instanceof QLCSequence) {
-            direction = ((QLCSequence)show.getFunction()).getDirection();
-            runOrder  = ((QLCSequence)show.getFunction()).getRunOrder();
+        postExecuteDefaultScheduler();
+
+    }
+
+    protected void postExecuteDefaultScheduler(){
+
+        if (show.getFunction() instanceof Sequenceable) {
+            direction = ((Sequenceable)show.getFunction()).getDirection();
+            runOrder  = ((Sequenceable)show.getFunction()).getRunOrder();
         }
 
         if (runOrder == QLCRunOrder.RANDOM){
@@ -70,13 +84,14 @@ public abstract class AbstractExecutor {
 
     }
 
+
     public void executeOS2LScheduler(){}
 
     private void forward(){
         actualStep++;
         if (actualStep==totalSteps && runOrder == QLCRunOrder.PINGPONG){
-             if (show.getFunction() instanceof QLCSequence)
-               ((QLCSequence)show.getFunction()).setDirection(QLCDirection.BACKWARD);
+             if (show.getFunction() instanceof Sequenceable)
+               ((Sequenceable)show.getFunction()).setDirection(QLCDirection.BACKWARD);
 
 
             show.setNextExecutionTime(System.currentTimeMillis());
@@ -92,8 +107,8 @@ public abstract class AbstractExecutor {
         actualStep--;
 
         if (actualStep==0 && runOrder == QLCRunOrder.PINGPONG){
-            if (show.getFunction() instanceof QLCSequence)
-                ((QLCSequence)show.getFunction()).setDirection(QLCDirection.FORWARD);
+            if (show.getFunction() instanceof Sequenceable)
+                ((Sequenceable)show.getFunction()).setDirection(QLCDirection.FORWARD);
             show.setNextExecutionTime(System.currentTimeMillis());
             return;
         }

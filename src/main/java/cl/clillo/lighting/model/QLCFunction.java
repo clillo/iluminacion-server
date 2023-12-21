@@ -241,7 +241,7 @@ public class QLCFunction extends QLCElement{
 
             if ("Chaser".equalsIgnoreCase(type))
                 return this.chaserSteps.size()>0? new QLCChaser(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
-                        this.qlcSpeed, this.chaserSteps): null;
+                        1, this.chaserSteps): null;
 
 
 

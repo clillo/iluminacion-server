@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @ToString
 @Setter
@@ -16,14 +13,14 @@ public class QLCChaserStep {
     private int fadeIn;
     private int hold;
     private int fadeOut;
-    private final QLCFunction collection;
+    private final Show show;
 
-    QLCChaserStep(int id, int fadeIn, int hold, int fadeOut, QLCFunction collection) {
+    QLCChaserStep(final int id, final int fadeIn, final int hold, final int fadeOut, final Show show) {
         this.id = id;
         this.fadeIn = fadeIn;
         this.hold = hold;
         this.fadeOut = fadeOut;
-        this.collection = collection;
+        this.show = show;
     }
 
     public static QLCStepBuilder builder() {
@@ -35,7 +32,7 @@ public class QLCChaserStep {
         private int fadeIn;
         private int hold;
         private int fadeOut;
-        private QLCFunction collection;
+        private Show show;
 
         QLCStepBuilder() {
         }
@@ -60,13 +57,13 @@ public class QLCChaserStep {
             return this;
         }
 
-        public QLCStepBuilder collection(QLCFunction collection) {
-            this.collection = collection;
+        public QLCStepBuilder show(Show show) {
+            this.show = show;
             return this;
         }
 
         public QLCChaserStep build() {
-            return new QLCChaserStep(this.id, this.fadeIn, this.hold, this.fadeOut, collection);
+            return new QLCChaserStep(this.id, this.fadeIn, this.hold, this.fadeOut, show);
         }
 
 

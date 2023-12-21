@@ -143,7 +143,7 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
     }
 
     @Override
-    public void change(final QLCRunOrder runOrder, final QLCDirection direction, final IOS2LEventListener.Type type) {
+    public void change(final QLCRunOrder runOrder, final QLCDirection direction, final IOS2LEventListener.Type type, int speed) {
         if (sequenceSelected == null)
             return;
 

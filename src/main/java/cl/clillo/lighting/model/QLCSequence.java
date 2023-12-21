@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Set;
 
 @ToString
-@Getter
-public class QLCSequence extends QLCFunction{
+public class QLCSequence extends QLCFunction implements Sequenceable{
 
     private static final int MIN_STEP_DURATION = 10; // in millis
 
@@ -84,12 +83,27 @@ public class QLCSequence extends QLCFunction{
         this.vdjType = vdjType;
     }
 
+    @Override
     public void setDirection(QLCDirection direction) {
         this.direction = direction;
     }
 
     public void setRunOrder(QLCRunOrder runOrder) {
         this.runOrder = runOrder;
+    }
+
+    @Override
+    public QLCDirection getDirection() {
+        return direction;
+    }
+
+    public List<QLCStep> getQlcStepList() {
+        return qlcStepList;
+    }
+
+    @Override
+    public QLCRunOrder getRunOrder() {
+        return runOrder;
     }
 
     private void buildFakeSteps(final QLCStep step){
@@ -256,5 +270,19 @@ public class QLCSequence extends QLCFunction{
             dimmerChannels[i++]= channel;
 
         return dimmerChannels;
+    }
+
+    public List<QLCStep> getQlcStepWithoutFade() {
+        return qlcStepWithoutFade;
+    }
+
+    @Override
+    public int getSpeed() {
+        return 1;
+    }
+
+    @Override
+    public void setSpeed(int speed) {
+
     }
 }

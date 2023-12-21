@@ -1,5 +1,7 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.executor.ChaserExecutor;
+import cl.clillo.lighting.executor.ChaserExecutorShowListener;
 import cl.clillo.lighting.model.QLCChaser;
 import cl.clillo.lighting.model.QLCChaserStep;
 import cl.clillo.lighting.model.Show;
@@ -9,6 +11,7 @@ import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JToggleButton;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -16,10 +19,12 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.Color;
 import java.util.Vector;
 
-public class ControllerChaser extends JPanel implements ChangeListener, ListSelectionListener {
+public class ControllerChaser extends JPanel implements ChangeListener, ListSelectionListener, ChaserExecutorShowListener {
 
     private final JList<ShowListWrapper> lstChasers;
     private final JList<ChaserListWrapper> lstCollection;
+    private Vector<ChaserListWrapper> chaserListWrappers;
+    private final RunOrderTypePicker runOrderTypePicker = new RunOrderTypePicker();
 
     public ControllerChaser() {
         setLayout(null);
@@ -34,18 +39,16 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
 
         lstChasers = buildList(collectionList, 10, 10, 250, 330);
         lstCollection = buildList(new Vector<>(), 280, 10, 250, 330);
+        lstCollection.removeListSelectionListener(this);
 
-        final JButton btnRunningShows = new JButton("Capture");
-        btnRunningShows.setBounds(670, 10, 120, 20);
+        final JToggleButton btnRunningShows = new JToggleButton("Run");
+        btnRunningShows.setBounds(555, 10, 120, 20);
 
         this.add(btnRunningShows);
-        //btnRunningShows.addActionListener(e ->runningShows());
+        btnRunningShows.addActionListener(e ->run(btnRunningShows.isSelected()));
 
-        final JButton btnAddToCollection = new JButton("Add");
-        btnAddToCollection.setBounds(670, 40, 120, 20);
-
-        this.add(btnAddToCollection);
-        //btnAddToCollection.addActionListener(e ->addToCollection());
+        runOrderTypePicker.setBounds(550,60,140,180);
+        this.add(runOrderTypePicker);
     }
 
     private <T> JList<T> buildList(final Vector<T> collectionList, int x, int y, int width, int height){
@@ -68,15 +71,62 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!e.getSource().equals(lstChasers) || e.getValueIsAdjusting())
+        if (!e.getSource().equals(lstChasers) || e.getValueIsAdjusting()) {
+            chaserListWrappers = null;
+            return;
+        }
+
+        final ShowListWrapper showSelected = lstChasers.getSelectedValue();
+
+        chaserListWrappers = new Vector<>();
+        final QLCChaser chaser = showSelected.getShow().getFunction();
+
+        for (QLCChaserStep show: chaser.getChaserSteps())
+            chaserListWrappers.add(new ChaserListWrapper(show));
+
+        runOrderTypePicker.selectShow(showSelected.getShow().getFunction());
+
+        lstCollection.setListData(chaserListWrappers);
+    }
+
+    private void run(boolean selected){
+        final ShowListWrapper showSelected = lstChasers.getSelectedValue();
+        if (showSelected==null)
+            return;
+        showSelected.getShow().setExecuting(selected);
+        ((ChaserExecutor)showSelected.getShow().getStepExecutor()).setChaserExecutorShowListener(this);
+        if (!selected) {
+            showSelected.getShow().getStepExecutor().stop();
+            ((ChaserExecutor)showSelected.getShow().getStepExecutor()).setChaserExecutorShowListener(null);
+        }
+    }
+
+    private ChaserListWrapper getChaserListWrapper(Show show){
+        if (chaserListWrappers==null)
+            return null;
+
+        for(ChaserListWrapper chaser: chaserListWrappers)
+            if(chaser.getChaserStep().getShow().getId()==show.getId())
+                return chaser;
+
+        return null;
+    }
+
+    @Override
+    public void startExecuting(Show show) {
+        final ChaserListWrapper chaser = getChaserListWrapper(show);
+        if (chaser==null)
             return;
 
-        ShowListWrapper showSelected = lstChasers.getSelectedValue();
+        lstCollection.setSelectedValue(chaser, true);
+    }
 
-        Vector<ChaserListWrapper> functionList = new Vector<>();
-        for (QLCChaserStep show: ((QLCChaser) showSelected.getShow().getFunction()).getChaserSteps())
-            functionList.add(new ChaserListWrapper(show));
+    @Override
+    public void stopExecuting(Show show) {
+        final ChaserListWrapper chaser = getChaserListWrapper(show);
+        if (chaser==null)
+            return;
 
-        lstCollection.setListData(functionList);
+        lstCollection.clearSelection();
     }
 }

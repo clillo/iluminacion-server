@@ -1,9 +1,7 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
-import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCEfx;
-import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.Show;
@@ -22,12 +20,7 @@ import java.awt.event.ActionListener;
 @Log4j2
 public class ControllerSeqPanel extends JPanel implements ActionListener, ChangeListener {
 
-    private final String fixtureGroupName;
-
-    private final JRadioButton loopForward = new JRadioButton("Loop Forward");
-    private final JRadioButton loopBackward = new JRadioButton("Loop Backward");
-    private final JRadioButton pingPong = new JRadioButton("Ping Pong");
-    private final JRadioButton random = new JRadioButton("Random");
+    private final RunOrderTypePicker runOrderTypePicker = new RunOrderTypePicker();
 
     private final JRadioButton universalTime = new JRadioButton("Universal Time");
     private final JRadioButton beatD4 = new JRadioButton("Beat / 4");
@@ -46,16 +39,13 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     private Show showSelected;
 
     public ControllerSeqPanel(final String fixtureGroupName) {
-        this.fixtureGroupName = fixtureGroupName;
         setLayout(null);
         final Label lblTittle = new Label(fixtureGroupName);
         lblTittle.setBounds(10, 10, 60, 40);
         this.add(lblTittle);
 
-        loopForward.setBounds(10,80,140,30);
-        loopBackward.setBounds(10,110,140,30);
-        pingPong.setBounds(10,140,100,30);
-        random.setBounds(10,170,100,30);
+        runOrderTypePicker.setBounds(10,70,140,130);
+        this.add(runOrderTypePicker);
 
         universalTime.setBounds(10,250,140,30);
         beatD4.setBounds(10,280,140,30);
@@ -66,11 +56,10 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         beatX8.setBounds(10,430,140,30);
         beatX16.setBounds(10,460,140,30);
 
-        addToButtonGroup(this, loopForward, loopBackward, pingPong, random);
         addToButtonGroup(this, universalTime, beatD4, beatD2, beatX1, beatX2, beatX4, beatX8, beatX16);
 
         universalTime.setSelected(true);
-        loopForward.setSelected(true);
+        runOrderTypePicker.setVisible(false);
 
         btnSave.setText("Save");
         btnSave.setBounds(10, 500, 120, 20);
@@ -87,31 +76,14 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         this.changeDirectionRunOrderListener = changeDirectionRunOrderListener;
     }
 
-    public void setShowSelected(Show showSelected) {
+    public void setShowSelected(final Show showSelected) {
         this.showSelected = showSelected;
 
-        if (showSelected.getFunction() instanceof QLCSequence) {
-            final QLCSequence sequence = showSelected.getFunction();
-
-            switch (sequence.getRunOrder()){
-                case LOOP:
-                    switch (sequence.getDirection()){
-                        case FORWARD:
-                            loopForward.setSelected(true);
-                            break;
-                        case BACKWARD:
-                            loopBackward.setSelected(true);
-                            break;
-                    }
-                    break;
-                case PINGPONG:
-                    pingPong.setSelected(true);
-                    break;
-
-                case RANDOM:
-                    random.setSelected(true);
-                    break;
-            }
+        try{
+            runOrderTypePicker.setVisible(true);
+            runOrderTypePicker.selectShow(showSelected.getFunction());
+        }catch (Exception e) {
+            runOrderTypePicker.setVisible(false);
         }
     }
 
@@ -171,7 +143,8 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     @Override
     public void stateChanged(ChangeEvent e) {
         if (changeDirectionRunOrderListener!=null)
-            changeDirectionRunOrderListener.change(getRunOrderSelected(), getDirectionSelected(), getType());
+            changeDirectionRunOrderListener.change(runOrderTypePicker.getRunOrderSelected(),
+                    runOrderTypePicker.getDirectionSelected(), getType(), runOrderTypePicker.getSpeedSelected());
 
     }
 
@@ -203,20 +176,5 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         return null;
     }
 
-    private QLCRunOrder getRunOrderSelected(){
-        if (loopForward.isSelected() || loopBackward.isSelected())
-            return QLCRunOrder.LOOP;
 
-        if (random.isSelected())
-            return QLCRunOrder.RANDOM;
-
-        return QLCRunOrder.PINGPONG;
-    }
-
-    private QLCDirection getDirectionSelected(){
-        if (loopForward.isSelected())
-            return QLCDirection.FORWARD;
-
-        return QLCDirection.BACKWARD;
-    }
 }

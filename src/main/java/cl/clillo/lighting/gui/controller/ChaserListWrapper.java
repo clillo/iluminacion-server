@@ -16,6 +16,6 @@ public class ChaserListWrapper {
 
     @Override
     public String toString() {
-        return chaserStep.getId()+"\t"+ chaserStep.getCollection().getName()+"\t"+ (chaserStep.getHold()/1000.0)+ " sec.";
+        return chaserStep.getId()+"\t"+ chaserStep.getShow().getName()+"\t"+ (chaserStep.getHold()/1000.0)+ " sec.";
     }
 }
