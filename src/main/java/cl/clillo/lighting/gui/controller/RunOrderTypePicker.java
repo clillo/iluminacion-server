@@ -32,10 +32,10 @@ public class RunOrderTypePicker extends JPanel implements ChangeListener {
         pingPong.setBounds(10, 70, 100, 30);
         random.setBounds(10, 100, 100, 30);
 
-        x1.setBounds(10, 130, 140, 20);
-        x2.setBounds(50, 130, 140, 20);
-        x3.setBounds(10, 160, 100, 20);
-        x4.setBounds(50, 160, 100, 20);
+        x1.setBounds(10, 150, 100, 20);
+        x2.setBounds(50, 150, 100, 20);
+        x3.setBounds(90, 150, 100, 20);
+        x4.setBounds(130, 150, 100, 20);
 
         addToButtonGroup(this, loopForward, loopBackward, pingPong, random);
         addToButtonGroup(this, x1, x2, x3, x4);

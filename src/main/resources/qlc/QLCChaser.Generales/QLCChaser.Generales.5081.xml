@@ -7,7 +7,17 @@
       <path>Generales</path>
       <name>Secuencia 3</name>
    </common>
-   <functions>
-      <function id="1" fadeIn="0" hold="0" fadeOut="0"/>
-   </functions>
+   <blackout id="160" />
+   <properties>
+      <runOrder>RANDOM</runOrder>
+      <direction>FORWARD</direction>
+      <speed>2</speed>
+   </properties>
+   <shows>
+      <show id="92" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="130" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="137" fadeIn="0" hold="1000" fadeOut="0"/>
+      <show id="405" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="166" fadeIn="0" hold="5000" fadeOut="0"/>
+   </shows>
 </doc>

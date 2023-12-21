@@ -7,7 +7,7 @@ import lombok.ToString;
 @Getter
 @ToString
 @Setter
-public class QLCChaserStep {
+public class ChaserStep {
 
     private int id;
     private int fadeIn;
@@ -15,7 +15,7 @@ public class QLCChaserStep {
     private int fadeOut;
     private final Show show;
 
-    QLCChaserStep(final int id, final int fadeIn, final int hold, final int fadeOut, final Show show) {
+    ChaserStep(final int id, final int fadeIn, final int hold, final int fadeOut, final Show show) {
         this.id = id;
         this.fadeIn = fadeIn;
         this.hold = hold;
@@ -62,8 +62,8 @@ public class QLCChaserStep {
             return this;
         }
 
-        public QLCChaserStep build() {
-            return new QLCChaserStep(this.id, this.fadeIn, this.hold, this.fadeOut, show);
+        public ChaserStep build() {
+            return new ChaserStep(this.id, this.fadeIn, this.hold, this.fadeOut, show);
         }
 
 

@@ -3,8 +3,6 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
-import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
-import cl.clillo.lighting.repository.XMLParser;
 import cl.clillo.lighting.utils.StringUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -302,8 +300,8 @@ public class QLCModel {
         return builder.build();
     }
 
-    private QLCChaserStep getChaserStep(final Node node){
-        final QLCChaserStep.QLCStepBuilder builder = QLCChaserStep.builder();
+    private ChaserStep getChaserStep(final Node node){
+        final ChaserStep.QLCStepBuilder builder = ChaserStep.builder();
         builder.id(getAttributeInt(node, "Number"));
         builder.fadeIn(getAttributeInt(node, "FadeIn"));
         builder.hold(getAttributeInt(node, "Hold"));

@@ -2,12 +2,11 @@ package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.ChaserExecutor;
 import cl.clillo.lighting.executor.ChaserExecutorShowListener;
-import cl.clillo.lighting.model.QLCChaser;
-import cl.clillo.lighting.model.QLCChaserStep;
+import cl.clillo.lighting.model.Chaser;
+import cl.clillo.lighting.model.ChaserStep;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 
-import javax.swing.JButton;
 import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -28,12 +27,12 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
 
     public ControllerChaser() {
         setLayout(null);
-        this.setOpaque(true);
-        this.setBackground(Color.red);
+        //this.setOpaque(true);
+     //   this.setBackground(Color.red);
 
         final Vector<ShowListWrapper> collectionList = new Vector<>();
         for (Show show: ShowCollection.getInstance().getShowList())
-            if (show.getFunction() instanceof QLCChaser) {
+            if (show.getFunction() instanceof Chaser) {
                 collectionList.add(new ShowListWrapper(show));
             }
 
@@ -47,7 +46,7 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
         this.add(btnRunningShows);
         btnRunningShows.addActionListener(e ->run(btnRunningShows.isSelected()));
 
-        runOrderTypePicker.setBounds(550,60,140,180);
+        runOrderTypePicker.setBounds(550,60,240,180);
         this.add(runOrderTypePicker);
     }
 
@@ -79,9 +78,9 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
         final ShowListWrapper showSelected = lstChasers.getSelectedValue();
 
         chaserListWrappers = new Vector<>();
-        final QLCChaser chaser = showSelected.getShow().getFunction();
+        final Chaser chaser = showSelected.getShow().getFunction();
 
-        for (QLCChaserStep show: chaser.getChaserSteps())
+        for (ChaserStep show: chaser.getChaserSteps())
             chaserListWrappers.add(new ChaserListWrapper(show));
 
         runOrderTypePicker.selectShow(showSelected.getShow().getFunction());

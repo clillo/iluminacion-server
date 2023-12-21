@@ -193,7 +193,7 @@ public class Show implements Comparable<Show> {
             if (function instanceof QLCCollection)
                 show.setStepExecutor(new QLCCollectionExecutor(show));
 
-            if (function instanceof QLCChaser)
+            if (function instanceof Chaser)
                 show.setStepExecutor(new ChaserExecutor(show));
             return show;
         }

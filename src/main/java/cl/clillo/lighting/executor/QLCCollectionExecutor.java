@@ -1,6 +1,7 @@
 package cl.clillo.lighting.executor;
 
 import cl.clillo.lighting.gui.controller.MidiButtonFunctionRepository;
+import cl.clillo.lighting.model.Chaser;
 import cl.clillo.lighting.model.QLCCollection;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
@@ -54,7 +55,7 @@ public class QLCCollectionExecutor extends AbstractExecutor {
         final Set<Show> collectionShows = new HashSet<>(collection.getShowList());
         final MidiButtonFunctionRepository midiButtonFunctionRepository = MidiButtonFunctionRepository.getInstance();
         for (Show show: allShows)
-            if (!collectionShows.contains(show) && show.getId()!=collection.getShow().getId()) {
+            if (!collectionShows.contains(show) && show.getId()!=collection.getShow().getId() && !(show.getFunction() instanceof Chaser)) {
                 show.setExecuting(false);
                 if (midiButtonFunctionRepository.getButton(show.getId())!=null)
                     midiButtonFunctionRepository.getButton(show.getId()).setExecuting(false);

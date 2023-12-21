@@ -39,7 +39,10 @@ public abstract class AbstractExecutor {
 
     public void executeDefaultScheduler(){
         if (show.isFirstTimeExecution()){
-            actualStep = 0;
+            if (runOrder == QLCRunOrder.RANDOM)
+                calcRandomNextStep();
+            else
+                actualStep = 0;
             show.setFirstTimeExecution(false);
             start();
         }
@@ -47,8 +50,11 @@ public abstract class AbstractExecutor {
 
     protected void preExecuteDefaultScheduler(){
         if (show.isFirstTimeExecution()){
-            actualStep = 0;
             show.setFirstTimeExecution(false);
+            if (runOrder == QLCRunOrder.RANDOM)
+                calcRandomNextStep();
+            else
+                actualStep = 0;
             start();
         }
     }
@@ -70,10 +76,7 @@ public abstract class AbstractExecutor {
         }
 
         if (runOrder == QLCRunOrder.RANDOM){
-            int next = actualStep;
-            while (next==actualStep)
-                next = random.nextInt(totalSteps+1);
-            actualStep = next;
+            calcRandomNextStep();
             return;
         }
 
@@ -84,6 +87,12 @@ public abstract class AbstractExecutor {
 
     }
 
+    private void calcRandomNextStep(){
+        int next = actualStep;
+        while (next==actualStep)
+            next = random.nextInt(totalSteps+1);
+        actualStep = next;
+    }
 
     public void executeOS2LScheduler(){}
 

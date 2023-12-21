@@ -31,6 +31,7 @@ public class QLCEfxExecutor extends AbstractExecutor {
     public void executeDefaultScheduler() {
         if (show.isFirstTimeExecution()){
             show.setFirstTimeExecution(false);
+            log.info("executing {} efx {}", show.getName(), show.getFunction().getId());
         }
 
         final QLCExecutionNode node = efx.nextNode();
@@ -41,7 +42,7 @@ public class QLCEfxExecutor extends AbstractExecutor {
 
         //roboticNotifiable.notify(node);
 
-        log.info("executing {} efx {}", show.getName(), show.getFunction().getId());
+      //  log.info("executing {} efx {}", show.getName(), show.getFunction().getId());
 
         show.setNextExecutionTime(System.currentTimeMillis() + speed);
     }

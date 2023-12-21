@@ -1,22 +1,18 @@
 package cl.clillo.lighting.executor;
 
-import cl.clillo.lighting.model.QLCChaser;
-import cl.clillo.lighting.model.QLCChaserStep;
-import cl.clillo.lighting.model.QLCSequence;
-import cl.clillo.lighting.model.QLCStep;
+import cl.clillo.lighting.model.Chaser;
+import cl.clillo.lighting.model.ChaserStep;
 import cl.clillo.lighting.model.Show;
 import lombok.extern.log4j.Log4j2;
-
-import java.util.List;
 
 @Log4j2
 public class ChaserExecutor extends AbstractExecutor {
 
-    private final QLCChaser chaser;
+    private final Chaser chaser;
     private ChaserExecutorShowListener chaserExecutorShowListener;
 
     public ChaserExecutor(final Show show) {
-        super(show, ((QLCChaser)show.getFunction()).getChaserSteps().size());
+        super(show, ((Chaser)show.getFunction()).getChaserSteps().size());
         chaser = show.getFunction();
 
     }
@@ -28,27 +24,28 @@ public class ChaserExecutor extends AbstractExecutor {
             return;
 
         chaser.getBlackoutShow().setExecuting(false);
-        for (QLCChaserStep chaserStep: chaser.getChaserSteps()) {
+        for (ChaserStep chaserStep: chaser.getChaserSteps()) {
             if (chaserExecutorShowListener!=null)
                 chaserExecutorShowListener.stopExecuting(chaserStep.getShow());
             chaserStep.getShow().setExecuting(false);
         }
 
-        final QLCChaserStep chaserStep = chaser.getChaserSteps().get(actualStep);
+        final ChaserStep chaserStep = chaser.getChaserSteps().get(actualStep);
         chaserStep.getShow().setExecuting(true);
         if (chaserExecutorShowListener!=null)
             chaserExecutorShowListener.startExecuting(chaserStep.getShow());
 
-        log.info("executing {} chaser {}: id [{}] show[{}] chaserStep id[{}]", show.getName(), actualStep, chaser.getId(), chaserStep.getShow().getName(), chaserStep.getId());
+        long nextStepExecInMillis = (long) (chaserStep.getFadeIn() + chaserStep.getHold() + chaserStep.getFadeOut()) * chaser.getSpeed();
+        log.info("executing {} chaser {}: id [{}] show[{}] chaserStep id[{}] nextStepExecInMillis [{}]", show.getName(), actualStep, chaser.getId(), chaserStep.getShow().getName(), chaserStep.getId(), nextStepExecInMillis);
 
-        show.setNextExecutionTime(System.currentTimeMillis() + (long) (chaserStep.getFadeIn() + chaserStep.getHold() + chaserStep.getFadeOut()) * chaser.getSpeed());
+        show.setNextExecutionTime(System.currentTimeMillis() + nextStepExecInMillis);
 
         postExecuteDefaultScheduler();
     }
 
     @Override
     public void stop(){
-        for (QLCChaserStep chaserStep: chaser.getChaserSteps()) {
+        for (ChaserStep chaserStep: chaser.getChaserSteps()) {
             chaserStep.getShow().setExecuting(false);
             if (chaserExecutorShowListener!=null)
                 chaserExecutorShowListener.stopExecuting(chaserStep.getShow());

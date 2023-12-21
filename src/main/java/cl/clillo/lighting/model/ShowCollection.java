@@ -153,6 +153,9 @@ public class ShowCollection {
             if (dir.listFiles()!=null)
                 addCollectionFromDir(dir);
 
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                addChaserFromDir(dir);
     }
 
     private void addFromDirectory(final File file){
@@ -188,8 +191,20 @@ public class ShowCollection {
             for (File f: files){
                 if (f.getName().startsWith("QLCCollection"))
                     addQLCFunction(QLCCollection.read(this, f));
+            }
+        } catch (ParserConfigurationException | IOException | SAXException e) {
+            throw new RuntimeException(e);
+        }
+
+        Collections.sort(showList);
+    }
+
+    private void addChaserFromDir(final File file){
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
+        try {
+            for (File f: files){
                 if (f.getName().startsWith("QLCChaser"))
-                    addQLCFunction(QLCChaser.read(this, f));
+                    addQLCFunction(Chaser.read(this, f));
             }
         } catch (ParserConfigurationException | IOException | SAXException e) {
             throw new RuntimeException(e);

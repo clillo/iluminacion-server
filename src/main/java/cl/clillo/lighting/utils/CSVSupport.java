@@ -133,7 +133,7 @@ public class CSVSupport {
 
         for (Show show : ShowCollection.getInstance().getShowList()) {
             functionIds.add(show.getFunction().getId());
-            names.put(show.getFunction().getId(), show.getFunction().getPath() + "." + show.getFunction().getName());
+            names.put(show.getFunction().getId(),show.getId()+"."+ show.getFunction().getPath() + "." + show.getFunction().getName());
         }
 
         final List<Integer> finalList = new ArrayList<>(functionIds);

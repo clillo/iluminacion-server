@@ -32,7 +32,7 @@ public class QLCSceneExecutor extends AbstractExecutor {
 
         sendNumber--;
         final QLCScene scene = show.getFunction();
-        System.out.println("Sending "+ show.getId()+ "\t" +scene.getType() + "\t"+scene.getName()+"\t"+scene.getQlcPointList());
+        log.info("Sending "+ show.getId()+ "\t" +scene.getType() + "\t"+scene.getName()+"\t"+scene.getQlcPointList());
         for (QLCPoint qlcPoint: scene.getQlcPointList())
             dmx.send(qlcPoint);
 

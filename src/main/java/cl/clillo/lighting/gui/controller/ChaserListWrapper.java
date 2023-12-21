@@ -1,16 +1,16 @@
 package cl.clillo.lighting.gui.controller;
 
-import cl.clillo.lighting.model.QLCChaserStep;
+import cl.clillo.lighting.model.ChaserStep;
 
 public class ChaserListWrapper {
 
-    private final QLCChaserStep chaserStep;
+    private final ChaserStep chaserStep;
 
-    public ChaserListWrapper(final QLCChaserStep chaserStep) {
+    public ChaserListWrapper(final ChaserStep chaserStep) {
         this.chaserStep = chaserStep;
     }
 
-    public QLCChaserStep getChaserStep() {
+    public ChaserStep getChaserStep() {
         return chaserStep;
     }
 

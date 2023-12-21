@@ -147,7 +147,7 @@ public class QLCFunction extends QLCElement{
         private final List<QLCFunction> qlcFunctionList = new ArrayList<>();
         private final List<QLCStep> qlcStepList = new ArrayList<>();
         private final List<QLCEfxFixtureData> roboticFixtureList = new ArrayList<>();
-        private final List<QLCChaserStep> chaserSteps = new ArrayList<>();
+        private final List<ChaserStep> chaserSteps = new ArrayList<>();
 
         QLCFunctionBuilder() {
         }
@@ -211,7 +211,7 @@ public class QLCFunction extends QLCElement{
             return this;
         }
 
-        public QLCFunctionBuilder addStepChaser(final QLCChaserStep step) {
+        public QLCFunctionBuilder addStepChaser(final ChaserStep step) {
             this.chaserSteps.add(step);
             return this;
         }
@@ -240,7 +240,7 @@ public class QLCFunction extends QLCElement{
 
 
             if ("Chaser".equalsIgnoreCase(type))
-                return this.chaserSteps.size()>0? new QLCChaser(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
+                return this.chaserSteps.size()>0? new Chaser(this.id, this.type, this.name, this.path, this.direction, this.runOrder,
                         1, this.chaserSteps): null;
 
 

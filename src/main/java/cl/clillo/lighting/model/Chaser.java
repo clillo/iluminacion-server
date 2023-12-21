@@ -15,16 +15,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ToString
-public class QLCChaser extends QLCFunction implements Sequenceable{
+public class Chaser extends QLCFunction implements Sequenceable{
 
-    private final List<QLCChaserStep> chaserSteps;
+    private final List<ChaserStep> chaserSteps;
     private QLCDirection direction;
     private final QLCRunOrder runOrder;
     private int qlcSpeed;
     private Show blackoutShow;
 
-    public QLCChaser(final int id, final String type, final String name, final String path, final QLCDirection direction,
-                     final QLCRunOrder runOrder, final int qlcSpeed, final List<QLCChaserStep> chaserSteps) {
+    public Chaser(final int id, final String type, final String name, final String path, final QLCDirection direction,
+                  final QLCRunOrder runOrder, final int qlcSpeed, final List<ChaserStep> chaserSteps) {
         super(id, type, name, path);
         this.direction = direction;
         this.runOrder = runOrder;
@@ -35,7 +35,7 @@ public class QLCChaser extends QLCFunction implements Sequenceable{
     public String toSmallString() {
         StringBuilder sb = new StringBuilder(super.toSmallString());
 
-        for (QLCChaserStep scene : chaserSteps)
+        for (ChaserStep scene : chaserSteps)
             sb.append('{').append(scene.getId()).append('}');
         return sb.toString();
     }
@@ -43,7 +43,7 @@ public class QLCChaser extends QLCFunction implements Sequenceable{
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
         out.writeStartElement("shows");
-        for (QLCChaserStep step : chaserSteps) {
+        for (ChaserStep step : chaserSteps) {
 
             out.writeStartElement("show");
             if (step.getShow()!=null) {
@@ -57,10 +57,10 @@ public class QLCChaser extends QLCFunction implements Sequenceable{
         out.writeEndElement();
     }
 
-    public static QLCChaser read(final ShowCollection collection, final File file) throws ParserConfigurationException, IOException, SAXException {
+    public static Chaser read(final ShowCollection collection, final File file) throws ParserConfigurationException, IOException, SAXException {
         final Document doc = XMLParser.getDocument(file);
         final QLCElement function = QLCElement.read(doc);
-        final List<QLCChaserStep> qlcFunctionList = new ArrayList<>();
+        final List<ChaserStep> qlcFunctionList = new ArrayList<>();
         final Node blackout = XMLParser.getNode(doc.getFirstChild(), "blackout");
         Show blackoutShow = null;
         if (blackout!=null && blackout.hasAttributes()) {
@@ -88,8 +88,12 @@ public class QLCChaser extends QLCFunction implements Sequenceable{
             if (node.hasAttributes()) {
                 final int showId = XMLParser.getIntAttributeValue(node, "id");
                 final Show show = collection.getShow(showId);
+                if (show==null){
+                    System.out.println("Show no existe: " + showId);
+                  //  System.exit(0);
+                }
 
-                qlcFunctionList.add(QLCChaserStep.builder()
+                qlcFunctionList.add(ChaserStep.builder()
                                 .id(showId)
                                 .fadeIn(XMLParser.getIntAttributeValue(node, "fadeIn"))
                                 .hold(XMLParser.getIntAttributeValue(node, "hold"))
@@ -98,13 +102,13 @@ public class QLCChaser extends QLCFunction implements Sequenceable{
                         .build());
             }
 
-        final QLCChaser chaser = new QLCChaser(function.getId(), function.getType(), function.getName(),
+        final Chaser chaser = new Chaser(function.getId(), function.getType(), function.getName(),
                 function.getPath(), qlcDirection, qlcRunOrder, qlcSpeed, qlcFunctionList);
         chaser.setBlackoutShow(blackoutShow);
         return chaser;
     }
 
-    public List<QLCChaserStep> getChaserSteps() {
+    public List<ChaserStep> getChaserSteps() {
         return chaserSteps;
     }
 
