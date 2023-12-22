@@ -16,6 +16,7 @@ public class QLCElement {
     protected final String name;
     protected final String path;
     protected boolean blackout;
+    private boolean totalBlackout;
 
     public QLCElement(int id, String type, String name, String path) {
         this.id = id;
@@ -30,6 +31,7 @@ public class QLCElement {
         final QLCElement qlcElement = new QLCElement(XMLParser.getNodeInt(common, "id"), XMLParser.getNodeString(common, "type"),
                 XMLParser.getNodeString(common, "name"), XMLParser.getNodeString(common, "path"));
         qlcElement.blackout = XMLParser.getNodeBoolean(common, "blackout");
+        qlcElement.totalBlackout = "TotalBlackout".equalsIgnoreCase(XMLParser.getNodeString(common, "system"));
 
         return qlcElement;
     }
@@ -73,5 +75,13 @@ public class QLCElement {
 
     protected int[] getDimmerChannels(){
         return new int[0];
+    }
+
+    public boolean isTotalBlackout() {
+        return totalBlackout;
+    }
+
+    public void setTotalBlackout(boolean totalBlackout) {
+        this.totalBlackout = totalBlackout;
     }
 }

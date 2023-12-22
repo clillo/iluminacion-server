@@ -52,7 +52,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         add(midiPages);
 
         controllerEditPanels = new ControllerEditPanel[8];
-        String []names = {"Collections", "Laser-Derby-RGBW", "Moving Heads", "", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam"};
+        String []names = {"Collections", "Laser-Derby", "RGBW", "Moving Heads", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam"};
         for (int i=0; i<8; i++) {
             final ControllerEditPanel editPanel = new ControllerEditPanel(i+1, names[i]);
             controllerEditPanels[i] = editPanel;

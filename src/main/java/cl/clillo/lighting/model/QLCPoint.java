@@ -35,7 +35,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
             channelType = qlcRoboticFixture.getChannelType(dmxChannel);
         }
 
-        if (channelType==null) {
+        if (channelType==null && fixture!=null) {
             channelType = fixture.getChannel(channel);
 
         }
@@ -55,7 +55,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     }
 
     public String toString() {
-        return "QLCPoint(fixture=" + this.getFixture().getId() + ",  dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
+        return "QLCPoint(fixture=" + (this.getFixture()!=null?this.getFixture().getId():-1) + ",  dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
     }
 
     public QLCPoint replaceDimmerValue(final int value){

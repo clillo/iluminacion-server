@@ -56,6 +56,12 @@ public class QLCFunction extends QLCElement{
             out.writeEndElement();
         }
 
+        if (isTotalBlackout()){
+            out.writeStartElement("system");
+            out.writeCharacters("TotalBlackout");
+            out.writeEndElement();
+        }
+
         out.writeEndElement();
     }
 

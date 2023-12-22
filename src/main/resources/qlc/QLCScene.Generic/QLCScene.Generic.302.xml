@@ -1,0 +1,15 @@
+
+<doc>
+   <title>QLCScene.Generic.302</title>
+   <common>
+      <id>302</id>
+      <type>Scene</type>
+      <path>Generic</path>
+      <name>Blackout</name>
+      <system>TotalBlackout</system>
+      <blackout>true</blackout>
+   </common>
+   <points>
+
+   </points>
+</doc>

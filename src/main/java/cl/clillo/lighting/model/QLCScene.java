@@ -50,6 +50,8 @@ public class QLCScene extends QLCFunction{
 
         }else
             qlcEfxScene = null;
+
+
     }
 
     public String toSmallString(){
@@ -90,6 +92,7 @@ public class QLCScene extends QLCFunction{
         Collections.sort(qlcPointList);
         final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList);
         scene.setBlackout(function.isBlackout());
+        scene.setTotalBlackout(function.isTotalBlackout());
 
         return scene;
     }
@@ -108,5 +111,21 @@ public class QLCScene extends QLCFunction{
         super.setShow(show);
         if (qlcEfxScene!=null)
             qlcEfxScene.setShow(getShow());
+    }
+
+    @Override
+    public void setTotalBlackout(boolean totalBlackout) {
+        super.setTotalBlackout(totalBlackout);
+        if (!totalBlackout)
+            return;
+
+        this.qlcPointList.clear();
+        for (int i=0; i<512; i++)
+            this.qlcPointList.add(QLCPoint.builder()
+                    .channel(i)
+                    .data(0)
+                    .dmxChannel(i)
+                    .build());
+
     }
 }

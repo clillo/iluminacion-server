@@ -7,5 +7,8 @@
       <path>Sec2</path>
       <name>Blue Strobo RGB</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="427" name="Blue Secuence Strobo"/>
+      <show id="200" name="Blue Slow Strobo"/>
+   </shows>
 </doc>
