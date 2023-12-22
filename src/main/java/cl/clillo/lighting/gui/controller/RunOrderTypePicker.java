@@ -3,17 +3,12 @@ package cl.clillo.lighting.gui.controller;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.Sequenceable;
+import cl.clillo.lighting.model.Show;
 
-import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import java.awt.event.ItemEvent;
-import java.util.List;
-import java.util.Vector;
 
-public class RunOrderTypePicker extends JPanel implements ChangeListener {
+public class RunOrderTypePicker extends JPanel {
 
     private final JRadioButton loopForward = new JRadioButton("Loop Forward");
     private final JRadioButton loopBackward = new JRadioButton("Loop Backward");
@@ -23,6 +18,8 @@ public class RunOrderTypePicker extends JPanel implements ChangeListener {
     private final JRadioButton x2 = new JRadioButton("2x");
     private final JRadioButton x3 = new JRadioButton("3x");
     private final JRadioButton x4 = new JRadioButton("4x");
+    private JRadioButton previousRadioSelected = null;
+    private Show showSelected = null;
 
     public RunOrderTypePicker() {
         setLayout(null);
@@ -45,21 +42,36 @@ public class RunOrderTypePicker extends JPanel implements ChangeListener {
     }
 
     private void addToButtonGroup(final JPanel panelDimmers, final JRadioButton... buttons) {
-        javax.swing.ButtonGroup bg = new javax.swing.ButtonGroup();
+        final javax.swing.ButtonGroup bg = new javax.swing.ButtonGroup();
         for (JRadioButton rb : buttons) {
             bg.add(rb);
-            rb.addChangeListener(this);
+            rb.addChangeListener(e ->{
+                if (!rb.isSelected())
+                    return;
+                if (previousRadioSelected!=null && previousRadioSelected==rb)
+                    return;
+                previousRadioSelected = rb;
+                selectRadio();
+            } );
             panelDimmers.add(rb);
         }
 
     }
 
-    @Override
-    public void stateChanged(ChangeEvent e) {
+    private void selectRadio(){
+        int speed = getSpeedSelected();
+        if (speed == -1)
+            return;
+        if (showSelected==null)
+            return;
 
+        ((Sequenceable)showSelected.getFunction()).setSpeed(speed);
     }
 
-    public void selectShow(final Sequenceable sequence) {
+    public void selectShow(final Show show) {
+        this.showSelected = show;
+        final Sequenceable sequence = show.getFunction();
+
         switch (sequence.getRunOrder()) {
             case LOOP:
                 switch (sequence.getDirection()) {
@@ -82,15 +94,19 @@ public class RunOrderTypePicker extends JPanel implements ChangeListener {
 
         switch (sequence.getSpeed()){
             case 1:
+                previousRadioSelected=x1;
                 x1.setSelected(true);
                 break;
             case 2:
+                previousRadioSelected=x2;
                 x2.setSelected(true);
                 break;
             case 3:
+                previousRadioSelected=x3;
                 x3.setSelected(true);
                 break;
             case 4:
+                previousRadioSelected=x4;
                 x4.setSelected(true);
                 break;
         }
@@ -117,12 +133,14 @@ public class RunOrderTypePicker extends JPanel implements ChangeListener {
     public int getSpeedSelected(){
         if (x1.isSelected())
             return 1;
-        if (x4.isSelected())
-            return 4;
+        if (x2.isSelected())
+            return 2;
         if (x3.isSelected())
             return 3;
+        if (x4.isSelected())
+            return 4;
 
-        return 4;
+        return -1;
 
     }
 }

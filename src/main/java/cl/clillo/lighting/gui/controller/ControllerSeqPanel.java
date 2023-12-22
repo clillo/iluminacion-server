@@ -81,7 +81,7 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
         try{
             runOrderTypePicker.setVisible(true);
-            runOrderTypePicker.selectShow(showSelected.getFunction());
+            runOrderTypePicker.selectShow(showSelected);
         }catch (Exception e) {
             runOrderTypePicker.setVisible(false);
         }

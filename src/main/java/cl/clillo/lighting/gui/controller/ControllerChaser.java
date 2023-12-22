@@ -97,7 +97,7 @@ public class ControllerChaser extends JPanel implements ChangeListener, ListSele
         for (ChaserStep show: chaser.getChaserSteps())
             chaserListWrappers.add(new ChaserListWrapper(show));
 
-        runOrderTypePicker.selectShow(showSelected.getShow().getFunction());
+        runOrderTypePicker.selectShow(showSelected.getShow());
 
         lstCollection.setListData(chaserListWrappers);
     }
