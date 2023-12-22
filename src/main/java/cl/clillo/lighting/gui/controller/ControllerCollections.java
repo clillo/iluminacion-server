@@ -55,7 +55,7 @@ public class ControllerCollections extends JPanel implements ChangeListener, Lis
     private void runningShows(){
         Vector<FunctionListWrapper> functionList = new Vector<>();
         for (Show show: ShowCollection.getInstance().getShowList())
-            if (show.isExecuting())
+            if (show.isExecuting() && show.getId()!=302)
                 functionList.add(new FunctionListWrapper(show.getFunction()));
 
         lstActualRunningShows.setListData(functionList);
