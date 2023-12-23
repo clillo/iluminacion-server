@@ -5,7 +5,9 @@ import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
+import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
+import cl.clillo.lighting.repository.StateRepository;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -40,6 +42,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final JTextField txtTimeX2 = new JTextField();
 
     private final JTextField txtPos = new JTextField();
+    private final JTextField txtEvent = new JTextField();
     private final DimmerManager[] dimmers;
 
     public ControllerMainPanel() {
@@ -100,16 +103,19 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         txtTime.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 115, 120, 30);
         txtTimeX2.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 150, 120, 30);
         txtPos.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 185, 120, 30);
+        txtEvent.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 220, 120, 30);
 
         txtActualBPM.setFont(new Font("serif", Font.BOLD, 18));
         txtTime.setFont(new Font("serif", Font.BOLD, 18));
         txtTimeX2.setFont(new Font("serif", Font.BOLD, 18));
         txtPos.setFont(new Font("serif", Font.BOLD, 18));
+        txtEvent.setFont(new Font("serif", Font.BOLD, 18));
 
         panelDimmers.add(txtActualBPM);
         panelDimmers.add(txtTime);
         panelDimmers.add(txtTimeX2);
         panelDimmers.add(txtPos);
+        panelDimmers.add(txtEvent);
 
         chaserPages = new JTabbedPane();
         chaserPages.setBounds(580, 0, 850, 400);
@@ -227,6 +233,24 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     public void pos(int pos) {
         int beat = Math.abs((int)(pos % 16.0) + 1);
         txtPos.setText(pos + " - " + beat);
+    }
+
+    @Override
+    public void event(int event) {
+        Show show = StateRepository.getInstance().getEventShow(event);
+        for (Show show1: ShowCollection.getInstance().getShowList()) {
+            show1.setExecuting(false);
+            if (show1.getFunction().isTotalBlackout())
+                show1.setExecuteOneTime(true);
+        }
+
+        if (show==null){
+            txtEvent.setText(event +" - undefined");
+            return;
+        }
+        txtEvent.setText(event +" - "+show.getId());
+
+        show.setExecuting(true);
     }
 
     @Override

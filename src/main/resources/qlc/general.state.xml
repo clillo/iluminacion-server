@@ -7,4 +7,8 @@
       <movingHeadSpot>96</movingHeadSpot>
       <movingHeadBeam>100</movingHeadBeam>
    </masterDimmer>
+   <virtualDJEvents>
+      <event id="1001" show="427"/>
+      <event id="1002" show="153"/>
+   </virtualDJEvents>
 </doc>

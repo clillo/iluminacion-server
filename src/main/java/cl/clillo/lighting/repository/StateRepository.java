@@ -2,10 +2,8 @@ package cl.clillo.lighting.repository;
 
 import cl.clillo.lighting.config.QLCReader;
 import cl.clillo.lighting.model.Point;
-import org.dom4j.DocumentException;
-import org.dom4j.DocumentHelper;
-import org.dom4j.io.OutputFormat;
-import org.dom4j.io.XMLWriter;
+import cl.clillo.lighting.model.Show;
+import cl.clillo.lighting.model.ShowCollection;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
@@ -18,19 +16,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.io.StringWriter;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class StateRepository {
 
     private static final String FILENAME = QLCReader.repoBase + "/general.state.xml";
 
     private List<Point> limitMasterDimmer = new ArrayList<>();
+    private Map<Integer, Integer> events = new HashMap<>();
     private int rgbwMasterDimmer;
     private int movingHeadSpotBeamMasterDimmer;
     private int movingHeadSpotMasterDimmer;
@@ -127,9 +124,21 @@ public class StateRepository {
 
             writeElements(out);
 
+
+
+
+            out.writeStartElement("virtualDJEvents");
+            for (Map.Entry<Integer, Integer> entry: events.entrySet()){
+                out.writeStartElement("event");
+                out.writeAttribute("id", String.valueOf(entry.getKey()));
+                out.writeAttribute("show", String.valueOf(entry.getValue()));
+                out.writeEndElement();
+            }
+
+            out.writeEndElement();
+
             out.writeEndElement();
             out.writeEndDocument();
-
             out.close();
 
             XMLParser.writeXMLFile(FILENAME, outputStream);
@@ -167,9 +176,26 @@ public class StateRepository {
             movingHeadSpotBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpotBeam");
             movingHeadSpotMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpot");
             movingHeadBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadBeam");
+            Node docNode = XMLParser.getNode(doc, "doc");
+            if (docNode==null)
+                return;
+            final List<Node> events = XMLParser.getNodeList(docNode, "virtualDJEvents");
+            for (Node node: events){
+                if (!node.hasAttributes())
+                    continue;
+                int eventId = XMLParser.getIntAttributeValue(node, "id");
+                int showId = XMLParser.getIntAttributeValue(node, "show");
+                this.events.put(eventId, showId);
+            }
         }  catch (ParserConfigurationException | IOException| SAXException e) {
             throw new RuntimeException(e);
         }
     }
 
+    public Show getEventShow(int eventId){
+        if (!events.containsKey(eventId))
+            return null;
+
+        return ShowCollection.getInstance().getShow(events.get(eventId));
+    }
 }

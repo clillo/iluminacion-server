@@ -9,4 +9,6 @@ public interface IOS2LEventListener {
     void changeTimes(long time, long timex2);
 
     void pos(int pos);
+
+    void event(int event);
 }

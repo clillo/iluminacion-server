@@ -66,7 +66,8 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void command(int id, int param) {
-
+        if (ios2LEventListener!=null )
+            ios2LEventListener.event(id);
     }
 
     @Override
