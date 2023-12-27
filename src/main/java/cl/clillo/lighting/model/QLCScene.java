@@ -120,12 +120,6 @@ public class QLCScene extends QLCFunction{
             return;
 
         this.qlcPointList.clear();
-        for (int i=0; i<512; i++)
-            this.qlcPointList.add(QLCPoint.builder()
-                    .channel(i)
-                    .data(0)
-                    .dmxChannel(i)
-                    .build());
-
+        this.qlcPointList.addAll(ShowCollection.getInstance().getBlackoutPointList());
     }
 }

@@ -4,6 +4,7 @@ import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCFixtureModel;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.fixture.qlc.QLCSimpleRoboticFixture;
+import cl.clillo.lighting.model.QLCPoint;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +15,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
 
     private final Map<Integer, QLCFixture> fixtureMap;
     private final List<QLCFixture> fixtureList;
+    private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
     public QLCFixtureBuilder(List<QLCFixtureModel> fixtureModelList) {
         this.fixtureMap = new HashMap<>();
@@ -31,7 +33,12 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelC));
         for (QLCFixture fixture: fixtureList) {
             fixtureMap.put(fixture.getId(), fixture);
+            blackoutPointList.addAll(fixture.getBlackoutPointList());
         }
+    }
+
+    public List<QLCPoint> getBlackoutPointList() {
+        return blackoutPointList;
     }
 
     public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA,

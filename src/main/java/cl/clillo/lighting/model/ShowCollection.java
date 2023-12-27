@@ -24,6 +24,7 @@ public class ShowCollection {
     private QLCFixtureBuilder qlcModel;
     private final StateRepository stateRepository = StateRepository.getInstance();
     private OS2LScheduler os2LScheduler;
+    private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
     private ShowCollection(){
 
@@ -34,6 +35,7 @@ public class ShowCollection {
         qlcModelOriginal = new QLCModel();
         System.out.println("Building new Model");
         qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
+        blackoutPointList.addAll(qlcModel.getBlackoutPointList());
         DefaultScheduler scheduler = new DefaultScheduler(showList);
         System.out.println("Reading new shows");
         addFromDirectory(BASE_DIR);
@@ -272,5 +274,9 @@ public class ShowCollection {
 
     public String getDirectory(final QLCFunction function){
         return FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
+    }
+
+    public List<QLCPoint> getBlackoutPointList() {
+        return blackoutPointList;
     }
 }

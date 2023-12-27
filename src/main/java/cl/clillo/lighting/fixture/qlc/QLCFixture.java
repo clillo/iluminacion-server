@@ -1,5 +1,6 @@
 package cl.clillo.lighting.fixture.qlc;
 
+import cl.clillo.lighting.model.QLCPoint;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -7,6 +8,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -15,8 +18,23 @@ import java.util.Map;
 public class QLCFixture {
 
     public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE,
-        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN, PAN_FINE, TILT, TILT_FINE, AUTO, GOBO_CRISTAL, GOBO_CRISTAL_ROTATING, GOBO_SHAKE,
-        GOBO_INDEX, GOBO_NORMAL_SHAKE ;
+        COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN(true), PAN_FINE(true), TILT(true),
+        TILT_FINE(true), AUTO, GOBO_CRISTAL, GOBO_CRISTAL_ROTATING, GOBO_SHAKE,
+        GOBO_INDEX, GOBO_NORMAL_SHAKE;
+
+        private final boolean isMovement;
+
+        ChannelType(){
+            isMovement=false;
+        }
+
+        ChannelType(boolean isMovement){
+            this.isMovement=isMovement;
+        }
+
+        public boolean isMovement() {
+            return isMovement;
+        }
 
         public static ChannelType of(String name){
             if ("color wheel".equalsIgnoreCase(name) || "color_wheel".equalsIgnoreCase(name))
@@ -64,6 +82,7 @@ public class QLCFixture {
     private int address;
     private int channels;
     private QLCFixtureModel fixtureModel;
+    private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
     QLCFixture(String manufacturer, String model, String mode, int id, String name, int universe, int address, int channels, QLCFixtureModel fixtureModel) {
         this.manufacturer = manufacturer;
@@ -75,6 +94,18 @@ public class QLCFixture {
         this.address = address;
         this.channels = channels;
         this.fixtureModel = fixtureModel;
+
+        for (int i=0; i<channels; i++) {
+            ChannelType channelType = getChannel(i);
+            if (channelType.isMovement())
+                continue;
+            blackoutPointList.add(QLCPoint.builder()
+                    .fixture(this)
+                    .channel(i)
+                    .data(0)
+                    .dmxChannel(getDMXChannel(i))
+                    .build());
+        }
     }
 
     public int getChannel(ChannelType channelType){
@@ -112,7 +143,6 @@ public class QLCFixture {
 
         return getDMXChannel(ChannelType.DIMMER, ChannelType.MASTER_DIMMER) - 2 ;
     }
-
 
     public int getDMXChannel(ChannelType channelType){
         return getChannel(channelType) + address - 1;
@@ -247,5 +277,9 @@ public class QLCFixture {
 
             return build(fixtureModelMap);
         }
+    }
+
+    public List<QLCPoint> getBlackoutPointList() {
+        return blackoutPointList;
     }
 }

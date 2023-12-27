@@ -32,7 +32,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final List<JSlider> pnlListDimmer;
     private final MidiHandler midiHandler;
     private final JTabbedPane midiPages;
-    private final JTabbedPane chaserPages;
 
     private final ControllerEditPanel[] controllerEditPanels;
     private int activeIndex = -1;
@@ -117,7 +116,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(txtPos);
         panelDimmers.add(txtEvent);
 
-        chaserPages = new JTabbedPane();
+        JTabbedPane chaserPages = new JTabbedPane();
         chaserPages.setBounds(580, 0, 850, 400);
         chaserPages.addTab("Chaser Executor",new ControllerChaser());
         chaserPages.addTab("Collections Editor",new ControllerCollections());
