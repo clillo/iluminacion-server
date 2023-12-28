@@ -1,5 +1,6 @@
 package cl.clillo.lighting.fixture.qlc;
 
+import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.model.QLCPoint;
 import lombok.Getter;
 import lombok.Setter;
@@ -281,5 +282,15 @@ public class QLCFixture {
 
     public List<QLCPoint> getBlackoutPointList() {
         return blackoutPointList;
+    }
+
+    public void on(){
+        Dmx dmx = Dmx.getInstance();
+        dmx.send(getDMXChannel(ChannelType.DIMMER), 255);
+    }
+
+    public void off(){
+        Dmx dmx = Dmx.getInstance();
+        dmx.send(getDMXChannel(ChannelType.DIMMER), 0);
     }
 }

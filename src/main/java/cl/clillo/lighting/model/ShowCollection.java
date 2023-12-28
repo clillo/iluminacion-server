@@ -3,6 +3,7 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.QLCFixtureBuilder;
 import cl.clillo.lighting.executor.DefaultScheduler;
 import cl.clillo.lighting.executor.OS2LScheduler;
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import org.xml.sax.SAXException;
@@ -284,5 +285,9 @@ public class ShowCollection {
         System.out.println("globalBlackout");
         Show blackoutShow = getShow(301);
         blackoutShow.setExecuteOneTime(true);
+    }
+
+    public QLCFixture getFixture(int fixtureId){
+        return getQlcModel().getFixture(fixtureId);
     }
 }

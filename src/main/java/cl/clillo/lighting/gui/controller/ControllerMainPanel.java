@@ -44,6 +44,9 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     private final JTextField txtEvent = new JTextField();
     private final DimmerManager[] dimmers;
 
+    private boolean upDown;
+    private boolean leftRight;
+
     public ControllerMainPanel() {
 
         pnlListDimmer = new ArrayList<>();
@@ -139,26 +142,49 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         }
 
         if (keyData.getMidiInputType() == KeyData.MidiInputType.SLIDER_BUTTON ){
+            switch (keyData.getValue()) {
+                case 0:
+                case 1:
+                    upDown = !upDown;
+                    if (upDown) {
+                        midiHandler.sendSlider(0, KeyData.StateLight.GREEN_BLINK);
+                        midiHandler.sendSlider(1, KeyData.StateLight.GREEN_BLINK);
+                    }else {
+                        midiHandler.sendSlider(0, KeyData.StateLight.OFF);
+                        midiHandler.sendSlider(1, KeyData.StateLight.OFF);
+                    }
+                    for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
+                        PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
+                        if (positionAdjustable != null)
+                            positionAdjustable.resetY();
+                    }
+                    break;
+                case 2:
+                case 3:
+                    leftRight = !leftRight;
+                    if (leftRight) {
+                        midiHandler.sendSlider(2, KeyData.StateLight.GREEN_BLINK);
+                        midiHandler.sendSlider(3, KeyData.StateLight.GREEN_BLINK);
+                    }else {
+                        midiHandler.sendSlider(2, KeyData.StateLight.OFF);
+                        midiHandler.sendSlider(3, KeyData.StateLight.OFF);
+                    }
+                    for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
+                        PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
+                        if (positionAdjustable != null)
+                            positionAdjustable.resetX();
+                    }
+                    break;
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    for (DimmerManager dimmerManager: dimmers)
+                        selectSlider(dimmerManager, 7-keyData.getValue(), keyData.getValue());
+                    break;
 
-            for (DimmerManager dimmerManager: dimmers) {
-                switch (keyData.getValue()) {
-                    case 4:
-                        selectSlider(dimmerManager, 3, keyData.getValue());
-                        break;
-                    case 5:
-                        selectSlider(dimmerManager, 2, keyData.getValue());
-                        break;
-                    case 6:
-                        selectSlider(dimmerManager, 1, keyData.getValue());
-                        break;
-                    case 7:
-                        selectSlider(dimmerManager, 0, keyData.getValue());
-                        break;
-                }
             }
-            return;
         }
-
     }
 
     private void selectSlider(DimmerManager dimmerManager, int index, int slider){
@@ -191,6 +217,23 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     @Override
     public void onSlide(final KeyData keyData) {
+        if (upDown && keyData.getPosX()>=0 && keyData.getPosX()<=1){
+
+            for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
+                PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
+                if (positionAdjustable!=null)
+                    positionAdjustable.movY(keyData.getSliderValue()*(keyData.getPosX()==1?-1.0:1.0));
+            }
+            return;
+        }
+        if (leftRight && keyData.getPosX()>=2 && keyData.getPosX()<=3){
+            for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
+                PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
+                if (positionAdjustable!=null)
+                    positionAdjustable.movX(keyData.getSliderValue()*(keyData.getPosX()==3?-1.0:1.0));
+            }
+            return;
+        }
         for (DimmerManager dimmerManager: dimmers)
             if (dimmerManager.isActive())
                 dimmerManager.onSlide(keyData, pnlListDimmer.get(keyData.getPosX()));

@@ -38,6 +38,8 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
     private Show showSelected;
 
+    private PositionAdjustable positionAdjustable;
+
     public ControllerSeqPanel(final String fixtureGroupName) {
         setLayout(null);
         final Label lblTittle = new Label(fixtureGroupName);
@@ -128,6 +130,8 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
         EFXMConfigureJFrame efxmConfigureJFrame = new EFXMConfigureJFrame(showSelected);
         efxmConfigureJFrame.start();
+
+        positionAdjustable = efxmConfigureJFrame.getEfxmConfigureMainPanel().getPositionAdjustable();
     }
 
 
@@ -137,8 +141,13 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
         EFXMConfigureJFrame efxmConfigureJFrame = new EFXMConfigureJFrame(showSelected);
         efxmConfigureJFrame.start();
+
+        positionAdjustable = null;
     }
 
+    public PositionAdjustable getPositionAdjustable() {
+        return positionAdjustable;
+    }
 
     @Override
     public void stateChanged(ChangeEvent e) {

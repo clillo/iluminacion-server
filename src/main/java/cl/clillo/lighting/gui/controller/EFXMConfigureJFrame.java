@@ -12,6 +12,7 @@ import java.awt.event.WindowEvent;
 public class EFXMConfigureJFrame extends JFrame {
 
     private static final long serialVersionUID = 1823403452881818081L;
+    private final EFXMConfigureMainPanel efxmConfigureMainPanel;
 
     public EFXMConfigureJFrame(final Show showSelected) {
         enableEvents(64L);
@@ -22,8 +23,8 @@ public class EFXMConfigureJFrame extends JFrame {
             e.printStackTrace();
         }
         setSize(EFXMConfigureMainPanel.WIDTH1 + 300, EFXMConfigureMainPanel.HEIGHT1 + 150);
-        EFXMConfigureMainPanel EFXMConfigureMainPanel = new EFXMConfigureMainPanel(showSelected, this);
-        setContentPane(EFXMConfigureMainPanel);
+        efxmConfigureMainPanel = new EFXMConfigureMainPanel(showSelected, this);
+        setContentPane(efxmConfigureMainPanel);
 
     }
 
@@ -53,5 +54,9 @@ public class EFXMConfigureJFrame extends JFrame {
 
         setVisible(true);
 
+    }
+
+    public EFXMConfigureMainPanel getEfxmConfigureMainPanel() {
+        return efxmConfigureMainPanel;
     }
 }

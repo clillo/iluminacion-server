@@ -24,12 +24,13 @@ public class EFXMConfigureMainPanel extends JPanel {
 
     private final Show showSelected;
     private final EFXMConfigureJFrame parent;
+    private final EffectEditPanel editPanel;
 
     public EFXMConfigureMainPanel(final Show showSelected, final EFXMConfigureJFrame parent) {
         this.showSelected = showSelected;
         this.parent = parent;
 
-        final EffectEditPanel editPanel = buildPanel(showSelected);
+        editPanel = buildPanel(showSelected);
         if (editPanel != null) {
             editPanel.setParent(parent);
             editPanel.setBounds(0, 0, WIDTH1 + 300, HEIGHT1);
@@ -58,5 +59,9 @@ public class EFXMConfigureMainPanel extends JPanel {
             return new EffectSplineEditPanel((QLCEfxSpline) qlcEfx, show);
 
         return null;
+    }
+
+    public PositionAdjustable getPositionAdjustable(){
+        return editPanel instanceof SceneEditPanel? (PositionAdjustable) editPanel :null;
     }
 }

@@ -101,6 +101,7 @@ public class ArtNet {
     private static class NoComm extends ArtNet{
 
         public void send(final int channel, final int data){
+           // System.out.println("\t"+channel+"\t"+data);
         }
 
         public void send(final int channel, final byte data){

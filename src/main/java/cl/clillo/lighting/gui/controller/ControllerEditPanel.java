@@ -162,4 +162,8 @@ public class ControllerEditPanel extends JPanel implements ActionListener, Butto
         sequenceSelected.getShow().setExecuting(true);
 
     }
+
+    public ControllerSeqPanel getPanelSeq() {
+        return panelSeq;
+    }
 }

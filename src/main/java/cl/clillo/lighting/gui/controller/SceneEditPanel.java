@@ -1,5 +1,6 @@
 package cl.clillo.lighting.gui.controller;
 
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.gui.ScreenPoint;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.gui.movements.EffectEditPanel;
@@ -22,15 +23,15 @@ import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SceneEditPanel extends EffectEditPanel implements ChangeListener {
+public class SceneEditPanel extends EffectEditPanel implements ChangeListener, PositionAdjustable {
 
     private static final long serialVersionUID = -5869553409971473557L;
 
     private final QLCEfxScene qlcEfx;
-    private List<ScreenPoint> screenPointList;
+    private final List<ScreenPoint> screenPointList;
 
-    private double mousePrevX=0;
-    private double mousePrevY=0;
+    private int prevX=0;
+    private int prevY=0;
 
     private ScreenPoint screenPointSelected;
 
@@ -87,6 +88,7 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener {
 
         addToButtonGroup(this, rbtFixtures);
         setQlcEfx(qlcEfx);
+
     }
 
     private void addButton(final JButton btn, final int col, final int line) {
@@ -178,8 +180,8 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener {
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        mousePrevX = screenToRealX(e.getX());
-        mousePrevY = screenToRealY(e.getY());
+        double mousePrevX = screenToRealX(e.getX());
+        double mousePrevY = screenToRealY(e.getY());
         txtScreenPosition.setText(Math.round(mousePrevX)+","+ Math.round(mousePrevY));
         screenPointSelected=null;
         int i=0;
@@ -275,8 +277,14 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener {
     public void stateChanged(ChangeEvent e) {
         int i=0;
         for (ScreenPoint pb: screenPointList) {
+            final QLCFixture fixture = ShowCollection.getInstance().getFixture(pb.getFixtureId());
+
             if (rbtFixtures[i].isSelected()){
+                System.out.println("Fixture "+fixture.getName()+"\tON");
                 screenPointSelected = pb;
+                fixture.on();
+            }else{
+                fixture.off();
             }
             i++;
         }
@@ -295,5 +303,30 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener {
     protected void refresh(){
         this.repaint();
         qlcEfx.updateParameters(screenPointList);
+    }
+
+    @Override
+    public void movX(double delta) {
+        int actual = (int)(delta*100.0);
+        mov((prevX - actual)*10, 0);
+        prevX = actual;
+
+    }
+
+    @Override
+    public void movY(double delta) {
+        int actual = (int)(delta*100.0);
+        mov(0, (prevY - actual)*10);
+        prevY = actual;
+    }
+
+    @Override
+    public void resetX() {
+        prevX = 0;
+    }
+
+    @Override
+    public void resetY() {
+        prevY = 0;
     }
 }
