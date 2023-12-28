@@ -1,0 +1,26 @@
+
+<doc>
+   <title>Chaser.Generales.5082</title>
+   <common>
+      <id>5082</id>
+      <type>Chaser</type>
+      <path>Generales</path>
+      <name>Secuencia 4</name>
+   </common>
+   <blackout id="160"/>
+   <properties>
+      <runOrder>RANDOM</runOrder>
+      <direction>FORWARD</direction>
+      <speed>2</speed>
+   </properties>
+   <shows>
+      <show id="92" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="300" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="139" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="141" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="157" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="297" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="80" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="142" fadeIn="0" hold="10000" fadeOut="0"/>
+   </shows>
+</doc>

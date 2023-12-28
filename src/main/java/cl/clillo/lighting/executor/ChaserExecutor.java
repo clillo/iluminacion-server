@@ -2,8 +2,12 @@ package cl.clillo.lighting.executor;
 
 import cl.clillo.lighting.model.Chaser;
 import cl.clillo.lighting.model.ChaserStep;
+import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.Show;
+import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
+
+import java.util.List;
 
 @Log4j2
 public class ChaserExecutor extends AbstractExecutor {
@@ -23,12 +27,15 @@ public class ChaserExecutor extends AbstractExecutor {
         if (chaser.getBlackoutShow()==null)
             return;
 
-        chaser.getBlackoutShow().setExecuting(false);
+        chaser.getBlackoutShow().setExecuting(true);
         for (ChaserStep chaserStep: chaser.getChaserSteps()) {
+            chaserStep.getShow().setExecuting(false);
             if (chaserExecutorShowListener!=null)
                 chaserExecutorShowListener.stopExecuting(chaserStep.getShow());
-            chaserStep.getShow().setExecuting(false);
+
         }
+
+        blackout(chaser);
 
         final ChaserStep chaserStep = chaser.getChaserSteps().get(actualStep);
         chaserStep.getShow().setExecuting(true);

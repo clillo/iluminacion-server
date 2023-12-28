@@ -7,5 +7,13 @@
       <path>Sec1</path>
       <name>Spoting Yellow</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="155" name="Spiders - Sec Fast (Copy)"/>
+      <show id="1004" name="Spiders 4"/>
+      <show id="2000" name="All On"/>
+      <show id="2101" name="Red"/>
+      <show id="2307" name="Gobo 6"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2521" name="Eight 1"/>
+   </shows>
 </doc>

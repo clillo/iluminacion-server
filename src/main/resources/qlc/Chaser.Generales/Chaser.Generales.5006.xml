@@ -16,7 +16,6 @@
    <shows>
       <show id="1" fadeIn="0" hold="5000" fadeOut="0"/>
       <show id="2" fadeIn="0" hold="5000" fadeOut="0"/>
-      <show id="3" fadeIn="0" hold="1000" fadeOut="0"/>
       <show id="4" fadeIn="0" hold="5000" fadeOut="0"/>
       <show id="15" fadeIn="0" hold="5000" fadeOut="0"/>
    </shows>

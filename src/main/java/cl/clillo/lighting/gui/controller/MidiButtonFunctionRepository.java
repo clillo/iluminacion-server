@@ -84,8 +84,11 @@ public class MidiButtonFunctionRepository {
         buttonGroup = createRows( 32, "Collection", "Mirror Ball", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Collections");
         createRows( 32, "Scene", "Generic", 7, 7,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Collections");
         createRows( 33, "Collection", "Sec1", 0, 5,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
-        createRows( 34, "Collection", "Sec2", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
-        createRows(34, "Collection", "Sec 3", 0, 1,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
+        createRows( 34, "Collection", "Sec2", 0, 4,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
+        createRows(34, "Collection", "Sec 3", 0, 3,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, buttonGroup, "Collections");
+        createRows(34, "Chaser", "Generales", 0, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "Collections");
+        createRows(34, "Chaser", "Laser", 7, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "Collections");
+
 
         buttonGroup = createRows( 50, "Scene", "Moving Head On.Off", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
         createRows( 50, "Sequence", "Moving Head Sequence", 6, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup, "Moving Heads");

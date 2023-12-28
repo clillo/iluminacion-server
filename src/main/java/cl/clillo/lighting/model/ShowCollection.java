@@ -279,4 +279,10 @@ public class ShowCollection {
     public List<QLCPoint> getBlackoutPointList() {
         return blackoutPointList;
     }
+
+    public void globalBlackout() {
+        System.out.println("globalBlackout");
+        Show blackoutShow = getShow(301);
+        blackoutShow.setExecuteOneTime(true);
+    }
 }

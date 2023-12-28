@@ -7,5 +7,11 @@
       <path>Sec1</path>
       <name>Red Green 3</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="6005" name="Seq 1"/>
+      <show id="6106" name="Green"/>
+      <show id="6700" name="Up and Down"/>
+      <show id="41" name="Green 2"/>
+      <show id="1001" name="Spiders 1"/>
+   </shows>
 </doc>

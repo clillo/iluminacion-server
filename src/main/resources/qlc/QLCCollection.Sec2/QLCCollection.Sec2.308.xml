@@ -8,7 +8,6 @@
       <name>Spoting Red Laser</name>
    </common>
    <shows>
-      <show id="127" name="Red Rotating"/>
       <show id="265" name="linea rotando"/>
    </shows>
 </doc>

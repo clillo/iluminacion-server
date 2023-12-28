@@ -7,5 +7,13 @@
       <path>Sec1</path>
       <name>Spoting Red Extreme</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="155" name="Spiders - Sec Fast (Copy)"/>
+      <show id="155" name="Spiders - Sec Fast (Copy)"/>
+      <show id="2000" name="All On"/>
+      <show id="2200" name="Color Change Slow"/>
+      <show id="2308" name="Gobo Rotating Slow"/>
+      <show id="2405" name="Prisma Rotating Fast"/>
+      <show id="2502" name="Bouncing External"/>
+   </shows>
 </doc>

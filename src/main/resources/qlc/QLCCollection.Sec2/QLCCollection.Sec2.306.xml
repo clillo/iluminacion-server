@@ -7,5 +7,16 @@
       <path>Sec2</path>
       <name>Spoting Red</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="162" name="Circulo Rojo"/>
+      <show id="32" name="Spider- Dimmer Rojo1"/>
+      <show id="162" name="Circulo Rojo"/>
+      <show id="1003" name="Spiders 3"/>
+      <show id="32" name="Spider- Dimmer Rojo1"/>
+      <show id="162" name="Circulo Rojo"/>
+      <show id="1003" name="Spiders 3"/>
+      <show id="3002" name="Inner"/>
+      <show id="3101" name="Red"/>
+      <show id="3501" name="Bouncing Bottom"/>
+   </shows>
 </doc>

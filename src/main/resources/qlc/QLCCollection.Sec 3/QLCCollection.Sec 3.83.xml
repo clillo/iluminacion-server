@@ -7,5 +7,16 @@
       <path>Sec 3</path>
       <name>MVCXX</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="266" name="linea paneando rotando"/>
+      <show id="2000" name="All On"/>
+      <show id="2106" name="Cyan"/>
+      <show id="2504" name="Bouncing Right"/>
+      <show id="266" name="linea paneando rotando"/>
+      <show id="2000" name="All On"/>
+      <show id="2106" name="Cyan"/>
+      <show id="2305" name="Gobo 4"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2504" name="Bouncing Right"/>
+   </shows>
 </doc>

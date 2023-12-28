@@ -11,7 +11,7 @@
    <properties>
       <runOrder>RANDOM</runOrder>
       <direction>FORWARD</direction>
-      <speed>3</speed>
+      <speed>2</speed>
    </properties>
    <shows>
       <show id="159" fadeIn="0" hold="5000" fadeOut="0"/>

@@ -7,5 +7,12 @@
       <path>Sec2</path>
       <name>Rainbow 1</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="267" name="wave lento"/>
+      <show id="2606" name="Down cross 2"/>
+      <show id="3605" name="Down cross 1"/>
+      <show id="4607" name="Cross Three"/>
+      <show id="6006" name="Seq 2"/>
+      <show id="6101" name="Red"/>
+   </shows>
 </doc>

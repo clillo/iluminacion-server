@@ -1,0 +1,26 @@
+
+<doc>
+   <title>Chaser.Generales.5083</title>
+   <common>
+      <id>5083</id>
+      <type>Chaser</type>
+      <path>Generales</path>
+      <name>Secuencia 5</name>
+   </common>
+   <blackout id="160"/>
+   <properties>
+      <runOrder>RANDOM</runOrder>
+      <direction>FORWARD</direction>
+      <speed>2</speed>
+   </properties>
+   <shows>
+      <show id="142" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="152" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="306" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="308" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="3" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="82" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="83" fadeIn="0" hold="10000" fadeOut="0"/>
+      <show id="800" fadeIn="0" hold="10000" fadeOut="0"/>
+   </shows>
+</doc>

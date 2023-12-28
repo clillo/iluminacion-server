@@ -8,7 +8,6 @@
       <name>Yellow Secuence</name>
    </common>
    <shows>
-      <show id="2009" name="All Off"/>
       <show id="4000" name="All On"/>
       <show id="4306" name="Cristal Amarillo"/>
       <show id="4403" name="Prism Rotation Slow"/>

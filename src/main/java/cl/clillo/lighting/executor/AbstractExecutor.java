@@ -1,6 +1,7 @@
 package cl.clillo.lighting.executor;
 
 import cl.clillo.lighting.external.dmx.Dmx;
+import cl.clillo.lighting.model.Chaser;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.QLCRunOrder;
@@ -8,6 +9,7 @@ import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.QLCStep;
 import cl.clillo.lighting.model.Sequenceable;
 import cl.clillo.lighting.model.Show;
+import cl.clillo.lighting.model.ShowCollection;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -66,6 +68,17 @@ public abstract class AbstractExecutor {
 
         postExecuteDefaultScheduler();
 
+    }
+
+    protected void blackout(Chaser chaser){
+        List<QLCPoint> blackoutPoints = ShowCollection.getInstance().getBlackoutPointList();
+        for (QLCPoint point: blackoutPoints) {
+            dmx.send(point);
+        }
+        for (Show show: ShowCollection.getInstance().getShowList()) {
+            if (show.getId()!= chaser.getId())
+               show.setExecuting(false);
+        }
     }
 
     protected void postExecuteDefaultScheduler(){

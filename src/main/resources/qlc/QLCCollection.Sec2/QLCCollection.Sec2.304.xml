@@ -7,5 +7,10 @@
       <path>Sec2</path>
       <name>Fast rainbow</name>
    </common>
-   <shows/>
+   <shows>
+      <show id="33" name="Derby ambos chasing - rotan lento"/>
+      <show id="3005" name="Seq 1"/>
+      <show id="3202" name="Green/Red"/>
+      <show id="3512" name="Circle 3"/>
+   </shows>
 </doc>
