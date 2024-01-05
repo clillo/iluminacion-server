@@ -8,21 +8,21 @@
       <name>Disco Ball</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" type="PAN" value="199"/>
-      <point fixture-robotic="true" fixture="8" type="PAN_FINE" value="147"/>
-      <point fixture-robotic="true" fixture="8" type="TILT" value="16"/>
-      <point fixture-robotic="true" fixture="8" type="TILT_FINE" value="36"/>
-      <point fixture-robotic="true" fixture="10" type="PAN" value="185"/>
-      <point fixture-robotic="true" fixture="10" type="PAN_FINE" value="255"/>
-      <point fixture-robotic="true" fixture="10" type="TILT" value="19"/>
-      <point fixture-robotic="true" fixture="10" type="TILT_FINE" value="12"/>
-      <point fixture-robotic="true" fixture="11" type="PAN" value="185"/>
-      <point fixture-robotic="true" fixture="11" type="PAN_FINE" value="11"/>
-      <point fixture-robotic="true" fixture="11" type="TILT" value="12"/>
-      <point fixture-robotic="true" fixture="11" type="TILT_FINE" value="84"/>
-      <point fixture-robotic="true" fixture="18" type="PAN" value="186"/>
-      <point fixture-robotic="true" fixture="18" type="PAN_FINE" value="23"/>
-      <point fixture-robotic="true" fixture="18" type="TILT" value="14"/>
-      <point fixture-robotic="true" fixture="18" type="TILT_FINE" value="24"/>
+      <point fixture-robotic="true" fixture="8" type="PAN" value="191"/>
+      <point fixture-robotic="true" fixture="8" type="PAN_FINE" value="165"/>
+      <point fixture-robotic="true" fixture="8" type="TILT" value="14"/>
+      <point fixture-robotic="true" fixture="8" type="TILT_FINE" value="98"/>
+      <point fixture-robotic="true" fixture="10" type="PAN" value="178"/>
+      <point fixture-robotic="true" fixture="10" type="PAN_FINE" value="177"/>
+      <point fixture-robotic="true" fixture="10" type="TILT" value="21"/>
+      <point fixture-robotic="true" fixture="10" type="TILT_FINE" value="100"/>
+      <point fixture-robotic="true" fixture="11" type="PAN" value="184"/>
+      <point fixture-robotic="true" fixture="11" type="PAN_FINE" value="217"/>
+      <point fixture-robotic="true" fixture="11" type="TILT" value="9"/>
+      <point fixture-robotic="true" fixture="11" type="TILT_FINE" value="22"/>
+      <point fixture-robotic="true" fixture="18" type="PAN" value="187"/>
+      <point fixture-robotic="true" fixture="18" type="PAN_FINE" value="67"/>
+      <point fixture-robotic="true" fixture="18" type="TILT" value="12"/>
+      <point fixture-robotic="true" fixture="18" type="TILT_FINE" value="86"/>
    </points>
 </doc>

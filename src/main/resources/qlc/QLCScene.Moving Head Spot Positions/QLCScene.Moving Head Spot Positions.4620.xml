@@ -8,13 +8,13 @@
       <name>Disco Ball</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="9" type="PAN" value="155"/>
+      <point fixture-robotic="true" fixture="9" type="PAN" value="153"/>
       <point fixture-robotic="true" fixture="9" type="TILT" value="24"/>
-      <point fixture-robotic="true" fixture="9" type="PAN_FINE" value="140"/>
+      <point fixture-robotic="true" fixture="9" type="PAN_FINE" value="52"/>
       <point fixture-robotic="true" fixture="9" type="TILT_FINE" value="16"/>
-      <point fixture-robotic="true" fixture="12" type="PAN" value="169"/>
+      <point fixture-robotic="true" fixture="12" type="PAN" value="158"/>
       <point fixture-robotic="true" fixture="12" type="TILT" value="22"/>
-      <point fixture-robotic="true" fixture="12" type="PAN_FINE" value="20"/>
+      <point fixture-robotic="true" fixture="12" type="PAN_FINE" value="246"/>
       <point fixture-robotic="true" fixture="12" type="TILT_FINE" value="218"/>
    </points>
 </doc>
