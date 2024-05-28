@@ -6,11 +6,12 @@ import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Collections;
 import java.util.List;
 
-@Log4j2
+@Slf4j
 public class QLCSceneExecutor extends AbstractExecutor {
 
     private final Dmx dmx = Dmx.getInstance();

@@ -6,10 +6,11 @@ import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 
-@Log4j2
+@Slf4j
 public class ChaserExecutor extends AbstractExecutor {
 
     private final Chaser chaser;

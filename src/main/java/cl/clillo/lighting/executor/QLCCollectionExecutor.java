@@ -6,12 +6,13 @@ import cl.clillo.lighting.model.QLCCollection;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-@Log4j2
+@Slf4j
 public class QLCCollectionExecutor extends AbstractExecutor {
 
     private int sendNumber;

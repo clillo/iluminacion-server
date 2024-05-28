@@ -6,7 +6,7 @@ import cl.clillo.lighting.executor.QLCSequenceExecutor;
 import cl.clillo.lighting.model.QLCDirection;
 import cl.clillo.lighting.model.QLCRunOrder;
 import cl.clillo.lighting.model.QLCSequence;
-import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JPanel;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,7 @@ import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.Map;
 
-@Log4j2
+@Slf4j
 public class ControllerEditPanel extends JPanel implements ActionListener, ButtonSelectedListener, ChangeDirectionRunOrderListener {
 
     private final int index;

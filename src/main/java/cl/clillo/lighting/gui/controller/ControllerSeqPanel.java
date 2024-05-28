@@ -7,6 +7,7 @@ import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.log4j.Log4j2;
+import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
@@ -17,7 +18,7 @@ import java.awt.Label;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-@Log4j2
+@Slf4j
 public class ControllerSeqPanel extends JPanel implements ActionListener, ChangeListener {
 
     private final RunOrderTypePicker runOrderTypePicker = new RunOrderTypePicker();
