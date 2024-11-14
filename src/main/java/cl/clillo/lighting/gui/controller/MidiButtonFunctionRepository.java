@@ -34,7 +34,7 @@ public class MidiButtonFunctionRepository {
         createRows( 1, "Scene", "Laser", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "Laser-Derby");
 
         buttonGroup = createRows( 2, "Scene", "Derby", 0, 3,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, "Laser-Derby");
-        createRows( 2, "Sequence", "Derby", 0, 2,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Laser-Derby");
+        createRows( 2, "Sequence", "Derby", 0, 0,  KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Laser-Derby");
 
         buttonGroup = createRows( 6, "Sequence", "RGBW", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "RGBW");
         createRows( 6, "Scene", "RGBW", 0, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "RGBW");

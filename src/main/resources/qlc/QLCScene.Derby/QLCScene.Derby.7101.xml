@@ -1,15 +1,14 @@
 <doc>
-    <title>QLCScene.Derby.999</title>
+    <title>QLCScene.Derby.7101</title>
     <common>
-        <id>999</id>
+        <id>7101</id>
         <type>Scene</type>
         <path>Derby</path>
-        <name>Off</name>
-        <blackout>true</blackout>
+        <name>Red Static</name>
     </common>
     <points>
-        <point fixture="6" channel="0" value="0"/>
-        <point fixture="6" channel="1" value="0"/>
+        <point fixture="6" channel="0" value="255"/>
+        <point fixture="6" channel="1" value="255"/>
         <point fixture="6" channel="2" value="0"/>
         <point fixture="6" channel="3" value="0"/>
         <point fixture="6" channel="4" value="0"/>
@@ -17,8 +16,8 @@
         <point fixture="6" channel="6" value="0"/>
         <point fixture="6" channel="7" value="0"/>
 
-        <point fixture="7" channel="0" value="0"/>
-        <point fixture="7" channel="1" value="0"/>
+        <point fixture="7" channel="0" value="255"/>
+        <point fixture="7" channel="1" value="255"/>
         <point fixture="7" channel="2" value="0"/>
         <point fixture="7" channel="3" value="0"/>
         <point fixture="7" channel="4" value="0"/>

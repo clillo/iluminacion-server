@@ -17,6 +17,7 @@
       <point fixture="6" channel="6" value="0"/>
       <point fixture="6" channel="7" value="0"/>
       <point fixture="7" channel="0" value="255"/>
+
       <point fixture="7" channel="1" value="0"/>
       <point fixture="7" channel="2" value="0"/>
       <point fixture="7" channel="3" value="255"/>
