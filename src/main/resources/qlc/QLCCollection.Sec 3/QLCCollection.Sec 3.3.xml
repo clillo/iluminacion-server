@@ -8,13 +8,11 @@
       <name>Strobo Azul</name>
    </common>
    <shows>
-      <show id="3005" name="Seq 1"/>
-      <show id="3103" name="Blue"/>
-      <show id="3212" name="Strobo Medium"/>
-      <show id="3606" name="Down cross 2"/>
-
-      <show id="4103" name="Blue"/>
-
-      <show id="427" name="Blue Secuence Strobo"/>
+      <show id="3005" name="Moving Head Beam Seq 1"/>
+      <show id="3103" name="Moving Head Beam Blue"/>
+      <show id="3212" name="Moving Head Beam Strobo Medium"/>
+      <show id="3606" name="Moving Head Beam Down cross 2"/>
+      <show id="4103" name="Moving Head Spot Blue"/>
+      <show id="7101" name="Derby Red Static"/>
    </shows>
 </doc>

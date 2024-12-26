@@ -8,9 +8,9 @@
       <name>Red Green 1</name>
    </common>
    <shows>
-      <show id="116" name="Green"/>
-      <show id="129" name="Green Rotating"/>
-      <show id="1004" name="Spiders 4"/>
-      <show id="1801" name="All Red"/>
+      <show id="116" name="Spider Green"/>
+      <show id="129" name="Derby Green Rotating"/>
+      <show id="1004" name="Spider - Line Spiders 4"/>
+      <show id="7130" name="Derby - Blue and Red Rotating Fast"/>
    </shows>
 </doc>

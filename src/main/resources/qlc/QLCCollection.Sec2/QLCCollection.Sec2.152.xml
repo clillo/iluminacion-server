@@ -8,11 +8,11 @@
       <name>Rainbow 1</name>
    </common>
    <shows>
-      <show id="267" name="wave lento"/>
-      <show id="2606" name="Down cross 2"/>
-      <show id="3605" name="Down cross 1"/>
-      <show id="4607" name="Cross Three"/>
-      <show id="6006" name="Seq 2"/>
-      <show id="6101" name="Red"/>
+      <show id="267" name="Laser wave lento"/>
+      <show id="2606" name="Moving Head Beam + Spot Down cross 2"/>
+      <show id="3605" name="Moving Head Beam + Spot Down cross 1"/>
+      <show id="4607" name="Moving Head Beam + Spot Cross Three"/>
+      <show id="6006" name="Moving Head Beam + Spot Seq 2"/>
+      <show id="6101" name="Moving Head Beam + Spot Red"/>
    </shows>
 </doc>

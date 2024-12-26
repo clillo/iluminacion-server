@@ -8,15 +8,15 @@
       <name>Spoting Red</name>
    </common>
    <shows>
-      <show id="162" name="Circulo Rojo"/>
+      <show id="162" name="Laser Circulo Rojo"/>
       <show id="32" name="Spider- Dimmer Rojo1"/>
-      <show id="162" name="Circulo Rojo"/>
-      <show id="1003" name="Spiders 3"/>
+      <show id="162" name="Laser Circulo Rojo"/>
+      <show id="1003" name="Spiders Spiders 3"/>
       <show id="32" name="Spider- Dimmer Rojo1"/>
-      <show id="162" name="Circulo Rojo"/>
-      <show id="1003" name="Spiders 3"/>
-      <show id="3002" name="Inner"/>
-      <show id="3101" name="Red"/>
-      <show id="3501" name="Bouncing Bottom"/>
+      <show id="162" name="Laser Circulo Rojo"/>
+      <show id="1003" name="Spiders Spiders 3"/>
+      <show id="3002" name="Moving Head Beam Inner"/>
+      <show id="3101" name="Moving Head Beam Red"/>
+      <show id="3501" name="Moving Head Beam Bouncing Bottom"/>
    </shows>
 </doc>

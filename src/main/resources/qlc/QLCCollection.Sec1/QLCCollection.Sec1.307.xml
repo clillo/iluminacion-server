@@ -10,10 +10,10 @@
    <shows>
       <show id="155" name="Spiders - Sec Fast (Copy)"/>
       <show id="155" name="Spiders - Sec Fast (Copy)"/>
-      <show id="2000" name="All On"/>
-      <show id="2200" name="Color Change Slow"/>
-      <show id="2308" name="Gobo Rotating Slow"/>
-      <show id="2405" name="Prisma Rotating Fast"/>
-      <show id="2502" name="Bouncing External"/>
+      <show id="2000" name="Moving Head Beam + Spot All On"/>
+      <show id="2200" name="Moving Head Beam + Spot Color Change Slow"/>
+      <show id="2308" name="Moving Head Beam + Spot Gobo Rotating Slow"/>
+      <show id="2405" name="Moving Head Beam + Spot Prisma Rotating Fast"/>
+      <show id="2502" name="Moving Head Beam + Spot Bouncing External"/>
    </shows>
 </doc>

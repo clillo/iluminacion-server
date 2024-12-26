@@ -9,8 +9,8 @@
    </common>
    <shows>
       <show id="25" name="Derby chasing - rotan"/>
-      <show id="2000" name="All On"/>
-      <show id="2200" name="Color Change Slow"/>
-      <show id="2607" name="Disco Ball"/>
+      <show id="2000" name="Moving Head Beam + Spot All On"/>
+      <show id="2200" name="Moving Head Beam + Spot Color Change Slow"/>
+      <show id="2607" name="Moving Head Beam + Spot Disco Ball"/>
    </shows>
 </doc>

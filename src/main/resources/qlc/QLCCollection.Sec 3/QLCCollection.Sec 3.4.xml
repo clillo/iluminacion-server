@@ -8,9 +8,9 @@
       <name>Yellow Secuence</name>
    </common>
    <shows>
-      <show id="4000" name="All On"/>
-      <show id="4306" name="Cristal Amarillo"/>
-      <show id="4403" name="Prism Rotation Slow"/>
-      <show id="4512" name="Circle 3"/>
+      <show id="4000" name="Moving Head Spot All On"/>
+      <show id="4306" name="Moving Head Spot Cristal Amarillo"/>
+      <show id="4403" name="Moving Head Spot Prism Rotation Slow"/>
+      <show id="4512" name="Moving Head Spot Circle 3"/>
    </shows>
 </doc>

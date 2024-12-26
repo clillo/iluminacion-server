@@ -8,22 +8,22 @@
       <name>Circle Pink Mid</name>
    </common>
    <shows>
-      <show id="3006" name="Seq 2"/>
-      <show id="3105" name="Pink"/>
-      <show id="3511" name="Circle 2"/>
-      <show id="2006" name="Seq 2"/>
-      <show id="2105" name="Magenta"/>
-      <show id="2511" name="Circle 2"/>
-      <show id="3006" name="Seq 2"/>
-      <show id="3105" name="Pink"/>
-      <show id="3511" name="Circle 2"/>
-      <show id="2006" name="Seq 2"/>
-      <show id="2105" name="Magenta"/>
-      <show id="2300" name="Open Wide"/>
-      <show id="2401" name="Prisma Off"/>
-      <show id="2511" name="Circle 2"/>
-      <show id="3006" name="Seq 2"/>
-      <show id="3105" name="Pink"/>
-      <show id="3511" name="Circle 2"/>
+      <show id="3006" name="Moving Head Beam Seq 2"/>
+      <show id="3105" name="Moving Head Beam Pink"/>
+      <show id="3511" name="Moving Head Beam Circle 2"/>
+      <show id="2006" name="Moving Head Beam + Spot Seq 2"/>
+      <show id="2105" name="Moving Head Beam + Spot Magenta"/>
+      <show id="2511" name="Moving Head Beam + Spot Circle 2"/>
+      <show id="3006" name="Moving Head Beam Seq 2"/>
+      <show id="3105" name="Moving Head Beam Pink"/>
+      <show id="3511" name="Moving Head Beam Circle 2"/>
+      <show id="2006" name="Moving Head Beam + Spot Seq 2"/>
+      <show id="2105" name="Moving Head Beam + Spot Magenta"/>
+      <show id="2300" name="Moving Head Beam + Spot Gobos Open Wide"/>
+      <show id="2401" name="Moving Head Beam + Spot Gobos Prisma Off"/>
+      <show id="2511" name="Moving Head Beam + Spot Circle 2"/>
+      <show id="3006" name="Moving Head Beam Seq 2"/>
+      <show id="3105" name="Moving Head Beam Pink"/>
+      <show id="3511" name="Moving Head Beam Circle 2"/>
    </shows>
 </doc>

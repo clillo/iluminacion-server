@@ -8,9 +8,9 @@
       <name>Moving Head Circle Pink</name>
    </common>
    <shows>
-      <show id="3000" name="All On"/>
-      <show id="3105" name="Pink"/>
-      <show id="3210" name="Strobe Off"/>
-      <show id="3510" name="Circle 1"/>
+      <show id="3000" name="Moving Head Beam All On"/>
+      <show id="3105" name="Moving Head Beam Pink"/>
+      <show id="3210" name="Moving Head Beam Strobe Off"/>
+      <show id="3510" name="Moving Head Beam Circle 1"/>
    </shows>
 </doc>

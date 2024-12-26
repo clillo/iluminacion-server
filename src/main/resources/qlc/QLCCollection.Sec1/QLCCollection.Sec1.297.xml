@@ -8,9 +8,9 @@
       <name>Mirror Ball Beam + Spot Color Rotating</name>
    </common>
    <shows>
-      <show id="2000" name="All On"/>
-      <show id="2200" name="Color Change Slow"/>
-      <show id="2300" name="Open Wide"/>
-      <show id="2607" name="Disco Ball"/>
+      <show id="2000" name="Moving Head Beam + Spot All On"/>
+      <show id="2200" name="Moving Head Beam + Spot Color Change Slow"/>
+      <show id="2300" name="Moving Head Beam + Spot Gobos Open Wide"/>
+      <show id="2607" name="Moving Head Beam + Spot Disco Ball"/>
    </shows>
 </doc>

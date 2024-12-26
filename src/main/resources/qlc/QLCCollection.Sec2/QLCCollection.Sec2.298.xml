@@ -8,8 +8,8 @@
       <name>Mirror Ball Beam Color Rotating</name>
    </common>
    <shows>
-      <show id="4000" name="All On"/>
-      <show id="4200" name="Rotating Color"/>
-      <show id="4620" name="Disco Ball"/>
+      <show id="4000" name="Moving Head Spot All On"/>
+      <show id="4200" name="Moving Head Spot Rotating Color"/>
+      <show id="4620" name="Moving Head Spot Disco Ball"/>
    </shows>
 </doc>
