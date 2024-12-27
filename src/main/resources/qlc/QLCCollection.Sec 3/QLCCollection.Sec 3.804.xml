@@ -1,0 +1,23 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.804</title>
+   <common>
+      <id>804</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="160" name="Off"/>
+      <show id="260" name="Puntos Ocho Colores"/>
+      <show id="998" name="Off"/>
+      <show id="2005" name="Seq 1"/>
+      <show id="2101" name="Red"/>
+      <show id="3005" name="Seq 1"/>
+      <show id="3101" name="Red"/>
+      <show id="3210" name="Strobe Off"/>
+      <show id="4005" name="Seq 1"/>
+      <show id="4101" name="Red"/>
+      <show id="6700" name="Up and Down"/>
+   </shows>
+</doc>

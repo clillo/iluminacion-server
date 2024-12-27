@@ -8,10 +8,10 @@
       <name>Down cross 2</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="8" type="PAN" value="150"/>
-      <point fixture-robotic="true" fixture="8" type="PAN_FINE" value="0"/>
-      <point fixture-robotic="true" fixture="8" type="TILT" value="82"/>
-      <point fixture-robotic="true" fixture="8" type="TILT_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="8" type="PAN" value="148"/>
+      <point fixture-robotic="true" fixture="8" type="PAN_FINE" value="192"/>
+      <point fixture-robotic="true" fixture="8" type="TILT" value="80"/>
+      <point fixture-robotic="true" fixture="8" type="TILT_FINE" value="142"/>
       <point fixture-robotic="true" fixture="10" type="PAN" value="150"/>
       <point fixture-robotic="true" fixture="10" type="PAN_FINE" value="0"/>
       <point fixture-robotic="true" fixture="10" type="TILT" value="82"/>

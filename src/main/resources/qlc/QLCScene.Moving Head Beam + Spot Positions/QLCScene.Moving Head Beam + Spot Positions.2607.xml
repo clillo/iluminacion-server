@@ -20,9 +20,9 @@
       <point fixture-robotic="true" fixture="11" type="PAN_FINE" value="217"/>
       <point fixture-robotic="true" fixture="11" type="TILT" value="9"/>
       <point fixture-robotic="true" fixture="11" type="TILT_FINE" value="22"/>
-      <point fixture-robotic="true" fixture="18" type="PAN" value="187"/>
-      <point fixture-robotic="true" fixture="18" type="PAN_FINE" value="67"/>
-      <point fixture-robotic="true" fixture="18" type="TILT" value="12"/>
-      <point fixture-robotic="true" fixture="18" type="TILT_FINE" value="86"/>
+      <point fixture-robotic="true" fixture="18" type="PAN" value="185"/>
+      <point fixture-robotic="true" fixture="18" type="PAN_FINE" value="169"/>
+      <point fixture-robotic="true" fixture="18" type="TILT" value="7"/>
+      <point fixture-robotic="true" fixture="18" type="TILT_FINE" value="136"/>
    </points>
 </doc>

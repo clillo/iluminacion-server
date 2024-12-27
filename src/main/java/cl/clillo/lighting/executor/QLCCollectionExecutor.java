@@ -67,7 +67,8 @@ public class QLCCollectionExecutor extends AbstractExecutor {
         final MidiButtonFunctionRepository midiButtonFunctionRepository = MidiButtonFunctionRepository.getInstance();
         for (Show show: collection.getShowList()) {
             show.setExecuting(executing);
-            midiButtonFunctionRepository.getButton(show.getId()).setExecuting(executing);
+            if (midiButtonFunctionRepository.getButton(show.getId())!=null)
+                midiButtonFunctionRepository.getButton(show.getId()).setExecuting(executing);
         }
     }
 }

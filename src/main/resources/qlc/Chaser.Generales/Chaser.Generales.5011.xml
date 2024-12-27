@@ -18,6 +18,7 @@
       <show id="307" fadeIn="0" hold="5000" fadeOut="0"/>
       <show id="304" fadeIn="0" hold="1000" fadeOut="0"/>
       <show id="63" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="806" fadeIn="0" hold="20000" fadeOut="0"/>
       <show id="305" fadeIn="0" hold="5000" fadeOut="0"/>
    </shows>
 </doc>

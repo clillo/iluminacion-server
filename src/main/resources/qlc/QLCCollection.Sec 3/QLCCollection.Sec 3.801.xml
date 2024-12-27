@@ -1,0 +1,18 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.801</title>
+   <common>
+      <id>801</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="2005" name="Seq 1"/>
+      <show id="2103" name="Yellow"/>
+      <show id="2605" name="Down cross 1"/>
+      <show id="3006" name="Seq 2"/>
+      <show id="3103" name="Blue"/>
+      <show id="3606" name="Down cross 2"/>
+   </shows>
+</doc>

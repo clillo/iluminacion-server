@@ -1,0 +1,21 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.806</title>
+   <common>
+      <id>806</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="6006" name="Seq 2"/>
+      <show id="6200" name="Color Change Slow"/>
+      <show id="6701" name="Up and Down 2"/>
+      <show id="155" name="Spiders - Sec Fast (Copy)"/>
+      <show id="999" name="Off"/>
+      <show id="1004" name="Spiders 4"/>
+      <show id="6006" name="Seq 2"/>
+      <show id="6200" name="Color Change Slow"/>
+      <show id="6701" name="Up and Down 2"/>
+   </shows>
+</doc>

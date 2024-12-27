@@ -1,0 +1,19 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.803</title>
+   <common>
+      <id>803</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="264" name="Gear Colores"/>
+      <show id="2000" name="All On"/>
+      <show id="2102" name="Orange"/>
+      <show id="2405" name="Prisma Rotating Fast"/>
+      <show id="2521" name="Eight 1"/>
+      <show id="4009" name="All Off"/>
+      <show id="7130" name="Blue and Red Rotating Fast"/>
+   </shows>
+</doc>

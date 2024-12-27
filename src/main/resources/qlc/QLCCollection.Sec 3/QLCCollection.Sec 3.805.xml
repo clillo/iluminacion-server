@@ -1,0 +1,21 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.805</title>
+   <common>
+      <id>805</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="267" name="wave lento"/>
+      <show id="805" name="Moving static secuencial"/>
+      <show id="2009" name="All Off"/>
+      <show id="3000" name="All On"/>
+      <show id="3211" name="Strobe Slow"/>
+      <show id="3521" name="Eight 1"/>
+      <show id="4000" name="All On"/>
+      <show id="4451" name="All On"/>
+      <show id="4521" name="Eight 1"/>
+   </shows>
+</doc>

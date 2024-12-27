@@ -11,13 +11,15 @@
    <properties>
       <runOrder>RANDOM</runOrder>
       <direction>FORWARD</direction>
-      <speed>2</speed>
+      <speed>1</speed>
    </properties>
    <shows>
       <show id="92" fadeIn="0" hold="10000" fadeOut="0"/>
       <show id="130" fadeIn="0" hold="5000" fadeOut="0"/>
-      <show id="137" fadeIn="0" hold="1000" fadeOut="0"/>
-      <show id="405" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="802" fadeIn="0" hold="40000" fadeOut="0"/>
+      <show id="137" fadeIn="0" hold="5000" fadeOut="0"/>
       <show id="166" fadeIn="0" hold="5000" fadeOut="0"/>
+      <show id="803" fadeIn="0" hold="30000" fadeOut="0"/>
+      <show id="801" fadeIn="0" hold="20000" fadeOut="0"/>
    </shows>
 </doc>

@@ -1,0 +1,25 @@
+
+<doc>
+   <title>QLCCollection.Sec 3.802</title>
+   <common>
+      <id>802</id>
+      <type>Collection</type>
+      <path>Sec 3</path>
+      <name>Moving static secuencial</name>
+   </common>
+   <shows>
+      <show id="999" name="Off"/>
+      <show id="2000" name="All On"/>
+      <show id="2200" name="Color Change Slow"/>
+      <show id="2302" name="Gobo 1"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2521" name="Eight 1"/>
+      <show id="3009" name="All Off"/>
+      <show id="4000" name="All On"/>
+      <show id="4307" name="Cristal Rotating"/>
+      <show id="4350" name="Gobos Off"/>
+      <show id="4403" name="Prism Rotation Slow"/>
+      <show id="4610" name="Y One"/>
+      <show id="7104" name="Pink Static"/>
+   </shows>
+</doc>
