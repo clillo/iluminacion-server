@@ -41,8 +41,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         return blackoutPointList;
     }
 
-    public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA,
-                                                 QLCFixtureModel fixtureModelC){
+    public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA, QLCFixtureModel fixtureModelC){
         final List<QLCFixture> list = new ArrayList<>();
 
         QLCFixtureModel fixtureLaser = new QLCFixtureModel("Generic", "Generic", "Laser", new String[24], false);
@@ -54,6 +53,18 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                 "master dimmer", "red", "green", "blue", "white", "strobe", "color change"}, false);
         QLCFixtureModel movingHeadBeam = new QLCFixtureModel("Wild Pro", "Moving Head Spot", "Moving Head", new String[]{
                 "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "nc", "nc2", "color wheel", "dimmer", "strobe", "macro"}, false);
+
+        QLCFixtureModel beeEye = new QLCFixtureModel("Wild Pro", "Moving Head Bee Eye", "Moving Head", new String[]{
+                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "focus", "rotate", "dimmer", "strobe",
+                "red.front", "green.front", "blue.front", "white.front", "color temperature", "kinetic diagram", "dynamic graph speed",
+                "red.background", "green.background", "blue.background", "white.background", "reset",
+                "red.bee.1", "green.bee.1", "blue.bee.1", "white.bee.1",
+                "red.bee.2", "green.bee.2", "blue.bee.2", "white.bee.2",
+                "red.bee.3", "green.bee.3", "blue.bee.3", "white.bee.3",
+                "red.bee.4", "green.bee.4", "blue.bee.4", "white.bee.4",
+                "red.bee.5", "green.bee.5", "blue.bee.5", "white.bee.5",
+                "red.bee.6", "green.bee.6", "blue.bee.6", "white.bee.6",
+                "red.bee.7", "green.bee.7", "blue.bee.7", "white.bee.7"}, false);
 
         //010 - 033	[13]	Laser	Generic
         list.add(QLCFixture.build(13, 10, fixtureLaser)); // laser
@@ -99,6 +110,11 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         list.add(QLCRoboticFixture.build(15, 452, movingHeadBeam)); // 202
         list.add(QLCRoboticFixture.build(16, 464, movingHeadBeam)); // 203
         list.add(QLCRoboticFixture.build(17, 476, movingHeadBeam)); // 204
+
+        list.add(QLCRoboticFixture.build(20,  2,1, beeEye)); // universo 2
+        list.add(QLCRoboticFixture.build(21,  2,50, beeEye)); // universo 2
+        list.add(QLCRoboticFixture.build(22,  2,100, beeEye)); // universo 2
+        list.add(QLCRoboticFixture.build(23,  2,150, beeEye)); // universo 2
 
         return list;
     }

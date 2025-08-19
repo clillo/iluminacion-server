@@ -27,9 +27,6 @@ public class QLCPoint implements Comparable<QLCPoint>{
         this.dmxChannel = dmxChannel;
         this.data = data;
 
-  //      if (dmxChannel==241)
-   //         System.out.println(122);
-
         if (channelType==null && fixture instanceof QLCRoboticFixture) {
             QLCRoboticFixture qlcRoboticFixture = (QLCRoboticFixture)fixture;
             channelType = qlcRoboticFixture.getChannelType(dmxChannel);

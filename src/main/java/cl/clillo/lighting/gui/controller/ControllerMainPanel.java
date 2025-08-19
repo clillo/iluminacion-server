@@ -19,11 +19,13 @@ import javax.swing.event.ChangeListener;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener, IOS2LEventListener  {
 
+    @Serial
     private static final long serialVersionUID = -5869553409971473557L;
 
     public static final int WIDTH1 = 1364;
@@ -55,15 +57,15 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         midiPages.setBounds(0, 0, WIDTH1 + 280, HEIGHT1-280);
         cleanMatrix();
         add(midiPages);
+        final HeadPanels headPanels = HeadPanels.getInstance();
+        controllerEditPanels = new ControllerEditPanel[headPanels.getHeadPanels().size()];
 
-        controllerEditPanels = new ControllerEditPanel[8];
-        String []names = {"Collections", "Laser-Derby", "RGBW", "Moving Heads", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam"};
-        for (int i=0; i<8; i++) {
-            final ControllerEditPanel editPanel = new ControllerEditPanel(i+1, names[i]);
-            controllerEditPanels[i] = editPanel;
+        for (HeadPanels.HeadPanel headPanel: headPanels.getHeadPanels()) {
+            final ControllerEditPanel editPanel = new ControllerEditPanel(headPanel.index()+1, headPanel.name());
+            controllerEditPanels[headPanel.index()] = editPanel;
 
             editPanel.setBounds(0, 0, WIDTH1 + 140, HEIGHT1-400);
-            midiPages.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+names[i]+"</p></html>", editPanel);
+            midiPages.addTab("<html><p style='padding:2px; font-family:\"Tahoma, sans-serif;\" font-size:10px;'>"+headPanel.name()+"</p></html>", editPanel);
         }
 
         midiPages.addChangeListener(this);
@@ -240,7 +242,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     }
 
     private void activePanel(int index){
-        if (activeIndex==index)
+        if (activeIndex==index || index>7)
             return;
         cleanMatrix();
         for (int i=0; i<8; i++)

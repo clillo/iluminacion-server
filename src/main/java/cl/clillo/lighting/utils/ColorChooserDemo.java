@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 
 import javax.swing.BorderFactory;
 import javax.swing.JColorChooser;
@@ -18,6 +19,7 @@ import javax.swing.event.ChangeListener;
 
 public class ColorChooserDemo extends JPanel implements ChangeListener {
 
+    @Serial
     private static final long serialVersionUID = 2066941021336318125L;
 
     private final JColorChooser tcc;

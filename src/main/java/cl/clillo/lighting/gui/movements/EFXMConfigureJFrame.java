@@ -7,9 +7,11 @@ import javax.swing.UIManager;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 
 public class EFXMConfigureJFrame extends JFrame {
 
+    @Serial
     private static final long serialVersionUID = 1823403452881818081L;
 
     public EFXMConfigureJFrame() {

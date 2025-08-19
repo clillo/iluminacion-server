@@ -1,8 +1,6 @@
 package cl.clillo.lighting.controller;
 
-
 import cl.clillo.lighting.external.dmx.ArtNet;
-
 
 //@RestController
 public class ArtNetController {

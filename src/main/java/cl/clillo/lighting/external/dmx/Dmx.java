@@ -1,6 +1,5 @@
 package cl.clillo.lighting.external.dmx;
 
-import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.QLCPoint;
 import cl.clillo.lighting.model.ShowCollection;
 
@@ -26,7 +25,7 @@ public class Dmx {
 		return Dmx.InstanceHolder.getInstance();
 	}
 
-	public void setShowCollection(ShowCollection showCollection) {
+	private void setShowCollection(ShowCollection showCollection) {
 		this.showCollection = showCollection;
 	}
 
@@ -38,17 +37,13 @@ public class Dmx {
 
 	}
 
-	public void send(final Point point){
-		send(point.getCanal(), point.getDmx());
+	public void send(final int universe, final int dmxChannel, final int dmxValue){
+		artNet.send(universe, dmxChannel, showCollection.getRealDMXValue(dmxChannel, dmxValue));
 
 	}
 
 	public void send(final QLCPoint point){
 		send(point.getDmxChannel(), point.getData());
 
-	}
-
-	public int getActualDmxValue(int channel){
-		return artNet.getDmxData(channel);
 	}
 }

@@ -5,8 +5,12 @@ import ch.bildspur.artnet.ArtNetClient;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ArtNet {
+
+    private static final int MAX_UNIVERSES = 2;
 
     public enum ArtNetMode {
         NON_ART_NET,
@@ -15,7 +19,21 @@ public class ArtNet {
     }
 
     private final ArtNetClient artNetClient;
-    private final byte[] dmxData;
+    private Map<Integer, byte[]> dmxData;
+
+    private ArtNet(){
+        artNetClient = new ArtNetClient(null);
+        artNetClient.start();
+
+        dmxData = new HashMap<>();
+        for (int i=0; i<MAX_UNIVERSES; i++) {
+            byte[] buffer = new byte[512];
+            dmxData.put(i, buffer);
+
+            for (int c = 0; c < 512; c++)
+                buffer[c] = 0;
+        }
+    }
 
     private static final class InstanceHolder {
         private static ArtNet instance;
@@ -42,34 +60,25 @@ public class ArtNet {
         ArtNet.InstanceHolder.setMode(artNetMode);
     }
 
-    private ArtNet(){
-        artNetClient = new ArtNetClient(null);
-        artNetClient.start();
-
-        dmxData = new byte[512];
-        for (int i=0; i<512; i++)
-            dmxData[i] = 0;
+    public void send(final int universe, final int dmxChannel, final int dmxValue){
+        send(universe, dmxChannel, (byte) dmxValue);
     }
 
     public void send(final int dmxChannel, final int dmxValue){
-
         send(dmxChannel, (byte) dmxValue);
     }
 
     public void send(final int channel, final byte data){
-        dmxData[channel] = data;
+        send(1, channel, data);
     }
 
-    public byte getDmxData(int channel) {
-        return dmxData[channel];
+    public void send(final int universe, final int channel, final byte data){
+        dmxData.get(universe-1)[channel] = data;
     }
 
     public void broadCast(){
-      //  System.out.println(dmxData[120]);
-      // artNetClient.broadcastDmx(0, 0, dmxData);
-        artNetClient.unicastDmx("169.254.0.255", 0, 0, dmxData);
-      //  artNetClient.unicastDmx("169.254.215.1", 0, 0, dmxData);
-
+        for (int i=0; i<MAX_UNIVERSES; i++)
+            artNetClient.unicastDmx("169.254.0.255", 0, i, dmxData.get(i));
     }
 
     private static class ArtNetHttpProxy extends ArtNet{

@@ -12,10 +12,8 @@ import java.util.List;
 
 public class ArtNetDiscovery {
 
-    private ArtNetManager artnet;
-
     void setup(){
-        artnet = new ArtNetManager();
+        ArtNetManager artnet = new ArtNetManager();
         artnet.test();
 
     }

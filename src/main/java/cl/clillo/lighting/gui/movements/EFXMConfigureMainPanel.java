@@ -11,11 +11,13 @@ import cl.clillo.lighting.model.ShowCollection;
 
 import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class EFXMConfigureMainPanel extends JPanel {
 
+    @Serial
     private static final long serialVersionUID = -5869553409971473557L;
 
     public static final int WIDTH1 = 1424;

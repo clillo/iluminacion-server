@@ -243,6 +243,7 @@ public class ShowCollection {
 
         return functionList;
     }
+
     public Map<Integer, QLCFunction> getFunctionMap(){
         final Map<Integer, QLCFunction> functionMap = new HashMap<>();
         for (Show show: showList) {

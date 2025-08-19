@@ -70,17 +70,13 @@ public class DimmerManager {
     }
 
     private int getRepositorySliderValue(int index){
-        switch (index){
-            case 0:
-                return stateRepository.getRgbwMasterDimmer();
-            case 1:
-                return stateRepository.getMovingHeadSpotBeamMasterDimmer();
-            case 2:
-                return stateRepository.getMovingHeadBeamMasterDimmer();
-            case 3:
-                return stateRepository.getMovingHeadSpotMasterDimmer();
-        }
-        return -1;
+        return switch (index) {
+            case 0 -> stateRepository.getRgbwMasterDimmer();
+            case 1 -> stateRepository.getMovingHeadSpotBeamMasterDimmer();
+            case 2 -> stateRepository.getMovingHeadBeamMasterDimmer();
+            case 3 -> stateRepository.getMovingHeadSpotMasterDimmer();
+            default -> -1;
+        };
     }
 
     private void setRepositorySliderValue(int index, int value){

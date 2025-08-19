@@ -57,10 +57,13 @@ public class QLCRoboticFixture extends QLCFixture{
     }
 
     public static QLCRoboticFixture build(final int id, final int dmxAddress, final QLCFixtureModel fixtureModel){
+        return build(id, 1, dmxAddress, fixtureModel);
+    }
+
+    public static QLCRoboticFixture build(final int id, final int universe, final int dmxAddress, final QLCFixtureModel fixtureModel){
         String manufacturer = "manufacturer";
         String model = "model";
         String mode = "mode";
-        int universe = 0;
 
         return new QLCRoboticFixture(manufacturer, model, mode, id, "fixture: "+id, universe, dmxAddress-1,
                 fixtureModel.getChannels().length, fixtureModel);

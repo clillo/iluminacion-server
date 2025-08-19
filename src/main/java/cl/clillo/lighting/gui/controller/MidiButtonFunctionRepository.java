@@ -98,7 +98,9 @@ public class MidiButtonFunctionRepository {
 
         buttonGroup = createRows( 50, "QLCEfxLine", "Moving Head EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
 
+        buttonGroup = createRows( 90, "Scene", "Moving Head Bee Eye", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Bee Eye");
         consistencyCheck();
+
     }
 
     private void consistencyCheck(){
