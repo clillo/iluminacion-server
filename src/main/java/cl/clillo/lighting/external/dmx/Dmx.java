@@ -32,18 +32,19 @@ public class Dmx {
 	private Dmx(){
 	}
 
+	public void sendForce(final int universe, final int dmxChannel, final int dmxValue){
+		artNet.send(universe, dmxChannel, dmxValue);
+	}
+
 	public void send(final int dmxChannel, final int dmxValue){
 		artNet.send(dmxChannel, showCollection.getRealDMXValue(dmxChannel, dmxValue));
-
 	}
 
 	public void send(final int universe, final int dmxChannel, final int dmxValue){
 		artNet.send(universe, dmxChannel, showCollection.getRealDMXValue(dmxChannel, dmxValue));
-
 	}
 
 	public void send(final QLCPoint point){
 		send(point.getDmxChannel(), point.getData());
-
 	}
 }

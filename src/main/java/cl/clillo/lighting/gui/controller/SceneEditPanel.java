@@ -20,11 +20,13 @@ import java.awt.Cursor;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
 public class SceneEditPanel extends EffectEditPanel implements ChangeListener, PositionAdjustable {
 
+    @Serial
     private static final long serialVersionUID = -5869553409971473557L;
 
     private final QLCEfxScene qlcEfx;
@@ -93,25 +95,25 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener, P
 
     private void addButton(final JButton btn, final int col, final int line) {
         int y = 0;
-        int offsetX = 0;
-        switch (line){
-            case 1:
-                y=740;
-                offsetX = 50;
-                break;
-            case 2:
-                y=860;
-                offsetX = 50;
-                break;
-            case 4:
-                y=780;
-                offsetX = 30;
-                break;
-            case 3:
-                y=820;
-                offsetX = 70;
-                break;
-        }
+        int offsetX = switch (line) {
+            case 1 -> {
+                y = 740;
+                yield 50;
+            }
+            case 2 -> {
+                y = 860;
+                yield 50;
+            }
+            case 4 -> {
+                y = 780;
+                yield 30;
+            }
+            case 3 -> {
+                y = 820;
+                yield 70;
+            }
+            default -> 0;
+        };
 
         btn.setBounds(EFXMConfigureMainPanel.WIDTH1+ offsetX + 40* (col-1), y,30,30);
         btn.addActionListener(this);
@@ -153,7 +155,7 @@ public class SceneEditPanel extends EffectEditPanel implements ChangeListener, P
         if (screenPointList ==null)
             return;
 
-        if (screenPointList.size()>=1)
+        if (!screenPointList.isEmpty())
             txtLineOriginX.setText(screenPointList.get(0).toString());
 
         if (screenPointList.size()>=2)

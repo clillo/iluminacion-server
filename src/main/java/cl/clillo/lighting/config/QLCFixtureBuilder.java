@@ -106,10 +106,10 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         //452 - 462	[15]	Moving Head	Beam
         //464 - 474	[16]	Moving Head	Beam
         //476 - 486	[17]	Moving Head	Beam
-        list.add(QLCRoboticFixture.build(14, 440, movingHeadBeam)); // 201
-        list.add(QLCRoboticFixture.build(15, 452, movingHeadBeam)); // 202
-        list.add(QLCRoboticFixture.build(16, 464, movingHeadBeam)); // 203
-        list.add(QLCRoboticFixture.build(17, 476, movingHeadBeam)); // 204
+        list.add(QLCRoboticFixture.build(14, 440, movingHeadBeam));
+        list.add(QLCRoboticFixture.build(15, 452, movingHeadBeam));
+        list.add(QLCRoboticFixture.build(16, 464, movingHeadBeam));
+        list.add(QLCRoboticFixture.build(17, 476, movingHeadBeam));
 
         list.add(QLCRoboticFixture.build(20,  2,1, beeEye)); // universo 2
         list.add(QLCRoboticFixture.build(21,  2,50, beeEye)); // universo 2
