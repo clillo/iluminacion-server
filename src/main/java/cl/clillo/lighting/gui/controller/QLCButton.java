@@ -4,6 +4,8 @@ import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.sound.midi.ShortMessage;
 import javax.swing.JToggleButton;
@@ -16,6 +18,7 @@ public class QLCButton implements ItemListener {
 
     private static int globalIdCounter = 1;
 
+    @Getter
     private final JToggleButton button;
     private String text;
     private final ShortMessage onMessage;
@@ -24,12 +27,15 @@ public class QLCButton implements ItemListener {
 
     private final int matrixX;
     private final int matrixY;
+    @Getter
     private boolean executing;
     private final MidiHandler midiHandler;
+    @Getter
     private final Show show;
     private final int groupId;
     private final int getGlobalId;
 
+    @Setter
     private ButtonSelectedListener buttonSelectedListener;
 
     public QLCButton(final int matrixX, final int matrixY, final Show show) {
@@ -81,10 +87,6 @@ public class QLCButton implements ItemListener {
 
     }
 
-    public JToggleButton getButton() {
-        return button;
-    }
-
     public void setText() {
         button.setText("<html><center>" + text.replaceAll("\\n", "<br>") + "</center></html>");
     }
@@ -123,18 +125,6 @@ public class QLCButton implements ItemListener {
             buttonSelectedListener.onFinishChange(this);
     }
 
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setButtonSelectedListener(ButtonSelectedListener buttonSelectedListener) {
-        this.buttonSelectedListener = buttonSelectedListener;
-    }
-
-    public Show getShow() {
-        return show;
-    }
-
     public String getMapKey() {
         return matrixX + "-" + matrixY;
     }
@@ -157,7 +147,4 @@ public class QLCButton implements ItemListener {
 
     }
 
-    public boolean isExecuting(){
-        return executing;
-    }
 }

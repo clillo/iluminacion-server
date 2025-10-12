@@ -1,0 +1,13 @@
+
+<doc>
+   <title>QLCScene.Moving Head Bee Eye.8226</title>
+   <common>
+      <id>8226</id>
+      <type>Scene</type>
+      <path>Moving Head Bee Eye Focus</path>
+      <name>Focus Medium H</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="20" type="FOCUS" value="160"/>
+   </points>
+</doc>

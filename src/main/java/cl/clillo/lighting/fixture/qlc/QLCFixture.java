@@ -21,7 +21,7 @@ public class QLCFixture {
     public enum ChannelType {MASTER_DIMMER, DIMMER, STROBE,
         COLOR_WHEEL, GOBO_WHEEL, PRISM_ROTATION, RAW, PAN(true), PAN_FINE(true), TILT(true),
         TILT_FINE(true), AUTO, GOBO_CRISTAL, GOBO_CRISTAL_ROTATING, GOBO_SHAKE,
-        GOBO_INDEX, GOBO_NORMAL_SHAKE;
+        GOBO_INDEX, GOBO_NORMAL_SHAKE, FOCUS, ROTATING;
 
         private final boolean isMovement;
 
@@ -70,6 +70,10 @@ public class QLCFixture {
                 return ChannelType.AUTO;
             if ("prism rotation".equalsIgnoreCase(name) || "prism_rotation".equalsIgnoreCase(name))
                 return ChannelType.PRISM_ROTATION;
+            if ("focus".equalsIgnoreCase(name))
+                return ChannelType.FOCUS;
+            if ("rotate".equalsIgnoreCase(name))
+                return ChannelType.ROTATING;
             return RAW;
         }
     };
@@ -82,6 +86,7 @@ public class QLCFixture {
     private int universe;
     private int address;
     private int channels;
+    @Getter
     private QLCFixtureModel fixtureModel;
     private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
@@ -158,10 +163,6 @@ public class QLCFixture {
 
     public int getDMXChannel(int channel){
         return channel + address;
-    }
-
-    public QLCFixtureModel getFixtureModel() {
-        return fixtureModel;
     }
 
     public static QLCFixtureBuilder builder() {

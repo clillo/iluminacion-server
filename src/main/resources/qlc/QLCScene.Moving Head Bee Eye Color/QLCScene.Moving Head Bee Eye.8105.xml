@@ -1,45 +1,44 @@
 
 <doc>
-   <title>QLCScene.Moving Head Bee Eye.8103</title>
+   <title>QLCScene.Moving Head Bee Eye.8104</title>
    <common>
-      <id>8103</id>
+      <id>8106</id>
       <type>Scene</type>
-      <path>Moving Head Bee Eye</path>
-      <name>Blue</name>
+      <path>Moving Head Bee Eye Color</path>
+      <name>Pink</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="20" type="DIMMER" value="255"/>
-      <point fixture-robotic="false" fixture="20" channel="21" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="21" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="22" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="23" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="24" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="25" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="25" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="26" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="27" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="28" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="29" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="29" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="30" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="31" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="32" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="33" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="33" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="34" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="35" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="36" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="37" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="37" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="38" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="39" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="40" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="41" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="41" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="42" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="43" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="44" value="0"/>
 
-      <point fixture-robotic="false" fixture="20" channel="45" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="45" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="46" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="47" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="48" value="0"/>

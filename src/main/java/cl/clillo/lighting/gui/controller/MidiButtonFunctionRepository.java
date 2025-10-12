@@ -4,7 +4,6 @@ import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.ShowCollection;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
@@ -91,6 +90,7 @@ public class MidiButtonFunctionRepository {
         createRows(34, "Chaser", "Laser", 7, 0,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "Collections");
 
 
+
         buttonGroup = createRows( 50, "Scene", "Moving Head On.Off", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
         createRows( 50, "Sequence", "Moving Head Sequence", 6, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup, "Moving Heads");
 
@@ -98,9 +98,18 @@ public class MidiButtonFunctionRepository {
 
         buttonGroup = createRows( 50, "QLCEfxLine", "Moving Head EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
 
-        buttonGroup = createRows( 90, "Scene", "Moving Head Bee Eye", 0, 7,  KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, "MHead Bee Eye");
-        consistencyCheck();
+        createRows( 60, "Scene", "Moving Head Bee Eye", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Strobe", 3, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Focus", 0, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Rotating", 4, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
 
+
+
+
+        createRows( 61, "Scene", "Moving Head Bee Eye Color", 0, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Bee Eye");
+
+
+        consistencyCheck();
     }
 
     private void consistencyCheck(){

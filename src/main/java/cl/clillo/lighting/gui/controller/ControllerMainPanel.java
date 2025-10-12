@@ -245,7 +245,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         if (activeIndex==index || index>7)
             return;
         cleanMatrix();
-        for (int i=0; i<8; i++)
+        for (int i=0; i<7; i++)
             midiHandler.sendSide(i, KeyData.StateLight.OFF);
         midiHandler.sendSide(7-index, KeyData.StateLight.RED);
         controllerEditPanels[index].activePanel();

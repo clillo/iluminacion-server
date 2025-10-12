@@ -1,23 +1,22 @@
 package cl.clillo.lighting.gui.controller;
 
+import lombok.Getter;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class HeadPanels {
 
-    private final String []names = {"Collections", "Laser-Derby", "RGBW", "Moving Heads", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam", "MHead Bee Eye"};
+    private final String []names = {"Collections", "Laser-Derby", "Moving Heads", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam", "MHead Bee Eye"};
 
-    private List<HeadPanel> headPanels;
+    @Getter
+    private final List<HeadPanel> headPanels;
 
     HeadPanels(){
         headPanels = new ArrayList<>();
         int i=0;
         for (String name: names)
             headPanels.add(new HeadPanel(i++, name));
-    }
-
-    public List<HeadPanel> getHeadPanels() {
-        return headPanels;
     }
 
     public record HeadPanel(int index, String name){};

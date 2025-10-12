@@ -1,25 +1,25 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.model.QLCScene;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 public class ButtonGroup {
 
+    @Getter
     private final int id;
-    private final String name;
+    @Getter
     private final List<QLCButton> buttonList;
+    @Setter
+    @Getter
     private QLCScene globalOff;
     private int finalOffReview;
 
     public ButtonGroup(final int id, final String name, final List<QLCButton> buttonList) {
         this.id = id;
-        this.name = name;
         this.buttonList = buttonList;
-    }
-
-    public List<QLCButton> getButtonList() {
-        return buttonList;
     }
 
     public void addFinalOffReview() {
@@ -34,15 +34,4 @@ public class ButtonGroup {
         return finalOffReview==0;
     }
 
-    public QLCScene getGlobalOff() {
-        return globalOff;
-    }
-
-    public void setGlobalOff(QLCScene globalOff) {
-        this.globalOff = globalOff;
-    }
-
-    public int getId() {
-        return id;
-    }
 }

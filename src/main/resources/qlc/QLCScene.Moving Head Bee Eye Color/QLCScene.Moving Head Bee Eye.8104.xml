@@ -4,11 +4,10 @@
    <common>
       <id>8104</id>
       <type>Scene</type>
-      <path>Moving Head Bee Eye</path>
+      <path>Moving Head Bee Eye Color</path>
       <name>White</name>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="20" type="DIMMER" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="21" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="22" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="23" value="0"/>

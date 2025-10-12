@@ -1,0 +1,13 @@
+
+<doc>
+   <title>QLCScene.Moving Head Bee Eye.8231</title>
+   <common>
+      <id>8231</id>
+      <type>Scene</type>
+      <path>Moving Head Bee Eye Rotating</path>
+      <name>Rotating Slow L</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="20" type="rotate" value="170"/>
+   </points>
+</doc>
