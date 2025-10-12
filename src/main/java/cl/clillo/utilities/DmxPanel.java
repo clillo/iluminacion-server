@@ -1,12 +1,13 @@
 package cl.clillo.utilities;
 
-import javax.swing.*;
+import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.FlowLayout;
 import java.util.ArrayList;
 import java.util.List;
 
 public final class DmxPanel extends JPanel implements DmxModel.ModelListener {
+
     private final DmxModel model;
     private final UISettings settings;
     private final List<ChannelPanel> channelPanels = new ArrayList<>();
@@ -48,13 +49,13 @@ public final class DmxPanel extends JPanel implements DmxModel.ModelListener {
         }
     }
 
-    @Override public void allValuesChanged() {
+    public void allValuesChanged() {
         for (int i = 0; i < channelPanels.size(); i++) {
             channelPanels.get(i).setValueFromModel(model.get(i));
         }
     }
 
-    @Override public void structureChanged() {
+   public void structureChanged() {
         rebuild();
         settings.addPropertyChangeListener(evt -> {
             if ("scale".equals(evt.getPropertyName()) || "compact".equals(evt.getPropertyName())) {
@@ -65,6 +66,5 @@ public final class DmxPanel extends JPanel implements DmxModel.ModelListener {
                 repaint();
             }
         });
-
     }
 }

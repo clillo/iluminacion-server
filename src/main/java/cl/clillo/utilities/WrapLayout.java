@@ -1,9 +1,13 @@
 package cl.clillo.utilities;
 
-import java.awt.*;
+import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Insets;
 
-/** FlowLayout que realiza "wrap" de componentes cuando no cabe en el ancho actual. */
 public class WrapLayout extends FlowLayout {
+
     public WrapLayout(int align, int hgap, int vgap) { super(align, hgap, vgap); }
 
     @Override

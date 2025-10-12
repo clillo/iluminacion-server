@@ -3,7 +3,6 @@ package cl.clillo.utilities;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
-
 public class UISettings {
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
     private double scale = 1.0;      // 1.0 = 100%

@@ -14,6 +14,7 @@ import java.io.File;
 import java.io.IOException;
 
 public class SnapshotXmlWriter {
+
     static void write(File file, DmxModel model, SnapshotMeta meta,
                       int fixtureId, boolean fixtureRobotic, int startChannel, int dimmerChannelIndex) throws Exception {
 

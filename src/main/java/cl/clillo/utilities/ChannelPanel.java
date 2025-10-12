@@ -1,10 +1,21 @@
 package cl.clillo.utilities;
 
-import javax.swing.*;
+import javax.swing.BorderFactory;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JProgressBar;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.Font;
 
-/** Panel visual para un canal DMX (0..255). */
 public final class ChannelPanel extends JPanel {
     private final int index;
     private final DmxModel model;
@@ -53,7 +64,7 @@ public final class ChannelPanel extends JPanel {
         // Sync slider -> model
         slider.addChangeListener(e -> {
             int v = slider.getValue();
-            if (!((Integer)spinner.getValue()).equals(v)) spinner.setValue(v);
+            if (!spinner.getValue().equals(v)) spinner.setValue(v);
             bar.setValue(v);
             if (!slider.getValueIsAdjusting()) {
                 model.set(index, v);
@@ -122,10 +133,8 @@ public final class ChannelPanel extends JPanel {
         repaint();
     }
 
-    // --- NUEVO: actualizar el texto del título con descripción
     void setTitleFromModel() {
         String desc = safe(model.getDescription(index));
-        // título en dos líneas: CH N + descripción pequeña
         title.setText("<html><div style='text-align:center'>CH " + (index + 1)
                 + "<br><span style='font-size:smaller'>" + desc + "</span></div></html>");
     }
@@ -134,5 +143,4 @@ public final class ChannelPanel extends JPanel {
         if (s == null) return "";
         return s.replace("&","&amp;").replace("<","&lt;").replace(">","&gt;");
     }
-
 }

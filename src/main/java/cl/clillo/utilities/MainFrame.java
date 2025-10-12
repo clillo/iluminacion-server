@@ -2,14 +2,32 @@ package cl.clillo.utilities;
 
 import cl.clillo.lighting.external.dmx.Dmx;
 
-import javax.swing.*;
+import javax.swing.AbstractAction;
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JSlider;
+import javax.swing.JSpinner;
+import javax.swing.JTabbedPane;
+import javax.swing.JToggleButton;
+import javax.swing.JToolBar;
+import javax.swing.ScrollPaneConstants;
+import javax.swing.SpinnerNumberModel;
 import javax.swing.border.EmptyBorder;
-import java.awt.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Toolkit;
 import java.awt.datatransfer.StringSelection;
 import java.awt.event.ActionEvent;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Map;
 
 public final class MainFrame extends JFrame {
 
@@ -109,23 +127,18 @@ public final class MainFrame extends JFrame {
         content.add(status, BorderLayout.SOUTH);
         setContentPane(content);
 
-        // Menú
         setJMenuBar(buildMenuBar());
 
         final Dmx dmx = Dmx.getInstance();
 
-        model.addListener(new DmxModel.ModelListener() {
-            @Override
-            public void valueChanged(int index, int newValue) {
-                dmx.sendForce(1, index, newValue);
-            }
-            @Override
-            public void allValuesChanged() {
-                //dmxSender.sendAll(model.toByteArray());
-            }
-            @Override
-            public void structureChanged() {}
-        });
+        model.addListener((index, newValue) -> dmx.sendForce(1, index, newValue));
+
+        JTabbedPane tabs = new JTabbedPane();
+        CueListPanel cuePanel = new CueListPanel(model);
+        GroupsPanel groupsPanel = new GroupsPanel(model);
+        tabs.addTab("Cuelist", cuePanel);
+        tabs.addTab("Groups", groupsPanel);
+        this.getContentPane().add(tabs, BorderLayout.EAST);
         pack();
     }
 

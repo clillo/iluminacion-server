@@ -60,7 +60,7 @@ public class SnapshotDialog {
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             if (fc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
                 File chosen = ensureXmlExtension(fc.getSelectedFile());
-                // confirmar overwrite
+
                 if (chosen.exists()) {
                     int ow = JOptionPane.showConfirmDialog(parent,
                             "El archivo ya existe. ¿Deseas sobrescribirlo?\n" + chosen.getAbsolutePath(),
