@@ -1,0 +1,46 @@
+
+<doc>
+   <title>QLCEfxMultiLine.Moving Head Bee Eye EFX.8501</title>
+   <common>
+      <id>8501</id>
+      <type>EfxMultiLine</type>
+      <path>Moving Head Bee Eye EFX</path>
+      <name>Bouncing Bottom</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>20</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>21</id>
+         <offset>90.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>22</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>23</id>
+         <offset>270.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <leftUp>
+         <x>9986.876404494382</x>
+         <y>35025.351111111115</y>
+      </leftUp>
+      <rightDown>
+         <x>30789.03370786517</x>
+         <y>61166.933333333334</y>
+      </rightDown>
+   </dimensions>
+   <config>
+      <loops>20</loops>
+      <type>CROSS</type>
+   </config>
+</doc>

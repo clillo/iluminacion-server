@@ -1,0 +1,62 @@
+
+<doc>
+   <title>QLCEfxSpline.Moving Head Bee Eye EFX.8520</title>
+   <common>
+      <id>8520</id>
+      <type>QLCEfxSpline</type>
+      <path>Moving Head Bee Eye EFX</path>
+      <name>Eight</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>20</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>21</id>
+         <offset>90.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+      <fixture>
+         <id>22</id>
+         <offset>180.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>23</id>
+         <offset>270.0</offset>
+         <reverse>true</reverse>
+      </fixture>
+   </fixtures>
+   <realPoints>
+      <point>
+         <x>49934.38202247191</x>
+         <y>26360.035555555554</y>
+      </point>
+      <point>
+         <x>44503.730337078654</x>
+         <y>30437.83111111111</y>
+      </point>
+      <point>
+         <x>35069.12359550562</x>
+         <y>19223.893333333333</y>
+      </point>
+      <point>
+         <x>53294.02247191011</x>
+         <y>6917.688888888889</y>
+      </point>
+      <point>
+         <x>45056.0</x>
+         <y>1456.3555555555556</y>
+      </point>
+      <point>
+         <x>34977.07865168539</x>
+         <y>6990.506666666667</y>
+      </point>
+      <point>
+         <x>54076.40449438202</x>
+         <y>19296.71111111111</y>
+      </point>
+   </realPoints>
+</doc>

@@ -9,5 +9,8 @@
    </common>
    <points>
       <point fixture-robotic="true" fixture="20" type="FOCUS" value="80"/>
+      <point fixture-robotic="true" fixture="21" type="FOCUS" value="80"/>
+      <point fixture-robotic="true" fixture="22" type="FOCUS" value="80"/>
+      <point fixture-robotic="true" fixture="23" type="FOCUS" value="80"/>
    </points>
 </doc>

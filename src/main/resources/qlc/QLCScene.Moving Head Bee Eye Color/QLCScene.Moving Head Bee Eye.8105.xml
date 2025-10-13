@@ -42,5 +42,145 @@
       <point fixture-robotic="false" fixture="20" channel="46" value="0"/>
       <point fixture-robotic="false" fixture="20" channel="47" value="255"/>
       <point fixture-robotic="false" fixture="20" channel="48" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="21" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="22" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="23" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="24" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="25" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="26" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="27" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="28" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="29" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="30" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="31" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="32" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="33" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="34" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="35" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="36" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="37" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="38" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="39" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="40" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="41" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="42" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="43" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="44" value="0"/>
+
+      <point fixture-robotic="false" fixture="20" channel="45" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="46" value="0"/>
+      <point fixture-robotic="false" fixture="20" channel="47" value="255"/>
+      <point fixture-robotic="false" fixture="20" channel="48" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="21" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="22" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="23" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="24" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="25" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="26" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="27" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="28" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="29" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="30" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="31" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="32" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="33" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="34" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="35" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="36" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="37" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="38" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="39" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="40" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="41" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="42" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="43" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="44" value="0"/>
+
+      <point fixture-robotic="false" fixture="21" channel="45" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="46" value="0"/>
+      <point fixture-robotic="false" fixture="21" channel="47" value="255"/>
+      <point fixture-robotic="false" fixture="21" channel="48" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="21" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="22" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="23" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="24" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="25" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="26" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="27" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="28" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="29" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="30" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="31" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="32" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="33" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="34" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="35" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="36" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="37" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="38" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="39" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="40" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="41" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="42" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="43" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="44" value="0"/>
+
+      <point fixture-robotic="false" fixture="22" channel="45" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="46" value="0"/>
+      <point fixture-robotic="false" fixture="22" channel="47" value="255"/>
+      <point fixture-robotic="false" fixture="22" channel="48" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="21" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="22" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="23" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="24" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="25" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="26" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="27" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="28" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="29" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="30" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="31" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="32" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="33" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="34" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="35" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="36" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="37" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="38" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="39" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="40" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="41" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="42" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="43" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="44" value="0"/>
+
+      <point fixture-robotic="false" fixture="23" channel="45" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="46" value="0"/>
+      <point fixture-robotic="false" fixture="23" channel="47" value="255"/>
+      <point fixture-robotic="false" fixture="23" channel="48" value="0"/>
    </points>
 </doc>

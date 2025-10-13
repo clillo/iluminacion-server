@@ -102,12 +102,11 @@ public class MidiButtonFunctionRepository {
         createRows( 60, "Scene", "Moving Head Bee Eye Strobe", 3, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
         createRows( 60, "Scene", "Moving Head Bee Eye Focus", 0, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
         createRows( 60, "Scene", "Moving Head Bee Eye Rotating", 4, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-
-
-
-
         createRows( 61, "Scene", "Moving Head Bee Eye Color", 0, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Bee Eye");
-
+        createRows( 60, "Scene", "Moving Head Bee Eye Positions", 0, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "EfxMultiLine", "Moving Head Bee Eye EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "EfxCircle", "Moving Head Bee Eye EFX", 6, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "QLCEfxSpline", "Moving Head Bee Eye EFX", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
 
         consistencyCheck();
     }

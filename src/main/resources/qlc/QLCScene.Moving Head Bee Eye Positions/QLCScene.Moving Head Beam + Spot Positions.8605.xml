@@ -1,0 +1,28 @@
+
+<doc>
+   <title>QLCScene.Moving Head Bee Eye Positions.8605</title>
+   <common>
+      <id>8605</id>
+      <type>Scene</type>
+      <path>Moving Head Bee Eye Positions</path>
+      <name>Down cross 1</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="20" type="PAN" value="156"/>
+      <point fixture-robotic="true" fixture="20" type="PAN_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="20" type="TILT" value="82"/>
+      <point fixture-robotic="true" fixture="20" type="TILT_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="21" type="PAN" value="176"/>
+      <point fixture-robotic="true" fixture="21" type="PAN_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="21" type="TILT" value="82"/>
+      <point fixture-robotic="true" fixture="21" type="TILT_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="22" type="PAN" value="156"/>
+      <point fixture-robotic="true" fixture="22" type="PAN_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="22" type="TILT" value="82"/>
+      <point fixture-robotic="true" fixture="22" type="TILT_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="23" type="PAN" value="176"/>
+      <point fixture-robotic="true" fixture="23" type="PAN_FINE" value="0"/>
+      <point fixture-robotic="true" fixture="23" type="TILT" value="82"/>
+      <point fixture-robotic="true" fixture="23" type="TILT_FINE" value="0"/>
+   </points>
+</doc>

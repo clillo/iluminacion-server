@@ -1,0 +1,38 @@
+
+<doc>
+   <title>QLCEfxCircle.Moving Head Bee Eye EFX.8512</title>
+   <common>
+      <id>8512</id>
+      <type>EfxCircle</type>
+      <path>Moving Head Bee Eye EFX</path>
+      <name>Circle 3</name>
+   </common>
+   <fixtures>
+      <fixture>
+         <id>20</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>21</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>22</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+      <fixture>
+         <id>23</id>
+         <offset>0.0</offset>
+         <reverse>false</reverse>
+      </fixture>
+   </fixtures>
+   <dimensions>
+      <centerX>42708.0</centerX>
+      <centerY>13107.0</centerY>
+      <width>7610.0</width>
+      <height>12190.0</height>
+   </dimensions>
+</doc>
