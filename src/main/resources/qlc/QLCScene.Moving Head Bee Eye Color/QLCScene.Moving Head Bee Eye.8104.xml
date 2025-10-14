@@ -6,6 +6,7 @@
       <type>Scene</type>
       <path>Moving Head Bee Eye Color</path>
       <name>White</name>
+      <initTrigger>true</initTrigger>
    </common>
    <points>
       <point fixture-robotic="false" fixture="20" channel="21" value="0"/>

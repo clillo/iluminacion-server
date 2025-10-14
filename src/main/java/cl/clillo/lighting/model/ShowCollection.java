@@ -6,6 +6,7 @@ import cl.clillo.lighting.executor.OS2LScheduler;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
+import lombok.Getter;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
@@ -20,11 +21,15 @@ import java.util.Map;
 public class ShowCollection {
 
     public static final String BASE_DIR = "src/main/resources/qlc";
+    @Getter
     private final List<Show> showList = new ArrayList<>();
     private QLCModel qlcModelOriginal;
+    @Getter
     private QLCFixtureBuilder qlcModel;
     private final StateRepository stateRepository = StateRepository.getInstance();
+    @Getter
     private OS2LScheduler os2LScheduler;
+    @Getter
     private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
     private ShowCollection(){
@@ -46,6 +51,8 @@ public class ShowCollection {
         System.out.println("Starting OS2L scheduler");
         os2LScheduler = new OS2LScheduler(showList);
         os2LScheduler.start();
+
+        initShowEvent();
     }
 
     private static final class InstanceHolder {
@@ -64,13 +71,8 @@ public class ShowCollection {
         return InstanceHolder.getInstance();
     }
 
-    public OS2LScheduler getOs2LScheduler() {
-        return os2LScheduler;
-    }
-
     public int getRealDMXValue(final int dmxChannel, final int dmxValue){
         int maxValue = stateRepository.getMaxValue(dmxChannel);
-   //    System.out.println(dmxChannel+"\t"+dmxValue + "\t" +maxValue+"\t"+Math.min(dmxValue, maxValue));
         if (maxValue>0)
             return Math.min(dmxValue, maxValue);
 
@@ -84,6 +86,114 @@ public class ShowCollection {
                 .build(qlcEfx.getId());
 
         addShow(show);
+    }
+
+    public void toggleShow(final Show show){
+        boolean isExecuting = show.isExecuting();
+
+        for (Show show1: show.getUniqueShow())
+            show1.setExecuting(false);
+
+        show.setExecuting(!isExecuting);
+    }
+
+    public void executeShow(final Show show){
+        boolean isExecuting = show.isExecuting();
+        if (!isExecuting && show.getStepExecutor().isExecuting())
+            show.getStepExecutor().stop();
+
+        for (Show show1: show.getUniqueShow())
+            show1.setExecuting(false);
+
+        show.setExecuting(isExecuting);
+    }
+
+    public void addFromDirectory(final String path){
+        File file = new File(path);
+        final List<File> directories = FileUtils.getDirectories(file.getAbsolutePath());
+        addFromDirectory(file);
+
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                addFromDirectory(dir);
+
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                addCollectionFromDir(dir);
+
+        for(File dir: directories)
+            if (dir.listFiles()!=null)
+                addChaserFromDir(dir);
+    }
+
+
+    public List<QLCFunction> getOriginalFunctionList(final String type, final String path){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (QLCFunction function: qlcModelOriginal.getFunctionList())
+            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
+                functionList.add(function);
+
+        return functionList;
+    }
+
+    public List<QLCFunction> getOriginalFunctionList(final String type){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (QLCFunction function: qlcModelOriginal.getFunctionList())
+            if (type.equalsIgnoreCase(function.getType()) )
+                functionList.add(function);
+
+        return functionList;
+    }
+
+    public List<QLCFunction> getFunctionList(final String type, final String path){
+        final List<QLCFunction> functionList = new ArrayList<>();
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
+                functionList.add(function);
+        }
+
+        return functionList;
+    }
+
+    public Map<Integer, QLCFunction> getFunctionMap(){
+        final Map<Integer, QLCFunction> functionMap = new HashMap<>();
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            functionMap.put(function.getId(), function);
+        }
+
+        return functionMap;
+    }
+
+    public Show getShow(final int showId){
+        for (Show show: showList)
+            if (show.getId()==showId)
+                return show;
+        return null;
+    }
+
+    public void save(){
+        for (Show show: showList) {
+            QLCFunction function = show.getFunction();
+            String dir = getDirectory(function);
+            System.out.println(dir);
+            function.writeToConfigFile(dir);
+        }
+    }
+
+    public String getDirectory(final QLCFunction function){
+        return FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
+    }
+
+    public void globalBlackout() {
+        System.out.println("globalBlackout");
+        Show blackoutShow = getShow(301);
+        blackoutShow.setExecuteOneTime(true);
+    }
+
+    public QLCFixture getFixture(int fixtureId){
+        return getQlcModel().getFixture(fixtureId);
     }
 
     private void addQLCFunction(final QLCFunction chaser){
@@ -117,48 +227,6 @@ public class ShowCollection {
         }
 
         showList.add(show);
-    }
-
-    public List<Show> getShowList() {
-        return showList;
-    }
-
-    public void toggleShow(final Show show){
-        boolean isExecuting = show.isExecuting();
-
-        for (Show show1: show.getUniqueShow())
-            show1.setExecuting(false);
-
-        show.setExecuting(!isExecuting);
-    }
-
-    public void executeShow(final Show show){
-        boolean isExecuting = show.isExecuting();
-        if (!isExecuting && show.getStepExecutor().isExecuting())
-            show.getStepExecutor().stop();
-
-        for (Show show1: show.getUniqueShow())
-            show1.setExecuting(false);
-
-        show.setExecuting(isExecuting);
-    }
-
-    public void addFromDirectory(final String path){
-        File file = new File(path);
-        final List<File> directories = FileUtils.getDirectories(file.getAbsolutePath());
-        addFromDirectory(file);
-
-        for(File dir: directories)
-            if (dir.listFiles()!=null)
-                  addFromDirectory(dir);
-
-        for(File dir: directories)
-            if (dir.listFiles()!=null)
-                addCollectionFromDir(dir);
-
-        for(File dir: directories)
-            if (dir.listFiles()!=null)
-                addChaserFromDir(dir);
     }
 
     private void addFromDirectory(final File file){
@@ -215,80 +283,19 @@ public class ShowCollection {
         Collections.sort(showList);
     }
 
-    public List<QLCFunction> getOriginalFunctionList(final String type, final String path){
-        final List<QLCFunction> functionList = new ArrayList<>();
-        for (QLCFunction function: qlcModelOriginal.getFunctionList())
-            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
-                functionList.add(function);
-
-        return functionList;
-    }
-
-    public List<QLCFunction> getOriginalFunctionList(final String type){
-        final List<QLCFunction> functionList = new ArrayList<>();
-        for (QLCFunction function: qlcModelOriginal.getFunctionList())
-            if (type.equalsIgnoreCase(function.getType()) )
-                functionList.add(function);
-
-        return functionList;
-    }
-
-    public List<QLCFunction> getFunctionList(final String type, final String path){
-        final List<QLCFunction> functionList = new ArrayList<>();
+    private void initShowEvent(){
         for (Show show: showList) {
             QLCFunction function = show.getFunction();
-            if (type.equalsIgnoreCase(function.getType()) && path.equalsIgnoreCase(function.getPath()))
-                functionList.add(function);
-        }
-
-        return functionList;
-    }
-
-    public Map<Integer, QLCFunction> getFunctionMap(){
-        final Map<Integer, QLCFunction> functionMap = new HashMap<>();
-        for (Show show: showList) {
-            QLCFunction function = show.getFunction();
-            functionMap.put(function.getId(), function);
-        }
-
-        return functionMap;
-    }
-
-    public Show getShow(final int showId){
-        for (Show show: showList)
-            if (show.getId()==showId)
-                return show;
-        return null;
-    }
-
-    public QLCFixtureBuilder getQlcModel() {
-        return qlcModel;
-    }
-
-    public void save(){
-        for (Show show: showList) {
-            QLCFunction function = show.getFunction();
-            String dir = getDirectory(function);
-            System.out.println(dir);
-            function.writeToConfigFile(dir);
+            if (function instanceof QLCScene scene){
+                if (scene.isInitEventTrigger())
+                    show.setExecuteOneTime(true);
+            }
         }
     }
 
-    public String getDirectory(final QLCFunction function){
-        return FileUtils.getDirectory(BASE_DIR+"/"+function.getClass().getSimpleName()+"."+function.getPath()).getAbsolutePath();
+    private void endShowEvent(){
+
     }
 
-    public List<QLCPoint> getBlackoutPointList() {
-        return blackoutPointList;
-    }
 
-    public void globalBlackout() {
-        System.out.println("globalBlackout");
-        Show blackoutShow = getShow(301);
-        blackoutShow.setExecuteOneTime(true);
-    }
-
-    public QLCFixture getFixture(int fixtureId){
-        return getQlcModel().getFixture(fixtureId);
-    }
 }

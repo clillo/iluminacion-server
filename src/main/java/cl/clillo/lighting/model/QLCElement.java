@@ -2,6 +2,8 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.repository.XMLParser;
+import lombok.Getter;
+import lombok.Setter;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 
@@ -11,18 +13,28 @@ import java.util.List;
 
 public class QLCElement {
 
+    @Getter
     protected final int id;
+    @Getter
     protected final String type;
+    @Getter
     protected final String name;
+    @Getter
     protected final String path;
+    @Setter
+    @Getter
     protected boolean blackout;
+    @Setter
+    @Getter
     private boolean totalBlackout;
+    private boolean initEventTrigger;
 
     public QLCElement(int id, String type, String name, String path) {
         this.id = id;
         this.type = type;
         this.name = name;
         this.path = path;
+        this.initEventTrigger = false;
     }
 
     public static QLCElement read(final Document doc) {
@@ -32,6 +44,7 @@ public class QLCElement {
                 XMLParser.getNodeString(common, "name"), XMLParser.getNodeString(common, "path"));
         qlcElement.blackout = XMLParser.getNodeBoolean(common, "blackout");
         qlcElement.totalBlackout = "TotalBlackout".equalsIgnoreCase(XMLParser.getNodeString(common, "system"));
+        qlcElement.setInitEventTrigger("true".equalsIgnoreCase(XMLParser.getNodeString(common, "initTrigger")));
 
         return qlcElement;
     }
@@ -49,39 +62,15 @@ public class QLCElement {
 
     }
 
-    public int getId() {
-        return this.id;
-    }
-
-    public String getType() {
-        return this.type;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public String getPath() {
-        return this.path;
-    }
-
-    public boolean isBlackout() {
-        return blackout;
-    }
-
-    public void setBlackout(boolean blackout) {
-        this.blackout = blackout;
-    }
-
     protected int[] getDimmerChannels(){
         return new int[0];
     }
 
-    public boolean isTotalBlackout() {
-        return totalBlackout;
+    public boolean isInitEventTrigger() {
+        return initEventTrigger;
     }
 
-    public void setTotalBlackout(boolean totalBlackout) {
-        this.totalBlackout = totalBlackout;
+    public void setInitEventTrigger(boolean initEventTrigger) {
+        this.initEventTrigger = initEventTrigger;
     }
 }

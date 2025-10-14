@@ -23,9 +23,12 @@ import java.util.List;
 public class QLCScene extends QLCFunction{
 
     private final List<QLCPoint> qlcPointList;
+    @Getter
     private final QLCEfxScene qlcEfxScene;
+    @Getter
+    private final boolean initEventTrigger;
 
-    public QLCScene(final int id, final String type, final String name, final String path, final List<QLCPoint> qlcPointList) {
+    public QLCScene(final int id, final String type, final String name, final String path, final List<QLCPoint> qlcPointList, boolean initEventTrigger) {
         super(id, type, name, path);
         this.qlcPointList = qlcPointList;
         if (isEfx()) {
@@ -51,7 +54,7 @@ public class QLCScene extends QLCFunction{
         }else
             qlcEfxScene = null;
 
-
+        this.initEventTrigger = initEventTrigger;
     }
 
     public String toSmallString(){
@@ -90,7 +93,7 @@ public class QLCScene extends QLCFunction{
         }
 
         Collections.sort(qlcPointList);
-        final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList);
+        final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList, function.isInitEventTrigger());
         scene.setBlackout(function.isBlackout());
         scene.setTotalBlackout(function.isTotalBlackout());
 
@@ -100,10 +103,6 @@ public class QLCScene extends QLCFunction{
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
         QLCPoint.write(out, qlcPointList);
-    }
-
-    public QLCEfxScene getQlcEfxScene() {
-        return qlcEfxScene;
     }
 
     @Override
@@ -122,4 +121,5 @@ public class QLCScene extends QLCFunction{
         this.qlcPointList.clear();
         this.qlcPointList.addAll(ShowCollection.getInstance().getBlackoutPointList());
     }
+
 }

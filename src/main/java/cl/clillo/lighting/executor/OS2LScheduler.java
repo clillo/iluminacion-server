@@ -4,6 +4,7 @@ import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.external.virtualdj.OS2LServer;
 import cl.clillo.lighting.external.virtualdj.VDJBMPEvent;
 import cl.clillo.lighting.model.Show;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
     private long time =0;
     private long previousCount =0;
     private double actualBPM;
+    @Setter
     private IOS2LEventListener ios2LEventListener;
 
     public OS2LScheduler(final List<Show> showList) {
@@ -22,10 +24,6 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
         OS2LServer.getInstance().addListener(this);
         previousCount = System.currentTimeMillis();
-    }
-
-    public void setIos2LEventListener(IOS2LEventListener ios2LEventListener) {
-        this.ios2LEventListener = ios2LEventListener;
     }
 
     public void run() {

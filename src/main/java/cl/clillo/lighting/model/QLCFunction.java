@@ -224,7 +224,7 @@ public class QLCFunction extends QLCElement{
 
         public QLCFunction build() {
             if ("Scene".equalsIgnoreCase(type))
-                return new QLCScene(this.id, this.type, this.name, this.path, this.qlcPointList);
+                return new QLCScene(this.id, this.type, this.name, this.path, this.qlcPointList, false);
 
             if ("Collection".equalsIgnoreCase(type))
                 return new QLCCollection(this.id, this.type, this.name, this.path, List.of());

@@ -6,6 +6,7 @@
       <type>Scene</type>
       <path>Moving Head Bee Eye Positions</path>
       <name>Down full</name>
+      <initTrigger>true</initTrigger>
    </common>
    <points>
       <point fixture-robotic="true" fixture="20" type="PAN" value="171"/>
