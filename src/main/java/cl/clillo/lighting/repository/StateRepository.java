@@ -27,7 +27,7 @@ public class StateRepository {
     private static final String FILENAME = QLCReader.repoBase + "/general.state.xml";
 
     private List<Point> limitMasterDimmer = new ArrayList<>();
-    private Map<Integer, Integer> events = new HashMap<>();
+    private final Map<Integer, Integer> events = new HashMap<>();
     private int rgbwMasterDimmer;
     private int movingHeadSpotBeamMasterDimmer;
     private int movingHeadSpotMasterDimmer;
@@ -99,8 +99,8 @@ public class StateRepository {
         this.movingHeadSpotMasterDimmer = value;
     }
 
-    public int getMaxValue(int channel){
-        if (maxDimmerValues.containsKey(channel))
+    public int getMaxValue(final int universe, int channel){
+        if (maxDimmerValues.containsKey(universe*512+ channel))
             return maxDimmerValues.get(channel);
 
         return -1;

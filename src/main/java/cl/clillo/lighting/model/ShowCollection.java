@@ -71,8 +71,8 @@ public class ShowCollection {
         return InstanceHolder.getInstance();
     }
 
-    public int getRealDMXValue(final int dmxChannel, final int dmxValue){
-        int maxValue = stateRepository.getMaxValue(dmxChannel);
+    public int getRealDMXValue(final int universe, final int dmxChannel, final int dmxValue){
+        int maxValue = stateRepository.getMaxValue(universe, dmxChannel);
         if (maxValue>0)
             return Math.min(dmxValue, maxValue);
 

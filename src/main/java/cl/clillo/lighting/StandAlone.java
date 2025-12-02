@@ -9,6 +9,7 @@ import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.utils.CSVSupport;
 import cl.clillo.lighting.utils.FileUtils;
+import cl.clillo.utilities.BeeEyeDemo;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
@@ -81,5 +82,8 @@ public class StandAlone {
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
        controllerJFrame.start();
+
+       // Lanzar también el frame demo con 4 BeeEye
+       BeeEyeDemo.main(new String[0]);
     }
 }
