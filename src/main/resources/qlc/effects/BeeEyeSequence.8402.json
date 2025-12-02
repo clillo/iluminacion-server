@@ -1,0 +1,85 @@
+{
+  "id": 8402,
+  "name": "BeeEye One-LED Chase Green Trail",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "trail": { "prev1": 170, "prev2": 100, "prev3": 40 },
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "green.full" },
+        { "led": 1, "color": "green.trail3" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "green.trail2" },
+        { "led": 5, "color": "green.trail1" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        { "led": 0, "color": "green.trail1" },
+        { "led": 1, "color": "green.full" },
+        { "led": 2, "color": "green.trail3" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "green.trail2" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        { "led": 0, "color": "green.trail2" },
+        { "led": 1, "color": "green.trail1" },
+        { "led": 2, "color": "green.full" },
+        { "led": 3, "color": "green.trail3" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 3,
+      "leds": [
+        { "led": 0, "color": "green.trail3" },
+        { "led": 1, "color": "green.trail2" },
+        { "led": 2, "color": "green.trail1" },
+        { "led": 3, "color": "green.full" },
+        { "led": 4, "color": "green.trail3" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 4,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "green.trail3" },
+        { "led": 2, "color": "green.trail2" },
+        { "led": 3, "color": "green.trail1" },
+        { "led": 4, "color": "green.full" },
+        { "led": 5, "color": "green.trail3" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 5,
+      "leds": [
+        { "led": 0, "color": "green.trail3" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "green.trail3" },
+        { "led": 3, "color": "green.trail2" },
+        { "led": 4, "color": "green.trail1" },
+        { "led": 5, "color": "green.full" },
+        { "led": 6, "color": "off" }
+      ]
+    }
+  ]
+}
+

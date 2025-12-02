@@ -1,0 +1,22 @@
+{
+  "id": 8101,
+  "name": "Red",
+  "type": "Scene",
+  "path": "Moving Head Bee Eye Color",
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "red.full" },
+        { "led": 1, "color": "red.full" },
+        { "led": 2, "color": "red.full" },
+        { "led": 3, "color": "red.full" },
+        { "led": 4, "color": "red.full" },
+        { "led": 5, "color": "red.full" },
+        { "led": 6, "color": "red.full" }
+      ]
+    }
+  ]
+}

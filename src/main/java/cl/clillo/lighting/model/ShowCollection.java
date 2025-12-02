@@ -45,6 +45,10 @@ public class ShowCollection {
         DefaultScheduler scheduler = new DefaultScheduler(showList);
         System.out.println("Reading new shows");
         addFromDirectory(BASE_DIR);
+        System.out.println("Reading JSON scenes");
+        addJsonScenes();
+        System.out.println("Reading JSON sequences");
+        addJsonSequences();
         System.out.println("Starting default scheduler");
         scheduler.start();
 
@@ -253,6 +257,80 @@ public class ShowCollection {
             throw new RuntimeException(e);
         }
 
+        Collections.sort(showList);
+    }
+
+    /**
+     * Carga escenas desde archivos JSON en el directorio de efectos.
+     * Solo carga escenas que no existan ya (por ID) para evitar duplicados con XML.
+     */
+    private void addJsonScenes() {
+        final File effectsDir = new File(BASE_DIR + "/effects");
+        if (!effectsDir.exists() || !effectsDir.isDirectory()) {
+            return;
+        }
+
+        final List<File> jsonFiles = FileUtils.getFiles(effectsDir.getAbsolutePath(), "", ".json");
+        for (File f : jsonFiles) {
+            if (f.getName().contains("Scene") || f.getName().contains("scene")) {
+                try {
+                    final QLCScene jsonScene = QLCScene.readFromJson(qlcModel, f);
+                    // Verificar si ya existe una escena con este ID
+                    boolean exists = false;
+                    for (Show show : showList) {
+                        if (show.getFunction().getId() == jsonScene.getId()) {
+                            exists = true;
+                            System.out.println("Scene " + jsonScene.getId() + " already loaded from XML, skipping JSON: " + f.getName());
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        addQLCFunction(jsonScene);
+                        System.out.println("Loaded JSON scene: " + jsonScene.getId() + " - " + jsonScene.getName() + " from " + f.getName());
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error reading JSON scene from " + f.getName() + ": " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
+        Collections.sort(showList);
+    }
+
+    /**
+     * Carga secuencias desde archivos JSON en el directorio de efectos.
+     * Solo carga secuencias que no existan ya (por ID) para evitar duplicados con XML.
+     */
+    private void addJsonSequences() {
+        final File effectsDir = new File(BASE_DIR + "/effects");
+        if (!effectsDir.exists() || !effectsDir.isDirectory()) {
+            return;
+        }
+
+        final List<File> jsonFiles = FileUtils.getFiles(effectsDir.getAbsolutePath(), "", ".json");
+        for (File f : jsonFiles) {
+            if (f.getName().contains("Sequence") || f.getName().contains("sequence")) {
+                try {
+                    final QLCSequence jsonSequence = QLCSequence.readFromJson(qlcModel, f);
+                    // Verificar si ya existe una secuencia con este ID
+                    boolean exists = false;
+                    for (Show show : showList) {
+                        if (show.getFunction().getId() == jsonSequence.getId()) {
+                            exists = true;
+                            System.out.println("Sequence " + jsonSequence.getId() + " already loaded from XML, skipping JSON: " + f.getName());
+                            break;
+                        }
+                    }
+                    if (!exists) {
+                        addQLCFunction(jsonSequence);
+                        System.out.println("Loaded JSON sequence: " + jsonSequence.getId() + " - " + jsonSequence.getName() + " from " + f.getName());
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error reading JSON sequence from " + f.getName() + ": " + e.getMessage());
+                    e.printStackTrace();
+                }
+            }
+        }
         Collections.sort(showList);
     }
 

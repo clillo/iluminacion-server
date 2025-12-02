@@ -1,0 +1,23 @@
+{
+  "id": 8105,
+  "name": "Pink",
+  "type": "Scene",
+  "path": "Moving Head Bee Eye Color",
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "magenta.full" },
+        { "led": 1, "color": "magenta.full" },
+        { "led": 2, "color": "magenta.full" },
+        { "led": 3, "color": "magenta.full" },
+        { "led": 4, "color": "magenta.full" },
+        { "led": 5, "color": "magenta.full" },
+        { "led": 6, "color": "magenta.full" }
+      ]
+    }
+  ]
+}
+

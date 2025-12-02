@@ -5,16 +5,14 @@ import ch.qos.logback.classic.Logger;
 import ch.qos.logback.classic.LoggerContext;
 import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.gui.controller.ControllerJFrame;
+import cl.clillo.lighting.model.ColorsCatalog;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
-import cl.clillo.lighting.utils.CSVSupport;
 import cl.clillo.lighting.utils.FileUtils;
 import cl.clillo.utilities.BeeEyeDemo;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.Socket;
 
 public class StandAlone {
 
@@ -79,6 +77,9 @@ public class StandAlone {
         ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
      //   ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
     //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+
+       // Cargar catálogo de colores
+       ColorsCatalog.loadFromClasspath();
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
        controllerJFrame.start();

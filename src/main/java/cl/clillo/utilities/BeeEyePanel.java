@@ -96,8 +96,8 @@ public class BeeEyePanel extends JPanel implements Dmx.DmxListener {
 		int v = clamp255(value);
 
 
-		if (v==100)
-			System.out.println(channel+"\t"+offset+"\t"+ledIndex+"\t"+component+"\t"+v);
+	//	if (v==100)
+	//		System.out.println(channel+"\t"+offset+"\t"+ledIndex+"\t"+component+"\t"+v);
 
 		switch (component) {
 			case 0: red[ledIndex] = v; break;

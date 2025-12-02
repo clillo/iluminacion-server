@@ -1,0 +1,23 @@
+{
+  "id": 8103,
+  "name": "Blue",
+  "type": "Scene",
+  "path": "Moving Head Bee Eye Color",
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "blue.full" },
+        { "led": 1, "color": "blue.full" },
+        { "led": 2, "color": "blue.full" },
+        { "led": 3, "color": "blue.full" },
+        { "led": 4, "color": "blue.full" },
+        { "led": 5, "color": "blue.full" },
+        { "led": 6, "color": "blue.full" }
+      ]
+    }
+  ]
+}
+

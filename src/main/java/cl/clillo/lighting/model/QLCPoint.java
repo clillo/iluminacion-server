@@ -5,6 +5,7 @@ import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.repository.XMLParser;
 import lombok.Getter;
+import lombok.Setter;
 import org.w3c.dom.Node;
 
 import javax.xml.stream.XMLStreamException;
@@ -18,6 +19,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     private final QLCFixture fixture;
     private final int channel;
     private final int dmxChannel;
+    @Setter
     private int data;
     private final QLCFixture.ChannelType channelType;
 
@@ -27,8 +29,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
         this.dmxChannel = dmxChannel;
         this.data = data;
 
-        if (channelType==null && fixture instanceof QLCRoboticFixture) {
-            QLCRoboticFixture qlcRoboticFixture = (QLCRoboticFixture)fixture;
+        if (channelType==null && fixture instanceof QLCRoboticFixture qlcRoboticFixture) {
             channelType = qlcRoboticFixture.getChannelType(dmxChannel);
         }
 
@@ -37,10 +38,6 @@ public class QLCPoint implements Comparable<QLCPoint>{
 
         }
         this.channelType = channelType;
-    }
-
-    public void setData(int data) {
-        this.data = data;
     }
 
     public static QLCPointBuilder builder() {
@@ -87,8 +84,6 @@ public class QLCPoint implements Comparable<QLCPoint>{
            return null;
         }
         int dmxChannel = fixture.getDMXChannel(channel);
-    //    if (dmxChannel==399 || dmxChannel==409 || dmxChannel==419 || dmxChannel==429)
-      //      return null;
 
         return new QLCPoint(fixture, channel, dmxChannel, data, QLCFixture.ChannelType.RAW);
     }

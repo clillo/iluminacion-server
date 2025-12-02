@@ -1,0 +1,84 @@
+{
+  "id": 8401,
+  "name": "BeeEye One-LED Chase Green",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "green.full" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "green.full" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "green.full" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 3,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "green.full" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 4,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "green.full" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "off" }
+      ]
+    },
+    {
+      "index": 5,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "green.full" },
+        { "led": 6, "color": "off" }
+      ]
+    }
+  ]
+}
+

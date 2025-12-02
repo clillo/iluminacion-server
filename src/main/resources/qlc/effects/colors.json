@@ -1,0 +1,92 @@
+{
+  "colors": {
+    "off": { "r": 0, "g": 0, "b": 0 },
+    "green.full": { "r": 0, "g": 255, "b": 0 },
+    "green.trail1": { "r": 0, "g": 170, "b": 0 },
+    "green.trail2": { "r": 0, "g": 100, "b": 0 },
+    "green.trail3": { "r": 0, "g": 40, "b": 0 },
+
+    "red.full": { "r": 255, "g": 0, "b": 0 },
+    "blue.full": { "r": 0, "g": 0, "b": 255 },
+    "white.full": { "r": 255, "g": 255, "b": 255 },
+
+    "yellow.full": { "r": 255, "g": 255, "b": 0 },
+    "cyan.full": { "r": 0, "g": 255, "b": 255 },
+    "magenta.full": { "r": 255, "g": 0, "b": 255 },
+    "magenta.trail1": { "r": 170, "g": 0, "b": 170 },
+    "magenta.trail2": { "r": 100, "g": 0, "b": 100 },
+    "magenta.trail3": { "r": 40, "g": 0, "b": 40 },
+
+    "amber.full": { "r": 255, "g": 191, "b": 0 },
+    "orange.full": { "r": 255, "g": 128, "b": 0 },
+    "purple.full": { "r": 128, "g": 0, "b": 255 },
+    "pink.full": { "r": 255, "g": 105, "b": 180 },
+    "lime.full": { "r": 191, "g": 255, "b": 0 },
+    "aqua.full": { "r": 0, "g": 255, "b": 200 },
+    "teal.full": { "r": 0, "g": 128, "b": 128 },
+
+    "warmwhite.full": { "r": 255, "g": 244, "b": 229 },
+    "coolwhite.full": { "r": 204, "g": 232, "b": 255 },
+
+    "red.trail1": { "r": 170, "g": 0, "b": 0 },
+    "red.trail2": { "r": 100, "g": 0, "b": 0 },
+    "red.trail3": { "r": 40, "g": 0, "b": 0 },
+
+    "blue.trail1": { "r": 0, "g": 0, "b": 170 },
+    "blue.trail2": { "r": 0, "g": 0, "b": 100 },
+    "blue.trail3": { "r": 0, "g": 0, "b": 40 },
+
+    "white.trail1": { "r": 170, "g": 170, "b": 170 },
+    "white.trail2": { "r": 100, "g": 100, "b": 100 },
+    "white.trail3": { "r": 40, "g": 40, "b": 40 },
+
+    "yellow.trail1": { "r": 170, "g": 170, "b": 0 },
+    "yellow.trail2": { "r": 100, "g": 100, "b": 0 },
+    "yellow.trail3": { "r": 40, "g": 40, "b": 0 },
+
+    "cyan.trail1": { "r": 0, "g": 170, "b": 170 },
+    "cyan.trail2": { "r": 0, "g": 100, "b": 100 },
+    "cyan.trail3": { "r": 0, "g": 40, "b": 40 },
+
+    "magenta.trail1": { "r": 170, "g": 0, "b": 170 },
+    "magenta.trail2": { "r": 100, "g": 0, "b": 100 },
+    "magenta.trail3": { "r": 40, "g": 0, "b": 40 },
+
+    "amber.trail1": { "r": 170, "g": 127, "b": 0 },
+    "amber.trail2": { "r": 100, "g": 75, "b": 0 },
+    "amber.trail3": { "r": 40, "g": 30, "b": 0 },
+
+    "orange.trail1": { "r": 170, "g": 85, "b": 0 },
+    "orange.trail2": { "r": 100, "g": 50, "b": 0 },
+    "orange.trail3": { "r": 40, "g": 20, "b": 0 },
+
+    "purple.trail1": { "r": 85, "g": 0, "b": 170 },
+    "purple.trail2": { "r": 50, "g": 0, "b": 100 },
+    "purple.trail3": { "r": 20, "g": 0, "b": 40 },
+
+    "pink.trail1": { "r": 170, "g": 70, "b": 120 },
+    "pink.trail2": { "r": 100, "g": 41, "b": 71 },
+    "pink.trail3": { "r": 40, "g": 16, "b": 28 },
+
+    "lime.trail1": { "r": 127, "g": 170, "b": 0 },
+    "lime.trail2": { "r": 75, "g": 100, "b": 0 },
+    "lime.trail3": { "r": 30, "g": 40, "b": 0 },
+
+    "aqua.trail1": { "r": 0, "g": 170, "b": 133 },
+    "aqua.trail2": { "r": 0, "g": 100, "b": 78 },
+    "aqua.trail3": { "r": 0, "g": 40, "b": 31 },
+
+    "teal.trail1": { "r": 0, "g": 85, "b": 85 },
+    "teal.trail2": { "r": 0, "g": 50, "b": 50 },
+    "teal.trail3": { "r": 0, "g": 20, "b": 20 },
+
+    "warmwhite.trail1": { "r": 170, "g": 163, "b": 153 },
+    "warmwhite.trail2": { "r": 100, "g": 96, "b": 90 },
+    "warmwhite.trail3": { "r": 40, "g": 38, "b": 36 },
+
+    "coolwhite.trail1": { "r": 136, "g": 155, "b": 170 },
+    "coolwhite.trail2": { "r": 80, "g": 91, "b": 100 },
+    "coolwhite.trail3": { "r": 32, "g": 36, "b": 40 }
+  }
+}
+
