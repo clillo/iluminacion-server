@@ -1,6 +1,6 @@
 {
   "id": 8402,
-  "name": "BeeEye One-LED Chase Green Trail",
+  "name": "One-LED Chase Green Trail",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

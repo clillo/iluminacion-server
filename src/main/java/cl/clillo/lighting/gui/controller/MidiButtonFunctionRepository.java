@@ -99,17 +99,17 @@ public class MidiButtonFunctionRepository {
         buttonGroup = createRows( 50, "QLCEfxLine", "Moving Head EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
 
         createRows( 60, "Scene", "Moving Head Bee Eye", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "Scene", "Moving Head Bee Eye Strobe", 3, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "Scene", "Moving Head Bee Eye Focus", 0, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "Scene", "Moving Head Bee Eye Rotating", 4, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "Scene", "Moving Head Bee Eye Positions", 0, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "EfxMultiLine", "Moving Head Bee Eye EFX", 0, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "EfxCircle", "Moving Head Bee Eye EFX", 6, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
-        createRows( 60, "QLCEfxSpline", "Moving Head Bee Eye EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Strobe", 2, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Focus", 5, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Rotating", 1, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        buttonGroup = createRows( 60, "Scene", "Moving Head Bee Eye Positions", 2, 5,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "EfxMultiLine", "Moving Head Bee Eye EFX", 2, 4,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup,"MHead Bee Eye");
+        createRows( 60, "EfxCircle", "Moving Head Bee Eye EFX", 0, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup,"MHead Bee Eye");
+        createRows( 60, "QLCEfxSpline", "Moving Head Bee Eye EFX", 2, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup,"MHead Bee Eye");
 
-        createRows( 61, "Scene", "Moving Head Bee Eye Color", 0, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Bee Eye");
 
-        createRows( 64, "Sequence", "Moving Head Bee Eye Sequence", 5, 1,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        buttonGroup = createRows( 61, "Scene", "Moving Head Bee Eye Color", 4, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Bee Eye");
+        createRows( 64, "Sequence", "Moving Head Bee Eye Sequence", 1, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup,"MHead Bee Eye");
 
 
         consistencyCheck();

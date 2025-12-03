@@ -1,6 +1,6 @@
 {
-  "id": 8406,
-  "name": "One-LED Chase Magenta",
+  "id": 8410,
+  "name": "One-LED Chase Magenta Trail",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,
@@ -11,33 +11,33 @@
       "index": 0,
       "leds": [
         { "led": 0, "color": "magenta.full" },
-        { "led": 1, "color": "off" },
+        { "led": 1, "color": "magenta.trail3" },
         { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
-        { "led": 4, "color": "off" },
-        { "led": 5, "color": "off" },
+        { "led": 4, "color": "magenta.trail2" },
+        { "led": 5, "color": "magenta.trail1" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 1,
       "leds": [
-        { "led": 0, "color": "off" },
+        { "led": 0, "color": "magenta.trail1" },
         { "led": 1, "color": "magenta.full" },
-        { "led": 2, "color": "off" },
+        { "led": 2, "color": "magenta.trail3" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
-        { "led": 5, "color": "off" },
+        { "led": 5, "color": "magenta.trail2" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 2,
       "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
+        { "led": 0, "color": "magenta.trail2" },
+        { "led": 1, "color": "magenta.trail1" },
         { "led": 2, "color": "magenta.full" },
-        { "led": 3, "color": "off" },
+        { "led": 3, "color": "magenta.trail3" },
         { "led": 4, "color": "off" },
         { "led": 5, "color": "off" },
         { "led": 6, "color": "off" }
@@ -46,11 +46,11 @@
     {
       "index": 3,
       "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
+        { "led": 0, "color": "magenta.trail3" },
+        { "led": 1, "color": "magenta.trail2" },
+        { "led": 2, "color": "magenta.trail1" },
         { "led": 3, "color": "magenta.full" },
-        { "led": 4, "color": "off" },
+        { "led": 4, "color": "magenta.trail3" },
         { "led": 5, "color": "off" },
         { "led": 6, "color": "off" }
       ]
@@ -59,22 +59,22 @@
       "index": 4,
       "leds": [
         { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
-        { "led": 3, "color": "off" },
+        { "led": 1, "color": "magenta.trail3" },
+        { "led": 2, "color": "magenta.trail2" },
+        { "led": 3, "color": "magenta.trail1" },
         { "led": 4, "color": "magenta.full" },
-        { "led": 5, "color": "off" },
+        { "led": 5, "color": "magenta.trail3" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 5,
       "leds": [
-        { "led": 0, "color": "off" },
+        { "led": 0, "color": "magenta.trail3" },
         { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
-        { "led": 3, "color": "off" },
-        { "led": 4, "color": "off" },
+        { "led": 2, "color": "magenta.trail3" },
+        { "led": 3, "color": "magenta.trail2" },
+        { "led": 4, "color": "magenta.trail1" },
         { "led": 5, "color": "magenta.full" },
         { "led": 6, "color": "off" }
       ]

@@ -1,6 +1,6 @@
 {
   "id": 8401,
-  "name": "BeeEye One-LED Chase Green",
+  "name": "One-LED Chase Green",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

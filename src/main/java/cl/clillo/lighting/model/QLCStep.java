@@ -5,7 +5,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 @Getter
@@ -18,6 +20,8 @@ public class QLCStep {
     private int hold;
     private int fadeOut;
     private List<QLCPoint> pointList;
+    // Map<LED index, fixture ID> para LEDs con color aleatorio
+    private Map<Integer, Integer> randomLedFixtures = new HashMap<>();
 
     QLCStep(int id, int fadeIn, int hold, int fadeOut, List<QLCPoint> pointList) {
         this.id = id;
@@ -25,6 +29,14 @@ public class QLCStep {
         this.hold = hold;
         this.fadeOut = fadeOut;
         this.pointList = pointList;
+    }
+
+    public void addRandomLed(int ledIndex, int fixtureId) {
+        this.randomLedFixtures.put(ledIndex, fixtureId);
+    }
+
+    public Map<Integer, Integer> getRandomLedFixtures() {
+        return randomLedFixtures;
     }
 
     public static QLCStepBuilder builder() {

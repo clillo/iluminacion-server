@@ -1,6 +1,6 @@
 {
-  "id": 8403,
-  "name": "One-LED Chase Red",
+  "id": 8407,
+  "name": "One-LED Chase Red Trail",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,
@@ -11,33 +11,33 @@
       "index": 0,
       "leds": [
         { "led": 0, "color": "red.full" },
-        { "led": 1, "color": "off" },
+        { "led": 1, "color": "red.trail3" },
         { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
-        { "led": 4, "color": "off" },
-        { "led": 5, "color": "off" },
+        { "led": 4, "color": "red.trail2" },
+        { "led": 5, "color": "red.trail1" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 1,
       "leds": [
-        { "led": 0, "color": "off" },
+        { "led": 0, "color": "red.trail1" },
         { "led": 1, "color": "red.full" },
-        { "led": 2, "color": "off" },
+        { "led": 2, "color": "red.trail3" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
-        { "led": 5, "color": "off" },
+        { "led": 5, "color": "red.trail2" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 2,
       "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
+        { "led": 0, "color": "red.trail2" },
+        { "led": 1, "color": "red.trail1" },
         { "led": 2, "color": "red.full" },
-        { "led": 3, "color": "off" },
+        { "led": 3, "color": "red.trail3" },
         { "led": 4, "color": "off" },
         { "led": 5, "color": "off" },
         { "led": 6, "color": "off" }
@@ -46,11 +46,11 @@
     {
       "index": 3,
       "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
+        { "led": 0, "color": "red.trail3" },
+        { "led": 1, "color": "red.trail2" },
+        { "led": 2, "color": "red.trail1" },
         { "led": 3, "color": "red.full" },
-        { "led": 4, "color": "off" },
+        { "led": 4, "color": "red.trail3" },
         { "led": 5, "color": "off" },
         { "led": 6, "color": "off" }
       ]
@@ -59,22 +59,22 @@
       "index": 4,
       "leds": [
         { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
-        { "led": 3, "color": "off" },
+        { "led": 1, "color": "red.trail3" },
+        { "led": 2, "color": "red.trail2" },
+        { "led": 3, "color": "red.trail1" },
         { "led": 4, "color": "red.full" },
-        { "led": 5, "color": "off" },
+        { "led": 5, "color": "red.trail3" },
         { "led": 6, "color": "off" }
       ]
     },
     {
       "index": 5,
       "leds": [
-        { "led": 0, "color": "off" },
+        { "led": 0, "color": "red.trail3" },
         { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
-        { "led": 3, "color": "off" },
-        { "led": 4, "color": "off" },
+        { "led": 2, "color": "red.trail3" },
+        { "led": 3, "color": "red.trail2" },
+        { "led": 4, "color": "red.trail1" },
         { "led": 5, "color": "red.full" },
         { "led": 6, "color": "off" }
       ]

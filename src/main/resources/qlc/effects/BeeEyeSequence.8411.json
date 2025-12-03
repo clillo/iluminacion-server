@@ -1,6 +1,6 @@
 {
-  "id": 8405,
-  "name": "One-LED Chase Blue",
+  "id": 8411,
+  "name": "BeeEye Center LED Sequential",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,
@@ -10,38 +10,41 @@
     {
       "index": 0,
       "leds": [
-        { "led": 0, "color": "blue.full" },
+        { "led": 0, "color": "off" },
         { "led": 1, "color": "off" },
         { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
         { "led": 5, "color": "off" },
-        { "led": 6, "color": "off" }
-      ]
+        { "led": 6, "color": "green.full" }
+      ],
+      "activeFixture": 0
     },
     {
       "index": 1,
       "leds": [
         { "led": 0, "color": "off" },
-        { "led": 1, "color": "blue.full" },
+        { "led": 1, "color": "off" },
         { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
         { "led": 5, "color": "off" },
-        { "led": 6, "color": "off" }
-      ]
+        { "led": 6, "color": "green.full" }
+      ],
+      "activeFixture": 1
     },
     {
       "index": 2,
       "leds": [
         { "led": 0, "color": "off" },
         { "led": 1, "color": "off" },
-        { "led": 2, "color": "blue.full" },
+        { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
         { "led": 5, "color": "off" },
-        { "led": 6, "color": "off" }
-      ]
+        { "led": 6, "color": "green.full" }
+      ],
+      "activeFixture": 2
     },
     {
       "index": 3,
@@ -49,36 +52,12 @@
         { "led": 0, "color": "off" },
         { "led": 1, "color": "off" },
         { "led": 2, "color": "off" },
-        { "led": 3, "color": "blue.full" },
-        { "led": 4, "color": "off" },
-        { "led": 5, "color": "off" },
-        { "led": 6, "color": "off" }
-      ]
-    },
-    {
-      "index": 4,
-      "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
-        { "led": 3, "color": "off" },
-        { "led": 4, "color": "blue.full" },
-        { "led": 5, "color": "off" },
-        { "led": 6, "color": "off" }
-      ]
-    },
-    {
-      "index": 5,
-      "leds": [
-        { "led": 0, "color": "off" },
-        { "led": 1, "color": "off" },
-        { "led": 2, "color": "off" },
         { "led": 3, "color": "off" },
         { "led": 4, "color": "off" },
-        { "led": 5, "color": "blue.full" },
-        { "led": 6, "color": "off" }
-      ]
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "green.full" }
+      ],
+      "activeFixture": 3
     }
   ]
 }
-

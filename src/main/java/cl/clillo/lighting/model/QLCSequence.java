@@ -25,6 +25,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @ToString
 @Slf4j
@@ -40,6 +41,10 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
     private final QLCSpeed qlcSpeed;
     private final Set<Integer> dimmerChannelSet;
     private IOS2LEventListener.Type vdjType;
+    @Getter
+    private Boolean useRandomColors = false;
+    @Getter
+    private List<String> randomColorPool;
     // Representación opcional a nivel LED (no persistida en XML antiguo)
     private final List<LedPoint> ledPoints = new ArrayList<>();
 
@@ -284,6 +289,11 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
                         int idx = Math.max(0, ledSpec.led);
                         ColorsCatalog.ColorEntry color;
                         if (ledSpec.color != null && !ledSpec.color.isBlank()) {
+                            // Si el color es "random", no procesar aquí (se manejará en el ejecutor)
+                            if ("random".equalsIgnoreCase(ledSpec.color)) {
+                                // No generar color aquí, se marcará para procesamiento en el ejecutor
+                                continue;
+                            }
                             color = palette.get(ledSpec.color);
                             if (color == null) {
                                 log.warn("Color '{}' not found in palette; defaulting to off at LED {}", ledSpec.color, idx);
@@ -321,7 +331,22 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
                 }
 
                 // Convertir a QLCPoint para cada fixture y LED
-                for (Integer fixtureId : fixtures) {
+                // Si activeFixture está definido, solo procesar ese fixture; si no, procesar todos
+                List<Integer> fixturesToProcess = fixtures;
+                if (stepJson.activeFixture != null && stepJson.activeFixture >= 0 && stepJson.activeFixture < fixtures.size()) {
+                    // Solo procesar el fixture activo
+                    fixturesToProcess = List.of(fixtures.get(stepJson.activeFixture));
+                }
+
+                QLCStep step = QLCStep.builder()
+                        .id(stepJson.index)
+                        .fadeIn(0)
+                        .hold(effect.holdMs)
+                        .fadeOut(0)
+                        .pointList(new ArrayList<>())
+                        .build();
+
+                for (Integer fixtureId : fixturesToProcess) {
                     final cl.clillo.lighting.fixture.qlc.QLCFixture fixture = fixtureListBuilder.getFixture(fixtureId);
                     if (fixture == null) {
                         log.warn("Fixture {} not found, skipping", fixtureId);
@@ -333,23 +358,54 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
                         if (c == null) {
                             c = createColorEntry(0, 0, 0, 0);
                         }
-                        // Canal base para LED: 21 + 4 * led
-                        int baseChannel = 21 + 4 * led;
-                        stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 0, c.getR()));
-                        stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 1, c.getG()));
-                        stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 2, c.getB()));
-                        stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 3, c.getW()));
+                        
+                        // Verificar si este LED tiene color "random"
+                        boolean isRandom = false;
+                        if (stepJson.leds != null) {
+                            for (LedSpecJson ledSpec : stepJson.leds) {
+                                if (ledSpec != null && ledSpec.led == led && "random".equalsIgnoreCase(ledSpec.color)) {
+                                    isRandom = true;
+                                    // Almacenar información para regenerar en el ejecutor
+                                    step.addRandomLed(led, fixtureId);
+                                    break;
+                                }
+                            }
+                        }
+                        
+                        // Si es random, no generar el punto ahora (se generará en el ejecutor)
+                        if (!isRandom) {
+                            // Canal base para LED: 21 + 4 * led
+                            int baseChannel = 21 + 4 * led;
+                            stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 0, c.getR()));
+                            stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 1, c.getG()));
+                            stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 2, c.getB()));
+                            stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 3, c.getW()));
+                        }
+                    }
+                }
+
+                // Si activeFixture está definido, asegurar que los otros fixtures estén apagados
+                if (stepJson.activeFixture != null && stepJson.activeFixture >= 0 && stepJson.activeFixture < fixtures.size()) {
+                    for (int i = 0; i < fixtures.size(); i++) {
+                        if (i != stepJson.activeFixture) {
+                            Integer fixtureId = fixtures.get(i);
+                            final cl.clillo.lighting.fixture.qlc.QLCFixture fixture = fixtureListBuilder.getFixture(fixtureId);
+                            if (fixture != null) {
+                                // Apagar todos los LEDs de este fixture
+                                for (int led = 0; led < ledCount; led++) {
+                                    int baseChannel = 21 + 4 * led;
+                                    stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 0, 0));
+                                    stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 1, 0));
+                                    stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 2, 0));
+                                    stepPoints.add(QLCPoint.buildRawPoint(fixture, baseChannel + 3, 0));
+                                }
+                            }
+                        }
                     }
                 }
 
                 Collections.sort(stepPoints);
-                final QLCStep step = QLCStep.builder()
-                        .id(stepJson.index)
-                        .fadeIn(0)
-                        .hold(effect.holdMs)
-                        .fadeOut(0)
-                        .pointList(stepPoints)
-                        .build();
+                step.setPointList(stepPoints);
                 qlcStepList.add(step);
             }
         }
@@ -360,6 +416,18 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
         final QLCSpeed qlcSpeed = QLCSpeed.builder().build();
 
         final QLCSequence sequence = new QLCSequence(effect.id, "Sequence", effect.name, path, direction, runOrder, qlcStepList, null, qlcSpeed);
+        // Asignar información de aleatoriedad
+        sequence.useRandomColors = effect.useRandomColors != null && effect.useRandomColors;
+        if (sequence.useRandomColors) {
+            if (effect.randomColorPool != null && !effect.randomColorPool.isEmpty()) {
+                sequence.randomColorPool = effect.randomColorPool;
+            } else {
+                // Si no se especifica pool, usar todos los colores que terminan en ".full"
+                sequence.randomColorPool = palette.keySet().stream()
+                        .filter(name -> name.endsWith(".full"))
+                        .collect(Collectors.toList());
+            }
+        }
         return sequence;
     }
 
@@ -393,6 +461,8 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
         public int holdMs = 1000;
         public List<Integer> applyToFixtures;
         public int ledCount = 6;
+        public Boolean useRandomColors = false;
+        public List<String> randomColorPool;
         public List<EffectStepJson> steps = new ArrayList<>();
     }
 
@@ -401,6 +471,7 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
         public int index;
         public List<LedSpecJson> leds;
         public List<LedPoint> ledPoints;
+        public Integer activeFixture; // Índice del fixture activo (0-based) en applyToFixtures
     }
 
     @JsonIgnoreProperties(ignoreUnknown = true)

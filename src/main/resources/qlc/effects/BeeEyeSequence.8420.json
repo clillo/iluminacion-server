@@ -1,0 +1,48 @@
+{
+  "id": 8420,
+  "name": "X White",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [20, 21, 22, 23],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        { "led": 0, "color": "white.full" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "white.full" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "white.full" }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "white.full" },
+        { "led": 2, "color": "off" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "white.full" },
+        { "led": 5, "color": "off" },
+        { "led": 6, "color": "white.full" }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        { "led": 0, "color": "off" },
+        { "led": 1, "color": "off" },
+        { "led": 2, "color": "white.full" },
+        { "led": 3, "color": "off" },
+        { "led": 4, "color": "off" },
+        { "led": 5, "color": "white.full" },
+        { "led": 6, "color": "white.full" }
+      ]
+    }
+  ]
+}
+

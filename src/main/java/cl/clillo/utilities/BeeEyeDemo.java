@@ -1,5 +1,7 @@
 package cl.clillo.utilities;
 
+import cl.clillo.lighting.gui.controller.BeeEyePanel;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -43,12 +45,6 @@ public class BeeEyeDemo {
 			p1.setBaseChannel(50 + 21 - 1);
 			p2.setBaseChannel(100 + 21 - 1);
 			p3.setBaseChannel(150 + 21 - 1);
-
-			// Setear un valor en el primer canal de cada fixture (ninguno será ignorado)
-			p0.setValue(21, 255);
-			p1.setValue(50 + 21, 255);
-			p2.setValue(100 + 21, 255);
-			p3.setValue(150 + 21, 255);
 
 			frame.pack();
 			frame.setLocationRelativeTo(null);

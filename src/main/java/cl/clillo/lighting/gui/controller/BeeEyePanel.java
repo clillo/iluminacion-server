@@ -1,4 +1,4 @@
-package cl.clillo.utilities;
+package cl.clillo.lighting.gui.controller;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -12,6 +12,8 @@ import java.awt.Polygon;
 import java.awt.RenderingHints;
 import java.awt.geom.Point2D;
 import cl.clillo.lighting.external.dmx.Dmx;
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * Panel de visualización para un fixture tipo BeeEye.
@@ -27,8 +29,13 @@ public class BeeEyePanel extends JPanel implements Dmx.DmxListener {
 	private static final int LED_COUNT = 7;
 	private static final float OUTLINE_SCALE = 1.04f;
 	private static final int DEFAULT_SIZE = 260;
+	@Setter
 	private int baseChannel = 21;
+	@Setter
+	@Getter
 	private int universe = 1;
+
+	@Getter
 	private String name = "BeeEye";
 
 	private final int[] red = new int[LED_COUNT];
@@ -41,41 +48,12 @@ public class BeeEyePanel extends JPanel implements Dmx.DmxListener {
 		this.setToolTipText("");
 	}
 
-	/**
-	 * Establece el canal base DMX para el mapeo (R del LED 0).
-	 * @param baseChannel canal inicial (por ejemplo, 21)
-	 */
-	public void setBaseChannel(int baseChannel) {
-		this.baseChannel = baseChannel;
-	}
 
-	public int getBaseChannel() {
-		return baseChannel;
-	}
-
-	/**
-	 * Universe DMX que controla este panel.
-	 */
-	public void setUniverse(int universe) {
-		this.universe = universe;
-	}
-
-	public int getUniverse() {
-		return universe;
-	}
-
-	/**
-	 * Nombre del fixture (para tooltip/UI).
-	 */
 	public void setName(String name) {
 		if (name != null && !name.isBlank()) {
 			this.name = name;
 			repaint();
 		}
-	}
-
-	public String getName() {
-		return name;
 	}
 
 	/**
@@ -87,7 +65,7 @@ public class BeeEyePanel extends JPanel implements Dmx.DmxListener {
 	 * @param value   valor [0..255]
 	 */
 	public void setValue(int channel, int value) {
-			int offset = channel - baseChannel;
+		int offset = channel - baseChannel;
 		if (offset < 0) return;
 		int totalChannels = LED_COUNT * 4;
 		if (offset >= totalChannels) return;
@@ -95,8 +73,7 @@ public class BeeEyePanel extends JPanel implements Dmx.DmxListener {
 		int component = offset % 4; // 0=R,1=G,2=B,3=W
 		int v = clamp255(value);
 
-
-	//	if (v==100)
+		//if (v==255 && "BeeEye 1".equals(name))
 	//		System.out.println(channel+"\t"+offset+"\t"+ledIndex+"\t"+component+"\t"+v);
 
 		switch (component) {
