@@ -1,0 +1,50 @@
+{
+  "QR Payment" : {
+    "transaction" : "QR Payment",
+    "sampleCount" : 22221,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 2838.992754601495,
+    "medianResTime" : 2839.0,
+    "minResTime" : 2046.0,
+    "maxResTime" : 4672.0,
+    "pct1ResTime" : 3438.9000000000015,
+    "pct2ResTime" : 3515.0,
+    "pct3ResTime" : 3646.0,
+    "throughput" : 33.58132829182705,
+    "receivedKBytesPerSec" : 20.725976055112007,
+    "sentKBytesPerSec" : 23.02157466881112
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 22221,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 2838.992754601495,
+    "medianResTime" : 2839.0,
+    "minResTime" : 2046.0,
+    "maxResTime" : 4672.0,
+    "pct1ResTime" : 3438.9000000000015,
+    "pct2ResTime" : 3515.0,
+    "pct3ResTime" : 3646.0,
+    "throughput" : 33.58132829182705,
+    "receivedKBytesPerSec" : 20.725976055112007,
+    "sentKBytesPerSec" : 23.02157466881112
+  },
+  "Pago con QR" : {
+    "transaction" : "Pago con QR",
+    "sampleCount" : 22221,
+    "errorCount" : 0,
+    "errorPct" : 0.0,
+    "meanResTime" : 2838.9927546015006,
+    "medianResTime" : 2839.0,
+    "minResTime" : 2046.0,
+    "maxResTime" : 4672.0,
+    "pct1ResTime" : 3438.9000000000015,
+    "pct2ResTime" : 3515.0,
+    "pct3ResTime" : 3646.0,
+    "throughput" : 33.568747120272526,
+    "receivedKBytesPerSec" : 20.718211113293197,
+    "sentKBytesPerSec" : 23.012949685968078
+  }
+}
