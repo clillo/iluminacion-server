@@ -1,6 +1,7 @@
 {
   "id": 8424,
   "name": "X Magenta",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

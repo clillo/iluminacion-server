@@ -9,6 +9,7 @@ import cl.clillo.lighting.model.ColorsCatalog;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.utils.FileUtils;
+import cl.clillo.lighting.web.WebServer;
 import cl.clillo.utilities.BeeEyeDemo;
 import org.slf4j.LoggerFactory;
 
@@ -80,6 +81,15 @@ public class StandAlone {
 
        // Cargar catálogo de colores
        ColorsCatalog.loadFromClasspath();
+
+       // Iniciar servidor web para control desde tablet
+       WebServer webServer = new WebServer(8080);
+       try {
+           webServer.start();
+       } catch (Exception e) {
+           System.err.println("Error starting web server: " + e.getMessage());
+           e.printStackTrace();
+       }
 
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
        controllerJFrame.start();

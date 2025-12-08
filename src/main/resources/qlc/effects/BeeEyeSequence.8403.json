@@ -1,6 +1,7 @@
 {
   "id": 8403,
   "name": "One-LED Chase Red",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

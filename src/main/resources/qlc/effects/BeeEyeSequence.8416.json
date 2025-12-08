@@ -1,6 +1,7 @@
 {
   "id": 8416,
   "name": "BeeEye Center LED Sequential Random Colors",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

@@ -1,6 +1,7 @@
 {
   "id": 8422,
   "name": "X Blue",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

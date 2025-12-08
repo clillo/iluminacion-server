@@ -1,6 +1,7 @@
 {
   "id": 8407,
   "name": "One-LED Chase Red Trail",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

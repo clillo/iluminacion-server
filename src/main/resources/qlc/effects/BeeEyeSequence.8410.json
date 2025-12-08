@@ -1,6 +1,7 @@
 {
   "id": 8410,
   "name": "One-LED Chase Magenta Trail",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,

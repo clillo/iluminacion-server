@@ -98,7 +98,7 @@ public class MidiButtonFunctionRepository {
 
         buttonGroup = createRows( 50, "QLCEfxLine", "Moving Head EFX", 0, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "Moving Heads");
 
-        createRows( 60, "Scene", "Moving Head Bee Eye", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
+        createRows( 60, "Scene", "Moving Head Bee Eye Dimmer", 0, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
         createRows( 60, "Scene", "Moving Head Bee Eye Strobe", 2, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
         createRows( 60, "Scene", "Moving Head Bee Eye Focus", 5, 7,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");
         createRows( 60, "Scene", "Moving Head Bee Eye Rotating", 1, 6,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,"MHead Bee Eye");

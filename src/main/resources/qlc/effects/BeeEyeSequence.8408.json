@@ -1,6 +1,7 @@
 {
   "id": 8408,
   "name": "One-LED Chase White Trail",
+  "path": "Moving Head Bee Eye Color",
   "order": "LOOP",
   "direction": "FORWARD",
   "holdMs": 1000,
