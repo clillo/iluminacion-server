@@ -14,7 +14,14 @@ public class EFXMConfigureJFrame extends JFrame {
     @Serial
     private static final long serialVersionUID = 1823403452881818081L;
 
+    private final FixtureGroupSelectionFrame.FixtureGroup fixtureGroup;
+
     public EFXMConfigureJFrame() {
+        this(null);
+    }
+
+    public EFXMConfigureJFrame(FixtureGroupSelectionFrame.FixtureGroup fixtureGroup) {
+        this.fixtureGroup = fixtureGroup;
         enableEvents(64L);
 
         try {
@@ -23,7 +30,7 @@ public class EFXMConfigureJFrame extends JFrame {
             e.printStackTrace();
         }
         setSize(EFXMConfigureMainPanel.WIDTH1 + 600, EFXMConfigureMainPanel.HEIGHT1 + 150);
-        EFXMConfigureMainPanel EFXMConfigureMainPanel = new EFXMConfigureMainPanel();
+        EFXMConfigureMainPanel EFXMConfigureMainPanel = new EFXMConfigureMainPanel(fixtureGroup);
         setContentPane(EFXMConfigureMainPanel);
 
     }

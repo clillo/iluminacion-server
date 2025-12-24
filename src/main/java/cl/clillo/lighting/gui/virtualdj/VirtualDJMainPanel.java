@@ -167,15 +167,14 @@ public class VirtualDJMainPanel extends JPanel implements VDJBMPEvent {
         txtStrength.setText(String.valueOf(strength));
 
         txtBeat.setText(String.valueOf(pos%16 + 1 ));
-
+        getSongName();
     }
 
     @Override
     public void remoteIp(String ip) {
         txtVirtualDJIP.setText(ip);
         baseUrl = "http://"+ip+":80/";
-
-      //  getSongName();
+         getSongName();
     }
 
     @Override

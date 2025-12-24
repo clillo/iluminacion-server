@@ -24,8 +24,14 @@ public class EFXMConfigureMainPanel extends JPanel {
     public static final int HEIGHT1 = 900;
 
     private final List<EffectEditPanel> pnlList;
+    private final FixtureGroupSelectionFrame.FixtureGroup fixtureGroup;
 
     public EFXMConfigureMainPanel() {
+        this(null);
+    }
+
+    public EFXMConfigureMainPanel(FixtureGroupSelectionFrame.FixtureGroup fixtureGroup) {
+        this.fixtureGroup = fixtureGroup;
         pnlList = new ArrayList<>();
 
         final JTabbedPane tabbedPane = new JTabbedPane();
@@ -34,6 +40,11 @@ public class EFXMConfigureMainPanel extends JPanel {
         add(tabbedPane);
 
         for (Show show : ShowCollection.getInstance().getShowList()) {
+            // Filtrar por grupo si está especificado
+            if (fixtureGroup != null && !matchesFixtureGroup(show, fixtureGroup)) {
+                continue;
+            }
+
             final EffectEditPanel editPanel = buildPanel(show);
             if (editPanel != null) {
                 editPanel.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
@@ -46,6 +57,24 @@ public class EFXMConfigureMainPanel extends JPanel {
 
         this.setBounds(0, 0, WIDTH1 + 200, HEIGHT1);
         this.setLayout(null);
+    }
+
+    private boolean matchesFixtureGroup(Show show, FixtureGroupSelectionFrame.FixtureGroup group) {
+        QLCFunction function = show.getFunction();
+        if (function == null) return false;
+        
+        String path = function.getPath();
+        if (path == null) return false;
+        
+        String filter = group.getPathFilter();
+        
+        // Para Moving Head Hibrid, incluir "Moving Head Beam + Spot" y también "Moving Head Beam" solo
+        if (group == FixtureGroupSelectionFrame.FixtureGroup.MOVING_HEAD_HIBRID) {
+            return path.contains("Moving Head Beam + Spot") || 
+                   (path.contains("Moving Head Beam") && !path.contains("Moving Head Spot"));
+        }
+        
+        return path.contains(filter);
     }
 
     private EffectEditPanel buildPanel(final Show show) {

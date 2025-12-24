@@ -31,6 +31,8 @@ public class WebServer {
     private Server server;
     private final int port;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final BeeEyeStateManager beeEyeStateManager = new BeeEyeStateManager();
+    private final VirtualDJStatusManager virtualDJStatusManager = new VirtualDJStatusManager();
 
     public WebServer(int port) {
         this.port = port;
@@ -70,11 +72,20 @@ public class WebServer {
             String path = req.getPathInfo();
             
             if (path == null || path.equals("/") || path.equals("/shows")) {
-                // GET /api/shows - Listar todos los shows BeeEye
+                // GET /api/shows?group=xxx - Listar shows filtrados por grupo
                 handleGetShows(req, resp);
             } else if (path.startsWith("/shows/")) {
                 // GET /api/shows/{id} - Estado de un show específico
                 handleGetShow(req, resp, path);
+            } else if (path != null && path.equals("/beeeye/status")) {
+                // GET /api/beeeye/status - Estado de todos los BeeEye
+                handleGetBeeEyeStatus(req, resp);
+            } else if (path != null && path.equals("/fixture-groups")) {
+                // GET /api/fixture-groups - Listar grupos de fixtures disponibles
+                handleGetFixtureGroups(req, resp);
+            } else if (path != null && path.equals("/virtualdj/status")) {
+                // GET /api/virtualdj/status - Estado de comunicación con VirtualDJ (OS2L)
+                handleGetVirtualDJStatus(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -101,6 +112,9 @@ public class WebServer {
             ShowCollection collection = ShowCollection.getInstance();
             List<Map<String, Object>> shows = new ArrayList<>();
             
+            // Obtener parámetro de grupo
+            String groupParam = req.getParameter("group");
+            
             for (Show show : collection.getShowList()) {
                 QLCFunction function = show.getFunction();
                 if (function == null) continue;
@@ -108,18 +122,20 @@ public class WebServer {
                 String path = function.getPath();
                 String name = function.getName();
                 
-                // Filtrar solo BeeEye
-                if ((path != null && path.contains("Bee Eye")) ||
-                    (name != null && name.contains("BeeEye"))) {
-                    
-                    Map<String, Object> showData = new HashMap<>();
-                    showData.put("id", show.getId());
-                    showData.put("name", show.getName());
-                    showData.put("path", path);
-                    showData.put("type", function.getType());
-                    showData.put("executing", show.isExecuting());
-                    shows.add(showData);
+                // Filtrar por grupo si está especificado
+                if (groupParam != null && !groupParam.isEmpty()) {
+                    if (!matchesFixtureGroup(path, name, groupParam)) {
+                        continue;
+                    }
                 }
+                
+                Map<String, Object> showData = new HashMap<>();
+                showData.put("id", show.getId());
+                showData.put("name", show.getName());
+                showData.put("path", path);
+                showData.put("type", function.getType());
+                showData.put("executing", show.isExecuting());
+                shows.add(showData);
             }
             
             // Agrupar por path
@@ -127,6 +143,64 @@ public class WebServer {
                 .collect(Collectors.groupingBy(s -> (String) s.get("path")));
             
             sendJsonResponse(resp, Map.of("shows", shows, "grouped", grouped));
+        }
+
+        private boolean matchesFixtureGroup(String path, String name, String group) {
+            if (path == null) path = "";
+            if (name == null) name = "";
+            
+            switch (group) {
+                case "bee-eyes":
+                    return (path != null && path.contains("Bee Eye")) ||
+                           (name != null && name.contains("BeeEye"));
+                case "moving-head-spot":
+                    return path.contains("Moving Head Spot") && !path.contains("Moving Head Beam");
+                case "moving-head-hibrid":
+                    return path.contains("Moving Head Beam + Spot") || 
+                           (path.contains("Moving Head Beam") && !path.contains("Moving Head Spot"));
+                case "laser":
+                    return path.contains("Laser");
+                case "derby":
+                    return path.contains("Derby");
+                default:
+                    return false;
+            }
+        }
+
+        private void handleGetFixtureGroups(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            List<Map<String, Object>> groups = new ArrayList<>();
+            
+            groups.add(Map.of(
+                "id", "bee-eyes",
+                "name", "Bee Eyes",
+                "displayName", "Bee Eyes"
+            ));
+            groups.add(Map.of(
+                "id", "moving-head-spot",
+                "name", "Moving Head Spot",
+                "displayName", "Moving Head Spot"
+            ));
+            groups.add(Map.of(
+                "id", "moving-head-hibrid",
+                "name", "Moving Head Hibrid",
+                "displayName", "Moving Head Hibrid"
+            ));
+            groups.add(Map.of(
+                "id", "laser",
+                "name", "Láser",
+                "displayName", "Láser"
+            ));
+            groups.add(Map.of(
+                "id", "derby",
+                "name", "Derby",
+                "displayName", "Derby"
+            ));
+            
+            sendJsonResponse(resp, Map.of("groups", groups));
+        }
+
+        private void handleGetVirtualDJStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            sendJsonResponse(resp, virtualDJStatusManager.getStatus());
         }
 
         private void handleGetShow(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
@@ -196,6 +270,11 @@ public class WebServer {
             }
             
             sendJsonResponse(resp, Map.of("status", "ok", "message", "BeeEye blackout executed"));
+        }
+
+        private void handleGetBeeEyeStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            List<Map<String, Object>> states = beeEyeStateManager.getAllStates();
+            sendJsonResponse(resp, Map.of("beeEyes", states));
         }
 
         private void sendJsonResponse(HttpServletResponse resp, Object data) throws IOException {
@@ -338,27 +417,303 @@ public class WebServer {
                     "            border-radius: 6px;\n" +
                     "            margin: 20px 0;\n" +
                     "        }\n" +
+                    "        .beeeye-section {\n" +
+                    "            margin-bottom: 40px;\n" +
+                    "        }\n" +
+                    "        .beeeye-section-title {\n" +
+                    "            font-size: 1.8em;\n" +
+                    "            color: #fff;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            text-align: center;\n" +
+                    "            padding-bottom: 10px;\n" +
+                    "            border-bottom: 2px solid #444;\n" +
+                    "        }\n" +
+                    "        .beeeye-grid {\n" +
+                    "            display: grid;\n" +
+                    "            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n" +
+                    "            gap: 20px;\n" +
+                    "            max-width: 1200px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "        }\n" +
+                    "        .beeeye-container {\n" +
+                    "            display: flex;\n" +
+                    "            flex-direction: column;\n" +
+                    "            align-items: center;\n" +
+                    "            padding: 15px;\n" +
+                    "            background: #111;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            border: 1px solid #333;\n" +
+                    "        }\n" +
+                    "        .beeeye-name {\n" +
+                    "            font-size: 1.1em;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            color: #aaa;\n" +
+                    "        }\n" +
+                    "        .beeeye-svg {\n" +
+                    "            width: 200px;\n" +
+                    "            height: 200px;\n" +
+                    "        }\n" +
+                    "        .group-selection {\n" +
+                    "            margin-bottom: 40px;\n" +
+                    "            text-align: center;\n" +
+                    "        }\n" +
+                    "        .group-selection-title {\n" +
+                    "            font-size: 1.8em;\n" +
+                    "            color: #fff;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "        }\n" +
+                    "        .group-buttons {\n" +
+                    "            display: grid;\n" +
+                    "            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));\n" +
+                    "            gap: 20px;\n" +
+                    "            max-width: 1000px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "        }\n" +
+                    "        .group-btn {\n" +
+                    "            padding: 30px 20px;\n" +
+                    "            font-size: 1.3em;\n" +
+                    "            font-weight: bold;\n" +
+                    "            background: #222;\n" +
+                    "            color: #fff;\n" +
+                    "            border: 3px solid #555;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            touch-action: manipulation;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            min-height: 100px;\n" +
+                    "            display: flex;\n" +
+                    "            align-items: center;\n" +
+                    "            justify-content: center;\n" +
+                    "        }\n" +
+                    "        .group-btn:hover {\n" +
+                    "            background: #333;\n" +
+                    "            border-color: #777;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
+                    "        .group-btn.selected {\n" +
+                    "            background: #0066cc;\n" +
+                    "            border-color: #0088ff;\n" +
+                    "        }\n" +
+                    "        .back-btn {\n" +
+                    "            padding: 15px 30px;\n" +
+                    "            font-size: 1.1em;\n" +
+                    "            background: #444;\n" +
+                    "            color: #fff;\n" +
+                    "            border: 2px solid #666;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            margin: 20px auto;\n" +
+                    "            display: block;\n" +
+                    "            transition: all 0.2s;\n" +
+                    "        }\n" +
+                    "        .back-btn:hover {\n" +
+                    "            background: #555;\n" +
+                    "            border-color: #777;\n" +
+                    "        }\n" +
+                    "        .hidden {\n" +
+                    "            display: none;\n" +
+                    "        }\n" +
+                    "        .test-section {\n" +
+                    "            margin: 20px auto 10px;\n" +
+                    "            max-width: 1000px;\n" +
+                    "            padding: 20px;\n" +
+                    "            border: 1px solid #333;\n" +
+                    "            border-radius: 10px;\n" +
+                    "            background: #0b0b0b;\n" +
+                    "        }\n" +
+                    "        .test-section-title {\n" +
+                    "            font-size: 1.4em;\n" +
+                    "            color: #ddd;\n" +
+                    "            margin-bottom: 14px;\n" +
+                    "            text-align: center;\n" +
+                    "        }\n" +
+                    "        .test-view-title {\n" +
+                    "            font-size: 1.8em;\n" +
+                    "            color: #fff;\n" +
+                    "            margin: 10px 0 18px;\n" +
+                    "            text-align: center;\n" +
+                    "            padding-bottom: 10px;\n" +
+                    "            border-bottom: 2px solid #444;\n" +
+                    "        }\n" +
+                    "        .card {\n" +
+                    "            background: #111;\n" +
+                    "            border: 1px solid #333;\n" +
+                    "            border-radius: 10px;\n" +
+                    "            padding: 16px;\n" +
+                    "            margin: 10px auto;\n" +
+                    "            max-width: 900px;\n" +
+                    "        }\n" +
+                    "        .kv {\n" +
+                    "            display: grid;\n" +
+                    "            grid-template-columns: 200px 1fr;\n" +
+                    "            gap: 10px;\n" +
+                    "            align-items: center;\n" +
+                    "        }\n" +
+                    "        .kv .k { color: #aaa; }\n" +
+                    "        .kv .v { color: #fff; word-break: break-word; }\n" +
                     "    </style>\n" +
                     "</head>\n" +
                     "<body>\n" +
                     "    <div class=\"header\">\n" +
-                    "        <h1>BeeEye Control</h1>\n" +
+                    "        <h1>Control de Iluminación</h1>\n" +
                     "    </div>\n" +
                     "    \n" +
-                    "    <button class=\"blackout-btn\" id=\"blackoutBtn\">BLACKOUT</button>\n" +
+                    "    <div id=\"groupSelection\" class=\"group-selection\">\n" +
+                    "        <div class=\"group-selection-title\">Seleccione el grupo de fixtures a configurar</div>\n" +
+                    "        <div class=\"group-buttons\" id=\"groupButtons\">\n" +
+                    "            <div class=\"loading\">Cargando grupos...</div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
                     "    \n" +
-                    "    <div id=\"content\">\n" +
-                    "        <div class=\"loading\">Cargando efectos...</div>\n" +
+                    "    <div id=\"testEntry\" class=\"test-section\">\n" +
+                    "        <div class=\"test-section-title\">Modo Test / Configuración final</div>\n" +
+                    "        <div class=\"group-buttons\">\n" +
+                    "            <button class=\"group-btn\" onclick=\"openTestChase()\">Chasing de fixtures</button>\n" +
+                    "            <button class=\"group-btn\" onclick=\"openTestVirtualDJ()\">Estado de comunicación con VirtualDJ</button>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <div id=\"mainContent\" class=\"hidden\">\n" +
+                    "        <button class=\"back-btn\" id=\"backBtn\">← Volver a selección de grupos</button>\n" +
+                    "        <button class=\"blackout-btn\" id=\"blackoutBtn\">BLACKOUT</button>\n" +
+                    "        \n" +
+                    "        <div class=\"beeeye-section hidden\" id=\"beeeyeSection\">\n" +
+                    "            <div class=\"beeeye-section-title\">Estado BeeEye</div>\n" +
+                    "            <div class=\"beeeye-grid\" id=\"beeeyeGrid\">\n" +
+                    "                <div class=\"loading\">Cargando estado BeeEye...</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div id=\"content\">\n" +
+                    "            <div class=\"loading\">Cargando efectos...</div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <div id=\"testContent\" class=\"hidden\">\n" +
+                    "        <button class=\"back-btn\" id=\"testBackBtn\">← Volver al inicio</button>\n" +
+                    "        <div id=\"testChaseView\" class=\"hidden\">\n" +
+                    "            <div class=\"test-view-title\">Chasing de fixtures</div>\n" +
+                    "            <div class=\"card\">\n" +
+                    "                <div class=\"loading\" style=\"padding: 10px;\">Preparado para implementar el chasing. Próximo paso: elegir grupo, velocidad y patrón.</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div id=\"testVdjView\" class=\"hidden\">\n" +
+                    "            <div class=\"test-view-title\">Estado de comunicación con VirtualDJ</div>\n" +
+                    "            <div class=\"card\">\n" +
+                    "                <div id=\"vdjStatus\" class=\"loading\" style=\"padding: 10px;\">Cargando estado...</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
                     "    <script>\n" +
                     "        const API_BASE = '/api';\n" +
                     "        let shows = [];\n" +
                     "        let activeShowByPath = {};\n" +
+                    "        let selectedGroup = null;\n" +
+                    "        let fixtureGroups = [];\n" +
+                    "        let activeTestView = null;\n" +
+                    "        \n" +
+                    "        // Cargar grupos disponibles\n" +
+                    "        async function loadFixtureGroups() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch(API_BASE + '/fixture-groups');\n" +
+                    "                const data = await response.json();\n" +
+                    "                fixtureGroups = data.groups || [];\n" +
+                    "                renderFixtureGroups(fixtureGroups);\n" +
+                    "            } catch (error) {\n" +
+                    "                document.getElementById('groupButtons').innerHTML = \n" +
+                    "                    '<div class=\"error\">Error al cargar grupos: ' + error.message + '</div>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderFixtureGroups(groups) {\n" +
+                    "            const container = document.getElementById('groupButtons');\n" +
+                    "            let html = '';\n" +
+                    "            groups.forEach(group => {\n" +
+                    "                html += '<button class=\"group-btn\" onclick=\"selectGroup(\\'' + group.id + '\\')\">' + \n" +
+                    "                    group.displayName + '</button>';\n" +
+                    "            });\n" +
+                    "            container.innerHTML = html;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function selectGroup(groupId) {\n" +
+                    "            selectedGroup = groupId;\n" +
+                    "            document.getElementById('groupSelection').classList.add('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.add('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.remove('hidden');\n" +
+                    "            \n" +
+                    "            // Mostrar/ocultar sección BeeEye solo para el grupo bee-eyes\n" +
+                    "            const beeeyeSection = document.getElementById('beeeyeSection');\n" +
+                    "            if (groupId === 'bee-eyes') {\n" +
+                    "                beeeyeSection.classList.remove('hidden');\n" +
+                    "                loadBeeEyeStatus();\n" +
+                    "            } else {\n" +
+                    "                beeeyeSection.classList.add('hidden');\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Actualizar botones de grupo\n" +
+                    "            const selectedGroupData = fixtureGroups.find(g => g.id === groupId);\n" +
+                    "            document.querySelectorAll('.group-btn').forEach(btn => {\n" +
+                    "                btn.classList.remove('selected');\n" +
+                    "                if (selectedGroupData && btn.textContent === selectedGroupData.displayName) {\n" +
+                    "                    btn.classList.add('selected');\n" +
+                    "                }\n" +
+                    "            });\n" +
+                    "            \n" +
+                    "            loadShows();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function hideAllTestViews() {\n" +
+                    "            document.getElementById('testChaseView').classList.add('hidden');\n" +
+                    "            document.getElementById('testVdjView').classList.add('hidden');\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function openTestChase() {\n" +
+                    "            activeTestView = 'chase';\n" +
+                    "            document.getElementById('groupSelection').classList.add('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.add('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.add('hidden');\n" +
+                    "            document.getElementById('testContent').classList.remove('hidden');\n" +
+                    "            hideAllTestViews();\n" +
+                    "            document.getElementById('testChaseView').classList.remove('hidden');\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function openTestVirtualDJ() {\n" +
+                    "            activeTestView = 'vdj';\n" +
+                    "            document.getElementById('groupSelection').classList.add('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.add('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.add('hidden');\n" +
+                    "            document.getElementById('testContent').classList.remove('hidden');\n" +
+                    "            hideAllTestViews();\n" +
+                    "            document.getElementById('testVdjView').classList.remove('hidden');\n" +
+                    "            loadVirtualDJStatus();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function goHome() {\n" +
+                    "            document.getElementById('testContent').classList.add('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.add('hidden');\n" +
+                    "            document.getElementById('groupSelection').classList.remove('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.remove('hidden');\n" +
+                    "            document.getElementById('beeeyeSection').classList.add('hidden');\n" +
+                    "            selectedGroup = null;\n" +
+                    "            activeTestView = null;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        document.getElementById('backBtn').addEventListener('click', () => {\n" +
+                    "            document.getElementById('groupSelection').classList.remove('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.remove('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.add('hidden');\n" +
+                    "            document.getElementById('beeeyeSection').classList.add('hidden');\n" +
+                    "            selectedGroup = null;\n" +
+                    "        });\n" +
+                    "        document.getElementById('testBackBtn').addEventListener('click', goHome);\n" +
                     "        \n" +
                     "        async function loadShows() {\n" +
                     "            try {\n" +
-                    "                const response = await fetch(API_BASE + '/shows');\n" +
+                    "                const url = selectedGroup ? \n" +
+                    "                    API_BASE + '/shows?group=' + encodeURIComponent(selectedGroup) : \n" +
+                    "                    API_BASE + '/shows';\n" +
+                    "                const response = await fetch(url);\n" +
                     "                const data = await response.json();\n" +
                     "                shows = data.shows || [];\n" +
                     "                renderShows();\n" +
@@ -366,6 +721,41 @@ public class WebServer {
                     "                document.getElementById('content').innerHTML = \n" +
                     "                    '<div class=\"error\">Error al cargar efectos: ' + error.message + '</div>';\n" +
                     "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function loadVirtualDJStatus() {\n" +
+                    "            try {\n" +
+                    "                const resp = await fetch(API_BASE + '/virtualdj/status');\n" +
+                    "                const data = await resp.json();\n" +
+                    "                renderVirtualDJStatus(data);\n" +
+                    "            } catch (e) {\n" +
+                    "                const el = document.getElementById('vdjStatus');\n" +
+                    "                if (el) el.innerHTML = '<div class=\"error\">Error: ' + e.message + '</div>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderVirtualDJStatus(data) {\n" +
+                    "            const el = document.getElementById('vdjStatus');\n" +
+                    "            if (!el) return;\n" +
+                    "            const connected = data.connected ? 'SI' : 'NO';\n" +
+                    "            const regOk = data.registered ? 'SI' : 'NO';\n" +
+                    "            const err = data.registerError ? data.registerError : '-';\n" +
+                    "            const ip = data.lastRemoteIp ? data.lastRemoteIp : '-';\n" +
+                    "            const ago = (data.lastSeenAgoMs != null) ? (Math.round(data.lastSeenAgoMs/1000) + 's') : '-';\n" +
+                    "            const bpm = (data.lastBeat && data.lastBeat.bpm != null) ? data.lastBeat.bpm : '-';\n" +
+                    "            const pos = (data.lastBeat && data.lastBeat.pos != null) ? data.lastBeat.pos : '-';\n" +
+                    "            \n" +
+                    "            el.innerHTML = '' +\n" +
+                    "              '<div class=\"kv\">' +\n" +
+                    "                '<div class=\"k\">OS2L port</div><div class=\"v\">' + data.os2lPort + '</div>' +\n" +
+                    "                '<div class=\"k\">Listener registrado</div><div class=\"v\">' + regOk + '</div>' +\n" +
+                    "                '<div class=\"k\">Error registro</div><div class=\"v\">' + err + '</div>' +\n" +
+                    "                '<div class=\"k\">Conectado</div><div class=\"v\">' + connected + '</div>' +\n" +
+                    "                '<div class=\"k\">IP VirtualDJ</div><div class=\"v\">' + ip + '</div>' +\n" +
+                    "                '<div class=\"k\">Último evento</div><div class=\"v\">' + ago + '</div>' +\n" +
+                    "                '<div class=\"k\">Último BPM</div><div class=\"v\">' + bpm + '</div>' +\n" +
+                    "                '<div class=\"k\">Última posición</div><div class=\"v\">' + pos + '</div>' +\n" +
+                    "              '</div>';\n" +
                     "        }\n" +
                     "        \n" +
                     "        function renderShows() {\n" +
@@ -459,11 +849,99 @@ public class WebServer {
                     "        \n" +
                     "        document.getElementById('blackoutBtn').addEventListener('click', blackout);\n" +
                     "        \n" +
-                    "        // Cargar shows al iniciar\n" +
-                    "        loadShows();\n" +
+                    "        // Funciones para BeeEye\n" +
+                    "        async function loadBeeEyeStatus() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch(API_BASE + '/beeeye/status');\n" +
+                    "                const data = await response.json();\n" +
+                    "                renderBeeEyes(data.beeEyes || []);\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error loading BeeEye status:', error);\n" +
+                    "            }\n" +
+                    "        }\n" +
                     "        \n" +
-                    "        // Actualizar estado cada 2 segundos\n" +
-                    "        setInterval(loadShows, 2000);\n" +
+                    "        function renderBeeEyes(beeEyes) {\n" +
+                    "            const grid = document.getElementById('beeeyeGrid');\n" +
+                    "            if (beeEyes.length === 0) {\n" +
+                    "                grid.innerHTML = '<div class=\"loading\">No hay BeeEye configurados</div>';\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            let html = '';\n" +
+                    "            beeEyes.forEach(beeEye => {\n" +
+                    "                html += '<div class=\"beeeye-container\">';\n" +
+                    "                html += '<div class=\"beeeye-name\">' + beeEye.name + '</div>';\n" +
+                    "                html += drawBeeEyeSVG(beeEye);\n" +
+                    "                html += '</div>';\n" +
+                    "            });\n" +
+                    "            grid.innerHTML = html;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function drawBeeEyeSVG(beeEye) {\n" +
+                    "            const size = 200;\n" +
+                    "            const cx = size / 2;\n" +
+                    "            const cy = size / 2;\n" +
+                    "            const ringRadius = size * 0.35;\n" +
+                    "            const ledRadius = size * 0.15;\n" +
+                    "            const centerRadius = size * 0.18;\n" +
+                    "            \n" +
+                    "            let svg = '<svg class=\"beeeye-svg\" viewBox=\"0 0 ' + size + ' ' + size + '\">';\n" +
+                    "            \n" +
+                    "            // Fondo circular (bezel)\n" +
+                    "            svg += '<circle cx=\"' + cx + '\" cy=\"' + cy + '\" r=\"' + (size * 0.45) + '\" fill=\"#1e1e1e\"/>';\n" +
+                    "            \n" +
+                    "            // LEDs del anillo (6)\n" +
+                    "            for (let i = 0; i < 6; i++) {\n" +
+                    "                const angle = -Math.PI / 2 + i * (Math.PI / 3);\n" +
+                    "                const x = cx + ringRadius * Math.cos(angle);\n" +
+                    "                const y = cy + ringRadius * Math.sin(angle);\n" +
+                    "                const led = beeEye.leds[i];\n" +
+                    "                const color = 'rgb(' + led.r + ',' + led.g + ',' + led.b + ')';\n" +
+                    "                svg += drawHexagon(x, y, ledRadius, color);\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // LED central (índice 6)\n" +
+                    "            const centerLed = beeEye.leds[6];\n" +
+                    "            const centerColor = 'rgb(' + centerLed.r + ',' + centerLed.g + ',' + centerLed.b + ')';\n" +
+                    "            svg += drawHexagon(cx, cy, centerRadius, centerColor);\n" +
+                    "            \n" +
+                    "            svg += '</svg>';\n" +
+                    "            return svg;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function drawHexagon(cx, cy, radius, fillColor) {\n" +
+                    "            let points = '';\n" +
+                    "            for (let i = 0; i < 6; i++) {\n" +
+                    "                const angle = -Math.PI / 2 + i * (Math.PI / 3);\n" +
+                    "                const x = cx + radius * Math.cos(angle);\n" +
+                    "                const y = cy + radius * Math.sin(angle);\n" +
+                    "                points += (i > 0 ? ' ' : '') + x + ',' + y;\n" +
+                    "            }\n" +
+                    "            return '<polygon points=\"' + points + '\" fill=\"' + fillColor + '\" stroke=\"rgba(0,0,0,0.6)\" stroke-width=\"2\"/>';\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Cargar grupos al iniciar\n" +
+                    "        loadFixtureGroups();\n" +
+                    "        \n" +
+                    "        // Actualizar estado cada 500ms para BeeEye solo si está visible\n" +
+                    "        setInterval(() => {\n" +
+                    "            if (selectedGroup === 'bee-eyes') {\n" +
+                    "                loadBeeEyeStatus();\n" +
+                    "            }\n" +
+                    "        }, 500);\n" +
+                    "        // Estado VirtualDJ: refrescar solo si estamos en la vista correspondiente\n" +
+                    "        setInterval(() => {\n" +
+                    "            if (activeTestView === 'vdj') {\n" +
+                    "                loadVirtualDJStatus();\n" +
+                    "            }\n" +
+                    "        }, 1000);\n" +
+                    "        \n" +
+                    "        // Actualizar estado cada 2 segundos para shows (solo si hay grupo seleccionado)\n" +
+                    "        setInterval(() => {\n" +
+                    "            if (selectedGroup) {\n" +
+                    "                loadShows();\n" +
+                    "            }\n" +
+                    "        }, 2000);\n" +
                     "    </script>\n" +
                     "</body>\n" +
                     "</html>";

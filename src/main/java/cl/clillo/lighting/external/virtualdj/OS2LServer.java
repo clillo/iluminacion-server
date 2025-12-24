@@ -51,7 +51,7 @@ public class OS2LServer {
     }
 
     public OS2LServer() {
-        this(4444, true);
+        this(4444, false);
     }
 
     public void start() throws IOException {
@@ -72,6 +72,50 @@ public class OS2LServer {
                     SocketChannel client = serverSocket.accept();
                     clients.add(client);
 
+                    new Thread(() -> {
+                        try {
+                            var socket = client.socket();
+                            var in = new java.io.BufferedReader(
+                                    new java.io.InputStreamReader(socket.getInputStream(), java.nio.charset.StandardCharsets.UTF_8));
+
+                            String remoteIP = socket.getInetAddress().getHostAddress();
+                            for (VDJBMPEvent l : listeners) l.remoteIp(remoteIP);
+
+                            ByteBuffer buffer = ByteBuffer.allocate(4096);
+                            StringBuilder sb = new StringBuilder();
+
+                            int bytesRead;
+                            while ((bytesRead = client.read(buffer)) != -1) {
+                                buffer.flip();
+                                sb.append(java.nio.charset.StandardCharsets.UTF_8.decode(buffer));
+                                buffer.clear();
+
+                                int idx;
+                                while ((idx = indexOfNewline(sb)) >= 0) {
+                                    String line = sb.substring(0, idx).trim();
+                                    sb.delete(0, idx + 1); // consume hasta \n
+
+                                    if (line.isEmpty()) continue;
+                                    if (line.endsWith("\r")) line = line.substring(0, line.length() - 1);
+                                    line = line+"}";
+                                    // ahora SÍ: line es 1 JSON completo
+                                    System.out.println(line);
+
+                                    if (line.startsWith("{\"evt\":\"beat\"")) processBpmEvent(line);
+                                    else if (line.startsWith("{\"evt\":\"cmd\"")) processCommandEvent(line);
+                                    else if (line.startsWith("{\"evt\":\"btn\"")) processButtonEvent(line);
+                                    else System.err.println("UNKNOWN: " + line);
+                                }
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        } finally {
+                            clients.remove(client);
+                            try { client.close(); } catch (Exception ignore) {}
+                        }
+                    }).start();
+/*
+
                     String remoteIP= client.getRemoteAddress().toString().substring(1, client.getRemoteAddress().toString().indexOf(':'));
                     for (VDJBMPEvent vdjbmpEvent : listeners)
                         vdjbmpEvent.remoteIp(remoteIP);
@@ -82,7 +126,7 @@ public class OS2LServer {
                     while (bytesRead != -1) {
                         buffer.flip();
                         final String event = new String (buffer.array(),0, bytesRead);
-
+                        System.out.println(event);
                         if (event.startsWith("{\"evt\":\"beat\"")) {
                             processBpmEvent(event);
                         }else
@@ -99,8 +143,8 @@ public class OS2LServer {
                         bytesRead = client.read(buffer);
 
                     }
+*/
 
-                    clients.remove(client);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -110,6 +154,13 @@ public class OS2LServer {
      //   vdjTimeService = new VDJTimeService();
      //   vdjTimeService.start();
      //   listeners.add(vdjTimeService);
+    }
+
+    private static int indexOfNewline(StringBuilder sb) {
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == '}') return i;
+        }
+        return -1;
     }
 
     private void processBpmEvent(final String event){

@@ -1,12 +1,12 @@
 package cl.clillo.lighting;
 
 import cl.clillo.lighting.external.dmx.ArtNet;
-import cl.clillo.lighting.gui.movements.EFXMConfigureJFrame;
+import cl.clillo.lighting.gui.movements.FixtureGroupSelectionFrame;
 import cl.clillo.lighting.model.ShowCollection;
 
 public class ConfigureApp {
 
-    private final EFXMConfigureJFrame efxmConfigureJFrame;
+    private final FixtureGroupSelectionFrame groupSelectionFrame;
 
     public ConfigureApp() {
         //  ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
@@ -15,12 +15,12 @@ public class ConfigureApp {
 
         ShowCollection.getInstance();
 
-        efxmConfigureJFrame = new EFXMConfigureJFrame();
+        groupSelectionFrame = new FixtureGroupSelectionFrame();
 
     }
 
     public void start(){
-        efxmConfigureJFrame.start();
+        groupSelectionFrame.start();
     }
 
     public static void main(String[] args) {

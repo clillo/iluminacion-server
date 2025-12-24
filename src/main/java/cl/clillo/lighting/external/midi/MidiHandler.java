@@ -82,27 +82,29 @@ public class MidiHandler {
     //    MidiDevice device;
         MidiDevice.Info[] infos = MidiSystem.getMidiDeviceInfo();
 
-        for (MidiDevice device: midiDevices) {
-            try {
-              //  device = MidiSystem.getMidiDevice(info);
-            //    if (!"APC MINI".equals(info.getName()))
-              //      continue;
+        if (false) {
+            for (MidiDevice device : midiDevices) {
+                try {
+                    //  device = MidiSystem.getMidiDevice(info);
+                    //    if (!"APC MINI".equals(info.getName()))
+                    //      continue;
 
-                List<Transmitter> transmitters = device.getTransmitters();
+                    List<Transmitter> transmitters = device.getTransmitters();
 
-                for (Transmitter transmitter : transmitters) {
-                    transmitter.setReceiver(
-                            new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent)
-                    );
+                    for (Transmitter transmitter : transmitters) {
+                        transmitter.setReceiver(
+                                new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent)
+                        );
+                    }
+
+                    Transmitter trans = device.getTransmitter();
+                    trans.setReceiver(new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent));
+
+                    mainMidiDevice = device;
+
+                } catch (MidiUnavailableException e) {
+                    e.printStackTrace();
                 }
-
-                Transmitter trans = device.getTransmitter();
-                trans.setReceiver(new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent));
-
-                mainMidiDevice = device;
-
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
             }
         }
 

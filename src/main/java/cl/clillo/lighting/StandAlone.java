@@ -75,9 +75,9 @@ public class StandAlone {
 
         Logger root = context.getLogger(Logger.ROOT_LOGGER_NAME);
         root.setLevel(Level.INFO);
-        ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
+       // ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
      //   ArtNet.setMode(ArtNet.ArtNetMode.HTTP_ART_NET);
-    //  ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
+        ArtNet.setMode(ArtNet.ArtNetMode.NON_ART_NET);
 
        // Cargar catálogo de colores
        ColorsCatalog.loadFromClasspath();
@@ -95,6 +95,6 @@ public class StandAlone {
        controllerJFrame.start();
 
        // Lanzar también el frame demo con 4 BeeEye
-       BeeEyeDemo.main(new String[0]);
+     //  BeeEyeDemo.main(new String[0]);
     }
 }
