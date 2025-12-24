@@ -74,6 +74,6 @@ public class Dmx {
 
 
 	public void send(final QLCPoint point){
-		send(point.getDmxChannel(), point.getData());
+		send(point.getUniverse(), point.getDmxChannel(), point.getData());
 	}
 }

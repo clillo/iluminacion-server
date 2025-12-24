@@ -19,6 +19,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     private final QLCFixture fixture;
     private final int channel;
     private final int dmxChannel;
+    private final int universe;
     @Setter
     private int data;
     private final QLCFixture.ChannelType channelType;
@@ -38,6 +39,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
 
         }
         this.channelType = channelType;
+        this.universe = fixture.getUniverse();
     }
 
     public static QLCPointBuilder builder() {
@@ -163,6 +165,10 @@ public class QLCPoint implements Comparable<QLCPoint>{
         return QLCPoint.buildRoboticPoint(qlcFixture,
                 channelType,
                 value);
+    }
+
+    public int getUniverse() {
+        return universe;
     }
 
     public static class QLCPointBuilder {

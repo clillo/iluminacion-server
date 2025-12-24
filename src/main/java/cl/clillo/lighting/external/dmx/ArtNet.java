@@ -64,21 +64,14 @@ public class ArtNet {
         send(universe, dmxChannel, (byte) dmxValue);
     }
 
-    public void send(final int dmxChannel, final int dmxValue){
-        send(dmxChannel, (byte) dmxValue);
-    }
-
-    public void send(final int channel, final byte data){
-        send(1, channel, data);
-    }
-
-    public void send(final int universe, final int channel, final byte data){
+    private void send(final int universe, final int channel, final byte data){
         dmxData.get(universe-1)[channel] = data;
     }
 
     public void broadCast(){
         for (int i=0; i<MAX_UNIVERSES; i++)
-            artNetClient.unicastDmx("169.254.0.255", 0, i, dmxData.get(i));
+      //      artNetClient.unicastDmx("169.254.0.255", 0, i, dmxData.get(i));
+          artNetClient.unicastDmx("192.168.255.255", 0, i, dmxData.get(i));
     }
 
     private static class ArtNetHttpProxy extends ArtNet{
