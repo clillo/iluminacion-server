@@ -200,6 +200,30 @@ public class ShowCollection {
         return getQlcModel().getFixture(fixtureId);
     }
 
+    /**
+     * Recarga los fixtures desde la configuración YAML.
+     * Útil después de actualizar la configuración desde la interfaz web.
+     */
+    public void reloadFixtures() {
+        try {
+            System.out.println("Recargando fixtures desde configuración YAML...");
+            QLCModel qlcModelOriginal = new QLCModel();
+            QLCFixtureBuilder newQlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
+            
+            // Actualizar referencias
+            this.qlcModel = newQlcModel;
+            
+            // Limpiar y actualizar blackout points
+            blackoutPointList.clear();
+            blackoutPointList.addAll(newQlcModel.getBlackoutPointList());
+            
+            System.out.println("Fixtures recargados. Total: " + newQlcModel.getFixtureList().size());
+        } catch (Exception e) {
+            System.err.println("Error al recargar fixtures: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
     private void addQLCFunction(final QLCFunction chaser){
         final Show show = Show.builder()
                 .name(chaser.getName())

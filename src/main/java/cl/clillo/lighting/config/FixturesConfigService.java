@@ -141,6 +141,9 @@ public class FixturesConfigService {
         
         yamlMapper.writeValue(configFile, config);
         log.info("Configuración guardada en: {}", configFile.getAbsolutePath());
+        
+        // Recargar la configuración en memoria para asegurar sincronización
+        loadConfig();
     }
     
     /**

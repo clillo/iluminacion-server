@@ -286,7 +286,15 @@ public class WebServer {
                 config.setMaxUniverses(maxUniverses);
                 configService.saveConfig();
                 
-                sendJsonResponse(resp, Map.of("status", "ok", "maxUniverses", maxUniverses));
+                // Recargar fixtures en ShowCollection para aplicar cambios
+                try {
+                    ShowCollection.getInstance().reloadFixtures();
+                    log.info("Fixtures recargados después de actualizar maxUniverses");
+                } catch (Exception e) {
+                    log.warn("No se pudieron recargar los fixtures automáticamente: {}", e.getMessage());
+                }
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "maxUniverses", maxUniverses, "reloaded", true));
             } catch (IOException e) {
                 resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
                 sendJsonResponse(resp, Map.of("error", "Error updating config: " + e.getMessage()));
@@ -551,10 +559,16 @@ public class WebServer {
                 FixturesConfigService configService = FixturesConfigService.getInstance();
                 configService.updateFixture(fixtureConfig);
                 
-                // Recargar configuración para aplicar cambios
-                configService.loadConfig();
+                // Recargar fixtures en ShowCollection para aplicar cambios
+                try {
+                    ShowCollection.getInstance().reloadFixtures();
+                    log.info("Fixtures recargados después de actualizar fixture ID: {}", id);
+                } catch (Exception e) {
+                    log.warn("No se pudieron recargar los fixtures automáticamente: {}", e.getMessage());
+                    // Continuar de todas formas, el usuario puede reiniciar manualmente
+                }
                 
-                sendJsonResponse(resp, Map.of("status", "ok", "fixture", fixtureConfig));
+                sendJsonResponse(resp, Map.of("status", "ok", "fixture", fixtureConfig, "reloaded", true));
             } catch (NumberFormatException e) {
                 resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
                 sendJsonResponse(resp, Map.of("error", "Invalid fixture ID"));
@@ -1234,7 +1248,11 @@ public class WebServer {
                     "                const result = await response.json();\n" +
                     "                if (result.status === 'ok') {\n" +
                     "                    maxUniverses = value;\n" +
-                    "                    alert('Máximo de universos actualizado. Reinicie la aplicación para aplicar los cambios.');\n" +
+                    "                    if (result.reloaded) {\n" +
+                    "                        alert('Máximo de universos actualizado y recargado correctamente.');\n" +
+                    "                    } else {\n" +
+                    "                        alert('Máximo de universos actualizado. Los cambios se aplicarán al reiniciar.');\n" +
+                    "                    }\n" +
                     "                    // Actualizar los límites de los inputs\n" +
                     "                    document.querySelectorAll('input[id^=\"universe-\"]').forEach(input => {\n" +
                     "                        input.setAttribute('max', maxUniverses);\n" +
@@ -1350,7 +1368,11 @@ public class WebServer {
                     "                \n" +
                     "                const result = await response.json();\n" +
                     "                if (result.status === 'ok') {\n" +
-                    "                    alert('Fixture actualizado correctamente. Reinicie la aplicación para aplicar los cambios.');\n" +
+                    "                    if (result.reloaded) {\n" +
+                    "                        alert('Fixture actualizado y recargado correctamente.');\n" +
+                    "                    } else {\n" +
+                    "                        alert('Fixture actualizado correctamente. Los cambios se aplicarán al reiniciar.');\n" +
+                    "                    }\n" +
                     "                } else {\n" +
                     "                    alert('Error al actualizar: ' + (result.error || 'Error desconocido'));\n" +
                     "                }\n" +
