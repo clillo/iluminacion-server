@@ -4,6 +4,7 @@ import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.model.QLCPoint;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.Setter;
 import lombok.ToString;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -83,7 +84,11 @@ public class QLCFixture {
     private String mode;
     private int id;
     private String name;
+    @Getter
+    @Setter
     private int universe;
+    @Getter
+    @Setter
     private int address;
     private int channels;
     @Getter

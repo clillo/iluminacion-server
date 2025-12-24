@@ -33,11 +33,115 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                 fixtureModelC = fixtureModel1;
         }
         fixtureList = new ArrayList<>();
-        fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelC));
+        
+        // Intentar cargar desde YAML, si falla usar configuración por defecto
+        try {
+            fixtureList.addAll(buildFixturesFromYaml(fixtureModelList, fixtureModelA, fixtureModelC));
+        } catch (Exception e) {
+            // Si falla, usar configuración por defecto
+            fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelC));
+        }
+        
         for (QLCFixture fixture: fixtureList) {
             fixtureMap.put(fixture.getId(), fixture);
             blackoutPointList.addAll(fixture.getBlackoutPointList());
         }
+    }
+    
+    /**
+     * Construye los fixtures desde la configuración YAML.
+     */
+    private List<QLCFixture> buildFixturesFromYaml(List<QLCFixtureModel> fixtureModelList, 
+                                                    QLCFixtureModel fixtureModelA, 
+                                                    QLCFixtureModel fixtureModelC) {
+        final List<QLCFixture> list = new ArrayList<>();
+        FixturesConfigService configService = FixturesConfigService.getInstance();
+        FixturesConfig config = configService.getConfig();
+        
+        // Crear modelos de fixtures necesarios
+        QLCFixtureModel fixtureLaser = new QLCFixtureModel("Generic", "Generic", "Laser", new String[24], false);
+        QLCFixtureModel fixtureDerby = new QLCFixtureModel("Generic", "Generic", "Derby", new String[]{
+                "master dimmer", "red", "green", "blue", "white", "strobe", "Gobo wheel", "auto"}, false);
+        QLCFixtureModel fixtureSpider = new QLCFixtureModel("Generic", "Generic", "Spider", new String[]{
+                "pan", "tilt", "dimmer", "strobo", "rojo.l", "verde.l", "azul.l", "blanco.l", "blanco.r", "azul.r", "verde.r", "rojo.r"}, false);
+        QLCFixtureModel fixtureRGBW = new QLCFixtureModel("Generic", "Generic", "RGBW", new String[]{
+                "master dimmer", "red", "green", "blue", "white", "strobe", "color change"}, false);
+        QLCFixtureModel movingHeadBeam = new QLCFixtureModel("Wild Pro", "Moving Head Spot", "Moving Head", new String[]{
+                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "nc", "nc2", "color wheel", "dimmer", "strobe", "macro"}, false);
+        QLCFixtureModel beeEye = new QLCFixtureModel("Wild Pro", "Moving Head Bee Eye", "Moving Head", new String[]{
+                "pan", "pan fine", "tilt", "tilt fine", "titl/pan speed", "focus", "rotate", "dimmer", "strobe",
+                "red.front", "green.front", "blue.front", "white.front", "color temperature", "kinetic diagram", "dynamic graph speed",
+                "red.background", "green.background", "blue.background", "white.background", "reset",
+                "red.bee.1", "green.bee.1", "blue.bee.1", "white.bee.1",
+                "red.bee.2", "green.bee.2", "blue.bee.2", "white.bee.2",
+                "red.bee.3", "green.bee.3", "blue.bee.3", "white.bee.3",
+                "red.bee.4", "green.bee.4", "blue.bee.4", "white.bee.4",
+                "red.bee.5", "green.bee.5", "blue.bee.5", "white.bee.5",
+                "red.bee.6", "green.bee.6", "blue.bee.6", "white.bee.6",
+                "red.bee.7", "green.bee.7", "blue.bee.7", "white.bee.7"}, false);
+        
+        // Construir fixtures desde la configuración YAML
+        for (FixtureConfig fixtureConfig : config.getFixtures()) {
+            // Filtrar fixtures inactivos
+            if (!fixtureConfig.isActivo()) {
+                continue;
+            }
+            
+            QLCFixtureModel model = getFixtureModel(fixtureConfig.getModel(), fixtureLaser, fixtureDerby, 
+                    fixtureSpider, fixtureRGBW, movingHeadBeam, beeEye, fixtureModelA, fixtureModelC);
+            
+            if (model == null) {
+                continue; // Saltar si no se encuentra el modelo
+            }
+            
+            QLCFixture fixture;
+            switch (fixtureConfig.getType()) {
+                case "robotic":
+                    fixture = QLCRoboticFixture.build(fixtureConfig.getId(), 
+                            fixtureConfig.getUniverse(), 
+                            fixtureConfig.getAddress(), 
+                            model);
+                    break;
+                case "simple-robotic":
+                    fixture = QLCSimpleRoboticFixture.build(fixtureConfig.getId(), 
+                            fixtureConfig.getAddress(), 
+                            model);
+                    fixture.setUniverse(fixtureConfig.getUniverse());
+                    fixture.setAddress(fixtureConfig.getAddress() - 1); // Convertir a 0-based
+                    break;
+                default: // "simple"
+                    fixture = QLCFixture.build(fixtureConfig.getId(), 
+                            fixtureConfig.getAddress(), 
+                            model);
+                    fixture.setUniverse(fixtureConfig.getUniverse());
+                    fixture.setAddress(fixtureConfig.getAddress() - 1); // Convertir a 0-based
+                    break;
+            }
+            
+            list.add(fixture);
+        }
+        
+        return list;
+    }
+    
+    private QLCFixtureModel getFixtureModel(String modelName, 
+                                            QLCFixtureModel fixtureLaser,
+                                            QLCFixtureModel fixtureDerby,
+                                            QLCFixtureModel fixtureSpider,
+                                            QLCFixtureModel fixtureRGBW,
+                                            QLCFixtureModel movingHeadBeam,
+                                            QLCFixtureModel beeEye,
+                                            QLCFixtureModel fixtureModelA,
+                                            QLCFixtureModel fixtureModelC) {
+        if ("Laser".equalsIgnoreCase(modelName)) return fixtureLaser;
+        if ("Derby".equalsIgnoreCase(modelName)) return fixtureDerby;
+        if ("Spider".equalsIgnoreCase(modelName)) return fixtureSpider;
+        if ("RGBW".equalsIgnoreCase(modelName)) return fixtureRGBW;
+        if ("Moving Head".equalsIgnoreCase(modelName)) return movingHeadBeam;
+        if ("Moving Head Bee Eye".equalsIgnoreCase(modelName)) return beeEye;
+        if ("Moving Head 2".equalsIgnoreCase(modelName)) return fixtureModelA;
+        if ("beam+spot".equalsIgnoreCase(modelName)) return fixtureModelC;
+        return null;
     }
 
     public List<QLCFixture> buildDefaultFixtures(QLCFixtureModel fixtureModelA, QLCFixtureModel fixtureModelC){

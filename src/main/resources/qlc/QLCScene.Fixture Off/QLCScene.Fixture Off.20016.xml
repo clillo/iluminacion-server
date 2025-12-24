@@ -1,0 +1,12 @@
+<doc>
+   <title>QLCScene.Fixture Off.20016</title>
+   <common>
+      <id>20016</id>
+      <type>Scene</type>
+      <path>Fixture Off</path>
+      <name>Fixture 16 Off</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
+   </points>
+</doc>

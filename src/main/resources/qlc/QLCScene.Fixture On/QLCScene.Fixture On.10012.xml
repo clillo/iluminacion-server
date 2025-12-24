@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10012</title>
+   <common>
+      <id>10012</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>Moving Head 4 On</name>
+   </common>
+   <points>
+      <!-- TODO: Agregar puntos para encender el fixture Moving Head 4 (ID: 12) -->
+      <!-- Ejemplo para fixture robotic: -->
+      <!-- <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/> -->
+   </points>
+</doc>
+

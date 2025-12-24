@@ -1,8 +1,15 @@
 package cl.clillo.lighting.web;
 
+import cl.clillo.lighting.config.FixtureConfig;
+import cl.clillo.lighting.config.FixturesConfig;
+import cl.clillo.lighting.config.FixturesConfigService;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.model.QLCFunction;
+import cl.clillo.lighting.model.QLCScene;
+import cl.clillo.lighting.fixture.qlc.QLCFixture;
+import cl.clillo.lighting.model.QLCPoint;
+import cl.clillo.lighting.external.dmx.Dmx;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.eclipse.jetty.server.Server;
@@ -86,6 +93,15 @@ public class WebServer {
             } else if (path != null && path.equals("/virtualdj/status")) {
                 // GET /api/virtualdj/status - Estado de comunicación con VirtualDJ (OS2L)
                 handleGetVirtualDJStatus(req, resp);
+            } else if (path != null && path.equals("/fixtures")) {
+                // GET /api/fixtures - Listar todos los fixtures
+                handleGetFixtures(req, resp);
+            } else if (path != null && path.equals("/fixtures/config")) {
+                // GET /api/fixtures/config - Obtener configuración completa
+                handleGetFixturesConfig(req, resp);
+            } else if (path != null && path.startsWith("/fixtures/")) {
+                // GET /api/fixtures/{id} - Obtener un fixture específico
+                handleGetFixture(req, resp, path);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -102,6 +118,28 @@ public class WebServer {
             } else if (path != null && path.equals("/beeeye/blackout")) {
                 // POST /api/beeeye/blackout - Blackout de BeeEye
                 handleBeeEyeBlackout(req, resp);
+            } else if (path != null && path.startsWith("/fixtures/") && path.endsWith("/turn-on")) {
+                // POST /api/fixtures/{id}/turn-on - Encender un fixture
+                handleTurnOnFixture(req, resp, path);
+            } else if (path != null && path.startsWith("/fixtures/") && path.endsWith("/turn-off")) {
+                // POST /api/fixtures/{id}/turn-off - Apagar un fixture
+                handleTurnOffFixture(req, resp, path);
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                sendJsonResponse(resp, Map.of("error", "Not found"));
+            }
+        }
+
+        @Override
+        protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+            String path = req.getPathInfo();
+            
+            if (path != null && path.startsWith("/fixtures/") && path.endsWith("/update")) {
+                // PUT /api/fixtures/{id}/update - Actualizar configuración de un fixture
+                handleUpdateFixture(req, resp, path);
+            } else if (path != null && path.equals("/fixtures/config/update")) {
+                // PUT /api/fixtures/config/update - Actualizar configuración (maxUniverses)
+                handleUpdateFixturesConfig(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -201,6 +239,329 @@ public class WebServer {
 
         private void handleGetVirtualDJStatus(HttpServletRequest req, HttpServletResponse resp) throws IOException {
             sendJsonResponse(resp, virtualDJStatusManager.getStatus());
+        }
+
+        private void handleGetFixtures(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            FixturesConfigService configService = FixturesConfigService.getInstance();
+            FixturesConfig config = configService.getConfig();
+            sendJsonResponse(resp, Map.of(
+                "maxUniverses", config.getMaxUniverses(),
+                "fixtures", config.getFixtures()
+            ));
+        }
+
+        private void handleGetFixturesConfig(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            FixturesConfigService configService = FixturesConfigService.getInstance();
+            FixturesConfig config = configService.getConfig();
+            sendJsonResponse(resp, Map.of(
+                "maxUniverses", config.getMaxUniverses()
+            ));
+        }
+
+        private void handleUpdateFixturesConfig(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            try {
+                // Leer el cuerpo de la petición
+                StringBuilder body = new StringBuilder();
+                String line;
+                try (var reader = req.getReader()) {
+                    while ((line = reader.readLine()) != null) {
+                        body.append(line);
+                    }
+                }
+                
+                // Parsear JSON
+                @SuppressWarnings("unchecked")
+                Map<String, Object> configData = (Map<String, Object>) objectMapper.readValue(body.toString(), Map.class);
+                Integer maxUniverses = (Integer) configData.get("maxUniverses");
+                
+                if (maxUniverses == null || maxUniverses < 1 || maxUniverses > 15) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "maxUniverses debe estar entre 1 y 15"));
+                    return;
+                }
+                
+                // Actualizar configuración
+                FixturesConfigService configService = FixturesConfigService.getInstance();
+                FixturesConfig config = configService.getConfig();
+                config.setMaxUniverses(maxUniverses);
+                configService.saveConfig();
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "maxUniverses", maxUniverses));
+            } catch (IOException e) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error updating config: " + e.getMessage()));
+            }
+        }
+
+        private void handleGetFixture(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String idStr = path.substring("/fixtures/".length());
+                int id = Integer.parseInt(idStr);
+                
+                FixturesConfigService configService = FixturesConfigService.getInstance();
+                FixtureConfig fixture = configService.getFixture(id);
+                
+                if (fixture == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Fixture not found"));
+                    return;
+                }
+                
+                sendJsonResponse(resp, fixture);
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid fixture ID"));
+            }
+        }
+
+        private void handleTurnOnFixture(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String idStr = path.substring("/fixtures/".length(), path.length() - "/turn-on".length());
+                int fixtureId = Integer.parseInt(idStr);
+                
+                // Obtener la configuración del fixture
+                FixturesConfigService configService = FixturesConfigService.getInstance();
+                FixtureConfig fixtureConfig = configService.getFixture(fixtureId);
+                
+                if (fixtureConfig == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Fixture not found"));
+                    return;
+                }
+                
+                // Si hay una escena configurada, usarla
+                if (fixtureConfig.getSceneIdOn() != null && fixtureConfig.getSceneIdOn() > 0) {
+                    ShowCollection collection = ShowCollection.getInstance();
+                    Show show = collection.getShow(fixtureConfig.getSceneIdOn());
+                    
+                    if (show == null) {
+                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        sendJsonResponse(resp, Map.of("error", "Scene not found with ID: " + fixtureConfig.getSceneIdOn()));
+                        return;
+                    }
+                    
+                    if (!(show.getFunction() instanceof QLCScene)) {
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        sendJsonResponse(resp, Map.of("error", "Show ID " + fixtureConfig.getSceneIdOn() + " is not a Scene"));
+                        return;
+                    }
+                    
+                    // Ejecutar la escena una vez
+                    QLCScene scene = (QLCScene) show.getFunction();
+                    Dmx dmx = Dmx.getInstance();
+                    
+                    // Enviar todos los puntos de la escena
+                    for (QLCPoint point : scene.getQlcPointList()) {
+                        if (point.getFixture() != null && point.getFixture().getId() == fixtureId) {
+                            dmx.send(point.getFixture().getUniverse(), point.getDmxChannel(), point.getData());
+                        }
+                    }
+                    
+                    // También enviar LedPoints si existen
+                    if (scene.getLedPoints() != null && !scene.getLedPoints().isEmpty()) {
+                        QLCFixture fixture = collection.getFixture(fixtureId);
+                        if (fixture != null) {
+                            for (cl.clillo.lighting.model.LedPoint lp : scene.getLedPoints()) {
+                                int ledIndex = Math.max(0, lp.getId());
+                                int base = 21 + ledIndex * 4;
+                                int chR = fixture.getDMXChannel(base + 0);
+                                int chG = fixture.getDMXChannel(base + 1);
+                                int chB = fixture.getDMXChannel(base + 2);
+                                int chW = fixture.getDMXChannel(base + 3);
+                                
+                                int r = Math.min(255, Math.max(0, lp.getR()));
+                                int g = Math.min(255, Math.max(0, lp.getG()));
+                                int b = Math.min(255, Math.max(0, lp.getB()));
+                                int w = Math.min(255, Math.max(0, lp.getW()));
+                                
+                                dmx.send(fixture.getUniverse(), chR, r);
+                                dmx.send(fixture.getUniverse(), chG, g);
+                                dmx.send(fixture.getUniverse(), chB, b);
+                                dmx.send(fixture.getUniverse(), chW, w);
+                            }
+                        }
+                    }
+                    
+                    log.info("Fixture {} encendido usando escena {}", fixtureId, fixtureConfig.getSceneIdOn());
+                    sendJsonResponse(resp, Map.of("status", "ok", "on", true));
+                } else {
+                    // Fallback: usar blackout points con valores 255
+                    ShowCollection collection = ShowCollection.getInstance();
+                    QLCFixture fixture = collection.getFixture(fixtureId);
+                    
+                    if (fixture == null) {
+                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        sendJsonResponse(resp, Map.of("error", "Fixture not found in ShowCollection"));
+                        return;
+                    }
+                    
+                    Dmx dmx = Dmx.getInstance();
+                    List<QLCPoint> blackoutPoints = fixture.getBlackoutPointList();
+                    int universe = fixture.getUniverse();
+                    
+                    for (QLCPoint point : blackoutPoints) {
+                        int value = 255;
+                        if (point.getChannelType() != null && point.getChannelType() == QLCFixture.ChannelType.STROBE) {
+                            value = 0;
+                        }
+                        dmx.send(universe, point.getDmxChannel(), value);
+                    }
+                    
+                    log.info("Fixture {} ({}) encendido (sin escena configurada)", fixtureId, fixture.getName());
+                    sendJsonResponse(resp, Map.of("status", "ok", "on", true));
+                }
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid fixture ID"));
+            } catch (Exception e) {
+                log.error("Error al encender fixture", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al encender fixture: " + e.getMessage()));
+            }
+        }
+
+        private void handleTurnOffFixture(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String idStr = path.substring("/fixtures/".length(), path.length() - "/turn-off".length());
+                int fixtureId = Integer.parseInt(idStr);
+                
+                // Obtener la configuración del fixture
+                FixturesConfigService configService = FixturesConfigService.getInstance();
+                FixtureConfig fixtureConfig = configService.getFixture(fixtureId);
+                
+                if (fixtureConfig == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Fixture not found"));
+                    return;
+                }
+                
+                // Si hay una escena configurada, usarla
+                if (fixtureConfig.getSceneIdOff() != null && fixtureConfig.getSceneIdOff() > 0) {
+                    ShowCollection collection = ShowCollection.getInstance();
+                    Show show = collection.getShow(fixtureConfig.getSceneIdOff());
+                    
+                    if (show == null) {
+                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        sendJsonResponse(resp, Map.of("error", "Scene not found with ID: " + fixtureConfig.getSceneIdOff()));
+                        return;
+                    }
+                    
+                    if (!(show.getFunction() instanceof QLCScene)) {
+                        resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                        sendJsonResponse(resp, Map.of("error", "Show ID " + fixtureConfig.getSceneIdOff() + " is not a Scene"));
+                        return;
+                    }
+                    
+                    // Ejecutar la escena una vez
+                    QLCScene scene = (QLCScene) show.getFunction();
+                    Dmx dmx = Dmx.getInstance();
+                    
+                    // Enviar todos los puntos de la escena
+                    for (QLCPoint point : scene.getQlcPointList()) {
+                        if (point.getFixture() != null && point.getFixture().getId() == fixtureId) {
+                            dmx.send(point.getFixture().getUniverse(), point.getDmxChannel(), point.getData());
+                        }
+                    }
+                    
+                    // También enviar LedPoints si existen
+                    if (scene.getLedPoints() != null && !scene.getLedPoints().isEmpty()) {
+                        QLCFixture fixture = collection.getFixture(fixtureId);
+                        if (fixture != null) {
+                            for (cl.clillo.lighting.model.LedPoint lp : scene.getLedPoints()) {
+                                int ledIndex = Math.max(0, lp.getId());
+                                int base = 21 + ledIndex * 4;
+                                int chR = fixture.getDMXChannel(base + 0);
+                                int chG = fixture.getDMXChannel(base + 1);
+                                int chB = fixture.getDMXChannel(base + 2);
+                                int chW = fixture.getDMXChannel(base + 3);
+                                
+                                int r = Math.min(255, Math.max(0, lp.getR()));
+                                int g = Math.min(255, Math.max(0, lp.getG()));
+                                int b = Math.min(255, Math.max(0, lp.getB()));
+                                int w = Math.min(255, Math.max(0, lp.getW()));
+                                
+                                dmx.send(fixture.getUniverse(), chR, r);
+                                dmx.send(fixture.getUniverse(), chG, g);
+                                dmx.send(fixture.getUniverse(), chB, b);
+                                dmx.send(fixture.getUniverse(), chW, w);
+                            }
+                        }
+                    }
+                    
+                    log.info("Fixture {} apagado usando escena {}", fixtureId, fixtureConfig.getSceneIdOff());
+                    sendJsonResponse(resp, Map.of("status", "ok", "on", false));
+                } else {
+                    // Fallback: usar blackout points (todos a 0)
+                    ShowCollection collection = ShowCollection.getInstance();
+                    QLCFixture fixture = collection.getFixture(fixtureId);
+                    
+                    if (fixture == null) {
+                        resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                        sendJsonResponse(resp, Map.of("error", "Fixture not found in ShowCollection"));
+                        return;
+                    }
+                    
+                    Dmx dmx = Dmx.getInstance();
+                    List<QLCPoint> blackoutPoints = fixture.getBlackoutPointList();
+                    int universe = fixture.getUniverse();
+                    
+                    for (QLCPoint point : blackoutPoints) {
+                        // Enviar 0 para apagar todos los canales
+                        dmx.send(universe, point.getDmxChannel(), 0);
+                    }
+                    
+                    log.info("Fixture {} ({}) apagado (sin escena configurada)", fixtureId, fixture.getName());
+                    sendJsonResponse(resp, Map.of("status", "ok", "on", false));
+                }
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid fixture ID"));
+            } catch (Exception e) {
+                log.error("Error al apagar fixture", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al apagar fixture: " + e.getMessage()));
+            }
+        }
+
+        private void handleUpdateFixture(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String idStr = path.substring("/fixtures/".length(), path.length() - "/update".length());
+                int id = Integer.parseInt(idStr);
+                
+                // Leer el cuerpo de la petición
+                StringBuilder body = new StringBuilder();
+                String line;
+                try (var reader = req.getReader()) {
+                    while ((line = reader.readLine()) != null) {
+                        body.append(line);
+                    }
+                }
+                
+                // Parsear JSON
+                FixtureConfig fixtureConfig = objectMapper.readValue(body.toString(), FixtureConfig.class);
+                
+                // Validar que el ID coincida
+                if (fixtureConfig.getId() != id) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Fixture ID mismatch"));
+                    return;
+                }
+                
+                // Actualizar configuración
+                FixturesConfigService configService = FixturesConfigService.getInstance();
+                configService.updateFixture(fixtureConfig);
+                
+                // Recargar configuración para aplicar cambios
+                configService.loadConfig();
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "fixture", fixtureConfig));
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid fixture ID"));
+            } catch (IOException e) {
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error updating fixture: " + e.getMessage()));
+            }
         }
 
         private void handleGetShow(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
@@ -551,6 +912,103 @@ public class WebServer {
                     "        }\n" +
                     "        .kv .k { color: #aaa; }\n" +
                     "        .kv .v { color: #fff; word-break: break-word; }\n" +
+                    "        .fixture-item {\n" +
+                    "            background: #1a1a1a;\n" +
+                    "            border: 1px solid #444;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            padding: 15px;\n" +
+                    "            margin: 10px 0;\n" +
+                    "        }\n" +
+                    "        .fixture-header {\n" +
+                    "            font-size: 1.2em;\n" +
+                    "            font-weight: bold;\n" +
+                    "            color: #fff;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "        }\n" +
+                    "        .fixture-form {\n" +
+                    "            display: grid;\n" +
+                    "            grid-template-columns: 150px 1fr;\n" +
+                    "            gap: 10px;\n" +
+                    "            align-items: center;\n" +
+                    "            margin: 8px 0;\n" +
+                    "        }\n" +
+                    "        .fixture-form label {\n" +
+                    "            color: #aaa;\n" +
+                    "        }\n" +
+                    "        .fixture-form input {\n" +
+                    "            padding: 8px;\n" +
+                    "            background: #222;\n" +
+                    "            border: 1px solid #555;\n" +
+                    "            border-radius: 4px;\n" +
+                    "            color: #fff;\n" +
+                    "            font-size: 1em;\n" +
+                    "        }\n" +
+                    "        .fixture-form input:focus {\n" +
+                    "            outline: none;\n" +
+                    "            border-color: #0088ff;\n" +
+                    "        }\n" +
+                    "        .save-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #0066cc;\n" +
+                    "            color: #fff;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-size: 1em;\n" +
+                    "            margin-top: 10px;\n" +
+                    "            transition: background 0.2s;\n" +
+                    "        }\n" +
+                    "        .save-btn:hover {\n" +
+                    "            background: #0088ff;\n" +
+                    "        }\n" +
+                    "        .save-btn:disabled {\n" +
+                    "            background: #444;\n" +
+                    "            cursor: not-allowed;\n" +
+                    "        }\n" +
+                    "        .toggle-switch {\n" +
+                    "            position: relative;\n" +
+                    "            display: inline-block;\n" +
+                    "            width: 60px;\n" +
+                    "            height: 34px;\n" +
+                    "            margin-left: 10px;\n" +
+                    "        }\n" +
+                    "        .toggle-switch input {\n" +
+                    "            opacity: 0;\n" +
+                    "            width: 0;\n" +
+                    "            height: 0;\n" +
+                    "        }\n" +
+                    "        .toggle-slider {\n" +
+                    "            position: absolute;\n" +
+                    "            cursor: pointer;\n" +
+                    "            top: 0;\n" +
+                    "            left: 0;\n" +
+                    "            right: 0;\n" +
+                    "            bottom: 0;\n" +
+                    "            background-color: #444;\n" +
+                    "            transition: .4s;\n" +
+                    "            border-radius: 34px;\n" +
+                    "        }\n" +
+                    "        .toggle-slider:before {\n" +
+                    "            position: absolute;\n" +
+                    "            content: \"\";\n" +
+                    "            height: 26px;\n" +
+                    "            width: 26px;\n" +
+                    "            left: 4px;\n" +
+                    "            bottom: 4px;\n" +
+                    "            background-color: white;\n" +
+                    "            transition: .4s;\n" +
+                    "            border-radius: 50%;\n" +
+                    "        }\n" +
+                    "        .toggle-switch input:checked + .toggle-slider {\n" +
+                    "            background-color: #4CAF50;\n" +
+                    "        }\n" +
+                    "        .toggle-switch input:checked + .toggle-slider:before {\n" +
+                    "            transform: translateX(26px);\n" +
+                    "        }\n" +
+                    "        .toggle-switch input:disabled + .toggle-slider {\n" +
+                    "            opacity: 0.5;\n" +
+                    "            cursor: not-allowed;\n" +
+                    "        }\n" +
                     "    </style>\n" +
                     "</head>\n" +
                     "<body>\n" +
@@ -570,6 +1028,7 @@ public class WebServer {
                     "        <div class=\"group-buttons\">\n" +
                     "            <button class=\"group-btn\" onclick=\"openTestChase()\">Chasing de fixtures</button>\n" +
                     "            <button class=\"group-btn\" onclick=\"openTestVirtualDJ()\">Estado de comunicación con VirtualDJ</button>\n" +
+                    "            <button class=\"group-btn\" onclick=\"openFixtureConfig()\">Configuración de Fixtures</button>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
@@ -601,6 +1060,20 @@ public class WebServer {
                     "            <div class=\"test-view-title\">Estado de comunicación con VirtualDJ</div>\n" +
                     "            <div class=\"card\">\n" +
                     "                <div id=\"vdjStatus\" class=\"loading\" style=\"padding: 10px;\">Cargando estado...</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        <div id=\"testFixtureConfigView\" class=\"hidden\">\n" +
+                    "            <div class=\"test-view-title\">Configuración de Fixtures</div>\n" +
+                    "            <div class=\"card\" style=\"margin-bottom: 20px;\">\n" +
+                    "                <div class=\"fixture-header\">Configuración General</div>\n" +
+                    "                <div class=\"fixture-form\">\n" +
+                    "                    <label>Máximo de Universos:</label>\n" +
+                    "                    <input type=\"number\" id=\"maxUniverses\" value=\"2\" min=\"1\" max=\"15\" style=\"width: 100px;\">\n" +
+                    "                </div>\n" +
+                    "                <button class=\"save-btn\" onclick=\"saveMaxUniverses()\" style=\"margin-top: 10px;\">Guardar máximo de universos</button>\n" +
+                    "            </div>\n" +
+                    "            <div id=\"fixturesList\" class=\"card\">\n" +
+                    "                <div class=\"loading\" style=\"padding: 10px;\">Cargando fixtures...</div>\n" +
                     "            </div>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
@@ -666,6 +1139,7 @@ public class WebServer {
                     "        function hideAllTestViews() {\n" +
                     "            document.getElementById('testChaseView').classList.add('hidden');\n" +
                     "            document.getElementById('testVdjView').classList.add('hidden');\n" +
+                    "            document.getElementById('testFixtureConfigView').classList.add('hidden');\n" +
                     "        }\n" +
                     "        \n" +
                     "        function openTestChase() {\n" +
@@ -687,6 +1161,202 @@ public class WebServer {
                     "            hideAllTestViews();\n" +
                     "            document.getElementById('testVdjView').classList.remove('hidden');\n" +
                     "            loadVirtualDJStatus();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function openFixtureConfig() {\n" +
+                    "            activeTestView = 'fixture-config';\n" +
+                    "            document.getElementById('groupSelection').classList.add('hidden');\n" +
+                    "            document.getElementById('testEntry').classList.add('hidden');\n" +
+                    "            document.getElementById('mainContent').classList.add('hidden');\n" +
+                    "            document.getElementById('testContent').classList.remove('hidden');\n" +
+                    "            hideAllTestViews();\n" +
+                    "            document.getElementById('testFixtureConfigView').classList.remove('hidden');\n" +
+                    "            loadFixtures();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        let maxUniverses = 2;\n" +
+                    "        \n" +
+                    "        async function loadFixtures() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch(API_BASE + '/fixtures');\n" +
+                    "                const data = await response.json();\n" +
+                    "                maxUniverses = data.maxUniverses || 2;\n" +
+                    "                document.getElementById('maxUniverses').value = maxUniverses;\n" +
+                    "                renderFixtures(data.fixtures || []);\n" +
+                    "            } catch (error) {\n" +
+                    "                document.getElementById('fixturesList').innerHTML = \n" +
+                    "                    '<div class=\"error\">Error al cargar fixtures: ' + error.message + '</div>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function toggleFixture(id, isOn) {\n" +
+                    "            const toggle = document.getElementById('power-' + id);\n" +
+                    "            toggle.disabled = true;\n" +
+                    "            \n" +
+                    "            try {\n" +
+                    "                const endpoint = isOn ? '/turn-on' : '/turn-off';\n" +
+                    "                const response = await fetch(API_BASE + '/fixtures/' + id + endpoint, {\n" +
+                    "                    method: 'POST',\n" +
+                    "                    headers: { 'Content-Type': 'application/json' }\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                if (result.status !== 'ok') {\n" +
+                    "                    // Revertir el toggle si hay error\n" +
+                    "                    toggle.checked = !isOn;\n" +
+                    "                    alert('Error: ' + (result.error || 'Error desconocido'));\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                // Revertir el toggle si hay error\n" +
+                    "                toggle.checked = !isOn;\n" +
+                    "                alert('Error: ' + error.message);\n" +
+                    "            } finally {\n" +
+                    "                toggle.disabled = false;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function saveMaxUniverses() {\n" +
+                    "            const maxUniversesInput = document.getElementById('maxUniverses');\n" +
+                    "            const value = parseInt(maxUniversesInput.value);\n" +
+                    "            \n" +
+                    "            if (isNaN(value) || value < 1 || value > 15) {\n" +
+                    "                alert('Por favor ingrese un valor válido entre 1 y 15');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            try {\n" +
+                    "                const response = await fetch(API_BASE + '/fixtures/config/update', {\n" +
+                    "                    method: 'PUT',\n" +
+                    "                    headers: { 'Content-Type': 'application/json' },\n" +
+                    "                    body: JSON.stringify({ maxUniverses: value })\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                if (result.status === 'ok') {\n" +
+                    "                    maxUniverses = value;\n" +
+                    "                    alert('Máximo de universos actualizado. Reinicie la aplicación para aplicar los cambios.');\n" +
+                    "                    // Actualizar los límites de los inputs\n" +
+                    "                    document.querySelectorAll('input[id^=\"universe-\"]').forEach(input => {\n" +
+                    "                        input.setAttribute('max', maxUniverses);\n" +
+                    "                    });\n" +
+                    "                } else {\n" +
+                    "                    alert('Error al actualizar: ' + (result.error || 'Error desconocido'));\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                alert('Error al guardar: ' + error.message);\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderFixtures(fixtures) {\n" +
+                    "            const container = document.getElementById('fixturesList');\n" +
+                    "            if (fixtures.length === 0) {\n" +
+                    "                container.innerHTML = '<div class=\"loading\">No hay fixtures configurados</div>';\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            let html = '';\n" +
+                    "            fixtures.forEach(fixture => {\n" +
+                    "                html += '<div class=\"fixture-item\">';\n" +
+                    "                html += '<div class=\"fixture-header\">' + fixture.name + ' (ID: ' + fixture.id + ')</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Universe:</label>';\n" +
+                    "                html += '<input type=\"number\" id=\"universe-' + fixture.id + '\" value=\"' + fixture.universe + '\" min=\"1\" max=\"' + maxUniverses + '\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Dirección DMX:</label>';\n" +
+                    "                html += '<input type=\"number\" id=\"address-' + fixture.id + '\" value=\"' + fixture.address + '\" min=\"1\" max=\"512\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Tipo:</label>';\n" +
+                    "                html += '<input type=\"text\" value=\"' + fixture.type + '\" disabled style=\"background: #333; color: #888;\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Modelo:</label>';\n" +
+                    "                html += '<input type=\"text\" value=\"' + fixture.model + '\" disabled style=\"background: #333; color: #888;\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Activo:</label>';\n" +
+                    "                html += '<input type=\"checkbox\" id=\"activo-' + fixture.id + '\" ' + (fixture.activo ? 'checked' : '') + ' style=\"width: auto; height: 20px;\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>ID Escena Encendido:</label>';\n" +
+                    "                html += '<input type=\"number\" id=\"sceneIdOn-' + fixture.id + '\" value=\"' + (fixture.sceneIdOn || '') + '\" min=\"0\" placeholder=\"Opcional\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>ID Escena Apagado:</label>';\n" +
+                    "                html += '<input type=\"number\" id=\"sceneIdOff-' + fixture.id + '\" value=\"' + (fixture.sceneIdOff || '') + '\" min=\"0\" placeholder=\"Opcional\">';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<div class=\"fixture-form\">';\n" +
+                    "                html += '<label>Encendido:</label>';\n" +
+                    "                html += '<label class=\"toggle-switch\">';\n" +
+                    "                html += '<input type=\"checkbox\" id=\"power-' + fixture.id + '\" onchange=\"toggleFixture(' + fixture.id + ', this.checked)\">';\n" +
+                    "                html += '<span class=\"toggle-slider\"></span>';\n" +
+                    "                html += '</label>';\n" +
+                    "                html += '</div>';\n" +
+                    "                html += '<button class=\"save-btn\" onclick=\"saveFixture(' + fixture.id + ')\">Guardar cambios</button>';\n" +
+                    "                html += '</div>';\n" +
+                    "            });\n" +
+                    "            container.innerHTML = html;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function saveFixture(id) {\n" +
+                    "            const universeInput = document.getElementById('universe-' + id);\n" +
+                    "            const addressInput = document.getElementById('address-' + id);\n" +
+                    "            const activoInput = document.getElementById('activo-' + id);\n" +
+                    "            const sceneIdOnInput = document.getElementById('sceneIdOn-' + id);\n" +
+                    "            const sceneIdOffInput = document.getElementById('sceneIdOff-' + id);\n" +
+                    "            \n" +
+                    "            const universe = parseInt(universeInput.value);\n" +
+                    "            const address = parseInt(addressInput.value);\n" +
+                    "            const activo = activoInput.checked;\n" +
+                    "            const sceneIdOnValue = sceneIdOnInput.value.trim();\n" +
+                    "            const sceneIdOn = sceneIdOnValue === '' ? null : parseInt(sceneIdOnValue);\n" +
+                    "            const sceneIdOffValue = sceneIdOffInput.value.trim();\n" +
+                    "            const sceneIdOff = sceneIdOffValue === '' ? null : parseInt(sceneIdOffValue);\n" +
+                    "            \n" +
+                    "            if (isNaN(universe) || isNaN(address)) {\n" +
+                    "                alert('Por favor ingrese valores válidos');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            if (sceneIdOnValue !== '' && (isNaN(sceneIdOn) || sceneIdOn < 0)) {\n" +
+                    "                alert('El ID de escena encendido debe ser un número válido o estar vacío');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            if (sceneIdOffValue !== '' && (isNaN(sceneIdOff) || sceneIdOff < 0)) {\n" +
+                    "                alert('El ID de escena apagado debe ser un número válido o estar vacío');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            try {\n" +
+                    "                // Obtener fixture actual\n" +
+                    "                const getResponse = await fetch(API_BASE + '/fixtures/' + id);\n" +
+                    "                const fixture = await getResponse.json();\n" +
+                    "                \n" +
+                    "                // Actualizar valores\n" +
+                    "                fixture.universe = universe;\n" +
+                    "                fixture.address = address;\n" +
+                    "                fixture.activo = activo;\n" +
+                    "                fixture.sceneIdOn = sceneIdOn;\n" +
+                    "                fixture.sceneIdOff = sceneIdOff;\n" +
+                    "                \n" +
+                    "                // Enviar actualización\n" +
+                    "                const response = await fetch(API_BASE + '/fixtures/' + id + '/update', {\n" +
+                    "                    method: 'PUT',\n" +
+                    "                    headers: { 'Content-Type': 'application/json' },\n" +
+                    "                    body: JSON.stringify(fixture)\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                if (result.status === 'ok') {\n" +
+                    "                    alert('Fixture actualizado correctamente. Reinicie la aplicación para aplicar los cambios.');\n" +
+                    "                } else {\n" +
+                    "                    alert('Error al actualizar: ' + (result.error || 'Error desconocido'));\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                alert('Error al guardar: ' + error.message);\n" +
+                    "            }\n" +
                     "        }\n" +
                     "        \n" +
                     "        function goHome() {\n" +

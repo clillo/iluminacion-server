@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10014</title>
+   <common>
+      <id>10014</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>Moving Head Beam 1 On</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
+   </points>
+</doc>
+

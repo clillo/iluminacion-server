@@ -1,0 +1,23 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10004</title>
+   <common>
+      <id>10004</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>Spider 2 On</name>
+   </common>
+   <points>
+      <point fixture="4" channel="2" value="255"/>
+      <point fixture="4" channel="3" value="0"/>
+      <point fixture="4" channel="4" value="255"/>
+      <point fixture="4" channel="5" value="255"/>
+      <point fixture="4" channel="6" value="255"/>
+      <point fixture="4" channel="7" value="255"/>
+      <point fixture="4" channel="8" value="255"/>
+      <point fixture="4" channel="9" value="255"/>
+      <point fixture="4" channel="10" value="255"/>
+      <point fixture="4" channel="11" value="255"/>
+   </points>
+</doc>
+

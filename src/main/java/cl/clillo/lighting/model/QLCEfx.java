@@ -95,6 +95,9 @@ public abstract class QLCEfx extends QLCFunction{
                 int fixtureIndexPosition = ((fixtureData.isReverse()?positionsSize-positionIndex:positionIndex)+ (int)fixtureData.getStartOffset())%positionsSize;
                 final QLCEfxPosition position = positions.get(fixtureIndexPosition);
 
+                if (fixtureData.getFixture()==null)
+                    System.out.println("oo");
+
                 screenPoints[positionFixture] = position.buildScreenPoint(fixtureData.getFixture().getId());
                 channels.add(fixtureData.getChannels());
                 data.add(position.buildDataArray());

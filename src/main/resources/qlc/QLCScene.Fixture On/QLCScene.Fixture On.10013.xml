@@ -1,0 +1,27 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10013</title>
+   <common>
+      <id>10013</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>Laser RGB On</name>
+   </common>
+   <points>
+      <point fixture="13" channel="0" value="220"/>
+      <point fixture="13" channel="1" value="0"/>
+      <point fixture="13" channel="2" value="255"/>
+      <point fixture="13" channel="3" value="10"/>
+      <point fixture="13" channel="4" value="0"/>
+      <point fixture="13" channel="5" value="0"/>
+      <point fixture="13" channel="6" value="0"/>
+      <point fixture="13" channel="7" value="0"/>
+      <point fixture="13" channel="8" value="0"/>
+      <point fixture="13" channel="9" value="0"/>
+      <point fixture="13" channel="10" value="0"/>
+      <point fixture="13" channel="11" value="0"/>
+      <point fixture="13" channel="12" value="0"/>
+      <point fixture="13" channel="13" value="0"/>
+   </points>
+</doc>
+

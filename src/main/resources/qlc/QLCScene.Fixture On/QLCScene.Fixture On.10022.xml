@@ -1,0 +1,14 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10022</title>
+   <common>
+      <id>10022</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>BeeEye 3 On</name>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="22" type="DIMMER" value="255"/>
+   </points>
+</doc>
+

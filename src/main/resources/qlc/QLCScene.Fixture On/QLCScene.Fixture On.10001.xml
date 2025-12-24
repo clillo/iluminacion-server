@@ -1,0 +1,20 @@
+
+<doc>
+   <title>QLCScene.Fixture On.10001</title>
+   <common>
+      <id>10001</id>
+      <type>Scene</type>
+      <path>Fixture On</path>
+      <name>RGBW Id2 On</name>
+   </common>
+   <points>
+      <!-- TODO: Agregar puntos para encender el fixture RGBW Id2 (ID: 1) -->
+      <!-- Ejemplo para fixture simple: -->
+      <!-- <point fixture="1" channel="0" value="255"/> -->
+      <!-- <point fixture="1" channel="1" value="0"/> -->
+      <!-- <point fixture="1" channel="2" value="0"/> -->
+      <!-- <point fixture="1" channel="3" value="0"/> -->
+      <!-- <point fixture="1" channel="4" value="255"/> -->
+   </points>
+</doc>
+

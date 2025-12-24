@@ -1,0 +1,14 @@
+<doc>
+   <title>QLCScene.Fixture Off.20002</title>
+   <common>
+      <id>20002</id>
+      <type>Scene</type>
+      <path>Fixture Off</path>
+      <name>Fixture 2 Off</name>
+   </common>
+   <points>
+      <!-- TODO: Agregar puntos para apagar el fixture (ID: 2) -->
+      <!-- Ejemplo: -->
+      <!-- <point fixture="2" channel="0" value="0"/> -->
+   </points>
+</doc>

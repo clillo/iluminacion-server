@@ -1,0 +1,21 @@
+<doc>
+   <title>QLCScene.Fixture Off.20005</title>
+   <common>
+      <id>20005</id>
+      <type>Scene</type>
+      <path>Fixture Off</path>
+      <name>Fixture 5 Off</name>
+   </common>
+   <points>
+      <point fixture="5" channel="2" value="0"/>
+      <point fixture="5" channel="3" value="0"/>
+      <point fixture="5" channel="4" value="0"/>
+      <point fixture="5" channel="5" value="0"/>
+      <point fixture="5" channel="6" value="0"/>
+      <point fixture="5" channel="7" value="0"/>
+      <point fixture="5" channel="8" value="0"/>
+      <point fixture="5" channel="9" value="0"/>
+      <point fixture="5" channel="10" value="0"/>
+      <point fixture="5" channel="11" value="0"/>
+   </points>
+</doc>
