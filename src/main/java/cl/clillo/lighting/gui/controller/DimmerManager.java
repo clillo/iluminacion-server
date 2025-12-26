@@ -4,6 +4,7 @@ import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.external.midi.KeyData;
 import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.model.ShowCollection;
+import cl.clillo.lighting.model.UniverseChannel;
 import cl.clillo.lighting.repository.StateRepository;
 
 import javax.swing.JSlider;
@@ -17,7 +18,7 @@ public class DimmerManager {
 
     private final Dmx dmx = Dmx.getInstance();
     private final JSlider sldrMasterDimmer;
-    private final int[] masterDimmerChannels;
+    private final UniverseChannel[] masterDimmerChannels;
     private final StateRepository stateRepository = StateRepository.getInstance();
     private final int index;
     private boolean active;
@@ -25,7 +26,7 @@ public class DimmerManager {
     public DimmerManager(final JSlider sldrMasterDimmer, final int index) {
         this.sldrMasterDimmer = sldrMasterDimmer;
         this.index = index;
-        final List<Integer> channels = new ArrayList<>();
+        final List<UniverseChannel> channels = new ArrayList<>();
         final ShowCollection showCollection = ShowCollection.getInstance();
         final List<QLCFixture> fixtureList = showCollection.getQlcModel().getFixtureList();
 
@@ -34,14 +35,14 @@ public class DimmerManager {
             if (dmxMasterDimmer > 0
                     && types[index].equals(fixture.getFixtureModel().getType())
                     && models[index].equals(fixture.getFixtureModel().getModel())) {
-                channels.add(dmxMasterDimmer);
+                channels.add(new UniverseChannel(fixture.getUniverse(), dmxMasterDimmer));
              }
         }
 
-        masterDimmerChannels = new int[channels.size()];
+        masterDimmerChannels = new UniverseChannel[channels.size()];
         int i = 0;
-        for (int dmx : channels)
-            masterDimmerChannels[i++] = dmx+2;
+        for (UniverseChannel dmx : channels)
+            masterDimmerChannels[i++] = new UniverseChannel(dmx.universe(),dmx.channel()+2);
 
         sldrMasterDimmer.setValue(getRepositorySliderValue(index));
         setRepositorySliderValue(index, sldrMasterDimmer.getValue());
@@ -59,8 +60,8 @@ public class DimmerManager {
     public void adjustMasterDimmer() {
         setRepositorySliderValue(index, sldrMasterDimmer.getValue());
 
-        for (int dmxMasterDimmer : masterDimmerChannels) {
-            dmx.send(dmxMasterDimmer, sldrMasterDimmer.getValue());
+        for (UniverseChannel dmxMasterDimmer : masterDimmerChannels) {
+            dmx.send(dmxMasterDimmer.universe(), dmxMasterDimmer.channel(), sldrMasterDimmer.getValue());
         }
     }
 
@@ -80,7 +81,7 @@ public class DimmerManager {
     }
 
     private void setRepositorySliderValue(int index, int value){
-        switch (index){
+        /*switch (index){
             case 0:
                 stateRepository.setRgbwMasterDimmer(value, masterDimmerChannels);
                 break;
@@ -93,7 +94,7 @@ public class DimmerManager {
             case 3:
                 stateRepository.setMovingHeadSpotMasterDimmer(value, masterDimmerChannels);
         }
-
+*/
     }
 
     public void setActive(boolean active) {

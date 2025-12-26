@@ -19,7 +19,7 @@ public class DMXApp {
         ArtNet.setMode(ArtNet.ArtNetMode.DIRECT_ART_NET);
         SwingUtilities.invokeLater(() -> {
             try { UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName()); } catch (Exception ignored) {}
-            int n = 49;
+            int n = 249;
             if (args.length > 0) {
                 try { n = Math.min(512, Math.max(1, Integer.parseInt(args[0]))); } catch (NumberFormatException ignored) {}
             }

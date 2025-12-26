@@ -73,10 +73,10 @@ public class QLCSceneExecutor extends AbstractExecutor {
                                 ledIndex, lp.getName(),
                                 r, chR, g, chG, b, chB, w, chW);
                     }
-                    dmx.send(chR, r);
-                    dmx.send(chG, g);
-                    dmx.send(chB, b);
-                    dmx.send(chW, w);
+                    dmx.send(fixture.getUniverse(), chR, r);
+                    dmx.send(fixture.getUniverse(), chG, g);
+                    dmx.send(fixture.getUniverse(), chB, b);
+                    dmx.send(fixture.getUniverse(), chW, w);
                 }
             }
         } else {

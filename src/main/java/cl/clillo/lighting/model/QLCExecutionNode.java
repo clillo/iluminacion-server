@@ -9,13 +9,13 @@ public class QLCExecutionNode {
 
     private int id;
     private final Dmx dmx = Dmx.getInstance();
-    private final int[] channel;
+    private final UniverseChannel[] channel;
     private final int[] data;
     private final long holdTime;
 
     private final ScreenPoint[] screenPoints;
 
-    public QLCExecutionNode(final int[] channel, final int[] data, final long holdTime, final ScreenPoint[] screenPoints) {
+    public QLCExecutionNode(final UniverseChannel[] channel, final int[] data, final long holdTime, final ScreenPoint[] screenPoints) {
         this.screenPoints = screenPoints;
         if (channel.length != data.length && data.length != screenPoints.length) {
             throw new RuntimeException("channel, screenPoints and data has different size");
@@ -31,24 +31,8 @@ public class QLCExecutionNode {
         return new QLCExecutionNodeBuilder();
     }
 
-    public int[] getChannel() {
-        return channel;
-    }
-
-    public int[] getData() {
-        return data;
-    }
-
-    public long getHoldTime() {
-        return holdTime;
-    }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public ScreenPoint[] getScreenPoints() {
@@ -57,12 +41,12 @@ public class QLCExecutionNode {
 
     public void send() {
         for (int i = 0; i < channel.length; i++)
-            dmx.send(channel[i], data[i]);
+            dmx.send(channel[i].universe(), channel[i].channel(), data[i]);
 
     }
 
     public static class QLCExecutionNodeBuilder {
-        private int[] channel;
+        private UniverseChannel[] channel;
         private int[] data;
         private ScreenPoint[] screenPoints;
         private long holdTime;
@@ -71,22 +55,22 @@ public class QLCExecutionNode {
         QLCExecutionNodeBuilder() {
         }
 
-        public QLCExecutionNodeBuilder channel(List<int[]> channel) {
+        public QLCExecutionNodeBuilder channel(List<UniverseChannel[]> channel) {
             int n=0;
-            for (int[] ints : channel) {
+            for (UniverseChannel[] ints : channel) {
                 if (ints.length>lengthChannels)
                     lengthChannels=ints.length;
                 n += ints.length;
             }
-            this.channel = new int[n];
+            this.channel = new UniverseChannel[n];
             n=0;
-            for (int[] ints : channel)
-                for (int anInt : ints) this.channel[n++] = anInt;
+            for (UniverseChannel[] ints : channel)
+                for (UniverseChannel anInt : ints) this.channel[n++] = anInt;
 
             return this;
         }
 
-        public QLCExecutionNodeBuilder channel(int[] channel) {
+        public QLCExecutionNodeBuilder channel(UniverseChannel[] channel) {
             this.channel = channel;
             return this;
         }
@@ -129,8 +113,6 @@ public class QLCExecutionNode {
         }
 
         public QLCExecutionNode build() {
-   //         if (this.data.length>0)
- //               System.out.println("A");
             return new QLCExecutionNode(this.channel, this.data, this.holdTime, this.screenPoints);
         }
 

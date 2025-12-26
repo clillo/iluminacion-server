@@ -38,6 +38,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         try {
             fixtureList.addAll(buildFixturesFromYaml(fixtureModelList, fixtureModelA, fixtureModelC));
         } catch (Exception e) {
+            e.printStackTrace();
             // Si falla, usar configuración por defecto
             fixtureList.addAll(buildDefaultFixtures(fixtureModelA, fixtureModelC));
         }
@@ -83,10 +84,10 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         // Construir fixtures desde la configuración YAML
         for (FixtureConfig fixtureConfig : config.getFixtures()) {
             // Filtrar fixtures inactivos
-            if (!fixtureConfig.isActivo()) {
+          /*  if (!fixtureConfig.isActivo()) {
                 continue;
             }
-            
+            */
             QLCFixtureModel model = getFixtureModel(fixtureConfig.getModel(), fixtureLaser, fixtureDerby, 
                     fixtureSpider, fixtureRGBW, movingHeadBeam, beeEye, fixtureModelA, fixtureModelC);
             
@@ -99,7 +100,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                 case "robotic":
                     fixture = QLCRoboticFixture.build(fixtureConfig.getId(), 
                             fixtureConfig.getUniverse(), 
-                            fixtureConfig.getAddress(), 
+                            fixtureConfig.getAddress(),
                             model);
                     break;
                 case "simple-robotic":

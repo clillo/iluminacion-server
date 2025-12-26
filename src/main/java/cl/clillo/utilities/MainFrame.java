@@ -131,7 +131,7 @@ public final class MainFrame extends JFrame {
 
         final Dmx dmx = Dmx.getInstance();
 
-        model.addListener((index, newValue) -> dmx.sendForce(1, index, newValue));
+        model.addListener((index, newValue) -> dmx.sendForce(2, index, newValue));
 
         JTabbedPane tabs = new JTabbedPane();
         CueListPanel cuePanel = new CueListPanel(model);

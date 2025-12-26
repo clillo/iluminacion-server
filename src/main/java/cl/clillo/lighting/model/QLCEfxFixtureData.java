@@ -20,17 +20,22 @@ public class QLCEfxFixtureData {
         this.startOffset = startOffset;
     }
 
-    public int[] getChannels(){
+    public UniverseChannel[] getChannels(){
         if (roboticFixture==null){
             if (fixture==null){
                 System.out.println("null fixture");
             }
 
             final QLCSimpleRoboticFixture simpleRoboticFixture = (QLCSimpleRoboticFixture)fixture;
-            return new int[]{simpleRoboticFixture.getPanDmxChannel(), simpleRoboticFixture.getTiltDmxChannel()};
+            return new UniverseChannel[]{
+                    new UniverseChannel(fixture.getUniverse(), simpleRoboticFixture.getPanDmxChannel()),
+                    new UniverseChannel(fixture.getUniverse(), simpleRoboticFixture.getTiltDmxChannel())};
         }
-       return new int[]{roboticFixture.getPanDmxChannel(), roboticFixture.getTiltDmxChannel(),
-               roboticFixture.getPanFineDmxChannel(), roboticFixture.getTiltFineDmxChannel()};
+       return new UniverseChannel[]{
+               new UniverseChannel(fixture.getUniverse(),  roboticFixture.getPanDmxChannel()),
+               new UniverseChannel(fixture.getUniverse(), roboticFixture.getTiltDmxChannel()),
+               new UniverseChannel(fixture.getUniverse(), roboticFixture.getPanFineDmxChannel()),
+               new UniverseChannel(fixture.getUniverse(), roboticFixture.getTiltFineDmxChannel())};
     }
 
     public static QLCEfxFixtureDataBuilder builder() {

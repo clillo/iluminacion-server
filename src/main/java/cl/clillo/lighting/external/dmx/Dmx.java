@@ -56,10 +56,6 @@ public class Dmx {
 		invokeListeners(universe, dmxChannel, dmxValue);
 	}
 
-	public void send(final int dmxChannel, final int dmxValue){
-		send(1, dmxChannel, dmxValue);
-	}
-
 	public void send(final int universe, final int dmxChannel, final int dmxValue){
 		final int realValue = showCollection.getRealDMXValue(universe, dmxChannel, dmxValue);
 		artNet.send(universe, dmxChannel, realValue);
@@ -71,7 +67,6 @@ public class Dmx {
 			l.onDmxValueSent(universe, dmxChannel, dmxValue);
 		}
 	}
-
 
 	public void send(final QLCPoint point){
 		send(point.getUniverse(), point.getDmxChannel(), point.getData());

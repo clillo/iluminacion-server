@@ -27,6 +27,51 @@ public class StandAlone {
            }
     }
 
+
+    private void writeDMXMap(){
+        new Thread(){
+            @Override
+            public void run() {
+                ArtNet artNet = ArtNet.getInstance();
+                //  for (int u=6; u<20; u++)
+                //    artNet.send(u, 255);
+
+                artNet.send(2, 104 + 1, 0);
+                artNet.send(2, 105 + 1, 0);
+
+                artNet.send(2, 106 + 1, 255);
+                artNet.send(2, 107 + 1, 255);
+          //      artNet.send(2, 100 + 1, 0);
+
+                artNet.send(2, 109 + 1, 255);
+                artNet.send(2, 110 + 1, 255);
+
+                artNet.send(2, 121 + 1, 255);
+                artNet.send(2, 125 + 1, 255);
+                artNet.send(2, 129 + 1, 255);
+                artNet.send(2, 133 + 1, 255);
+                artNet.send(2, 137 + 1, 255);
+                artNet.send(2, 141 + 1, 255);
+                artNet.send(2, 145 + 1, 255);
+                int i=0;
+                while(true){
+                    i++;
+                    artNet.send(2, 100 + 1, i%255);
+                    artNet.send(2, 102 + 1, i%255);
+
+                    System.out.println(i%255);
+                    artNet.broadCast();
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        }.start();
+
+    }
+
     public static void main(String[] args) throws IOException, InterruptedException {
         LoggerContext context = (LoggerContext) LoggerFactory.getILoggerFactory();
 
@@ -51,7 +96,8 @@ public class StandAlone {
        final ControllerJFrame controllerJFrame = new ControllerJFrame();
        controllerJFrame.start();
 
+    //    new StandAlone().writeDMXMap();
        // Lanzar también el frame demo con 4 BeeEye
-     //  BeeEyeDemo.main(new String[0]);
+  //     BeeEyeDemo.main(new String[0]);
     }
 }

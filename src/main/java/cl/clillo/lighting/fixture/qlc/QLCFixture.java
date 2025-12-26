@@ -292,11 +292,11 @@ public class QLCFixture {
 
     public void on(){
         Dmx dmx = Dmx.getInstance();
-        dmx.send(getDMXChannel(ChannelType.DIMMER), 255);
+        dmx.send(getUniverse(), getDMXChannel(ChannelType.DIMMER), 255);
     }
 
     public void off(){
         Dmx dmx = Dmx.getInstance();
-        dmx.send(getDMXChannel(ChannelType.DIMMER), 0);
+        dmx.send(getUniverse(), getDMXChannel(ChannelType.DIMMER), 0);
     }
 }
