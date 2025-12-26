@@ -1,0 +1,137 @@
+---
+fixtureTypes:
+  - name: "Laser"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "Laser"
+    robotic: false
+    channelCount: 24
+    # channels: [] # Array vacío de 24 elementos (new String[24])
+
+  - name: "Derby"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "Derby"
+    robotic: false
+    channelCount: 8
+    channels:
+      - "master dimmer"
+      - "red"
+      - "green"
+      - "blue"
+      - "white"
+      - "strobe"
+      - "Gobo wheel"
+      - "auto"
+
+  - name: "Spider"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "Spider"
+    robotic: false
+    channelCount: 12
+    channels:
+      - "pan"
+      - "tilt"
+      - "dimmer"
+      - "strobo"
+      - "rojo.l"
+      - "verde.l"
+      - "azul.l"
+      - "blanco.l"
+      - "blanco.r"
+      - "azul.r"
+      - "verde.r"
+      - "rojo.r"
+
+  - name: "RGBW"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "RGBW"
+    robotic: false
+    channelCount: 7
+    channels:
+      - "master dimmer"
+      - "red"
+      - "green"
+      - "blue"
+      - "white"
+      - "strobe"
+      - "color change"
+
+  - name: "Moving Head"
+    manufacturer: "Wild Pro"
+    model: "Moving Head Spot"
+    type: "Moving Head"
+    robotic: false
+    channelCount: 11
+    channels:
+      - "pan"
+      - "pan fine"
+      - "tilt"
+      - "tilt fine"
+      - "titl/pan speed"
+      - "nc"
+      - "nc2"
+      - "color wheel"
+      - "dimmer"
+      - "strobe"
+      - "macro"
+
+  - name: "Moving Head Bee Eye"
+    manufacturer: "Wild Pro"
+    model: "Moving Head Bee Eye"
+    type: "Moving Head"
+    robotic: false
+    channelCount: 40
+    channels:
+      - "pan"
+      - "pan fine"
+      - "tilt"
+      - "tilt fine"
+      - "titl/pan speed"
+      - "focus"
+      - "rotate"
+      - "dimmer"
+      - "strobe"
+      - "red.front"
+      - "green.front"
+      - "blue.front"
+      - "white.front"
+      - "color temperature"
+      - "kinetic diagram"
+      - "dynamic graph speed"
+      - "red.background"
+      - "green.background"
+      - "blue.background"
+      - "white.background"
+      - "reset"
+      - "red.bee.1"
+      - "green.bee.1"
+      - "blue.bee.1"
+      - "white.bee.1"
+      - "red.bee.2"
+      - "green.bee.2"
+      - "blue.bee.2"
+      - "white.bee.2"
+      - "red.bee.3"
+      - "green.bee.3"
+      - "blue.bee.3"
+      - "white.bee.3"
+      - "red.bee.4"
+      - "green.bee.4"
+      - "blue.bee.4"
+      - "white.bee.4"
+      - "red.bee.5"
+      - "green.bee.5"
+      - "blue.bee.5"
+      - "white.bee.5"
+      - "red.bee.6"
+      - "green.bee.6"
+      - "blue.bee.6"
+      - "white.bee.6"
+      - "red.bee.7"
+      - "green.bee.7"
+      - "blue.bee.7"
+      - "white.bee.7"
+

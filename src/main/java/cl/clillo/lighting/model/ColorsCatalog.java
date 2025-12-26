@@ -43,6 +43,7 @@ public class ColorsCatalog {
 				loaded = true;
 			} catch (Exception e) {
 				log.error("Error loading colors.json", e);
+				System.exit(0);
 				loaded = true; // evita reintentos en bucle
 			}
 		}

@@ -3,6 +3,7 @@ package cl.clillo.lighting.web;
 import cl.clillo.lighting.config.FixtureConfig;
 import cl.clillo.lighting.config.FixturesConfig;
 import cl.clillo.lighting.config.FixturesConfigService;
+import cl.clillo.lighting.config.DmxMapService;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.model.QLCFunction;
@@ -102,6 +103,9 @@ public class WebServer {
             } else if (path != null && path.startsWith("/fixtures/")) {
                 // GET /api/fixtures/{id} - Obtener un fixture específico
                 handleGetFixture(req, resp, path);
+            } else if (path != null && path.equals("/dmx-map")) {
+                // GET /api/dmx-map - Obtener mapa completo de canales DMX
+                handleGetDmxMap(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -652,6 +656,13 @@ public class WebServer {
             sendJsonResponse(resp, Map.of("beeEyes", states));
         }
 
+        private void handleGetDmxMap(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            DmxMapService dmxMapService = DmxMapService.getInstance();
+            List<DmxMapService.DmxChannelEntry> map = dmxMapService.generateDmxMap();
+            Map<Integer, Map<Integer, DmxMapService.DmxChannelEntry>> fullMap = dmxMapService.generateFullDmxMap();
+            sendJsonResponse(resp, Map.of("dmxMap", map, "fullDmxMap", fullMap));
+        }
+
         private void sendJsonResponse(HttpServletResponse resp, Object data) throws IOException {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
@@ -678,6 +689,13 @@ public class WebServer {
                 resp.setCharacterEncoding("UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.write(getFrontendHtml());
+                out.flush();
+            } else if (path != null && path.equals("/dmx-map.html")) {
+                // Servir la página del mapa DMX
+                resp.setContentType("text/html");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.write(getDmxMapHtml());
                 out.flush();
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -1043,6 +1061,7 @@ public class WebServer {
                     "            <button class=\"group-btn\" onclick=\"openTestChase()\">Chasing de fixtures</button>\n" +
                     "            <button class=\"group-btn\" onclick=\"openTestVirtualDJ()\">Estado de comunicación con VirtualDJ</button>\n" +
                     "            <button class=\"group-btn\" onclick=\"openFixtureConfig()\">Configuración de Fixtures</button>\n" +
+                    "            <a href=\"/dmx-map.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🗺️ Mapa DMX</a>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
@@ -1634,6 +1653,355 @@ public class WebServer {
                     "                loadShows();\n" +
                     "            }\n" +
                     "        }, 2000);\n" +
+                    "    </script>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+        private String getDmxMapHtml() {
+            return "<!DOCTYPE html>\n" +
+                    "<html lang=\"es\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Mapa DMX - Canales Utilizados</title>\n" +
+                    "    <style>\n" +
+                    "        * {\n" +
+                    "            margin: 0;\n" +
+                    "            padding: 0;\n" +
+                    "            box-sizing: border-box;\n" +
+                    "        }\n" +
+                    "        body {\n" +
+                    "            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            min-height: 100vh;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .container {\n" +
+                    "            max-width: 1400px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            box-shadow: 0 10px 40px rgba(0,0,0,0.2);\n" +
+                    "            padding: 30px;\n" +
+                    "        }\n" +
+                    "        h1 {\n" +
+                    "            color: #333;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-size: 2em;\n" +
+                    "        }\n" +
+                    "        .subtitle {\n" +
+                    "            color: #666;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "            font-size: 1.1em;\n" +
+                    "        }\n" +
+                    "        .controls {\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            display: flex;\n" +
+                    "            gap: 15px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "            align-items: center;\n" +
+                    "        }\n" +
+                    "        .filter-group {\n" +
+                    "            display: flex;\n" +
+                    "            gap: 10px;\n" +
+                    "            align-items: center;\n" +
+                    "        }\n" +
+                    "        label {\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #555;\n" +
+                    "        }\n" +
+                    "        select, input {\n" +
+                    "            padding: 8px 12px;\n" +
+                    "            border: 2px solid #ddd;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            font-size: 14px;\n" +
+                    "            transition: border-color 0.3s;\n" +
+                    "        }\n" +
+                    "        select:focus, input:focus {\n" +
+                    "            outline: none;\n" +
+                    "            border-color: #667eea;\n" +
+                    "        }\n" +
+                    "        .stats {\n" +
+                    "            display: flex;\n" +
+                    "            gap: 20px;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "        }\n" +
+                    "        .stat-card {\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            color: white;\n" +
+                    "            padding: 15px 20px;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            min-width: 150px;\n" +
+                    "        }\n" +
+                    "        .stat-label {\n" +
+                    "            font-size: 0.9em;\n" +
+                    "            opacity: 0.9;\n" +
+                    "        }\n" +
+                    "        .stat-value {\n" +
+                    "            font-size: 1.8em;\n" +
+                    "            font-weight: bold;\n" +
+                    "            margin-top: 5px;\n" +
+                    "        }\n" +
+                    "        .table-container {\n" +
+                    "            overflow-x: auto;\n" +
+                    "            overflow-y: auto;\n" +
+                    "            max-height: 80vh;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n" +
+                    "        }\n" +
+                    "        table {\n" +
+                    "            width: 100%;\n" +
+                    "            border-collapse: collapse;\n" +
+                    "            background: white;\n" +
+                    "        }\n" +
+                    "        thead {\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            color: white;\n" +
+                    "        }\n" +
+                    "        th {\n" +
+                    "            padding: 15px;\n" +
+                    "            text-align: center;\n" +
+                    "            font-weight: 600;\n" +
+                    "            position: sticky;\n" +
+                    "            top: 0;\n" +
+                    "            z-index: 10;\n" +
+                    "        }\n" +
+                    "        th:first-child {\n" +
+                    "            text-align: right;\n" +
+                    "            padding-right: 20px;\n" +
+                    "        }\n" +
+                    "        tbody tr {\n" +
+                    "            border-bottom: 1px solid #eee;\n" +
+                    "            transition: background-color 0.2s;\n" +
+                    "        }\n" +
+                    "        tbody tr:hover {\n" +
+                    "            background-color: #f8f9fa;\n" +
+                    "        }\n" +
+                    "        tbody tr:nth-child(even) {\n" +
+                    "            background-color: #fafafa;\n" +
+                    "        }\n" +
+                    "        tbody tr:nth-child(even):hover {\n" +
+                    "            background-color: #f0f0f0;\n" +
+                    "        }\n" +
+                    "        td {\n" +
+                    "            padding: 12px 15px;\n" +
+                    "            color: #333;\n" +
+                    "            text-align: center;\n" +
+                    "            vertical-align: middle;\n" +
+                    "        }\n" +
+                    "        td:first-child {\n" +
+                    "            text-align: right;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #666;\n" +
+                    "            font-family: 'Courier New', monospace;\n" +
+                    "            padding-right: 20px;\n" +
+                    "        }\n" +
+                    "        td.empty-channel {\n" +
+                    "            color: #ccc;\n" +
+                    "            font-style: italic;\n" +
+                    "        }\n" +
+                    "        .universe-badge {\n" +
+                    "            display: inline-block;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            padding: 4px 10px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "        }\n" +
+                    "        .channel-badge {\n" +
+                    "            display: inline-block;\n" +
+                    "            background: #28a745;\n" +
+                    "            color: white;\n" +
+                    "            padding: 4px 10px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            font-family: 'Courier New', monospace;\n" +
+                    "        }\n" +
+                    "        .fixture-name {\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .fixture-model {\n" +
+                    "            color: #666;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "            margin-top: 4px;\n" +
+                    "        }\n" +
+                    "        .channel-name {\n" +
+                    "            color: #888;\n" +
+                    "            font-size: 0.85em;\n" +
+                    "            font-style: italic;\n" +
+                    "        }\n" +
+                    "        .loading {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .empty {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #999;\n" +
+                    "        }\n" +
+                    "        @media (max-width: 768px) {\n" +
+                    "            .container {\n" +
+                    "                padding: 15px;\n" +
+                    "            }\n" +
+                    "            table {\n" +
+                    "                font-size: 0.9em;\n" +
+                    "            }\n" +
+                    "            th, td {\n" +
+                    "                padding: 8px;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <h1>🗺️ Mapa DMX</h1>\n" +
+                    "        <p class=\"subtitle\">Visualización de canales utilizados en cada universo DMX</p>\n" +
+                    "        \n" +
+                    "        <div class=\"controls\">\n" +
+                    "            <div class=\"filter-group\">\n" +
+                    "                <label for=\"searchInput\">Buscar Fixture:</label>\n" +
+                    "                <input type=\"text\" id=\"searchInput\" placeholder=\"Nombre del fixture...\">\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div class=\"stats\">\n" +
+                    "            <div class=\"stat-card\">\n" +
+                    "                <div class=\"stat-label\">Total Canales</div>\n" +
+                    "                <div class=\"stat-value\" id=\"totalChannels\">0</div>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"stat-card\">\n" +
+                    "                <div class=\"stat-label\">Total Fixtures</div>\n" +
+                    "                <div class=\"stat-value\" id=\"totalFixtures\">0</div>\n" +
+                    "            </div>\n" +
+                    "            <div class=\"stat-card\">\n" +
+                    "                <div class=\"stat-label\">Universos</div>\n" +
+                    "                <div class=\"stat-value\" id=\"totalUniverses\">0</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div class=\"table-container\">\n" +
+                    "            <table id=\"dmxTable\">\n" +
+                    "                <thead id=\"tableHead\">\n" +
+                    "                    <tr>\n" +
+                    "                        <th>Canal</th>\n" +
+                    "                    </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody id=\"tableBody\">\n" +
+                    "                    <tr>\n" +
+                    "                        <td colspan=\"10\" class=\"loading\">Cargando datos...</td>\n" +
+                    "                    </tr>\n" +
+                    "                </tbody>\n" +
+                    "            </table>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <script>\n" +
+                    "        let fullDmxMap = {};\n" +
+                    "        let allData = [];\n" +
+                    "        let maxChannels = 512;\n" +
+                    "        let maxUniverses = 2;\n" +
+                    "        \n" +
+                    "        async function loadDmxMap() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch('/api/dmx-map');\n" +
+                    "                const data = await response.json();\n" +
+                    "                allData = data.dmxMap || [];\n" +
+                    "                fullDmxMap = data.fullDmxMap || {};\n" +
+                    "                \n" +
+                    "                // Determinar número máximo de universos\n" +
+                    "                const universes = [...new Set(allData.map(item => item.universe))].sort((a, b) => a - b);\n" +
+                    "                maxUniverses = universes.length > 0 ? Math.max(...universes) : 2;\n" +
+                    "                \n" +
+                    "                // Máximo de canales por universo es 512\n" +
+                    "                maxChannels = 512;\n" +
+                    "                \n" +
+                    "                \n" +
+                    "                updateStats();\n" +
+                    "                renderTable();\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando mapa DMX:', error);\n" +
+                    "                document.getElementById('tableBody').innerHTML = \n" +
+                    "                    '<tr><td colspan=\"10\" class=\"empty\">Error al cargar los datos</td></tr>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function updateStats() {\n" +
+                    "            const uniqueFixtures = new Set(allData.map(item => item.fixtureId));\n" +
+                    "            const uniqueUniverses = new Set(allData.map(item => item.universe));\n" +
+                    "            \n" +
+                    "            document.getElementById('totalChannels').textContent = allData.length;\n" +
+                    "            document.getElementById('totalFixtures').textContent = uniqueFixtures.size;\n" +
+                    "            document.getElementById('totalUniverses').textContent = uniqueUniverses.size;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderTable() {\n" +
+                    "            const searchInput = document.getElementById('searchInput').value.toLowerCase();\n" +
+                    "            \n" +
+                    "            // Construir encabezados de tabla\n" +
+                    "            const thead = document.getElementById('tableHead');\n" +
+                    "            let headerRow = '<tr><th>Canal</th>';\n" +
+                    "            for (let u = 1; u <= maxUniverses; u++) {\n" +
+                    "                headerRow += `<th>Universo ${u}</th>`;\n" +
+                    "            }\n" +
+                    "            headerRow += '</tr>';\n" +
+                    "            thead.innerHTML = headerRow;\n" +
+                    "            \n" +
+                    "            // Construir filas de la tabla\n" +
+                    "            const tbody = document.getElementById('tableBody');\n" +
+                    "            let tableRows = '';\n" +
+                    "            \n" +
+                    "            for (let channel = 1; channel <= maxChannels; channel++) {\n" +
+                    "                let row = `<tr><td>${channel}</td>`;\n" +
+                    "                let hasData = false;\n" +
+                    "                \n" +
+                    "                for (let universe = 1; universe <= maxUniverses; universe++) {\n" +
+                    "                    // Los keys del objeto JSON son strings\n" +
+                    "                    const channelMap = fullDmxMap[channel] || fullDmxMap[channel.toString()];\n" +
+                    "                    const entry = channelMap && (channelMap[universe] || channelMap[universe.toString()]);\n" +
+                    "                    \n" +
+                    "                    if (entry && entry.fixtureName) {\n" +
+                    "                        // Filtrar por búsqueda si hay texto\n" +
+                    "                        if (searchInput && !entry.fixtureName.toLowerCase().includes(searchInput) && \n" +
+                    "                            !entry.fixtureModel.toLowerCase().includes(searchInput)) {\n" +
+                    "                            row += '<td class=\"empty-channel\">-</td>';\n" +
+                    "                        } else {\n" +
+                    "                            hasData = true;\n" +
+                    "                            const channelName = entry.channelName ? `<div class=\"channel-name\">${entry.channelName}</div>` : '';\n" +
+                    "                            row += `<td><div class=\"fixture-name\">${entry.fixtureName}</div>${channelName}</td>`;\n" +
+                    "                        }\n" +
+                    "                    } else {\n" +
+                    "                        row += '<td class=\"empty-channel\">-</td>';\n" +
+                    "                    }\n" +
+                    "                }\n" +
+                    "                \n" +
+                    "                row += '</tr>';\n" +
+                    "                \n" +
+                    "                // Solo mostrar filas con datos o si no hay filtro de búsqueda\n" +
+                    "                if (!searchInput || hasData) {\n" +
+                    "                    tableRows += row;\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            if (tableRows === '') {\n" +
+                    "                tbody.innerHTML = `<tr><td colspan=\"${maxUniverses + 1}\" class=\"empty\">No se encontraron canales</td></tr>`;\n" +
+                    "            } else {\n" +
+                    "                tbody.innerHTML = tableRows;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Event listeners\n" +
+                    "        document.getElementById('searchInput').addEventListener('input', renderTable);\n" +
+                    "        \n" +
+                    "        // Cargar datos al iniciar\n" +
+                    "        loadDmxMap();\n" +
+                    "        \n" +
+                    "        // Recargar cada 30 segundos\n" +
+                    "        setInterval(loadDmxMap, 30000);\n" +
                     "    </script>\n" +
                     "</body>\n" +
                     "</html>";
