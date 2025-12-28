@@ -1701,6 +1701,26 @@ public class WebServer {
                     "            gap: 15px;\n" +
                     "            flex-wrap: wrap;\n" +
                     "            align-items: center;\n" +
+                    "            justify-content: space-between;\n" +
+                    "        }\n" +
+                    "        .export-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            font-size: 1em;\n" +
+                    "            font-weight: 600;\n" +
+                    "            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            box-shadow: 0 2px 4px rgba(0,0,0,0.2);\n" +
+                    "        }\n" +
+                    "        .export-btn:hover {\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "            box-shadow: 0 4px 8px rgba(0,0,0,0.3);\n" +
+                    "        }\n" +
+                    "        .export-btn:active {\n" +
+                    "            transform: translateY(0);\n" +
                     "        }\n" +
                     "        .filter-group {\n" +
                     "            display: flex;\n" +
@@ -1867,6 +1887,7 @@ public class WebServer {
                     "                <label for=\"searchInput\">Buscar Fixture:</label>\n" +
                     "                <input type=\"text\" id=\"searchInput\" placeholder=\"Nombre del fixture...\">\n" +
                     "            </div>\n" +
+                    "            <button class=\"export-btn\" onclick=\"exportToCSV()\">📥 Exportar CSV</button>\n" +
                     "        </div>\n" +
                     "        \n" +
                     "        <div class=\"stats\">\n" +
@@ -1992,6 +2013,58 @@ public class WebServer {
                     "            } else {\n" +
                     "                tbody.innerHTML = tableRows;\n" +
                     "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function exportToCSV() {\n" +
+                    "            if (!fullDmxMap || Object.keys(fullDmxMap).length === 0) {\n" +
+                    "                alert('No hay datos para exportar');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Construir encabezados\n" +
+                    "            let csv = 'Canal';\n" +
+                    "            for (let u = 1; u <= maxUniverses; u++) {\n" +
+                    "                csv += `,Universo ${u}`;\n" +
+                    "            }\n" +
+                    "            csv += '\\n';\n" +
+                    "            \n" +
+                    "            // Construir filas\n" +
+                    "            for (let channel = 1; channel <= maxChannels; channel++) {\n" +
+                    "                csv += channel;\n" +
+                    "                \n" +
+                    "                for (let universe = 1; universe <= maxUniverses; universe++) {\n" +
+                    "                    const channelMap = fullDmxMap[channel] || fullDmxMap[channel.toString()];\n" +
+                    "                    const entry = channelMap && (channelMap[universe] || channelMap[universe.toString()]);\n" +
+                    "                    \n" +
+                    "                    if (entry && entry.fixtureName) {\n" +
+                    "                        let cellValue = entry.fixtureName;\n" +
+                    "                        if (entry.channelName) {\n" +
+                    "                            cellValue += ` (${entry.channelName})`;\n" +
+                    "                        }\n" +
+                    "                        // Escapar comillas y comas en CSV\n" +
+                    "                        cellValue = cellValue.replace(/\"/g, '\"\"');\n" +
+                    "                        if (cellValue.includes(',') || cellValue.includes('\"') || cellValue.includes('\\n')) {\n" +
+                    "                            cellValue = `\"${cellValue}\"`;\n" +
+                    "                        }\n" +
+                    "                        csv += `,${cellValue}`;\n" +
+                    "                    } else {\n" +
+                    "                        csv += ',-';\n" +
+                    "                    }\n" +
+                    "                }\n" +
+                    "                \n" +
+                    "                csv += '\\n';\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Crear y descargar archivo\n" +
+                    "            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });\n" +
+                    "            const link = document.createElement('a');\n" +
+                    "            const url = URL.createObjectURL(blob);\n" +
+                    "            link.setAttribute('href', url);\n" +
+                    "            link.setAttribute('download', `dmx-map-${new Date().toISOString().split('T')[0]}.csv`);\n" +
+                    "            link.style.visibility = 'hidden';\n" +
+                    "            document.body.appendChild(link);\n" +
+                    "            link.click();\n" +
+                    "            document.body.removeChild(link);\n" +
                     "        }\n" +
                     "        \n" +
                     "        // Event listeners\n" +

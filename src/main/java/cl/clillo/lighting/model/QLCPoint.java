@@ -19,7 +19,9 @@ public class QLCPoint implements Comparable<QLCPoint>{
     private final QLCFixture fixture;
     private final int channel;
     private final int dmxChannel;
-    private final int universe;
+    @Getter
+    @Setter
+    private int universe;
     @Setter
     private int data;
     private final QLCFixture.ChannelType channelType;
@@ -51,7 +53,7 @@ public class QLCPoint implements Comparable<QLCPoint>{
     }
 
     public String toString() {
-        return "QLCPoint(fixture=" + (this.getFixture()!=null?this.getFixture().getId():-1) + ",  dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
+        return "QLCPoint(fixture=" + (this.getFixture()!=null?this.getFixture().getId():-1)+ ",  universe=" + this.getUniverse() + ",  dmxChannel=" + this.getDmxChannel() + ", data=" + this.getData() + ")";
     }
 
     public QLCPoint replaceDimmerValue(final int value){
@@ -165,10 +167,6 @@ public class QLCPoint implements Comparable<QLCPoint>{
         return QLCPoint.buildRoboticPoint(qlcFixture,
                 channelType,
                 value);
-    }
-
-    public int getUniverse() {
-        return universe;
     }
 
     public static class QLCPointBuilder {

@@ -110,12 +110,14 @@ public class QLCFixture {
             ChannelType channelType = getChannel(i);
             if (channelType.isMovement())
                 continue;
-            blackoutPointList.add(QLCPoint.builder()
+            QLCPoint point = QLCPoint.builder()
                     .fixture(this)
                     .channel(i)
                     .data(0)
                     .dmxChannel(getDMXChannel(i))
-                    .build());
+                    .build();
+            point.setUniverse(universe);
+            blackoutPointList.add(point);
         }
     }
 
@@ -174,11 +176,10 @@ public class QLCFixture {
         return new QLCFixtureBuilder();
     }
 
-    public static QLCFixture build(final int id, final int dmxAddress, final QLCFixtureModel fixtureModel){
+    public static QLCFixture build(final int id, final int dmxAddress, final QLCFixtureModel fixtureModel, final int universe){
         String manufacturer = "manufacturer";
         String model = "model";
         String mode = "mode";
-        int universe = 0;
 
         return new QLCFixture(manufacturer, model, mode, id, "fixture: "+id, universe, dmxAddress-1,
                 fixtureModel.getChannels().length, fixtureModel);

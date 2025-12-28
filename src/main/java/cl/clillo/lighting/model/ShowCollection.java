@@ -310,7 +310,7 @@ public class ShowCollection {
                     }
                     if (!exists) {
                         addQLCFunction(jsonScene);
-                        System.out.println("Loaded JSON scene: " + jsonScene.getId() + " - " + jsonScene.getName() + " from " + f.getName());
+                      //  System.out.println("Loaded JSON scene: " + jsonScene.getId() + " - " + jsonScene.getName() + " from " + f.getName());
                     }
                 } catch (Exception e) {
                     System.err.println("Error reading JSON scene from " + f.getName() + ": " + e.getMessage());
@@ -347,7 +347,7 @@ public class ShowCollection {
                     }
                     if (!exists) {
                         addQLCFunction(jsonSequence);
-                        System.out.println("Loaded JSON sequence: " + jsonSequence.getId() + " - " + jsonSequence.getName() + " from " + f.getName());
+                       // System.out.println("Loaded JSON sequence: " + jsonSequence.getId() + " - " + jsonSequence.getName() + " from " + f.getName());
                     }
                 } catch (Exception e) {
                     System.err.println("Error reading JSON sequence from " + f.getName() + ": " + e.getMessage());

@@ -83,15 +83,14 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                 case "simple-robotic":
                     fixture = QLCSimpleRoboticFixture.build(fixtureConfig.getId(), 
                             fixtureConfig.getAddress(), 
-                            model);
+                            model, fixtureConfig.getUniverse());
                     fixture.setUniverse(fixtureConfig.getUniverse());
                     fixture.setAddress(fixtureConfig.getAddress() - 1); // Convertir a 0-based
                     break;
                 default: // "simple"
                     fixture = QLCFixture.build(fixtureConfig.getId(), 
                             fixtureConfig.getAddress(), 
-                            model);
-                    fixture.setUniverse(fixtureConfig.getUniverse());
+                            model, fixtureConfig.getUniverse());
                     fixture.setAddress(fixtureConfig.getAddress() - 1); // Convertir a 0-based
                     break;
             }

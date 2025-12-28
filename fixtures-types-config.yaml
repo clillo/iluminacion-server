@@ -58,6 +58,48 @@ fixtureTypes:
       - "white"
       - "strobe"
       - "color change"
+      -
+  - name: "beam+spot"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "RGBW"
+    robotic: false
+    channelCount: 11
+    channels:
+      - "Pan"
+      - "Pan fine"
+      - "Tilt"
+      - "Tilt fine"
+      - "Pan/Tilt speed"
+      - "Dimmer"
+      - "Strobe"
+      - "Color wheel"
+      - "Gobo wheel"
+      - "Prism rotation"
+      - "No function"
+
+  - name: "Moving Head 2"
+    manufacturer: "Generic"
+    model: "Generic"
+    type: "RGBW"
+    robotic: false
+    channelCount: 11
+    channels:
+      - "Pan"
+      - "Tilt"
+      - "Master dimmer"
+      - "Strobe"
+      - "Color wheel"
+      - "Gobo cristal"
+      - "Gobo cristal rotating"
+      - "Gobo shake"
+      - "Gobo index"
+      - "Gobo normal shake"
+      - "Focus"
+      - "Prism rotation"
+      - "nc"
+      - "pan fine"
+      - "tilt fine"
 
   - name: "Moving Head"
     manufacturer: "Wild Pro"
