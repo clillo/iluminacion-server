@@ -8,7 +8,13 @@
       <name>Blue Strobo RGB</name>
    </common>
    <shows>
-      <show id="7106" name="Derby Red/Green Static"/>
-      <show id="200" name="Derby Blue Slow Strobo"/>
+      <show id="80" name="Blue Strobo RGB"/>
+      <show id="200" name="Blue Slow Strobo"/>
+      <show id="7106" name="Red/Green Static"/>
+      <show id="8200" name="On"/>
+      <show id="8228" name="Focus OFF"/>
+      <show id="8236" name="Rotating Slow R"/>
+      <show id="8423" name="X Green"/>
+      <show id="8601" name="Down"/>
    </shows>
 </doc>

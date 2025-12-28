@@ -95,6 +95,10 @@ public class QLCFixture {
     private QLCFixtureModel fixtureModel;
     private final List<QLCPoint> blackoutPointList = new ArrayList<>();
 
+    @Getter
+    @Setter
+    private boolean active;
+
     QLCFixture(String manufacturer, String model, String mode, int id, String name, int universe, int address, int channels, QLCFixtureModel fixtureModel) {
         this.manufacturer = manufacturer;
         this.model = model;

@@ -12,141 +12,193 @@
       <step id="0" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="1" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="2" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="3" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="255"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="4" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="5" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="6" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="7" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="8" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="255"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
          </points>
       </step>
       <step id="9" fadeIn="0" hold="2000" fadeOut="0">
          <points>
             <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="9" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
-            <point fixture-robotic="true" fixture="12" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
             <point fixture-robotic="true" fixture="17" type="DIMMER" value="255"/>
             <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
+         </points>
+      </step>
+      <step id="10" fadeIn="0" hold="2000" fadeOut="0">
+         <points>
+            <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="255"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="0"/>
+         </points>
+      </step>
+      <step id="10" fadeIn="0" hold="2000" fadeOut="0">
+         <points>
+            <point fixture-robotic="true" fixture="8" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="10" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="11" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="15" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="16" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="17" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="18" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="20" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="21" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="22" type="DIMMER" value="0"/>
+            <point fixture-robotic="true" fixture="23" type="DIMMER" value="255"/>
          </points>
       </step>
    </steps>

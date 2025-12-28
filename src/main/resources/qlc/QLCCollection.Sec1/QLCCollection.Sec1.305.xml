@@ -9,11 +9,18 @@
    </common>
    <shows>
       <show id="155" name="Spiders - Sec Fast (Copy)"/>
-      <show id="1004" name="Spiders - Line Spiders 4"/>
-      <show id="2000" name="Moving Head Beam All On"/>
-      <show id="2101" name="Moving Head Beam Red"/>
-      <show id="2307" name="Moving Head Beam Gobo 6"/>
-      <show id="2403" name="Moving Head Beam + Spot Rotating Slow"/>
-      <show id="2521" name="Moving Head Beam + Spot Eight 1"/>
+      <show id="1004" name="Spiders 4"/>
+      <show id="2000" name="All On"/>
+      <show id="2101" name="Red"/>
+      <show id="2307" name="Gobo 6"/>
+      <show id="2403" name="Prisma Rotating Slow"/>
+      <show id="2521" name="Eight 1"/>
+      <show id="305" name="Spoting Yellow"/>
+      <show id="8228" name="Focus OFF"/>
+      <show id="8232" name="Rotating Slow R"/>
+      <show id="8521" name="Eight 1"/>
+      <show id="10020" name="BeeEye 3 On"/>
+      <show id="10022" name="BeeEye 3 On"/>
+      <show id="8101" name="Red"/>
    </shows>
 </doc>

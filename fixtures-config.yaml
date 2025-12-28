@@ -86,7 +86,7 @@ fixtures:
   address: 240
   manufacturer: "generic"
   mode: "normal"
-  activo: true
+  activo: false
   sceneIdOn: 10009
   sceneIdOff: 20009
 - id: 12
@@ -97,7 +97,7 @@ fixtures:
   address: 260
   manufacturer: "generic"
   mode: "normal"
-  activo: true
+  activo: false
   sceneIdOn: 10012
   sceneIdOff: 20012
 - id: 4
@@ -130,7 +130,7 @@ fixtures:
   address: 400
   manufacturer: "Wild Pro"
   mode: "Normal"
-  activo: true
+  activo: false
   sceneIdOn: 10000
   sceneIdOff: 20000
 - id: 1
@@ -141,7 +141,7 @@ fixtures:
   address: 410
   manufacturer: "Wild Pro"
   mode: "Normal"
-  activo: true
+  activo: false
   sceneIdOn: 10001
   sceneIdOff: 20001
 - id: 2
@@ -152,7 +152,7 @@ fixtures:
   address: 420
   manufacturer: "Wild Pro"
   mode: "Normal"
-  activo: true
+  activo: false
   sceneIdOn: 10002
   sceneIdOff: 20002
 - id: 3

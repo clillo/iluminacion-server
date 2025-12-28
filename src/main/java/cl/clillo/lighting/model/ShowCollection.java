@@ -43,12 +43,13 @@ public class ShowCollection {
         qlcModel = new QLCFixtureBuilder(qlcModelOriginal.getFixtureModelList());
         blackoutPointList.addAll(qlcModel.getBlackoutPointList());
         DefaultScheduler scheduler = new DefaultScheduler(showList);
-        System.out.println("Reading new shows");
-        addFromDirectory(BASE_DIR);
         System.out.println("Reading JSON scenes");
         addJsonScenes();
         System.out.println("Reading JSON sequences");
         addJsonSequences();
+        System.out.println("Reading new shows");
+        addFromDirectory(BASE_DIR);
+
         System.out.println("Starting default scheduler");
         scheduler.start();
 
@@ -310,7 +311,7 @@ public class ShowCollection {
                     }
                     if (!exists) {
                         addQLCFunction(jsonScene);
-                      //  System.out.println("Loaded JSON scene: " + jsonScene.getId() + " - " + jsonScene.getName() + " from " + f.getName());
+                        System.out.println("Loaded JSON scene: " + jsonScene.getId() + " - " + jsonScene.getName() + " from " + f.getName());
                     }
                 } catch (Exception e) {
                     System.err.println("Error reading JSON scene from " + f.getName() + ": " + e.getMessage());

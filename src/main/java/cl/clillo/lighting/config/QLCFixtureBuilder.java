@@ -61,11 +61,7 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
         
         // Construir fixtures desde la configuración YAML
         for (FixtureConfig fixtureConfig : config.getFixtures()) {
-            // Filtrar fixtures inactivos
-          /*  if (!fixtureConfig.isActivo()) {
-                continue;
-            }
-            */
+
             QLCFixtureModel model = getFixtureModel(fixtureConfig.getModel(), typesConfigService, fixtureModelA, fixtureModelC);
             
             if (model == null) {
@@ -94,6 +90,8 @@ public class QLCFixtureBuilder implements FixtureListBuilder{
                     fixture.setAddress(fixtureConfig.getAddress() - 1); // Convertir a 0-based
                     break;
             }
+
+            fixture.setActive(fixtureConfig.isActivo());
             
             list.add(fixture);
         }

@@ -154,6 +154,12 @@ public class QLCPoint implements Comparable<QLCPoint>{
         }
 
         final QLCRoboticFixture qlcFixture = fixtureListBuilder.getFixture(fixtureId);
+
+        if (!qlcFixture.isActive()){
+         //   System.out.println("Point with fixture inactive");
+      //      System.exit(0);
+        }
+
         if (qlcFixture==null){
 
             System.out.println("Robotic point without fixture: "+ fixtureId);
