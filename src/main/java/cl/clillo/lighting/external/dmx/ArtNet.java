@@ -1,6 +1,7 @@
 package cl.clillo.lighting.external.dmx;
 
 import ch.bildspur.artnet.ArtNetClient;
+import cl.clillo.lighting.config.ExternalConfigService;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class ArtNet {
 
     private static final int MAX_UNIVERSES = 2;
+    private String artnetAddress;
 
     public enum ArtNetMode {
         NON_ART_NET,
@@ -19,9 +21,12 @@ public class ArtNet {
     }
 
     private final ArtNetClient artNetClient;
-    private Map<Integer, byte[]> dmxData;
+    private final Map<Integer, byte[]> dmxData;
 
     private ArtNet(){
+        // Cargar IP desde configuración externa
+        ExternalConfigService configService = ExternalConfigService.getInstance();
+        artnetAddress = configService.getArtNetIpAddress();
         artNetClient = new ArtNetClient(null);
         artNetClient.start();
 
@@ -69,9 +74,17 @@ public class ArtNet {
     }
 
     public void broadCast(){
-        for (int i=0; i<MAX_UNIVERSES; i++)
-      //      artNetClient.unicastDmx("169.254.0.255", 0, i, dmxData.get(i));
-          artNetClient.unicastDmx("192.168.255.255", 0, i, dmxData.get(i));
+        for (int i=0; i<MAX_UNIVERSES; i++) {
+            artNetClient.unicastDmx(artnetAddress, 0, i, dmxData.get(i));
+        }
+    }
+
+    /**
+     * Actualiza la dirección IP de ArtNet desde la configuración.
+     */
+    public void updateArtNetAddress() {
+        ExternalConfigService configService = ExternalConfigService.getInstance();
+        artnetAddress = configService.getArtNetIpAddress();
     }
 
     private static class ArtNetHttpProxy extends ArtNet{

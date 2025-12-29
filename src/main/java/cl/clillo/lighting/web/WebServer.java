@@ -4,6 +4,9 @@ import cl.clillo.lighting.config.FixtureConfig;
 import cl.clillo.lighting.config.FixturesConfig;
 import cl.clillo.lighting.config.FixturesConfigService;
 import cl.clillo.lighting.config.DmxMapService;
+import cl.clillo.lighting.config.NetworkConfigService;
+import cl.clillo.lighting.config.ExternalConfigService;
+import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.model.QLCFunction;
@@ -106,6 +109,12 @@ public class WebServer {
             } else if (path != null && path.equals("/dmx-map")) {
                 // GET /api/dmx-map - Obtener mapa completo de canales DMX
                 handleGetDmxMap(req, resp);
+            } else if (path != null && path.equals("/network/interfaces")) {
+                // GET /api/network/interfaces - Obtener interfaces de red cableadas
+                handleGetNetworkInterfaces(req, resp);
+            } else if (path != null && path.equals("/external-config")) {
+                // GET /api/external-config - Obtener configuración externa
+                handleGetExternalConfig(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -144,6 +153,9 @@ public class WebServer {
             } else if (path != null && path.equals("/fixtures/config/update")) {
                 // PUT /api/fixtures/config/update - Actualizar configuración (maxUniverses)
                 handleUpdateFixturesConfig(req, resp);
+            } else if (path != null && path.equals("/external-config/artnet-ip")) {
+                // PUT /api/external-config/artnet-ip - Actualizar IP de ArtNet
+                handleUpdateArtNetIp(req, resp);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -663,6 +675,55 @@ public class WebServer {
             sendJsonResponse(resp, Map.of("dmxMap", map, "fullDmxMap", fullMap));
         }
 
+        private void handleGetNetworkInterfaces(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            NetworkConfigService networkService = NetworkConfigService.getInstance();
+            List<NetworkConfigService.NetworkInterfaceInfo> interfaces = networkService.getWiredNetworkInterfaces();
+            sendJsonResponse(resp, Map.of("interfaces", interfaces));
+        }
+
+        private void handleGetExternalConfig(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            ExternalConfigService configService = ExternalConfigService.getInstance();
+            String artNetIp = configService.getArtNetIpAddress();
+            Map<String, Object> artNetMap = new HashMap<>();
+            artNetMap.put("ipAddress", artNetIp);
+            Map<String, Object> response = new HashMap<>();
+            response.put("artNet", artNetMap);
+            sendJsonResponse(resp, response);
+        }
+
+        private void handleUpdateArtNetIp(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            try {
+                Map<String, Object> requestData = objectMapper.readValue(req.getReader(), 
+                        objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                String ipAddress = (String) requestData.get("ipAddress");
+                
+                if (ipAddress == null || ipAddress.trim().isEmpty()) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "IP address is required"));
+                    return;
+                }
+                
+                ExternalConfigService configService = ExternalConfigService.getInstance();
+                configService.setArtNetIpAddress(ipAddress);
+                
+                // Actualizar la IP en la instancia de ArtNet si está activa
+                try {
+                    ArtNet artNet = ArtNet.getInstance();
+                    if (artNet != null) {
+                        artNet.updateArtNetAddress();
+                    }
+                } catch (Exception e) {
+                    log.warn("No se pudo actualizar la dirección ArtNet en la instancia activa: {}", e.getMessage());
+                }
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "message", "ArtNet IP actualizada", "ipAddress", ipAddress));
+            } catch (Exception e) {
+                log.error("Error al actualizar IP de ArtNet", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al actualizar la configuración: " + e.getMessage()));
+            }
+        }
+
         private void sendJsonResponse(HttpServletResponse resp, Object data) throws IOException {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
@@ -696,6 +757,13 @@ public class WebServer {
                 resp.setCharacterEncoding("UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.write(getDmxMapHtml());
+                out.flush();
+            } else if (path != null && path.equals("/network-config.html")) {
+                // Servir la página de configuración de red
+                resp.setContentType("text/html");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.write(getNetworkConfigHtml());
                 out.flush();
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -1062,6 +1130,7 @@ public class WebServer {
                     "            <button class=\"group-btn\" onclick=\"openTestVirtualDJ()\">Estado de comunicación con VirtualDJ</button>\n" +
                     "            <button class=\"group-btn\" onclick=\"openFixtureConfig()\">Configuración de Fixtures</button>\n" +
                     "            <a href=\"/dmx-map.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🗺️ Mapa DMX</a>\n" +
+                    "            <a href=\"/network-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">⚙️ Configuración de Red</a>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
@@ -1864,6 +1933,23 @@ public class WebServer {
                     "            padding: 40px;\n" +
                     "            color: #999;\n" +
                     "        }\n" +
+                    "        .back-btn-dmx {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            text-decoration: none;\n" +
+                    "            display: inline-block;\n" +
+                    "        }\n" +
+                    "        .back-btn-dmx:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
                     "        @media (max-width: 768px) {\n" +
                     "            .container {\n" +
                     "                padding: 15px;\n" +
@@ -1879,6 +1965,7 @@ public class WebServer {
                     "</head>\n" +
                     "<body>\n" +
                     "    <div class=\"container\">\n" +
+                    "        <a href=\"/\" class=\"back-btn-dmx\">← Volver</a>\n" +
                     "        <h1>🗺️ Mapa DMX</h1>\n" +
                     "        <p class=\"subtitle\">Visualización de canales utilizados en cada universo DMX</p>\n" +
                     "        \n" +
@@ -2075,6 +2162,306 @@ public class WebServer {
                     "        \n" +
                     "        // Recargar cada 30 segundos\n" +
                     "        setInterval(loadDmxMap, 30000);\n" +
+                    "    </script>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+        private String getNetworkConfigHtml() {
+            return "<!DOCTYPE html>\n" +
+                    "<html lang=\"es\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Configuración de Red - ArtNet</title>\n" +
+                    "    <style>\n" +
+                    "        * {\n" +
+                    "            margin: 0;\n" +
+                    "            padding: 0;\n" +
+                    "            box-sizing: border-box;\n" +
+                    "        }\n" +
+                    "        body {\n" +
+                    "            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            min-height: 100vh;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .container {\n" +
+                    "            max-width: 1000px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            box-shadow: 0 10px 40px rgba(0,0,0,0.2);\n" +
+                    "            padding: 30px;\n" +
+                    "        }\n" +
+                    "        h1 {\n" +
+                    "            color: #333;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-size: 2em;\n" +
+                    "        }\n" +
+                    "        .subtitle {\n" +
+                    "            color: #666;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "            font-size: 1.1em;\n" +
+                    "        }\n" +
+                    "        .section {\n" +
+                    "            margin-bottom: 40px;\n" +
+                    "        }\n" +
+                    "        .section-title {\n" +
+                    "            font-size: 1.5em;\n" +
+                    "            color: #333;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            padding-bottom: 10px;\n" +
+                    "            border-bottom: 2px solid #eee;\n" +
+                    "        }\n" +
+                    "        .interface-card {\n" +
+                    "            background: #f8f9fa;\n" +
+                    "            border: 2px solid #e0e0e0;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            padding: 20px;\n" +
+                    "            margin-bottom: 15px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .interface-card:hover {\n" +
+                    "            border-color: #667eea;\n" +
+                    "            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2);\n" +
+                    "        }\n" +
+                    "        .interface-card.selected {\n" +
+                    "            border-color: #28a745;\n" +
+                    "            background: #f0fff4;\n" +
+                    "        }\n" +
+                    "        .interface-header {\n" +
+                    "            display: flex;\n" +
+                    "            justify-content: space-between;\n" +
+                    "            align-items: center;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "        }\n" +
+                    "        .interface-name {\n" +
+                    "            font-size: 1.2em;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .interface-ip {\n" +
+                    "            font-size: 1.1em;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #667eea;\n" +
+                    "            font-family: 'Courier New', monospace;\n" +
+                    "        }\n" +
+                    "        .interface-details {\n" +
+                    "            color: #666;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "            margin-top: 10px;\n" +
+                    "        }\n" +
+                    "        .interface-details span {\n" +
+                    "            margin-right: 15px;\n" +
+                    "        }\n" +
+                    "        .select-btn {\n" +
+                    "            padding: 8px 20px;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .select-btn:hover {\n" +
+                    "            background: #5568d3;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
+                    "        .select-btn.selected {\n" +
+                    "            background: #28a745;\n" +
+                    "        }\n" +
+                    "        .loading {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .empty {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #999;\n" +
+                    "        }\n" +
+                    "        .current-config {\n" +
+                    "            background: #e7f3ff;\n" +
+                    "            border-left: 4px solid #2196F3;\n" +
+                    "            padding: 15px;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "        }\n" +
+                    "        .current-config strong {\n" +
+                    "            color: #1976D2;\n" +
+                    "        }\n" +
+                    "        .refresh-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .refresh-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "        }\n" +
+                    "        .back-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            text-decoration: none;\n" +
+                    "            display: inline-block;\n" +
+                    "        }\n" +
+                    "        .back-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <a href=\"/\" class=\"back-btn\">← Volver</a>\n" +
+                    "        <h1>⚙️ Configuración de Red</h1>\n" +
+                    "        <p class=\"subtitle\">Configuración de interfaces de red para ArtNet</p>\n" +
+                    "        \n" +
+                    "        <div class=\"current-config\" id=\"currentConfig\">\n" +
+                    "            <strong>IP ArtNet actual:</strong> <span id=\"currentArtNetIp\">Cargando...</span>\n" +
+                    "        </div>\n" +
+                    "        <div id=\"saveMessage\" style=\"display: none; padding: 10px; margin-bottom: 20px; border-radius: 6px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;\"></div>\n" +
+                    "        \n" +
+                    "        <div class=\"section\">\n" +
+                    "            <div style=\"display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;\">\n" +
+                    "                <h2 class=\"section-title\">Interfaces de Red Cableadas</h2>\n" +
+                    "                <button class=\"refresh-btn\" onclick=\"loadInterfaces()\">🔄 Actualizar</button>\n" +
+                    "            </div>\n" +
+                    "            <div id=\"interfacesList\">\n" +
+                    "                <div class=\"loading\">Cargando interfaces de red...</div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <script>\n" +
+                    "        let selectedIp = null;\n" +
+                    "        let currentArtNetIp = null;\n" +
+                    "        \n" +
+                    "        async function loadCurrentConfig() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch('/api/external-config');\n" +
+                    "                const data = await response.json();\n" +
+                    "                currentArtNetIp = data.artNet.ipAddress;\n" +
+                    "                selectedIp = currentArtNetIp;\n" +
+                    "                document.getElementById('currentArtNetIp').textContent = currentArtNetIp;\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando configuración:', error);\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function loadInterfaces() {\n" +
+                    "            try {\n" +
+                    "                document.getElementById('interfacesList').innerHTML = '<div class=\"loading\">Cargando interfaces de red...</div>';\n" +
+                    "                \n" +
+                    "                const response = await fetch('/api/network/interfaces');\n" +
+                    "                const data = await response.json();\n" +
+                    "                const interfaces = data.interfaces || [];\n" +
+                    "                \n" +
+                    "                if (interfaces.length === 0) {\n" +
+                    "                    document.getElementById('interfacesList').innerHTML = \n" +
+                    "                        '<div class=\"empty\">No se encontraron interfaces de red cableadas con IPs IPv4</div>';\n" +
+                    "                    return;\n" +
+                    "                }\n" +
+                    "                \n" +
+                    "                let html = '';\n" +
+                    "                interfaces.forEach((iface, index) => {\n" +
+                    "                    const isSelected = selectedIp === iface.ipAddress;\n" +
+                    "                    html += `\n" +
+                    "                        <div class=\"interface-card ${isSelected ? 'selected' : ''}\" id=\"interface-${index}\">\n" +
+                    "                            <div class=\"interface-header\">\n" +
+                    "                                <div>\n" +
+                    "                                    <div class=\"interface-name\">${iface.displayName || iface.name}</div>\n" +
+                    "                                    <div class=\"interface-ip\">${iface.ipAddress}</div>\n" +
+                    "                                </div>\n" +
+                    "                                <button class=\"select-btn ${isSelected ? 'selected' : ''}\" onclick=\"selectInterface('${iface.ipAddress}', ${index})\">\n" +
+                    "                                    ${isSelected ? '✓ Guardada' : 'Guardar como IP ArtNet'}\n" +
+                    "                                </button>\n" +
+                    "                            </div>\n" +
+                    "                            <div class=\"interface-details\">\n" +
+                    "                                <span><strong>Interfaz:</strong> ${iface.name}</span>\n" +
+                    "                                ${iface.subnetMask ? `<span><strong>Máscara:</strong> ${iface.subnetMask}</span>` : ''}\n" +
+                    "                                ${iface.macAddress ? `<span><strong>MAC:</strong> ${iface.macAddress}</span>` : ''}\n" +
+                    "                                <span><strong>Estado:</strong> ${iface.isUp ? 'Activa' : 'Inactiva'}</span>\n" +
+                    "                            </div>\n" +
+                    "                        </div>\n" +
+                    "                    `;\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                document.getElementById('interfacesList').innerHTML = html;\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando interfaces:', error);\n" +
+                    "                document.getElementById('interfacesList').innerHTML = \n" +
+                    "                    '<div class=\"empty\">Error al cargar las interfaces de red</div>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function selectInterface(ip, index) {\n" +
+                    "            try {\n" +
+                    "                // Guardar en el servidor\n" +
+                    "                const response = await fetch('/api/external-config/artnet-ip', {\n" +
+                    "                    method: 'PUT',\n" +
+                    "                    headers: {\n" +
+                    "                        'Content-Type': 'application/json'\n" +
+                    "                    },\n" +
+                    "                    body: JSON.stringify({ ipAddress: ip })\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                \n" +
+                    "                if (response.ok) {\n" +
+                    "                    selectedIp = ip;\n" +
+                    "                    currentArtNetIp = ip;\n" +
+                    "                    \n" +
+                    "                    // Actualizar UI\n" +
+                    "                    document.querySelectorAll('.interface-card').forEach(card => {\n" +
+                    "                        card.classList.remove('selected');\n" +
+                    "                    });\n" +
+                    "                    document.querySelectorAll('.select-btn').forEach(btn => {\n" +
+                    "                        btn.classList.remove('selected');\n" +
+                    "                        btn.textContent = 'Guardar como IP ArtNet';\n" +
+                    "                    });\n" +
+                    "                    \n" +
+                    "                    const card = document.getElementById(`interface-${index}`);\n" +
+                    "                    const btn = card.querySelector('.select-btn');\n" +
+                    "                    card.classList.add('selected');\n" +
+                    "                    btn.classList.add('selected');\n" +
+                    "                    btn.textContent = '✓ Guardada';\n" +
+                    "                    \n" +
+                    "                    // Actualizar IP actual\n" +
+                    "                    document.getElementById('currentArtNetIp').textContent = ip;\n" +
+                    "                    \n" +
+                    "                    // Mostrar mensaje de éxito\n" +
+                    "                    const messageDiv = document.getElementById('saveMessage');\n" +
+                    "                    messageDiv.textContent = '✓ IP ArtNet actualizada correctamente: ' + ip;\n" +
+                    "                    messageDiv.style.display = 'block';\n" +
+                    "                    setTimeout(() => {\n" +
+                    "                        messageDiv.style.display = 'none';\n" +
+                    "                    }, 3000);\n" +
+                    "                } else {\n" +
+                    "                    alert('Error al guardar: ' + (result.error || 'Error desconocido'));\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error al guardar IP:', error);\n" +
+                    "                alert('Error al guardar la configuración');\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Cargar configuración e interfaces al iniciar\n" +
+                    "        loadCurrentConfig().then(() => loadInterfaces());\n" +
                     "    </script>\n" +
                     "</body>\n" +
                     "</html>";
