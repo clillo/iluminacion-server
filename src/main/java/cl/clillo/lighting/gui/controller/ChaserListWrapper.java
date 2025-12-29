@@ -8,6 +8,8 @@ public class ChaserListWrapper {
 
     public ChaserListWrapper(final ChaserStep chaserStep) {
         this.chaserStep = chaserStep;
+        if (chaserStep.getShow()==null)
+            System.out.println("show nulo");
     }
 
     public ChaserStep getChaserStep() {

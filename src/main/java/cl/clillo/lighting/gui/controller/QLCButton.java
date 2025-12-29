@@ -80,8 +80,9 @@ public class QLCButton implements ItemListener {
 
         this.show = show;
         if (show != null) {
-           // text = show.getId() +"."+ show.getFunction().getName();
-            text = show.getFunction().getName();
+            //text = show.getId() +"."+ show.getFunction().getName();
+          //  text = show.getFunction().getName();
+            text = show.getFunction().getName() +"<br>" + show.getId();
         }
 
 

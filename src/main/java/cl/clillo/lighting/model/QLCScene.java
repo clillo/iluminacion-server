@@ -48,7 +48,7 @@ public class QLCScene extends QLCFunction{
 
                 boolean exist = false;
                 for (QLCEfxFixtureData qlcEfxFixtureData: fixtureList)
-                    if (qlcEfxFixtureData.getRoboticFixture().equals(fixtureData.getRoboticFixture())) {
+                    if (qlcEfxFixtureData.getRoboticFixture().getId()==fixtureData.getRoboticFixture().getId()) {
                         exist = true;
                         break;
                     }

@@ -106,7 +106,7 @@ public class Chaser extends QLCFunction implements Sequenceable{
                 final Show show = collection.getShow(showId);
                 if (show==null){
                     System.out.println("Show no existe: " + showId);
-                  //  System.exit(0);
+                    System.exit(0);
                 }
 
                 qlcFunctionList.add(ChaserStep.builder()

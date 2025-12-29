@@ -7,7 +7,7 @@ import java.util.List;
 
 public class HeadPanels {
 
-    private final String []names = {"Collections", "Laser-Derby", "Moving Heads", "Spider", "MHead Beam", "MHead Spot", "MHead Spot + Beam", "MHead Bee Eye"};
+    private final String []names = {"Collections", "Laser-Derby", "Moving Heads", "Spider", "MHead Spot", "MHead Spot + Beam", "MHead Bee Eye"};
 
     @Getter
     private final List<HeadPanel> headPanels;

@@ -65,8 +65,10 @@ public class QLCCollection extends QLCFunction {
         return showList;
     }
 
-    public void addShow(Show show){
+    public void addShow(final Show show){
+        for (Show iShow: showList)
+            if(iShow.getId()==show.getId())
+                return;
         showList.add(show);
-
     }
 }
