@@ -3714,6 +3714,44 @@ public class WebServer {
                     "            color: white;\n" +
                     "            border-color: #667eea;\n" +
                     "        }\n" +
+                    "        .invert-controls {\n" +
+                    "            margin-top: 20px;\n" +
+                    "            padding: 15px;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 6px;\n" +
+                    "        }\n" +
+                    "        .invert-controls label {\n" +
+                    "            display: block;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .toggle-buttons {\n" +
+                    "            display: flex;\n" +
+                    "            gap: 10px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "        }\n" +
+                    "        .toggle-btn {\n" +
+                    "            flex: 1;\n" +
+                    "            min-width: 120px;\n" +
+                    "            padding: 10px 15px;\n" +
+                    "            border: 2px solid #ddd;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            background: white;\n" +
+                    "            color: #333;\n" +
+                    "            font-weight: 600;\n" +
+                    "            cursor: pointer;\n" +
+                    "            transition: all 0.2s;\n" +
+                    "        }\n" +
+                    "        .toggle-btn:hover {\n" +
+                    "            border-color: #667eea;\n" +
+                    "            background: #f0f0ff;\n" +
+                    "        }\n" +
+                    "        .toggle-btn.active {\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            border-color: #667eea;\n" +
+                    "        }\n" +
                     "        .fixture-selector {\n" +
                     "            margin-top: 20px;\n" +
                     "            padding: 15px;\n" +
@@ -3805,6 +3843,13 @@ public class WebServer {
                     "                        <div></div>\n" +
                     "                    </div>\n" +
                     "                </div>\n" +
+                    "                <div class=\"invert-controls\">\n" +
+                    "                    <label>Invertir Controles:</label>\n" +
+                    "                    <div class=\"toggle-buttons\">\n" +
+                    "                        <button class=\"toggle-btn\" id=\"toggleInvertPan\" onclick=\"toggleInvert('pan')\">🔄 Invertir Pan</button>\n" +
+                    "                        <button class=\"toggle-btn\" id=\"toggleInvertTilt\" onclick=\"toggleInvert('tilt')\">🔄 Invertir Tilt</button>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
                     "                <div class=\"increment-selector\">\n" +
                     "                    <label>Incremento (coordenadas):</label>\n" +
                     "                    <div class=\"increment-buttons\">\n" +
@@ -3827,8 +3872,7 @@ public class WebServer {
                     "            <table id=\"positionsTable\">\n" +
                     "                <thead>\n" +
                     "                    <tr>\n" +
-                    "                        <th>ID Fixture</th>\n" +
-                    "                        <th>Nombre Fixture</th>\n" +
+                    "                        <th>Fixture (ID + Nombre)</th>\n" +
                     "                        <th>Pan</th>\n" +
                     "                        <th>Pan Fine</th>\n" +
                     "                        <th>Tilt</th>\n" +
@@ -3839,7 +3883,7 @@ public class WebServer {
                     "                </thead>\n" +
                     "                <tbody id=\"tableBody\">\n" +
                     "                    <tr>\n" +
-                    "                        <td colspan=\"8\" class=\"loading\">Cargando posiciones...</td>\n" +
+                    "                        <td colspan=\"7\" class=\"loading\">Cargando posiciones...</td>\n" +
                     "                    </tr>\n" +
                     "                </tbody>\n" +
                     "            </table>\n" +
@@ -3858,6 +3902,8 @@ public class WebServer {
                     "        const canvas = document.getElementById('positionCanvas');\n" +
                     "        const ctx = canvas.getContext('2d');\n" +
                     "        let currentIncrement = 1; // Incremento en coordenadas DMX (0-65535)\n" +
+                    "        let invertPan = false; // Estado de inversión de Pan\n" +
+                    "        let invertTilt = false; // Estado de inversión de Tilt\n" +
                     "        \n" +
                     "        // Ajustar tamaño del canvas\n" +
                     "        function resizeCanvas() {\n" +
@@ -3878,6 +3924,26 @@ public class WebServer {
                     "                    btn.classList.remove('active');\n" +
                     "                }\n" +
                     "            });\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function toggleInvert(type) {\n" +
+                    "            if (type === 'pan') {\n" +
+                    "                invertPan = !invertPan;\n" +
+                    "                const btn = document.getElementById('toggleInvertPan');\n" +
+                    "                if (invertPan) {\n" +
+                    "                    btn.classList.add('active');\n" +
+                    "                } else {\n" +
+                    "                    btn.classList.remove('active');\n" +
+                    "                }\n" +
+                    "            } else if (type === 'tilt') {\n" +
+                    "                invertTilt = !invertTilt;\n" +
+                    "                const btn = document.getElementById('toggleInvertTilt');\n" +
+                    "                if (invertTilt) {\n" +
+                    "                    btn.classList.add('active');\n" +
+                    "                } else {\n" +
+                    "                    btn.classList.remove('active');\n" +
+                    "                }\n" +
+                    "            }\n" +
                     "        }\n" +
                     "        \n" +
                     "        let sendToArtNetTimeout = null;\n" +
@@ -3933,10 +3999,22 @@ public class WebServer {
                     "            let currentDmxY = selectedFixture.y;\n" +
                     "            \n" +
                     "            // Calcular nueva posición según dirección (incremento en coordenadas DMX)\n" +
+                    "            // Aplicar inversión si está activa\n" +
+                    "            let actualDirection = direction;\n" +
+                    "            if (direction === 'left' || direction === 'right') {\n" +
+                    "                if (invertPan) {\n" +
+                    "                    actualDirection = direction === 'left' ? 'right' : 'left';\n" +
+                    "                }\n" +
+                    "            } else if (direction === 'up' || direction === 'down') {\n" +
+                    "                if (invertTilt) {\n" +
+                    "                    actualDirection = direction === 'up' ? 'down' : 'up';\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "            \n" +
                     "            let newDmxX = currentDmxX;\n" +
                     "            let newDmxY = currentDmxY;\n" +
                     "            \n" +
-                    "            switch(direction) {\n" +
+                    "            switch(actualDirection) {\n" +
                     "                case 'up':\n" +
                     "                    newDmxY = Math.max(0, currentDmxY - currentIncrement);\n" +
                     "                    break;\n" +
@@ -4217,10 +4295,7 @@ public class WebServer {
                     "            \n" +
                     "            document.getElementById('selectedFixtureInfo').innerHTML = `\n" +
                     "                <div class=\"info-item\">\n" +
-                    "                    <strong>ID:</strong> ${fixture.fixtureId}\n" +
-                    "                </div>\n" +
-                    "                <div class=\"info-item\">\n" +
-                    "                    <strong>Nombre:</strong> ${fixture.fixtureName || '-'}\n" +
+                    "                    <strong>Fixture:</strong> ${fixture.fixtureId}${fixture.fixtureName ? ' - ' + fixture.fixtureName : ''}\n" +
                     "                </div>\n" +
                     "                <div class=\"info-item\">\n" +
                     "                    <strong>Pan:</strong> ${pan} | <strong>Pan Fine:</strong> ${panFine}\n" +
@@ -4284,14 +4359,14 @@ public class WebServer {
                     "        \n" +
                     "        if (!sceneId) {\n" +
                     "            document.getElementById('tableBody').innerHTML = \n" +
-                    "                '<tr><td colspan=\"8\" class=\"empty\">ID de escena no proporcionado</td></tr>';\n" +
+                    "                '<tr><td colspan=\"7\" class=\"empty\">ID de escena no proporcionado</td></tr>';\n" +
                     "        } else {\n" +
                     "            loadSceneData();\n" +
                     "        }\n" +
                     "        \n" +
                     "        async function loadSceneData() {\n" +
                     "            try {\n" +
-                    "                document.getElementById('tableBody').innerHTML = '<tr><td colspan=\"8\" class=\"loading\">Cargando posiciones...</td></tr>';\n" +
+                    "                document.getElementById('tableBody').innerHTML = '<tr><td colspan=\"7\" class=\"loading\">Cargando posiciones...</td></tr>';\n" +
                     "                \n" +
                     "                const response = await fetch(`/api/scenes/${sceneId}`);\n" +
                     "                sceneData = await response.json();\n" +
@@ -4312,12 +4387,12 @@ public class WebServer {
                     "                    drawCanvas();\n" +
                     "                } else {\n" +
                     "                    document.getElementById('tableBody').innerHTML = \n" +
-                    "                        '<tr><td colspan=\"8\" class=\"empty\">No se encontraron fixtures con posiciones</td></tr>';\n" +
+                    "                        '<tr><td colspan=\"7\" class=\"empty\">No se encontraron fixtures con posiciones</td></tr>';\n" +
                     "                }\n" +
                     "            } catch (error) {\n" +
                     "                console.error('Error cargando datos de escena:', error);\n" +
                     "                document.getElementById('tableBody').innerHTML = \n" +
-                    "                    '<tr><td colspan=\"8\" class=\"empty\">Error al cargar los datos de la escena</td></tr>';\n" +
+                    "                    '<tr><td colspan=\"7\" class=\"empty\">Error al cargar los datos de la escena</td></tr>';\n" +
                     "            }\n" +
                     "        }\n" +
                     "        \n" +
@@ -4332,10 +4407,13 @@ public class WebServer {
                     "                const x = fixture.x !== null && fixture.x !== undefined ? fixture.x : '-';\n" +
                     "                const y = fixture.y !== null && fixture.y !== undefined ? fixture.y : '-';\n" +
                     "                \n" +
+                    "                const fixtureDisplay = fixture.fixtureName ? \n" +
+                    "                    `<span class=\"id-badge\">${fixture.fixtureId}</span> <strong>${fixture.fixtureName}</strong>` : \n" +
+                    "                    `<span class=\"id-badge\">${fixture.fixtureId}</span>`;\n" +
+                    "                \n" +
                     "                return `\n" +
                     "                    <tr>\n" +
-                    "                        <td><span class=\"id-badge\">${fixture.fixtureId}</span></td>\n" +
-                    "                        <td><strong>${fixture.fixtureName || '-'}</strong></td>\n" +
+                    "                        <td>${fixtureDisplay}</td>\n" +
                     "                        <td><span class=\"channel-value\">${pan}</span></td>\n" +
                     "                        <td><span class=\"channel-value\">${panFine}</span></td>\n" +
                     "                        <td><span class=\"channel-value\">${tilt}</span></td>\n" +
