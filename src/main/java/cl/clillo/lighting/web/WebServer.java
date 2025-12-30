@@ -7,6 +7,7 @@ import cl.clillo.lighting.config.DmxMapService;
 import cl.clillo.lighting.config.NetworkConfigService;
 import cl.clillo.lighting.config.ExternalConfigService;
 import cl.clillo.lighting.external.dmx.ArtNet;
+import cl.clillo.lighting.external.dmx.Dmx;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.model.QLCFunction;
@@ -115,6 +116,12 @@ public class WebServer {
             } else if (path != null && path.equals("/external-config")) {
                 // GET /api/external-config - Obtener configuración externa
                 handleGetExternalConfig(req, resp);
+            } else if (path != null && path.equals("/scenes")) {
+                // GET /api/scenes - Listar todas las escenas
+                handleGetScenes(req, resp);
+            } else if (path != null && path.startsWith("/scenes/")) {
+                // GET /api/scenes/{id} - Obtener una escena específica
+                handleGetScene(req, resp, path);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -156,6 +163,15 @@ public class WebServer {
             } else if (path != null && path.equals("/external-config/artnet-ip")) {
                 // PUT /api/external-config/artnet-ip - Actualizar IP de ArtNet
                 handleUpdateArtNetIp(req, resp);
+            } else if (path != null && path.startsWith("/scenes/") && path.endsWith("/update")) {
+                // PUT /api/scenes/{id}/update - Actualizar una escena
+                handleUpdateScene(req, resp, path);
+            } else if (path != null && path.startsWith("/scenes/") && path.endsWith("/update-positions")) {
+                // PUT /api/scenes/{id}/update-positions - Actualizar posiciones de fixtures
+                handleUpdateScenePositions(req, resp, path);
+            } else if (path != null && path.startsWith("/scenes/") && path.endsWith("/send-point")) {
+                // PUT /api/scenes/{id}/send-point - Enviar un punto a ArtNet en tiempo real
+                handleSendPointToArtNet(req, resp, path);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -724,6 +740,441 @@ public class WebServer {
             }
         }
 
+        private void handleGetScenes(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+            ShowCollection collection = ShowCollection.getInstance();
+            List<Map<String, Object>> scenes = new ArrayList<>();
+            
+            for (Show show : collection.getShowList()) {
+                if (show.getFunction() instanceof QLCScene) {
+                    QLCScene scene = show.getFunction();
+                    Map<String, Object> sceneData = new HashMap<>();
+                    sceneData.put("id", scene.getId());
+                    sceneData.put("name", scene.getName());
+                    sceneData.put("path", scene.getPath());
+                    sceneData.put("type", scene.getType());
+                    sceneData.put("subType", scene.getSubType());
+                    sceneData.put("blackout", scene.isBlackout());
+                    sceneData.put("totalBlackout", scene.isTotalBlackout());
+                    sceneData.put("initEventTrigger", scene.isInitEventTrigger());
+                    sceneData.put("pointCount", scene.getQlcPointList() != null ? scene.getQlcPointList().size() : 0);
+                    scenes.add(sceneData);
+                }
+            }
+            
+            sendJsonResponse(resp, Map.of("scenes", scenes));
+        }
+
+        private void handleGetScene(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String[] parts = path.split("/");
+                if (parts.length < 3) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Invalid scene ID"));
+                    return;
+                }
+                
+                int sceneId = Integer.parseInt(parts[2]);
+                ShowCollection collection = ShowCollection.getInstance();
+                
+                QLCScene foundScene = null;
+                for (Show show : collection.getShowList()) {
+                    if (show.getFunction() instanceof QLCScene && show.getFunction().getId() == sceneId) {
+                        foundScene = show.getFunction();
+                        break;
+                    }
+                }
+                
+                if (foundScene == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Scene not found"));
+                    return;
+                }
+                
+                // Si es una escena robotic.position.static, devolver datos especiales
+                if ("robotic.position.static".equals(foundScene.getSubType())) {
+                    Map<String, Object> sceneData = buildRoboticPositionSceneData(foundScene);
+                    sendJsonResponse(resp, sceneData);
+                    return;
+                }
+                
+                Map<String, Object> sceneData = new HashMap<>();
+                sceneData.put("id", foundScene.getId());
+                sceneData.put("name", foundScene.getName());
+                sceneData.put("path", foundScene.getPath());
+                sceneData.put("type", foundScene.getType());
+                sceneData.put("subType", foundScene.getSubType());
+                sceneData.put("blackout", foundScene.isBlackout());
+                sceneData.put("totalBlackout", foundScene.isTotalBlackout());
+                sceneData.put("initEventTrigger", foundScene.isInitEventTrigger());
+                
+                // Agregar puntos
+                List<Map<String, Object>> points = new ArrayList<>();
+                if (foundScene.getQlcPointList() != null) {
+                    for (QLCPoint point : foundScene.getQlcPointList()) {
+                        Map<String, Object> pointData = new HashMap<>();
+                        pointData.put("fixtureId", point.getFixture().getId());
+                        pointData.put("fixtureName", point.getFixture().getName());
+                        pointData.put("channel", point.getChannel());
+                        pointData.put("data", point.getData());
+                        pointData.put("dmxChannel", point.getDmxChannel());
+                        points.add(pointData);
+                    }
+                }
+                sceneData.put("points", points);
+                
+                sendJsonResponse(resp, sceneData);
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid scene ID format"));
+            } catch (Exception e) {
+                log.error("Error al obtener escena", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al obtener la escena: " + e.getMessage()));
+            }
+        }
+
+        private Map<String, Object> buildRoboticPositionSceneData(QLCScene scene) {
+            Map<String, Object> sceneData = new HashMap<>();
+            sceneData.put("id", scene.getId());
+            sceneData.put("name", scene.getName());
+            sceneData.put("path", scene.getPath());
+            sceneData.put("type", scene.getType());
+            sceneData.put("subType", scene.getSubType());
+            
+            // Agrupar puntos por fixture y extraer valores de pan/tilt
+            Map<Integer, Map<String, Object>> fixturesMap = new HashMap<>();
+            
+            if (scene.getQlcPointList() != null) {
+                for (QLCPoint point : scene.getQlcPointList()) {
+                    if (!point.isMovement()) {
+                        continue; // Solo procesar puntos de movimiento
+                    }
+                    
+                    int fixtureId = point.getFixture().getId();
+                    fixturesMap.putIfAbsent(fixtureId, new HashMap<>());
+                    Map<String, Object> fixtureData = fixturesMap.get(fixtureId);
+                    
+                    // Inicializar datos del fixture si es la primera vez
+                    if (!fixtureData.containsKey("fixtureId")) {
+                        fixtureData.put("fixtureId", fixtureId);
+                        fixtureData.put("fixtureName", point.getFixture().getName());
+                        fixtureData.put("pan", null);
+                        fixtureData.put("panFine", null);
+                        fixtureData.put("tilt", null);
+                        fixtureData.put("tiltFine", null);
+                    }
+                    
+                    // Asignar valores según el tipo de canal
+                    QLCFixture.ChannelType channelType = point.getChannelType();
+                    if (channelType == QLCFixture.ChannelType.PAN) {
+                        fixtureData.put("pan", point.getData());
+                    } else if (channelType == QLCFixture.ChannelType.PAN_FINE) {
+                        fixtureData.put("panFine", point.getData());
+                    } else if (channelType == QLCFixture.ChannelType.TILT) {
+                        fixtureData.put("tilt", point.getData());
+                    } else if (channelType == QLCFixture.ChannelType.TILT_FINE) {
+                        fixtureData.put("tiltFine", point.getData());
+                    }
+                }
+            }
+            
+            // Convertir a lista y calcular coordenadas x, y
+            List<Map<String, Object>> fixtures = new ArrayList<>();
+            for (Map<String, Object> fixtureData : fixturesMap.values()) {
+                Integer pan = (Integer) fixtureData.get("pan");
+                Integer panFine = (Integer) fixtureData.get("panFine");
+                Integer tilt = (Integer) fixtureData.get("tilt");
+                Integer tiltFine = (Integer) fixtureData.get("tiltFine");
+                
+                // Calcular coordenadas
+                int x = -1;
+                int y = -1;
+                if (pan != null && panFine != null) {
+                    x = pan * 256 + panFine;
+                }
+                if (tilt != null && tiltFine != null) {
+                    y = tilt * 256 + tiltFine;
+                }
+                
+                fixtureData.put("x", x >= 0 ? x : null);
+                fixtureData.put("y", y >= 0 ? y : null);
+                
+                fixtures.add(fixtureData);
+            }
+            
+            // Ordenar por fixtureId
+            fixtures.sort((a, b) -> Integer.compare((Integer)a.get("fixtureId"), (Integer)b.get("fixtureId")));
+            
+            sceneData.put("fixtures", fixtures);
+            return sceneData;
+        }
+
+        private void handleUpdateScene(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String[] parts = path.split("/");
+                if (parts.length < 3) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Invalid scene ID"));
+                    return;
+                }
+                
+                int sceneId = Integer.parseInt(parts[2]);
+                
+                Map<String, Object> requestData = objectMapper.readValue(req.getReader(), 
+                        objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                
+                ShowCollection collection = ShowCollection.getInstance();
+                
+                QLCScene foundScene = null;
+                Show foundShow = null;
+                for (Show show : collection.getShowList()) {
+                    if (show.getFunction() instanceof QLCScene && show.getFunction().getId() == sceneId) {
+                        foundScene = show.getFunction();
+                        foundShow = show;
+                        break;
+                    }
+                }
+                
+                if (foundScene == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Scene not found"));
+                    return;
+                }
+                
+                // Actualizar campos básicos (nota: algunos campos son final, así que solo actualizamos los modificables)
+                String name = (String) requestData.get("name");
+                String subType = (String) requestData.get("subType");
+                
+                if (name != null && !name.trim().isEmpty()) {
+                    foundShow.setName(name);
+                    // Nota: El nombre en QLCScene es final, así que no podemos cambiarlo directamente
+                    // Esto requeriría recrear la escena, lo cual es más complejo
+                }
+                
+                // TODO: Implementar guardado en archivo XML
+                // Por ahora solo confirmamos que se recibió la actualización
+                log.info("Actualización de escena {} recibida: name={}, subType={}", sceneId, name, subType);
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "message", "Escena actualizada (guardado en archivo pendiente)", "sceneId", sceneId));
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid scene ID format"));
+            } catch (Exception e) {
+                log.error("Error al actualizar escena", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al actualizar la escena: " + e.getMessage()));
+            }
+        }
+
+        private void handleUpdateScenePositions(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String[] parts = path.split("/");
+                if (parts.length < 3) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Invalid scene ID"));
+                    return;
+                }
+                
+                int sceneId = Integer.parseInt(parts[2]);
+                
+                Map<String, Object> requestData = objectMapper.readValue(req.getReader(), 
+                        objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                
+                @SuppressWarnings("unchecked")
+                List<Map<String, Object>> fixturesData = (List<Map<String, Object>>) requestData.get("fixtures");
+                
+                if (fixturesData == null) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Fixtures data is required"));
+                    return;
+                }
+                
+                ShowCollection collection = ShowCollection.getInstance();
+                
+                QLCScene foundScene = null;
+                for (Show show : collection.getShowList()) {
+                    if (show.getFunction() instanceof QLCScene && show.getFunction().getId() == sceneId) {
+                        foundScene = show.getFunction();
+                        break;
+                    }
+                }
+                
+                if (foundScene == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Scene not found"));
+                    return;
+                }
+                
+                if (!"robotic.position.static".equals(foundScene.getSubType())) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Scene is not of type robotic.position.static"));
+                    return;
+                }
+                
+                // Actualizar los puntos de la escena y enviar a ArtNet
+                Dmx dmx = Dmx.getInstance();
+                int updatedCount = 0;
+                int sentCount = 0;
+                
+                for (Map<String, Object> fixtureData : fixturesData) {
+                    Integer fixtureId = (Integer) fixtureData.get("fixtureId");
+                    Integer pan = (Integer) fixtureData.get("pan");
+                    Integer panFine = (Integer) fixtureData.get("panFine");
+                    Integer tilt = (Integer) fixtureData.get("tilt");
+                    Integer tiltFine = (Integer) fixtureData.get("tiltFine");
+                    
+                    if (fixtureId == null) continue;
+                    
+                    // Buscar y actualizar los puntos de este fixture
+                    for (QLCPoint point : foundScene.getQlcPointList()) {
+                        if (point.getFixture().getId() != fixtureId) continue;
+                        if (!point.isMovement()) continue;
+                        
+                        QLCFixture.ChannelType channelType = point.getChannelType();
+                        boolean updated = false;
+                        
+                        if (channelType == QLCFixture.ChannelType.PAN && pan != null) {
+                            point.setData(pan);
+                            updated = true;
+                            updatedCount++;
+                        } else if (channelType == QLCFixture.ChannelType.PAN_FINE && panFine != null) {
+                            point.setData(panFine);
+                            updated = true;
+                            updatedCount++;
+                        } else if (channelType == QLCFixture.ChannelType.TILT && tilt != null) {
+                            point.setData(tilt);
+                            updated = true;
+                            updatedCount++;
+                        } else if (channelType == QLCFixture.ChannelType.TILT_FINE && tiltFine != null) {
+                            point.setData(tiltFine);
+                            updated = true;
+                            updatedCount++;
+                        }
+                        
+                        // Enviar a ArtNet si se actualizó (equivalente a ejecutar la escena)
+                        if (updated) {
+                            dmx.send(point);
+                            sentCount++;
+                        }
+                    }
+                }
+                
+                log.info("Escena {}: {} puntos actualizados, {} valores enviados a ArtNet", sceneId, updatedCount, sentCount);
+                
+                // Guardar el archivo XML
+                try {
+                    String dir = ShowCollection.getInstance().getDirectory(foundScene);
+                    foundScene.writeToConfigFile(dir);
+                    log.info("Escena {} guardada en: {}", sceneId, dir);
+                } catch (Exception e) {
+                    log.error("Error al guardar el archivo XML de la escena {}", sceneId, e);
+                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    sendJsonResponse(resp, Map.of("error", "Error al guardar el archivo: " + e.getMessage()));
+                    return;
+                }
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "message", "Posiciones actualizadas, enviadas a ArtNet y guardadas correctamente", "sceneId", sceneId, "fixturesUpdated", fixturesData.size(), "pointsUpdated", updatedCount, "valuesSentToArtNet", sentCount));
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid scene ID format"));
+            } catch (Exception e) {
+                log.error("Error al actualizar posiciones de escena", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al actualizar las posiciones: " + e.getMessage()));
+            }
+        }
+
+        private void handleSendPointToArtNet(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
+            try {
+                String[] parts = path.split("/");
+                if (parts.length < 3) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Invalid scene ID"));
+                    return;
+                }
+                
+                int sceneId = Integer.parseInt(parts[2]);
+                
+                Map<String, Object> requestData = objectMapper.readValue(req.getReader(), 
+                        objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
+                
+                Integer fixtureId = (Integer) requestData.get("fixtureId");
+                Integer pan = (Integer) requestData.get("pan");
+                Integer panFine = (Integer) requestData.get("panFine");
+                Integer tilt = (Integer) requestData.get("tilt");
+                Integer tiltFine = (Integer) requestData.get("tiltFine");
+                
+                if (fixtureId == null) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Fixture ID is required"));
+                    return;
+                }
+                
+                ShowCollection collection = ShowCollection.getInstance();
+                
+                QLCScene foundScene = null;
+                for (Show show : collection.getShowList()) {
+                    if (show.getFunction() instanceof QLCScene && show.getFunction().getId() == sceneId) {
+                        foundScene = show.getFunction();
+                        break;
+                    }
+                }
+                
+                if (foundScene == null) {
+                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                    sendJsonResponse(resp, Map.of("error", "Scene not found"));
+                    return;
+                }
+                
+                if (!"robotic.position.static".equals(foundScene.getSubType())) {
+                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    sendJsonResponse(resp, Map.of("error", "Scene is not of type robotic.position.static"));
+                    return;
+                }
+                
+                // Buscar y actualizar los puntos del fixture, luego enviar a ArtNet
+                Dmx dmx = Dmx.getInstance();
+                int sentCount = 0;
+                
+                for (QLCPoint point : foundScene.getQlcPointList()) {
+                    if (point.getFixture().getId() != fixtureId) continue;
+                    if (!point.isMovement()) continue;
+                    
+                    QLCFixture.ChannelType channelType = point.getChannelType();
+                    boolean shouldSend = false;
+                    
+                    if (channelType == QLCFixture.ChannelType.PAN && pan != null) {
+                        point.setData(pan);
+                        shouldSend = true;
+                    } else if (channelType == QLCFixture.ChannelType.PAN_FINE && panFine != null) {
+                        point.setData(panFine);
+                        shouldSend = true;
+                    } else if (channelType == QLCFixture.ChannelType.TILT && tilt != null) {
+                        point.setData(tilt);
+                        shouldSend = true;
+                    } else if (channelType == QLCFixture.ChannelType.TILT_FINE && tiltFine != null) {
+                        point.setData(tiltFine);
+                        shouldSend = true;
+                    }
+                    
+                    // Enviar a ArtNet en tiempo real
+                    if (shouldSend) {
+                        dmx.send(point);
+                        sentCount++;
+                    }
+                }
+                
+                sendJsonResponse(resp, Map.of("status", "ok", "message", "Valores enviados a ArtNet", "fixtureId", fixtureId, "valuesSent", sentCount));
+            } catch (NumberFormatException e) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                sendJsonResponse(resp, Map.of("error", "Invalid scene ID format"));
+            } catch (Exception e) {
+                log.error("Error al enviar punto a ArtNet", e);
+                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                sendJsonResponse(resp, Map.of("error", "Error al enviar a ArtNet: " + e.getMessage()));
+            }
+        }
+
         private void sendJsonResponse(HttpServletResponse resp, Object data) throws IOException {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
@@ -764,6 +1215,21 @@ public class WebServer {
                 resp.setCharacterEncoding("UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.write(getNetworkConfigHtml());
+                out.flush();
+            } else if (path != null && path.equals("/scenes-config.html")) {
+                // Servir la página de configuración de escenas
+                resp.setContentType("text/html");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter out = resp.getWriter();
+                out.write(getScenesConfigHtml());
+                out.flush();
+            } else if (path != null && path.startsWith("/scene-position-edit.html")) {
+                // Servir la página de edición especial de posiciones robóticas
+                resp.setContentType("text/html");
+                resp.setCharacterEncoding("UTF-8");
+                PrintWriter out = resp.getWriter();
+                String sceneId = req.getParameter("id");
+                out.write(getScenePositionEditHtml(sceneId));
                 out.flush();
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
@@ -1131,6 +1597,7 @@ public class WebServer {
                     "            <button class=\"group-btn\" onclick=\"openFixtureConfig()\">Configuración de Fixtures</button>\n" +
                     "            <a href=\"/dmx-map.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🗺️ Mapa DMX</a>\n" +
                     "            <a href=\"/network-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">⚙️ Configuración de Red</a>\n" +
+                    "            <a href=\"/scenes-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🎭 Configuración de Escenas</a>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
@@ -2462,6 +2929,1426 @@ public class WebServer {
                     "        \n" +
                     "        // Cargar configuración e interfaces al iniciar\n" +
                     "        loadCurrentConfig().then(() => loadInterfaces());\n" +
+                    "    </script>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+        private String getScenesConfigHtml() {
+            return "<!DOCTYPE html>\n" +
+                    "<html lang=\"es\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Configuración de Escenas</title>\n" +
+                    "    <style>\n" +
+                    "        * {\n" +
+                    "            margin: 0;\n" +
+                    "            padding: 0;\n" +
+                    "            box-sizing: border-box;\n" +
+                    "        }\n" +
+                    "        body {\n" +
+                    "            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            min-height: 100vh;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .container {\n" +
+                    "            max-width: 1400px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            box-shadow: 0 10px 40px rgba(0,0,0,0.2);\n" +
+                    "            padding: 30px;\n" +
+                    "        }\n" +
+                    "        h1 {\n" +
+                    "            color: #333;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-size: 2em;\n" +
+                    "        }\n" +
+                    "        .subtitle {\n" +
+                    "            color: #666;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "            font-size: 1.1em;\n" +
+                    "        }\n" +
+                    "        .back-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            text-decoration: none;\n" +
+                    "            display: inline-block;\n" +
+                    "        }\n" +
+                    "        .back-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
+                    "        .controls {\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            display: flex;\n" +
+                    "            gap: 15px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "            align-items: center;\n" +
+                    "            justify-content: space-between;\n" +
+                    "        }\n" +
+                    "        .refresh-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .refresh-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "        }\n" +
+                    "        .table-container {\n" +
+                    "            overflow-x: auto;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n" +
+                    "        }\n" +
+                    "        table {\n" +
+                    "            width: 100%;\n" +
+                    "            border-collapse: collapse;\n" +
+                    "            background: white;\n" +
+                    "        }\n" +
+                    "        thead {\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            color: white;\n" +
+                    "        }\n" +
+                    "        th {\n" +
+                    "            padding: 15px;\n" +
+                    "            text-align: left;\n" +
+                    "            font-weight: 600;\n" +
+                    "        }\n" +
+                    "        tbody tr {\n" +
+                    "            border-bottom: 1px solid #eee;\n" +
+                    "            transition: background-color 0.2s;\n" +
+                    "        }\n" +
+                    "        tbody tr:hover {\n" +
+                    "            background-color: #f8f9fa;\n" +
+                    "        }\n" +
+                    "        tbody tr:nth-child(even) {\n" +
+                    "            background-color: #fafafa;\n" +
+                    "        }\n" +
+                    "        td {\n" +
+                    "            padding: 12px 15px;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .id-badge {\n" +
+                    "            display: inline-block;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            padding: 4px 10px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "        }\n" +
+                    "        .subtype-badge {\n" +
+                    "            display: inline-block;\n" +
+                    "            background: #28a745;\n" +
+                    "            color: white;\n" +
+                    "            padding: 4px 10px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            font-size: 0.85em;\n" +
+                    "        }\n" +
+                    "        .edit-btn {\n" +
+                    "            padding: 6px 12px;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 4px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .edit-btn:hover {\n" +
+                    "            background: #5568d3;\n" +
+                    "        }\n" +
+                    "        .modal {\n" +
+                    "            display: none;\n" +
+                    "            position: fixed;\n" +
+                    "            z-index: 1000;\n" +
+                    "            left: 0;\n" +
+                    "            top: 0;\n" +
+                    "            width: 100%;\n" +
+                    "            height: 100%;\n" +
+                    "            background-color: rgba(0,0,0,0.5);\n" +
+                    "        }\n" +
+                    "        .modal-content {\n" +
+                    "            background-color: white;\n" +
+                    "            margin: 5% auto;\n" +
+                    "            padding: 30px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            width: 90%;\n" +
+                    "            max-width: 600px;\n" +
+                    "            max-height: 80vh;\n" +
+                    "            overflow-y: auto;\n" +
+                    "        }\n" +
+                    "        .modal-header {\n" +
+                    "            display: flex;\n" +
+                    "            justify-content: space-between;\n" +
+                    "            align-items: center;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "        }\n" +
+                    "        .close {\n" +
+                    "            color: #aaa;\n" +
+                    "            font-size: 28px;\n" +
+                    "            font-weight: bold;\n" +
+                    "            cursor: pointer;\n" +
+                    "        }\n" +
+                    "        .close:hover {\n" +
+                    "            color: #000;\n" +
+                    "        }\n" +
+                    "        .form-group {\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "        }\n" +
+                    "        label {\n" +
+                    "            display: block;\n" +
+                    "            margin-bottom: 5px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        input, select, textarea {\n" +
+                    "            width: 100%;\n" +
+                    "            padding: 10px;\n" +
+                    "            border: 2px solid #ddd;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            font-size: 14px;\n" +
+                    "        }\n" +
+                    "        input:focus, select:focus, textarea:focus {\n" +
+                    "            outline: none;\n" +
+                    "            border-color: #667eea;\n" +
+                    "        }\n" +
+                    "        .save-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #28a745;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-right: 10px;\n" +
+                    "        }\n" +
+                    "        .save-btn:hover {\n" +
+                    "            background: #218838;\n" +
+                    "        }\n" +
+                    "        .cancel-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "        }\n" +
+                    "        .cancel-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "        }\n" +
+                    "        .loading {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .empty {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #999;\n" +
+                    "        }\n" +
+                    "        .message {\n" +
+                    "            padding: 10px;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            display: none;\n" +
+                    "        }\n" +
+                    "        .message.success {\n" +
+                    "            background: #d4edda;\n" +
+                    "            color: #155724;\n" +
+                    "            border: 1px solid #c3e6cb;\n" +
+                    "        }\n" +
+                    "        .message.error {\n" +
+                    "            background: #f8d7da;\n" +
+                    "            color: #721c24;\n" +
+                    "            border: 1px solid #f5c6cb;\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <a href=\"/\" class=\"back-btn\">← Volver</a>\n" +
+                    "        <h1>🎭 Configuración de Escenas</h1>\n" +
+                    "        <p class=\"subtitle\">Gestionar y editar escenas del sistema</p>\n" +
+                    "        \n" +
+                    "        <div id=\"message\" class=\"message\"></div>\n" +
+                    "        \n" +
+                    "        <div class=\"controls\">\n" +
+                    "            <div class=\"filter-group\" style=\"display: flex; gap: 10px; align-items: center;\">\n" +
+                    "                <label for=\"subTypeFilter\" style=\"font-weight: 600; color: #555;\">Filtrar por SubType:</label>\n" +
+                    "                <select id=\"subTypeFilter\" style=\"padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px;\">\n" +
+                    "                    <option value=\"\">Todos</option>\n" +
+                    "                    <option value=\"robotic.position.static\">robotic.position.static</option>\n" +
+                    "                </select>\n" +
+                    "            </div>\n" +
+                    "            <button class=\"refresh-btn\" onclick=\"loadScenes()\">🔄 Actualizar</button>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div class=\"table-container\">\n" +
+                    "            <table id=\"scenesTable\">\n" +
+                    "                <thead>\n" +
+                    "                    <tr>\n" +
+                    "                        <th>ID</th>\n" +
+                    "                        <th>Nombre</th>\n" +
+                    "                        <th>Path</th>\n" +
+                    "                        <th>SubType</th>\n" +
+                    "                        <th>Puntos</th>\n" +
+                    "                        <th>Acciones</th>\n" +
+                    "                    </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody id=\"tableBody\">\n" +
+                    "                    <tr>\n" +
+                    "                        <td colspan=\"6\" class=\"loading\">Cargando escenas...</td>\n" +
+                    "                    </tr>\n" +
+                    "                </tbody>\n" +
+                    "            </table>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <!-- Modal para editar escena -->\n" +
+                    "    <div id=\"editModal\" class=\"modal\">\n" +
+                    "        <div class=\"modal-content\">\n" +
+                    "            <div class=\"modal-header\">\n" +
+                    "                <h2>Editar Escena</h2>\n" +
+                    "                <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n" +
+                    "            </div>\n" +
+                    "            <form id=\"editForm\">\n" +
+                    "                <div class=\"form-group\">\n" +
+                    "                    <label>ID:</label>\n" +
+                    "                    <input type=\"text\" id=\"editId\" readonly style=\"background: #f5f5f5;\">\n" +
+                    "                </div>\n" +
+                    "                <div class=\"form-group\">\n" +
+                    "                    <label>Nombre:</label>\n" +
+                    "                    <input type=\"text\" id=\"editName\" required>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"form-group\">\n" +
+                    "                    <label>Path:</label>\n" +
+                    "                    <input type=\"text\" id=\"editPath\" readonly style=\"background: #f5f5f5;\">\n" +
+                    "                </div>\n" +
+                    "                <div class=\"form-group\">\n" +
+                    "                    <label>SubType:</label>\n" +
+                    "                    <input type=\"text\" id=\"editSubType\" placeholder=\"Ej: robotic.position.static\">\n" +
+                    "                </div>\n" +
+                    "                <div style=\"text-align: right; margin-top: 20px;\">\n" +
+                    "                    <button type=\"button\" class=\"cancel-btn\" onclick=\"closeModal()\">Cancelar</button>\n" +
+                    "                    <button type=\"submit\" class=\"save-btn\">Guardar</button>\n" +
+                    "                </div>\n" +
+                    "            </form>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <script>\n" +
+                    "        let scenes = [];\n" +
+                    "        let currentEditingScene = null;\n" +
+                    "        \n" +
+                    "        async function loadScenes() {\n" +
+                    "            try {\n" +
+                    "                document.getElementById('tableBody').innerHTML = '<tr><td colspan=\"6\" class=\"loading\">Cargando escenas...</td></tr>';\n" +
+                    "                \n" +
+                    "                const response = await fetch('/api/scenes');\n" +
+                    "                const data = await response.json();\n" +
+                    "                scenes = data.scenes || [];\n" +
+                    "                \n" +
+                    "                renderTable();\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando escenas:', error);\n" +
+                    "                document.getElementById('tableBody').innerHTML = \n" +
+                    "                    '<tr><td colspan=\"6\" class=\"empty\">Error al cargar las escenas</td></tr>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderTable() {\n" +
+                    "            const tbody = document.getElementById('tableBody');\n" +
+                    "            const subTypeFilter = document.getElementById('subTypeFilter').value;\n" +
+                    "            \n" +
+                    "            // Filtrar escenas por subType\n" +
+                    "            let filteredScenes = scenes;\n" +
+                    "            if (subTypeFilter) {\n" +
+                    "                filteredScenes = scenes.filter(scene => scene.subType === subTypeFilter);\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            if (filteredScenes.length === 0) {\n" +
+                    "                tbody.innerHTML = '<tr><td colspan=\"6\" class=\"empty\">No se encontraron escenas' + (subTypeFilter ? ' con subType \"' + subTypeFilter + '\"' : '') + '</td></tr>';\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            tbody.innerHTML = filteredScenes.map(scene => {\n" +
+                    "                const subTypeDisplay = scene.subType ? \n" +
+                    "                    `<span class=\"subtype-badge\">${scene.subType}</span>` : \n" +
+                    "                    '<span style=\"color: #999;\">-</span>';\n" +
+                    "                \n" +
+                    "                return `\n" +
+                    "                    <tr>\n" +
+                    "                        <td><span class=\"id-badge\">${scene.id}</span></td>\n" +
+                    "                        <td><strong>${scene.name || '-'}</strong></td>\n" +
+                    "                        <td>${scene.path || '-'}</td>\n" +
+                    "                        <td>${subTypeDisplay}</td>\n" +
+                    "                        <td>${scene.pointCount || 0}</td>\n" +
+                    "                        <td>\n" +
+                    "                            ${scene.subType === 'robotic.position.static' ? \n" +
+                    "                                `<a href=\"/scene-position-edit.html?id=${scene.id}\" class=\"edit-btn\" style=\"text-decoration: none; display: inline-block;\">✏️ Editar Posición</a>` : \n" +
+                    "                                `<button class=\"edit-btn\" onclick=\"editScene(${scene.id})\">✏️ Editar</button>`\n" +
+                    "                            }\n" +
+                    "                        </td>\n" +
+                    "                    </tr>\n" +
+                    "                `;\n" +
+                    "            }).join('');\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function editScene(sceneId) {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch(`/api/scenes/${sceneId}`);\n" +
+                    "                const scene = await response.json();\n" +
+                    "                \n" +
+                    "                currentEditingScene = scene;\n" +
+                    "                document.getElementById('editId').value = scene.id;\n" +
+                    "                document.getElementById('editName').value = scene.name || '';\n" +
+                    "                document.getElementById('editPath').value = scene.path || '';\n" +
+                    "                document.getElementById('editSubType').value = scene.subType || '';\n" +
+                    "                \n" +
+                    "                document.getElementById('editModal').style.display = 'block';\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando escena:', error);\n" +
+                    "                showMessage('Error al cargar la escena', 'error');\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function closeModal() {\n" +
+                    "            document.getElementById('editModal').style.display = 'none';\n" +
+                    "            currentEditingScene = null;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        document.getElementById('editForm').addEventListener('submit', async function(e) {\n" +
+                    "            e.preventDefault();\n" +
+                    "            \n" +
+                    "            if (!currentEditingScene) return;\n" +
+                    "            \n" +
+                    "            const sceneId = currentEditingScene.id;\n" +
+                    "            const updateData = {\n" +
+                    "                name: document.getElementById('editName').value,\n" +
+                    "                subType: document.getElementById('editSubType').value || null\n" +
+                    "            };\n" +
+                    "            \n" +
+                    "            try {\n" +
+                    "                const response = await fetch(`/api/scenes/${sceneId}/update`, {\n" +
+                    "                    method: 'PUT',\n" +
+                    "                    headers: {\n" +
+                    "                        'Content-Type': 'application/json'\n" +
+                    "                    },\n" +
+                    "                    body: JSON.stringify(updateData)\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                \n" +
+                    "                if (response.ok) {\n" +
+                    "                    showMessage('Escena actualizada correctamente', 'success');\n" +
+                    "                    closeModal();\n" +
+                    "                    loadScenes();\n" +
+                    "                } else {\n" +
+                    "                    showMessage('Error: ' + (result.error || 'Error desconocido'), 'error');\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error actualizando escena:', error);\n" +
+                    "                showMessage('Error al actualizar la escena', 'error');\n" +
+                    "            }\n" +
+                    "        });\n" +
+                    "        \n" +
+                    "        function showMessage(text, type) {\n" +
+                    "            const messageDiv = document.getElementById('message');\n" +
+                    "            messageDiv.textContent = text;\n" +
+                    "            messageDiv.className = 'message ' + type;\n" +
+                    "            messageDiv.style.display = 'block';\n" +
+                    "            setTimeout(() => {\n" +
+                    "                messageDiv.style.display = 'none';\n" +
+                    "            }, 3000);\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Cerrar modal al hacer clic fuera\n" +
+                    "        window.onclick = function(event) {\n" +
+                    "            const modal = document.getElementById('editModal');\n" +
+                    "            if (event.target == modal) {\n" +
+                    "                closeModal();\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Event listener para el filtro\n" +
+                    "        document.getElementById('subTypeFilter').addEventListener('change', renderTable);\n" +
+                    "        \n" +
+                    "        // Cargar escenas al iniciar\n" +
+                    "        loadScenes();\n" +
+                    "    </script>\n" +
+                    "</body>\n" +
+                    "</html>";
+        }
+
+        private String getScenePositionEditHtml(String sceneIdParam) {
+            return "<!DOCTYPE html>\n" +
+                    "<html lang=\"es\">\n" +
+                    "<head>\n" +
+                    "    <meta charset=\"UTF-8\">\n" +
+                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
+                    "    <title>Editar Posiciones Robóticas</title>\n" +
+                    "    <style>\n" +
+                    "        * {\n" +
+                    "            margin: 0;\n" +
+                    "            padding: 0;\n" +
+                    "            box-sizing: border-box;\n" +
+                    "        }\n" +
+                    "        body {\n" +
+                    "            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            min-height: 100vh;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .container {\n" +
+                    "            max-width: 1400px;\n" +
+                    "            margin: 0 auto;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            box-shadow: 0 10px 40px rgba(0,0,0,0.2);\n" +
+                    "            padding: 30px;\n" +
+                    "        }\n" +
+                    "        h1 {\n" +
+                    "            color: #333;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-size: 2em;\n" +
+                    "        }\n" +
+                    "        .subtitle {\n" +
+                    "            color: #666;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "            font-size: 1.1em;\n" +
+                    "        }\n" +
+                    "        .back-btn {\n" +
+                    "            padding: 10px 20px;\n" +
+                    "            background: #6c757d;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "            text-decoration: none;\n" +
+                    "            display: inline-block;\n" +
+                    "        }\n" +
+                    "        .back-btn:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "            transform: translateY(-2px);\n" +
+                    "        }\n" +
+                    "        .scene-info {\n" +
+                    "            background: #e7f3ff;\n" +
+                    "            border-left: 4px solid #2196F3;\n" +
+                    "            padding: 15px;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "        }\n" +
+                    "        .scene-info strong {\n" +
+                    "            color: #1976D2;\n" +
+                    "        }\n" +
+                    "        .table-container {\n" +
+                    "            overflow-x: auto;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n" +
+                    "        }\n" +
+                    "        table {\n" +
+                    "            width: 100%;\n" +
+                    "            border-collapse: collapse;\n" +
+                    "            background: white;\n" +
+                    "        }\n" +
+                    "        thead {\n" +
+                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
+                    "            color: white;\n" +
+                    "        }\n" +
+                    "        th {\n" +
+                    "            padding: 15px;\n" +
+                    "            text-align: left;\n" +
+                    "            font-weight: 600;\n" +
+                    "        }\n" +
+                    "        tbody tr {\n" +
+                    "            border-bottom: 1px solid #eee;\n" +
+                    "            transition: background-color 0.2s;\n" +
+                    "        }\n" +
+                    "        tbody tr:hover {\n" +
+                    "            background-color: #f8f9fa;\n" +
+                    "        }\n" +
+                    "        tbody tr:nth-child(even) {\n" +
+                    "            background-color: #fafafa;\n" +
+                    "        }\n" +
+                    "        td {\n" +
+                    "            padding: 12px 15px;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .id-badge {\n" +
+                    "            display: inline-block;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            padding: 4px 10px;\n" +
+                    "            border-radius: 12px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "        }\n" +
+                    "        .coord-value {\n" +
+                    "            font-family: 'Courier New', monospace;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #28a745;\n" +
+                    "        }\n" +
+                    "        .channel-value {\n" +
+                    "            font-family: 'Courier New', monospace;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .loading {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .empty {\n" +
+                    "            text-align: center;\n" +
+                    "            padding: 40px;\n" +
+                    "            color: #999;\n" +
+                    "        }\n" +
+                    "        .message {\n" +
+                    "            padding: 10px;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            display: none;\n" +
+                    "        }\n" +
+                    "        .message.success {\n" +
+                    "            background: #d4edda;\n" +
+                    "            color: #155724;\n" +
+                    "            border: 1px solid #c3e6cb;\n" +
+                    "        }\n" +
+                    "        .message.error {\n" +
+                    "            background: #f8d7da;\n" +
+                    "            color: #721c24;\n" +
+                    "            border: 1px solid #f5c6cb;\n" +
+                    "        }\n" +
+                    "        .editor-container {\n" +
+                    "            display: grid;\n" +
+                    "            grid-template-columns: 1fr 1fr 1fr;\n" +
+                    "            gap: 20px;\n" +
+                    "            margin-bottom: 30px;\n" +
+                    "        }\n" +
+                    "        @media (max-width: 1400px) {\n" +
+                    "            .editor-container {\n" +
+                    "                grid-template-columns: 1fr 1fr;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        @media (max-width: 1000px) {\n" +
+                    "            .editor-container {\n" +
+                    "                grid-template-columns: 1fr;\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        .canvas-section {\n" +
+                    "            background: #f8f9fa;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .canvas-wrapper {\n" +
+                    "            position: relative;\n" +
+                    "            border: 2px solid #ddd;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            background: white;\n" +
+                    "            overflow: hidden;\n" +
+                    "        }\n" +
+                    "        #positionCanvas {\n" +
+                    "            display: block;\n" +
+                    "            cursor: crosshair;\n" +
+                    "            width: 100%;\n" +
+                    "            height: auto;\n" +
+                    "        }\n" +
+                    "        .canvas-controls {\n" +
+                    "            margin-top: 15px;\n" +
+                    "            display: flex;\n" +
+                    "            gap: 10px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "        }\n" +
+                    "        .control-btn {\n" +
+                    "            padding: 8px 16px;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            font-weight: 600;\n" +
+                    "            transition: all 0.3s;\n" +
+                    "        }\n" +
+                    "        .control-btn:hover {\n" +
+                    "            background: #5568d3;\n" +
+                    "        }\n" +
+                    "        .control-btn.secondary {\n" +
+                    "            background: #6c757d;\n" +
+                    "        }\n" +
+                    "        .control-btn.secondary:hover {\n" +
+                    "            background: #5a6268;\n" +
+                    "        }\n" +
+                    "        .control-btn.success {\n" +
+                    "            background: #28a745;\n" +
+                    "        }\n" +
+                    "        .control-btn.success:hover {\n" +
+                    "            background: #218838;\n" +
+                    "        }\n" +
+                    "        .info-panel {\n" +
+                    "            background: #f8f9fa;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .info-panel h3 {\n" +
+                    "            margin-bottom: 15px;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .info-item {\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            padding: 10px;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            border-left: 3px solid #667eea;\n" +
+                    "        }\n" +
+                    "        .info-item strong {\n" +
+                    "            color: #667eea;\n" +
+                    "        }\n" +
+                    "        .legend {\n" +
+                    "            margin-top: 15px;\n" +
+                    "            padding: 10px;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            font-size: 0.9em;\n" +
+                    "            color: #666;\n" +
+                    "        }\n" +
+                    "        .control-panel {\n" +
+                    "            background: #f8f9fa;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            padding: 20px;\n" +
+                    "        }\n" +
+                    "        .control-panel h3 {\n" +
+                    "            margin-bottom: 15px;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .dpad-container {\n" +
+                    "            display: flex;\n" +
+                    "            flex-direction: column;\n" +
+                    "            align-items: center;\n" +
+                    "            gap: 10px;\n" +
+                    "            margin-bottom: 20px;\n" +
+                    "        }\n" +
+                    "        .dpad-row {\n" +
+                    "            display: flex;\n" +
+                    "            gap: 10px;\n" +
+                    "        }\n" +
+                    "        .dpad-btn {\n" +
+                    "            width: 60px;\n" +
+                    "            height: 60px;\n" +
+                    "            border: none;\n" +
+                    "            border-radius: 8px;\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            font-size: 24px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            transition: all 0.2s;\n" +
+                    "            display: flex;\n" +
+                    "            align-items: center;\n" +
+                    "            justify-content: center;\n" +
+                    "            box-shadow: 0 2px 4px rgba(0,0,0,0.2);\n" +
+                    "        }\n" +
+                    "        .dpad-btn:hover:not(:disabled) {\n" +
+                    "            background: #5568d3;\n" +
+                    "            transform: scale(1.05);\n" +
+                    "        }\n" +
+                    "        .dpad-btn:active:not(:disabled) {\n" +
+                    "            transform: scale(0.95);\n" +
+                    "        }\n" +
+                    "        .dpad-btn:disabled {\n" +
+                    "            background: #ccc;\n" +
+                    "            cursor: not-allowed;\n" +
+                    "            opacity: 0.5;\n" +
+                    "        }\n" +
+                    "        .increment-selector {\n" +
+                    "            margin-top: 20px;\n" +
+                    "            padding: 15px;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 6px;\n" +
+                    "        }\n" +
+                    "        .increment-selector label {\n" +
+                    "            display: block;\n" +
+                    "            margin-bottom: 10px;\n" +
+                    "            font-weight: 600;\n" +
+                    "            color: #333;\n" +
+                    "        }\n" +
+                    "        .increment-buttons {\n" +
+                    "            display: flex;\n" +
+                    "            gap: 8px;\n" +
+                    "            flex-wrap: wrap;\n" +
+                    "        }\n" +
+                    "        .increment-btn {\n" +
+                    "            flex: 1;\n" +
+                    "            min-width: 60px;\n" +
+                    "            padding: 10px;\n" +
+                    "            border: 2px solid #ddd;\n" +
+                    "            border-radius: 6px;\n" +
+                    "            background: white;\n" +
+                    "            color: #333;\n" +
+                    "            font-weight: 600;\n" +
+                    "            cursor: pointer;\n" +
+                    "            transition: all 0.2s;\n" +
+                    "        }\n" +
+                    "        .increment-btn:hover {\n" +
+                    "            border-color: #667eea;\n" +
+                    "            background: #f0f0ff;\n" +
+                    "        }\n" +
+                    "        .increment-btn.active {\n" +
+                    "            background: #667eea;\n" +
+                    "            color: white;\n" +
+                    "            border-color: #667eea;\n" +
+                    "        }\n" +
+                    "        .fixture-selector {\n" +
+                    "            margin-top: 20px;\n" +
+                    "            padding: 15px;\n" +
+                    "            background: white;\n" +
+                    "            border-radius: 6px;\n" +
+                    "        }\n" +
+                    "        .radio-item {\n" +
+                    "            display: flex;\n" +
+                    "            align-items: center;\n" +
+                    "            padding: 8px;\n" +
+                    "            margin-bottom: 5px;\n" +
+                    "            border-radius: 4px;\n" +
+                    "            cursor: pointer;\n" +
+                    "            transition: background-color 0.2s;\n" +
+                    "        }\n" +
+                    "        .radio-item:hover {\n" +
+                    "            background-color: #f0f0ff;\n" +
+                    "        }\n" +
+                    "        .radio-item input[type=\"radio\"] {\n" +
+                    "            margin-right: 10px;\n" +
+                    "            cursor: pointer;\n" +
+                    "        }\n" +
+                    "        .radio-item label {\n" +
+                    "            cursor: pointer;\n" +
+                    "            flex: 1;\n" +
+                    "            margin: 0;\n" +
+                    "            font-weight: normal;\n" +
+                    "        }\n" +
+                    "        .radio-item.selected {\n" +
+                    "            background-color: #e7f3ff;\n" +
+                    "            border-left: 3px solid #667eea;\n" +
+                    "        }\n" +
+                    "    </style>\n" +
+                    "</head>\n" +
+                    "<body>\n" +
+                    "    <div class=\"container\">\n" +
+                    "        <a href=\"/scenes-config.html\" class=\"back-btn\">← Volver a Escenas</a>\n" +
+                    "        <h1>🎯 Editar Posiciones Robóticas</h1>\n" +
+                    "        <p class=\"subtitle\">Visualización y edición de coordenadas de fixtures robóticos</p>\n" +
+                    "        \n" +
+                    "        <div id=\"message\" class=\"message\"></div>\n" +
+                    "        \n" +
+                    "        <div id=\"sceneInfo\" class=\"scene-info\">\n" +
+                    "            <div class=\"loading\">Cargando información de la escena...</div>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div class=\"editor-container\">\n" +
+                    "            <div class=\"canvas-section\">\n" +
+                    "                <h3 style=\"margin-bottom: 15px; color: #333;\">Editor Gráfico de Posiciones</h3>\n" +
+                    "                <div class=\"canvas-wrapper\">\n" +
+                    "                    <canvas id=\"positionCanvas\" width=\"800\" height=\"800\"></canvas>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"canvas-controls\">\n" +
+                    "                    <button class=\"control-btn secondary\" onclick=\"resetView()\">🔄 Resetear Vista</button>\n" +
+                    "                    <button class=\"control-btn secondary\" onclick=\"centerAll()\">🎯 Centrar Todos</button>\n" +
+                    "                    <button class=\"control-btn success\" onclick=\"savePositions()\">💾 Guardar Cambios</button>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"legend\">\n" +
+                    "                    <strong>Instrucciones:</strong> Haz clic y arrastra los puntos azules para mover las posiciones de los fixtures. " +
+                    "Los valores se actualizan automáticamente en la tabla.\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "            \n" +
+                    "            <div class=\"info-panel\">\n" +
+                    "                <h3>Información del Fixture Seleccionado</h3>\n" +
+                    "                <div id=\"selectedFixtureInfo\">\n" +
+                    "                    <div class=\"info-item\">\n" +
+                    "                        <p>Selecciona un fixture en el canvas para ver sus detalles</p>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "            \n" +
+                    "            <div class=\"control-panel\">\n" +
+                    "                <h3>Control de Posición</h3>\n" +
+                    "                <div class=\"dpad-container\">\n" +
+                    "                    <div class=\"dpad-row\">\n" +
+                    "                        <div></div>\n" +
+                    "                        <button class=\"dpad-btn\" id=\"btnUp\" onclick=\"moveFixture('up')\" disabled>↑</button>\n" +
+                    "                        <div></div>\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"dpad-row\">\n" +
+                    "                        <button class=\"dpad-btn\" id=\"btnLeft\" onclick=\"moveFixture('left')\" disabled>←</button>\n" +
+                    "                        <div style=\"width: 60px; height: 60px;\"></div>\n" +
+                    "                        <button class=\"dpad-btn\" id=\"btnRight\" onclick=\"moveFixture('right')\" disabled>→</button>\n" +
+                    "                    </div>\n" +
+                    "                    <div class=\"dpad-row\">\n" +
+                    "                        <div></div>\n" +
+                    "                        <button class=\"dpad-btn\" id=\"btnDown\" onclick=\"moveFixture('down')\" disabled>↓</button>\n" +
+                    "                        <div></div>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"increment-selector\">\n" +
+                    "                    <label>Incremento (coordenadas):</label>\n" +
+                    "                    <div class=\"increment-buttons\">\n" +
+                    "                        <button class=\"increment-btn active\" onclick=\"setIncrement(1)\" data-increment=\"1\">1</button>\n" +
+                    "                        <button class=\"increment-btn\" onclick=\"setIncrement(10)\" data-increment=\"10\">10</button>\n" +
+                    "                        <button class=\"increment-btn\" onclick=\"setIncrement(100)\" data-increment=\"100\">100</button>\n" +
+                    "                        <button class=\"increment-btn\" onclick=\"setIncrement(500)\" data-increment=\"500\">500</button>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "                <div class=\"fixture-selector\" style=\"margin-top: 20px; padding: 15px; background: white; border-radius: 6px;\">\n" +
+                    "                    <label style=\"display: block; margin-bottom: 10px; font-weight: 600; color: #333;\">Seleccionar Fixture:</label>\n" +
+                    "                    <div id=\"fixtureRadioList\" style=\"max-height: 200px; overflow-y: auto;\">\n" +
+                    "                        <div class=\"loading\">Cargando fixtures...</div>\n" +
+                    "                    </div>\n" +
+                    "                </div>\n" +
+                    "            </div>\n" +
+                    "        </div>\n" +
+                    "        \n" +
+                    "        <div class=\"table-container\">\n" +
+                    "            <table id=\"positionsTable\">\n" +
+                    "                <thead>\n" +
+                    "                    <tr>\n" +
+                    "                        <th>ID Fixture</th>\n" +
+                    "                        <th>Nombre Fixture</th>\n" +
+                    "                        <th>Pan</th>\n" +
+                    "                        <th>Pan Fine</th>\n" +
+                    "                        <th>Tilt</th>\n" +
+                    "                        <th>Tilt Fine</th>\n" +
+                    "                        <th>X (Pan×256+PanFine)</th>\n" +
+                    "                        <th>Y (Tilt×256+TiltFine)</th>\n" +
+                    "                    </tr>\n" +
+                    "                </thead>\n" +
+                    "                <tbody id=\"tableBody\">\n" +
+                    "                    <tr>\n" +
+                    "                        <td colspan=\"8\" class=\"loading\">Cargando posiciones...</td>\n" +
+                    "                    </tr>\n" +
+                    "                </tbody>\n" +
+                    "            </table>\n" +
+                    "        </div>\n" +
+                    "    </div>\n" +
+                    "    \n" +
+                    "    <script>\n" +
+                    "        const urlParams = new URLSearchParams(window.location.search);\n" +
+                    "        const sceneId = urlParams.get('id');\n" +
+                    "        let sceneData = null;\n" +
+                    "        let fixtures = [];\n" +
+                    "        let selectedFixture = null;\n" +
+                    "        let isDragging = false;\n" +
+                    "        let dragOffset = { x: 0, y: 0 };\n" +
+                    "        \n" +
+                    "        const canvas = document.getElementById('positionCanvas');\n" +
+                    "        const ctx = canvas.getContext('2d');\n" +
+                    "        let currentIncrement = 1; // Incremento en coordenadas DMX (0-65535)\n" +
+                    "        \n" +
+                    "        // Ajustar tamaño del canvas\n" +
+                    "        function resizeCanvas() {\n" +
+                    "            const wrapper = canvas.parentElement;\n" +
+                    "            const maxSize = Math.min(800, wrapper.clientWidth - 40);\n" +
+                    "            canvas.width = maxSize;\n" +
+                    "            canvas.height = maxSize;\n" +
+                    "            drawCanvas();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function setIncrement(value) {\n" +
+                    "            currentIncrement = value;\n" +
+                    "            // Actualizar botones activos\n" +
+                    "            document.querySelectorAll('.increment-btn').forEach(btn => {\n" +
+                    "                if (parseInt(btn.dataset.increment) === value) {\n" +
+                    "                    btn.classList.add('active');\n" +
+                    "                } else {\n" +
+                    "                    btn.classList.remove('active');\n" +
+                    "                }\n" +
+                    "            });\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        let sendToArtNetTimeout = null;\n" +
+                    "        \n" +
+                    "        async function sendToArtNetRealTime(fixture) {\n" +
+                    "            if (!fixture || !sceneId) return;\n" +
+                    "            \n" +
+                    "            // Debounce: cancelar envío anterior si existe\n" +
+                    "            if (sendToArtNetTimeout) {\n" +
+                    "                clearTimeout(sendToArtNetTimeout);\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Enviar después de un pequeño delay para evitar saturar la red\n" +
+                    "            sendToArtNetTimeout = setTimeout(async () => {\n" +
+                    "                try {\n" +
+                    "                    const response = await fetch(`/api/scenes/${sceneId}/send-point`, {\n" +
+                    "                        method: 'PUT',\n" +
+                    "                        headers: {\n" +
+                    "                            'Content-Type': 'application/json'\n" +
+                    "                        },\n" +
+                    "                        body: JSON.stringify({\n" +
+                    "                            fixtureId: fixture.fixtureId,\n" +
+                    "                            pan: fixture.pan,\n" +
+                    "                            panFine: fixture.panFine,\n" +
+                    "                            tilt: fixture.tilt,\n" +
+                    "                            tiltFine: fixture.tiltFine\n" +
+                    "                        })\n" +
+                    "                    });\n" +
+                    "                    \n" +
+                    "                    if (!response.ok) {\n" +
+                    "                        console.warn('Error enviando a ArtNet:', await response.text());\n" +
+                    "                    }\n" +
+                    "                } catch (error) {\n" +
+                    "                    console.error('Error enviando a ArtNet:', error);\n" +
+                    "                }\n" +
+                    "            }, 50); // 50ms de debounce\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function moveFixture(direction) {\n" +
+                    "            if (!selectedFixture) {\n" +
+                    "                alert('Por favor selecciona un fixture primero');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            if (selectedFixture.x === null || selectedFixture.x === undefined || \n" +
+                    "                selectedFixture.y === null || selectedFixture.y === undefined) {\n" +
+                    "                alert('El fixture seleccionado no tiene coordenadas válidas');\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Obtener valores DMX actuales\n" +
+                    "            let currentDmxX = selectedFixture.x;\n" +
+                    "            let currentDmxY = selectedFixture.y;\n" +
+                    "            \n" +
+                    "            // Calcular nueva posición según dirección (incremento en coordenadas DMX)\n" +
+                    "            let newDmxX = currentDmxX;\n" +
+                    "            let newDmxY = currentDmxY;\n" +
+                    "            \n" +
+                    "            switch(direction) {\n" +
+                    "                case 'up':\n" +
+                    "                    newDmxY = Math.max(0, currentDmxY - currentIncrement);\n" +
+                    "                    break;\n" +
+                    "                case 'down':\n" +
+                    "                    newDmxY = Math.min(MAX_DMX, currentDmxY + currentIncrement);\n" +
+                    "                    break;\n" +
+                    "                case 'left':\n" +
+                    "                    newDmxX = Math.max(0, currentDmxX - currentIncrement);\n" +
+                    "                    break;\n" +
+                    "                case 'right':\n" +
+                    "                    newDmxX = Math.min(MAX_DMX, currentDmxX + currentIncrement);\n" +
+                    "                    break;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Usar los valores DMX directamente\n" +
+                    "            const dmxX = newDmxX;\n" +
+                    "            const dmxY = newDmxY;\n" +
+                    "            \n" +
+                    "            // Actualizar valores del fixture\n" +
+                    "            const panData = dmxToPanTilt(dmxX);\n" +
+                    "            const tiltData = dmxToPanTilt(dmxY);\n" +
+                    "            \n" +
+                    "            selectedFixture.pan = panData.coarse;\n" +
+                    "            selectedFixture.panFine = panData.fine;\n" +
+                    "            selectedFixture.tilt = tiltData.coarse;\n" +
+                    "            selectedFixture.tiltFine = tiltData.fine;\n" +
+                    "            selectedFixture.x = dmxX;\n" +
+                    "            selectedFixture.y = dmxY;\n" +
+                    "            \n" +
+                    "            drawCanvas();\n" +
+                    "            renderTable(fixtures);\n" +
+                    "            updateFixtureInfo(selectedFixture);\n" +
+                    "            \n" +
+                    "            // Enviar a ArtNet en tiempo real\n" +
+                    "            sendToArtNetRealTime(selectedFixture);\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function updateDpadButtons() {\n" +
+                    "            const hasSelection = selectedFixture !== null;\n" +
+                    "            document.getElementById('btnUp').disabled = !hasSelection;\n" +
+                    "            document.getElementById('btnDown').disabled = !hasSelection;\n" +
+                    "            document.getElementById('btnLeft').disabled = !hasSelection;\n" +
+                    "            document.getElementById('btnRight').disabled = !hasSelection;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function selectFixtureFromRadio(fixtureId) {\n" +
+                    "            const fixture = fixtures.find(f => f.fixtureId === fixtureId);\n" +
+                    "            if (fixture) {\n" +
+                    "                selectedFixture = fixture;\n" +
+                    "                updateFixtureInfo(fixture);\n" +
+                    "                updateDpadButtons();\n" +
+                    "                updateRadioSelection();\n" +
+                    "                drawCanvas();\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function updateRadioSelection() {\n" +
+                    "            document.querySelectorAll('.radio-item').forEach(item => {\n" +
+                    "                const fixtureId = parseInt(item.dataset.fixtureId);\n" +
+                    "                if (selectedFixture && selectedFixture.fixtureId === fixtureId) {\n" +
+                    "                    item.classList.add('selected');\n" +
+                    "                    item.querySelector('input[type=\"radio\"]').checked = true;\n" +
+                    "                } else {\n" +
+                    "                    item.classList.remove('selected');\n" +
+                    "                    item.querySelector('input[type=\"radio\"]').checked = false;\n" +
+                    "                }\n" +
+                    "            });\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderFixtureRadioList() {\n" +
+                    "            const container = document.getElementById('fixtureRadioList');\n" +
+                    "            if (!fixtures || fixtures.length === 0) {\n" +
+                    "                container.innerHTML = '<div class=\"empty\">No hay fixtures disponibles</div>';\n" +
+                    "                return;\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            container.innerHTML = fixtures.map(fixture => {\n" +
+                    "                const fixtureName = fixture.fixtureName || `Fixture ${fixture.fixtureId}`;\n" +
+                    "                return `\n" +
+                    "                    <div class=\"radio-item\" data-fixture-id=\"${fixture.fixtureId}\" onclick=\"selectFixtureFromRadio(${fixture.fixtureId})\">\n" +
+                    "                        <input type=\"radio\" name=\"fixtureSelect\" id=\"fixture_${fixture.fixtureId}\" value=\"${fixture.fixtureId}\" onchange=\"selectFixtureFromRadio(${fixture.fixtureId})\">\n" +
+                    "                        <label for=\"fixture_${fixture.fixtureId}\">\n" +
+                    "                            <strong>ID ${fixture.fixtureId}:</strong> ${fixtureName}\n" +
+                    "                        </label>\n" +
+                    "                    </div>\n" +
+                    "                `;\n" +
+                    "            }).join('');\n" +
+                    "            \n" +
+                    "            updateRadioSelection();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Rango de valores DMX: 0-65535 (pan*256 + panFine)\n" +
+                    "        const MAX_DMX = 65535;\n" +
+                    "        \n" +
+                    "        // Convertir coordenada DMX a posición en canvas\n" +
+                    "        function dmxToCanvas(dmxValue) {\n" +
+                    "            return (dmxValue / MAX_DMX) * canvas.width;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Convertir posición en canvas a coordenada DMX\n" +
+                    "        function canvasToDmx(canvasPos) {\n" +
+                    "            return Math.round((canvasPos / canvas.width) * MAX_DMX);\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Convertir DMX a pan/panFine o tilt/tiltFine\n" +
+                    "        function dmxToPanTilt(dmxValue) {\n" +
+                    "            const coarse = Math.floor(dmxValue / 256);\n" +
+                    "            const fine = dmxValue % 256;\n" +
+                    "            return { coarse: coarse, fine: fine };\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Convertir pan/panFine o tilt/tiltFine a DMX\n" +
+                    "        function panTiltToDmx(coarse, fine) {\n" +
+                    "            return coarse * 256 + fine;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function drawCanvas() {\n" +
+                    "            // Limpiar canvas\n" +
+                    "            ctx.clearRect(0, 0, canvas.width, canvas.height);\n" +
+                    "            \n" +
+                    "            // Dibujar cuadrícula\n" +
+                    "            ctx.strokeStyle = '#e0e0e0';\n" +
+                    "            ctx.lineWidth = 1;\n" +
+                    "            const gridSize = canvas.width / 10;\n" +
+                    "            for (let i = 0; i <= 10; i++) {\n" +
+                    "                const pos = i * gridSize;\n" +
+                    "                // Líneas verticales\n" +
+                    "                ctx.beginPath();\n" +
+                    "                ctx.moveTo(pos, 0);\n" +
+                    "                ctx.lineTo(pos, canvas.height);\n" +
+                    "                ctx.stroke();\n" +
+                    "                // Líneas horizontales\n" +
+                    "                ctx.beginPath();\n" +
+                    "                ctx.moveTo(0, pos);\n" +
+                    "                ctx.lineTo(canvas.width, pos);\n" +
+                    "                ctx.stroke();\n" +
+                    "            }\n" +
+                    "            \n" +
+                    "            // Dibujar ejes centrales\n" +
+                    "            ctx.strokeStyle = '#999';\n" +
+                    "            ctx.lineWidth = 2;\n" +
+                    "            const centerX = canvas.width / 2;\n" +
+                    "            const centerY = canvas.height / 2;\n" +
+                    "            ctx.beginPath();\n" +
+                    "            ctx.moveTo(centerX, 0);\n" +
+                    "            ctx.lineTo(centerX, canvas.height);\n" +
+                    "            ctx.stroke();\n" +
+                    "            ctx.beginPath();\n" +
+                    "            ctx.moveTo(0, centerY);\n" +
+                    "            ctx.lineTo(canvas.width, centerY);\n" +
+                    "            ctx.stroke();\n" +
+                    "            \n" +
+                    "            // Dibujar fixtures\n" +
+                    "            fixtures.forEach(fixture => {\n" +
+                    "                if (fixture.x === null || fixture.x === undefined || \n" +
+                    "                    fixture.y === null || fixture.y === undefined) return;\n" +
+                    "                \n" +
+                    "                const x = dmxToCanvas(fixture.x);\n" +
+                    "                const y = dmxToCanvas(fixture.y);\n" +
+                    "                \n" +
+                    "                const isSelected = selectedFixture && selectedFixture.fixtureId === fixture.fixtureId;\n" +
+                    "                \n" +
+                    "                // Círculo del fixture\n" +
+                    "                ctx.fillStyle = isSelected ? '#ff6b6b' : '#667eea';\n" +
+                    "                ctx.beginPath();\n" +
+                    "                ctx.arc(x, y, isSelected ? 12 : 8, 0, Math.PI * 2);\n" +
+                    "                ctx.fill();\n" +
+                    "                ctx.strokeStyle = 'white';\n" +
+                    "                ctx.lineWidth = 2;\n" +
+                    "                ctx.stroke();\n" +
+                    "                \n" +
+                    "                // Etiqueta con ID del fixture\n" +
+                    "                ctx.fillStyle = 'white';\n" +
+                    "                ctx.font = 'bold 12px Arial';\n" +
+                    "                ctx.textAlign = 'center';\n" +
+                    "                ctx.textBaseline = 'middle';\n" +
+                    "                ctx.fillText(fixture.fixtureId.toString(), x, y);\n" +
+                    "            });\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Obtener fixture en una posición del canvas\n" +
+                    "        function getFixtureAt(x, y) {\n" +
+                    "            const radius = 15;\n" +
+                    "            for (let fixture of fixtures) {\n" +
+                    "                if (fixture.x === null || fixture.x === undefined || \n" +
+                    "                    fixture.y === null || fixture.y === undefined) continue;\n" +
+                    "                \n" +
+                    "                const fx = dmxToCanvas(fixture.x);\n" +
+                    "                const fy = dmxToCanvas(fixture.y);\n" +
+                    "                \n" +
+                    "                const dx = x - fx;\n" +
+                    "                const dy = y - fy;\n" +
+                    "                const distance = Math.sqrt(dx * dx + dy * dy);\n" +
+                    "                \n" +
+                    "                if (distance <= radius) {\n" +
+                    "                    return fixture;\n" +
+                    "                }\n" +
+                    "            }\n" +
+                    "            return null;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Eventos del canvas\n" +
+                    "        canvas.addEventListener('mousedown', (e) => {\n" +
+                    "            const rect = canvas.getBoundingClientRect();\n" +
+                    "            const x = e.clientX - rect.left;\n" +
+                    "            const y = e.clientY - rect.top;\n" +
+                    "            \n" +
+                    "            const fixture = getFixtureAt(x, y);\n" +
+                    "            if (fixture) {\n" +
+                    "                selectedFixture = fixture;\n" +
+                    "                isDragging = true;\n" +
+                    "                dragOffset.x = x - dmxToCanvas(fixture.x);\n" +
+                    "                dragOffset.y = y - dmxToCanvas(fixture.y);\n" +
+                    "                canvas.style.cursor = 'grabbing';\n" +
+                    "                updateFixtureInfo(fixture);\n" +
+                    "                updateDpadButtons();\n" +
+                    "                updateRadioSelection();\n" +
+                    "                drawCanvas();\n" +
+                    "            }\n" +
+                    "        });\n" +
+                    "        \n" +
+                    "        canvas.addEventListener('mousemove', (e) => {\n" +
+                    "            const rect = canvas.getBoundingClientRect();\n" +
+                    "            const x = e.clientX - rect.left;\n" +
+                    "            const y = e.clientY - rect.top;\n" +
+                    "            \n" +
+                    "            if (isDragging && selectedFixture) {\n" +
+                    "                // Calcular nueva posición\n" +
+                    "                const newX = Math.max(0, Math.min(canvas.width, x - dragOffset.x));\n" +
+                    "                const newY = Math.max(0, Math.min(canvas.height, y - dragOffset.y));\n" +
+                    "                \n" +
+                    "                // Convertir a valores DMX\n" +
+                    "                const dmxX = canvasToDmx(newX);\n" +
+                    "                const dmxY = canvasToDmx(newY);\n" +
+                    "                \n" +
+                    "                // Actualizar valores del fixture\n" +
+                    "                const panData = dmxToPanTilt(dmxX);\n" +
+                    "                const tiltData = dmxToPanTilt(dmxY);\n" +
+                    "                \n" +
+                    "                selectedFixture.pan = panData.coarse;\n" +
+                    "                selectedFixture.panFine = panData.fine;\n" +
+                    "                selectedFixture.tilt = tiltData.coarse;\n" +
+                    "                selectedFixture.tiltFine = tiltData.fine;\n" +
+                    "                selectedFixture.x = dmxX;\n" +
+                    "                selectedFixture.y = dmxY;\n" +
+                    "                \n" +
+                    "                drawCanvas();\n" +
+                    "                renderTable(fixtures);\n" +
+                    "                updateFixtureInfo(selectedFixture);\n" +
+                    "                \n" +
+                    "                // Enviar a ArtNet en tiempo real mientras se arrastra\n" +
+                    "                sendToArtNetRealTime(selectedFixture);\n" +
+                    "            } else {\n" +
+                    "                const fixture = getFixtureAt(x, y);\n" +
+                    "                canvas.style.cursor = fixture ? 'grab' : 'crosshair';\n" +
+                    "            }\n" +
+                    "        });\n" +
+                    "        \n" +
+                    "        canvas.addEventListener('mouseup', () => {\n" +
+                    "            isDragging = false;\n" +
+                    "            canvas.style.cursor = 'crosshair';\n" +
+                    "        });\n" +
+                    "        \n" +
+                    "        canvas.addEventListener('mouseleave', () => {\n" +
+                    "            isDragging = false;\n" +
+                    "            canvas.style.cursor = 'crosshair';\n" +
+                    "        });\n" +
+                    "        \n" +
+                    "        function updateFixtureInfo(fixture) {\n" +
+                    "            if (!fixture) return;\n" +
+                    "            \n" +
+                    "            const pan = fixture.pan !== null && fixture.pan !== undefined ? fixture.pan : '-';\n" +
+                    "            const panFine = fixture.panFine !== null && fixture.panFine !== undefined ? fixture.panFine : '-';\n" +
+                    "            const tilt = fixture.tilt !== null && fixture.tilt !== undefined ? fixture.tilt : '-';\n" +
+                    "            const tiltFine = fixture.tiltFine !== null && fixture.tiltFine !== undefined ? fixture.tiltFine : '-';\n" +
+                    "            const x = fixture.x !== null && fixture.x !== undefined ? fixture.x : '-';\n" +
+                    "            const y = fixture.y !== null && fixture.y !== undefined ? fixture.y : '-';\n" +
+                    "            \n" +
+                    "            document.getElementById('selectedFixtureInfo').innerHTML = `\n" +
+                    "                <div class=\"info-item\">\n" +
+                    "                    <strong>ID:</strong> ${fixture.fixtureId}\n" +
+                    "                </div>\n" +
+                    "                <div class=\"info-item\">\n" +
+                    "                    <strong>Nombre:</strong> ${fixture.fixtureName || '-'}\n" +
+                    "                </div>\n" +
+                    "                <div class=\"info-item\">\n" +
+                    "                    <strong>Pan:</strong> ${pan} | <strong>Pan Fine:</strong> ${panFine}\n" +
+                    "                </div>\n" +
+                    "                <div class=\"info-item\">\n" +
+                    "                    <strong>Tilt:</strong> ${tilt} | <strong>Tilt Fine:</strong> ${tiltFine}\n" +
+                    "                </div>\n" +
+                    "                <div class=\"info-item\">\n" +
+                    "                    <strong>X:</strong> ${x} | <strong>Y:</strong> ${y}\n" +
+                    "                </div>\n" +
+                    "            `;\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function resetView() {\n" +
+                    "            selectedFixture = null;\n" +
+                    "            updateDpadButtons();\n" +
+                    "            updateRadioSelection();\n" +
+                    "            drawCanvas();\n" +
+                    "            document.getElementById('selectedFixtureInfo').innerHTML = \n" +
+                    "                '<div class=\"info-item\"><p>Selecciona un fixture en el canvas para ver sus detalles</p></div>';\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function centerAll() {\n" +
+                    "            const centerDmx = Math.floor(MAX_DMX / 2);\n" +
+                    "            fixtures.forEach(fixture => {\n" +
+                    "                const panData = dmxToPanTilt(centerDmx);\n" +
+                    "                const tiltData = dmxToPanTilt(centerDmx);\n" +
+                    "                fixture.pan = panData.coarse;\n" +
+                    "                fixture.panFine = panData.fine;\n" +
+                    "                fixture.tilt = tiltData.coarse;\n" +
+                    "                fixture.tiltFine = tiltData.fine;\n" +
+                    "                fixture.x = centerDmx;\n" +
+                    "                fixture.y = centerDmx;\n" +
+                    "            });\n" +
+                    "            drawCanvas();\n" +
+                    "            renderTable(fixtures);\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function savePositions() {\n" +
+                    "            try {\n" +
+                    "                const response = await fetch(`/api/scenes/${sceneId}/update-positions`, {\n" +
+                    "                    method: 'PUT',\n" +
+                    "                    headers: {\n" +
+                    "                        'Content-Type': 'application/json'\n" +
+                    "                    },\n" +
+                    "                    body: JSON.stringify({ fixtures: fixtures })\n" +
+                    "                });\n" +
+                    "                \n" +
+                    "                const result = await response.json();\n" +
+                    "                \n" +
+                    "                if (response.ok) {\n" +
+                    "                    alert('Posiciones guardadas correctamente');\n" +
+                    "                } else {\n" +
+                    "                    alert('Error: ' + (result.error || 'Error desconocido'));\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error guardando posiciones:', error);\n" +
+                    "                alert('Error al guardar las posiciones');\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        if (!sceneId) {\n" +
+                    "            document.getElementById('tableBody').innerHTML = \n" +
+                    "                '<tr><td colspan=\"8\" class=\"empty\">ID de escena no proporcionado</td></tr>';\n" +
+                    "        } else {\n" +
+                    "            loadSceneData();\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        async function loadSceneData() {\n" +
+                    "            try {\n" +
+                    "                document.getElementById('tableBody').innerHTML = '<tr><td colspan=\"8\" class=\"loading\">Cargando posiciones...</td></tr>';\n" +
+                    "                \n" +
+                    "                const response = await fetch(`/api/scenes/${sceneId}`);\n" +
+                    "                sceneData = await response.json();\n" +
+                    "                \n" +
+                    "                // Mostrar información de la escena\n" +
+                    "                document.getElementById('sceneInfo').innerHTML = \n" +
+                    "                    `<strong>Escena ID:</strong> ${sceneData.id} | ` +\n" +
+                    "                    `<strong>Nombre:</strong> ${sceneData.name || '-'} | ` +\n" +
+                    "                    `<strong>Path:</strong> ${sceneData.path || '-'}`;\n" +
+                    "                \n" +
+                    "                // Cargar fixtures\n" +
+                    "                if (sceneData.fixtures && sceneData.fixtures.length > 0) {\n" +
+                    "                    fixtures = sceneData.fixtures;\n" +
+                    "                    renderTable(fixtures);\n" +
+                    "                    renderFixtureRadioList();\n" +
+                    "                    resizeCanvas();\n" +
+                    "                    updateDpadButtons();\n" +
+                    "                    drawCanvas();\n" +
+                    "                } else {\n" +
+                    "                    document.getElementById('tableBody').innerHTML = \n" +
+                    "                        '<tr><td colspan=\"8\" class=\"empty\">No se encontraron fixtures con posiciones</td></tr>';\n" +
+                    "                }\n" +
+                    "            } catch (error) {\n" +
+                    "                console.error('Error cargando datos de escena:', error);\n" +
+                    "                document.getElementById('tableBody').innerHTML = \n" +
+                    "                    '<tr><td colspan=\"8\" class=\"empty\">Error al cargar los datos de la escena</td></tr>';\n" +
+                    "            }\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        function renderTable(fixtures) {\n" +
+                    "            const tbody = document.getElementById('tableBody');\n" +
+                    "            \n" +
+                    "            tbody.innerHTML = fixtures.map(fixture => {\n" +
+                    "                const pan = fixture.pan !== null && fixture.pan !== undefined ? fixture.pan : '-';\n" +
+                    "                const panFine = fixture.panFine !== null && fixture.panFine !== undefined ? fixture.panFine : '-';\n" +
+                    "                const tilt = fixture.tilt !== null && fixture.tilt !== undefined ? fixture.tilt : '-';\n" +
+                    "                const tiltFine = fixture.tiltFine !== null && fixture.tiltFine !== undefined ? fixture.tiltFine : '-';\n" +
+                    "                const x = fixture.x !== null && fixture.x !== undefined ? fixture.x : '-';\n" +
+                    "                const y = fixture.y !== null && fixture.y !== undefined ? fixture.y : '-';\n" +
+                    "                \n" +
+                    "                return `\n" +
+                    "                    <tr>\n" +
+                    "                        <td><span class=\"id-badge\">${fixture.fixtureId}</span></td>\n" +
+                    "                        <td><strong>${fixture.fixtureName || '-'}</strong></td>\n" +
+                    "                        <td><span class=\"channel-value\">${pan}</span></td>\n" +
+                    "                        <td><span class=\"channel-value\">${panFine}</span></td>\n" +
+                    "                        <td><span class=\"channel-value\">${tilt}</span></td>\n" +
+                    "                        <td><span class=\"channel-value\">${tiltFine}</span></td>\n" +
+                    "                        <td><span class=\"coord-value\">${x}</span></td>\n" +
+                    "                        <td><span class=\"coord-value\">${y}</span></td>\n" +
+                    "                    </tr>\n" +
+                    "                `;\n" +
+                    "            }).join('');\n" +
+                    "        }\n" +
+                    "        \n" +
+                    "        // Ajustar canvas al redimensionar ventana\n" +
+                    "        window.addEventListener('resize', resizeCanvas);\n" +
                     "    </script>\n" +
                     "</body>\n" +
                     "</html>";

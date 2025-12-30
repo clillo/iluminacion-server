@@ -1,0 +1,29 @@
+
+<doc>
+   <title>QLCScene.Moving Head Bee Eye Positions.8607</title>
+   <common>
+      <id>8607</id>
+      <type>Scene</type>
+      <path>Moving Head Bee Eye Positions</path>
+      <name>Disco Ball</name>
+      <subType>robotic.position.static</subType>
+   </common>
+   <points>
+      <point fixture-robotic="true" fixture="20" type="PAN" value="185"/>
+      <point fixture-robotic="true" fixture="20" type="PAN_FINE" value="201"/>
+      <point fixture-robotic="true" fixture="20" type="TILT" value="38"/>
+      <point fixture-robotic="true" fixture="20" type="TILT_FINE" value="194"/>
+      <point fixture-robotic="true" fixture="21" type="PAN" value="178"/>
+      <point fixture-robotic="true" fixture="21" type="PAN_FINE" value="177"/>
+      <point fixture-robotic="true" fixture="21" type="TILT" value="19"/>
+      <point fixture-robotic="true" fixture="21" type="TILT_FINE" value="212"/>
+      <point fixture-robotic="true" fixture="22" type="PAN" value="157"/>
+      <point fixture-robotic="true" fixture="22" type="PAN_FINE" value="29"/>
+      <point fixture-robotic="true" fixture="22" type="TILT" value="20"/>
+      <point fixture-robotic="true" fixture="22" type="TILT_FINE" value="206"/>
+      <point fixture-robotic="true" fixture="23" type="PAN" value="203"/>
+      <point fixture-robotic="true" fixture="23" type="PAN_FINE" value="61"/>
+      <point fixture-robotic="true" fixture="23" type="TILT" value="15"/>
+      <point fixture-robotic="true" fixture="23" type="TILT_FINE" value="88"/>
+   </points>
+</doc>

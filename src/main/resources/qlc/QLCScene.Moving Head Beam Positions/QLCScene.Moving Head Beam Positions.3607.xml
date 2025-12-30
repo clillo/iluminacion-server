@@ -6,6 +6,7 @@
       <type>Scene</type>
       <path>Moving Head Beam Positions</path>
       <name>Disco Ball</name>
+      <subType>robotic.position.static</subType>
    </common>
    <points>
       <point fixture-robotic="true" fixture="14" type="PAN" value="158"/>

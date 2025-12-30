@@ -1,17 +1,18 @@
 
 <doc>
-   <title>QLCScene.Moving Head Bee Eye Positions.8607</title>
+   <title>QLCScene.Moving Head Bee Eye Positions.8608</title>
    <common>
-      <id>8607</id>
+      <id>8608</id>
       <type>Scene</type>
       <path>Moving Head Bee Eye Positions</path>
-      <name>Disco Ball</name>
+      <name>Piscina 1</name>
+      <subType>robotic.position.static</subType>
    </common>
    <points>
-      <point fixture-robotic="true" fixture="20" type="PAN" value="185"/>
+      <point fixture-robotic="true" fixture="20" type="PAN" value="141"/>
       <point fixture-robotic="true" fixture="20" type="PAN_FINE" value="201"/>
-      <point fixture-robotic="true" fixture="20" type="TILT" value="8"/>
-      <point fixture-robotic="true" fixture="20" type="TILT_FINE" value="134"/>
+      <point fixture-robotic="true" fixture="20" type="TILT" value="92"/>
+      <point fixture-robotic="true" fixture="20" type="TILT_FINE" value="20"/>
       <point fixture-robotic="true" fixture="21" type="PAN" value="178"/>
       <point fixture-robotic="true" fixture="21" type="PAN_FINE" value="177"/>
       <point fixture-robotic="true" fixture="21" type="TILT" value="6"/>
