@@ -1,5 +1,7 @@
 package cl.clillo.lighting.web;
 
+import cl.clillo.lighting.config.FixtureConfig;
+import cl.clillo.lighting.config.FixturesConfigService;
 import cl.clillo.lighting.external.dmx.Dmx;
 import lombok.extern.slf4j.Slf4j;
 
@@ -10,6 +12,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Gestiona el estado de todos los BeeEye escuchando los valores DMX.
+ * Lee la configuración desde FixturesConfigService.
  */
 @Slf4j
 public class BeeEyeStateManager implements Dmx.DmxListener {
@@ -22,22 +25,43 @@ public class BeeEyeStateManager implements Dmx.DmxListener {
     }
     
     /**
-     * Inicializa los 4 BeeEye con sus canales base.
-     * Canales base: 21, 70, 120, 170 (según BeeEyeDemo)
+     * Inicializa los BeeEye desde la configuración.
+     * Los LEDs empiezan en el canal 21 relativo al fixture (address + 21).
      */
     private void initializeBeeEyes() {
         if (initialized) return;
         
-        // Configuración de los 4 BeeEye según BeeEyeDemo
-        beeEyes.put("BeeEye 1", new BeeEyeState("BeeEye 1", 21, 1));
-        beeEyes.put("BeeEye 2", new BeeEyeState("BeeEye 2", 70, 1));
-        beeEyes.put("BeeEye 3", new BeeEyeState("BeeEye 3", 120, 1));
-        beeEyes.put("BeeEye 4", new BeeEyeState("BeeEye 4", 170, 1));
-        
-        // Registrar como listener de DMX
-        Dmx.getInstance().addListener(this);
-        initialized = true;
-        log.info("BeeEyeStateManager initialized with {} BeeEye fixtures", beeEyes.size());
+        try {
+            FixturesConfigService configService = FixturesConfigService.getInstance();
+            List<FixtureConfig> fixtures = configService.getConfig().getFixtures();
+            
+            for (FixtureConfig fixture : fixtures) {
+                // Filtrar solo fixtures BeeEye
+                if ("Moving Head Bee Eye".equals(fixture.getModel()) && fixture.isActivo()) {
+                    // El canal base para los LEDs es address + 21
+                    // (los primeros 20 canales son para pan/tilt/etc)
+                    int baseChannel = fixture.getAddress() + 21;
+                    int universe = fixture.getUniverse();
+                    
+                    beeEyes.put(fixture.getName(), new BeeEyeState(
+                        fixture.getName(),
+                        baseChannel,
+                        universe
+                    ));
+                    
+                    log.debug("Initialized BeeEye: {} - universe: {}, address: {}, baseChannel: {}",
+                            fixture.getName(), universe, fixture.getAddress(), baseChannel);
+                }
+            }
+            
+            // Registrar como listener de DMX
+            Dmx.getInstance().addListener(this);
+            initialized = true;
+            log.info("BeeEyeStateManager initialized with {} BeeEye fixtures", beeEyes.size());
+        } catch (Exception e) {
+            log.error("Error initializing BeeEyeStateManager", e);
+            initialized = true; // Evitar reintentos infinitos
+        }
     }
     
     @Override

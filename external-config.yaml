@@ -1,5 +1,3 @@
 ---
 artNet:
-  ipAddress: "192.168.10.255"
-  # IP para el protocolo ArtNet (broadcast por defecto)
-
+  ipAddress: "192.168.255.255"
