@@ -1,0 +1,16 @@
+
+<doc>
+   <title>QLCCollection.Sec2.146/title>
+   <common>
+      <id>146</id>
+      <type>Collection</type>
+      <path>Sec2</path>
+      <name>Countdown 2</name>
+   </common>
+   <shows>
+      <show id="8200" name="On"/>
+      <show id="8228" name="Focus OFF"/>
+      <show id="8412" name="BeeEye Center LED Sequential Red"/>
+      <show id="8501" name="Bouncing Bottom"/>
+   </shows>
+</doc>

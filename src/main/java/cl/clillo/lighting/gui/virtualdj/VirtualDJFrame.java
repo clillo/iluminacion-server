@@ -1,6 +1,5 @@
 package cl.clillo.lighting.gui.virtualdj;
 
-import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.utils.SystemUtils;
 
 import javax.swing.JFrame;
@@ -8,9 +7,11 @@ import javax.swing.UIManager;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 
 public class VirtualDJFrame extends JFrame {
 
+    @Serial
     private static final long serialVersionUID = 1823403452881818081L;
 
     public VirtualDJFrame() {

@@ -99,7 +99,7 @@ public class OS2LServer {
                                     if (line.endsWith("\r")) line = line.substring(0, line.length() - 1);
                                     line = line+"}";
                                     // ahora SÍ: line es 1 JSON completo
-                                    System.out.println(line);
+                                 //   System.out.println(line);
 
                                     if (line.startsWith("{\"evt\":\"beat\"")) processBpmEvent(line);
                                     else if (line.startsWith("{\"evt\":\"cmd\"")) processCommandEvent(line);

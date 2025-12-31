@@ -11,4 +11,17 @@
       <event id="1001" show="427"/>
       <event id="1002" show="153"/>
    </virtualDJEvents>
+   <virtualDJCommands>
+      <event name="POI_countdown_0" show="301"/>
+      <event name="POI_countdown_1" show="144"/>
+      <event name="POI_countdown_2" show="146"/>
+      <event name="POI_countdown_3" show="147"/>
+      <event name="POI_countdown_4" show="148"/>
+      <event name="POI_countdown_5" show="150"/>
+      <event name="POI_countdown_6" show="154"/>
+      <event name="POI_countdown_7" show="156"/>
+      <event name="POI_countdown_8" show="170"/>
+      <event name="POI_countdown_9" show="171"/>
+      <event name="POI_countdown_10" show="172"/>
+   </virtualDJCommands>
 </doc>

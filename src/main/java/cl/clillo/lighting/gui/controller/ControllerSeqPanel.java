@@ -1,25 +1,28 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
+import cl.clillo.lighting.external.virtualdj.OS2LServer;
+import cl.clillo.lighting.external.virtualdj.VDJBMPEvent;
 import cl.clillo.lighting.model.QLCEfx;
 import cl.clillo.lighting.model.QLCScene;
 import cl.clillo.lighting.model.QLCSequence;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
-import lombok.extern.log4j.Log4j2;
 import lombok.extern.slf4j.Slf4j;
 
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.Label;
+import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 @Slf4j
-public class ControllerSeqPanel extends JPanel implements ActionListener, ChangeListener {
+public class ControllerSeqPanel extends JPanel implements ActionListener, ChangeListener, VDJBMPEvent {
 
     private final RunOrderTypePicker runOrderTypePicker = new RunOrderTypePicker();
 
@@ -40,12 +43,13 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     private Show showSelected;
 
     private PositionAdjustable positionAdjustable;
+    private final JTextArea txtCommands = new JTextArea();
 
     public ControllerSeqPanel(final String fixtureGroupName) {
         setLayout(null);
-        final Label lblTittle = new Label(fixtureGroupName);
-        lblTittle.setBounds(10, 10, 60, 40);
-        this.add(lblTittle);
+       // final Label lblTittle = new Label(fixtureGroupName);
+      //  lblTittle.setBounds(10, 10, 60, 40);
+     //   this.add(lblTittle);
 
         runOrderTypePicker.setBounds(10,70,140,130);
         this.add(runOrderTypePicker);
@@ -73,6 +77,11 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         btnSave.addActionListener(this);
         btnEdit.addActionListener(this);
 
+        final JScrollPane pnlCommands = new JScrollPane(txtCommands);
+        pnlCommands.setBounds(10,10, 180, 200);
+
+        this.add(pnlCommands, BorderLayout.CENTER);
+        OS2LServer.getInstance().addListener(this);
     }
 
     public void setChangeDirectionRunOrderListener(ChangeDirectionRunOrderListener changeDirectionRunOrderListener) {
@@ -186,5 +195,78 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         return null;
     }
 
+    @Override
+    public void beat(boolean change, int pos, double bpm, double strength) {
 
+    }
+
+    @Override
+    public void remoteIp(String ip) {
+
+    }
+
+    @Override
+    public void command(int id, int param) {
+        txtCommands.append(id+"\t"+param+"\n");
+    }
+
+    @Override
+    public void button(String name, String state) {
+        txtCommands.append(name+"\n");
+    }
+
+    @Override
+    public void beat(int beat) {
+
+    }
+
+    @Override
+    public void beat() {
+
+    }
+
+    @Override
+    public void beatX2() {
+
+    }
+
+    @Override
+    public void beatX2(int beat) {
+
+    }
+
+    @Override
+    public void beatX4() {
+
+    }
+
+    @Override
+    public void beatX4(int beat) {
+
+    }
+
+    @Override
+    public void beatX8() {
+
+    }
+
+    @Override
+    public void beatX8(int beat) {
+
+    }
+
+    @Override
+    public void beatX16() {
+
+    }
+
+    @Override
+    public void beatD2() {
+
+    }
+
+    @Override
+    public void beatD4() {
+
+    }
 }

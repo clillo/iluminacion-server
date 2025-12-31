@@ -298,6 +298,24 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     }
 
     @Override
+    public void command(String command) {
+        Show show = StateRepository.getInstance().getCommkandShow(command);
+        for (Show show1: ShowCollection.getInstance().getShowList()) {
+            show1.setExecuting(false);
+            if (show1.getFunction().isTotalBlackout())
+                show1.setExecuteOneTime(true);
+        }
+
+        if (show==null){
+            txtEvent.setText(command +" - undefined");
+            return;
+        }
+        txtEvent.setText(command +" - "+show.getId());
+
+        show.setExecuting(true);
+    }
+
+    @Override
     public void stateChanged(ChangeEvent e) {
         midiPages.removeChangeListener(this);
         activePanel(midiPages.getSelectedIndex());

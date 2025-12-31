@@ -70,7 +70,8 @@ public class OS2LScheduler extends Thread implements VDJBMPEvent {
 
     @Override
     public void button(String name, String state) {
-
+        if (ios2LEventListener!=null )
+            ios2LEventListener.command(name);
     }
 
     @Override

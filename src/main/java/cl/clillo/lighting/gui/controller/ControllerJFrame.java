@@ -7,18 +7,16 @@ import javax.swing.UIManager;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import java.awt.event.WindowEvent;
+import java.io.Serial;
 
 public class ControllerJFrame extends JFrame {
 
+    @Serial
     private static final long serialVersionUID = 1823403452881818081L;
 
     public ControllerJFrame() {
         enableEvents(64L);
-       /* try {
-            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {
@@ -27,7 +25,6 @@ public class ControllerJFrame extends JFrame {
         setSize(ControllerMainPanel.WIDTH1 + 300, ControllerMainPanel.HEIGHT1 + 150);
         ControllerMainPanel ControllerMainPanel = new ControllerMainPanel();
         setContentPane(ControllerMainPanel);
-
     }
 
     protected void processWindowEvent(WindowEvent e) {

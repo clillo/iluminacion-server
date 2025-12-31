@@ -11,4 +11,6 @@ public interface IOS2LEventListener {
     void pos(int pos);
 
     void event(int event);
+
+    void command(String command);
 }

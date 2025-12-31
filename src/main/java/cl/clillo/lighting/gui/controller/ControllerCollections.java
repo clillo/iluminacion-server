@@ -26,8 +26,6 @@ public class ControllerCollections extends JPanel implements ChangeListener, Lis
 
     public ControllerCollections() {
         setLayout(null);
-       // this.setOpaque(true);
-       // this.setBackground(Color.blue);
 
         final Vector<ShowListWrapper> collectionList = new Vector<>();
         for (Show show: ShowCollection.getInstance().getShowList())

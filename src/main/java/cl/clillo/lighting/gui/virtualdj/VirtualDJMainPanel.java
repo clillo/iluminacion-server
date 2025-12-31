@@ -11,11 +11,13 @@ import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Graphics;
+import java.io.Serial;
 import java.util.Arrays;
 import java.util.Map;
 
 public class VirtualDJMainPanel extends JPanel implements VDJBMPEvent {
 
+    @Serial
     private static final long serialVersionUID = -5869553409971473557L;
 
     public static final int WIDTH1 = 600;
@@ -248,7 +250,7 @@ public class VirtualDJMainPanel extends JPanel implements VDJBMPEvent {
     }
 
     private void getSongName(){
-        String node = httpClient.getString(baseUrl + "query?script=get_filepath", Map.of(), Map.of());
-        txtSongName.setText(node);
+    //    String node = httpClient.getString(baseUrl + "query?script=get_filepath", Map.of(), Map.of());
+      //  txtSongName.setText(node);
     }
 }

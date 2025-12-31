@@ -28,6 +28,7 @@ public class StateRepository {
 
     private List<Point> limitMasterDimmer = new ArrayList<>();
     private final Map<Integer, Integer> events = new HashMap<>();
+    private final Map<String, Integer> commands = new HashMap<>();
     private int rgbwMasterDimmer;
     private int movingHeadSpotBeamMasterDimmer;
     private int movingHeadSpotMasterDimmer;
@@ -124,13 +125,20 @@ public class StateRepository {
 
             writeElements(out);
 
-
-
-
             out.writeStartElement("virtualDJEvents");
             for (Map.Entry<Integer, Integer> entry: events.entrySet()){
                 out.writeStartElement("event");
                 out.writeAttribute("id", String.valueOf(entry.getKey()));
+                out.writeAttribute("show", String.valueOf(entry.getValue()));
+                out.writeEndElement();
+            }
+
+            out.writeEndElement();
+
+            out.writeStartElement("virtualDJCommands");
+            for (Map.Entry<String, Integer> entry: commands.entrySet()){
+                out.writeStartElement("command");
+                out.writeAttribute("name", String.valueOf(entry.getKey()));
                 out.writeAttribute("show", String.valueOf(entry.getValue()));
                 out.writeEndElement();
             }
@@ -187,6 +195,15 @@ public class StateRepository {
                 int showId = XMLParser.getIntAttributeValue(node, "show");
                 this.events.put(eventId, showId);
             }
+
+            final List<Node> comms = XMLParser.getNodeList(docNode, "virtualDJCommands");
+            for (Node node: comms){
+                if (!node.hasAttributes())
+                    continue;
+                String commandName = XMLParser.getStringAttributeValue(node, "name");
+                int showId = XMLParser.getIntAttributeValue(node, "show");
+                this.commands.put(commandName, showId);
+            }
         }  catch (ParserConfigurationException | IOException| SAXException e) {
             throw new RuntimeException(e);
         }
@@ -198,4 +215,12 @@ public class StateRepository {
 
         return ShowCollection.getInstance().getShow(events.get(eventId));
     }
+
+    public Show getCommkandShow(String command){
+        if (!commands.containsKey(command))
+            return null;
+
+        return ShowCollection.getInstance().getShow(commands.get(command));
+    }
 }
+
