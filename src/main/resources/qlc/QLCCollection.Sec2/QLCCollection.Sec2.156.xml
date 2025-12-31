@@ -8,9 +8,14 @@
       <name>Countdown 7</name>
    </common>
    <shows>
-      <show id="8200" name="On"/>
+      <show id="999" name="Derby Off"/>
+      <show id="998" name="Spider All Off"/>
+      <show id="3009" name="Moving Head Beam All Off"/>
+      <show id="2009" name="Moving Head Beam + Spot All Off"/>
+      <show id="8200" name="Moving Head Bee Eye On"/>
+      <show id="8106" name="Moving Head Bee Eye Random Colors"/>
+      <show id="8603" name="Moving Head Bee Eye Cross front"/>
+      <show id="8210" name="Moving Head Bee Strobe Off"/>
       <show id="8228" name="Focus OFF"/>
-      <show id="8412" name="BeeEye Center LED Sequential Red"/>
-      <show id="8501" name="Bouncing Bottom"/>
    </shows>
 </doc>

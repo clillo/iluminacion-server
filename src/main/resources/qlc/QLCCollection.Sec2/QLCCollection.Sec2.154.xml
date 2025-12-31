@@ -8,9 +8,14 @@
       <name>Countdown 6</name>
    </common>
    <shows>
-      <show id="8200" name="On"/>
-      <show id="8228" name="Focus OFF"/>
-      <show id="8412" name="BeeEye Center LED Sequential Red"/>
-      <show id="8501" name="Bouncing Bottom"/>
+      <show id="92" name="Pink Rotating"/>
+      <show id="153" name="Spiders - Sec Fast"/>
+      <show id="2000" name="All On"/>
+      <show id="2202" name="Color Change medium"/>
+      <show id="2521" name="Eight 1"/>
+      <show id="3000" name="All On"/>
+      <show id="3104" name="Yellow"/>
+      <show id="3521" name="Eight 1"/>
+      <show id="8602" name="Down full"/>
    </shows>
 </doc>

@@ -5,7 +5,7 @@
       <id>998</id>
       <type>Scene</type>
       <path>Spider</path>
-      <name>Off</name>
+      <name>Spider All Off</name>
       <blackout>true</blackout>
    </common>
    <points>

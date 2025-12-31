@@ -5,7 +5,7 @@
       <id>8200</id>
       <type>Scene</type>
       <path>Moving Head Bee Eye Dimmer</path>
-      <name>On</name>
+      <name>Moving Head Bee Eye On</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="20" type="DIMMER" value="255"/>

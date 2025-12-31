@@ -8,9 +8,9 @@
       <name>Countdown 9</name>
    </common>
    <shows>
-      <show id="8200" name="On"/>
+      <show id="8201" name="Off"/>
       <show id="8228" name="Focus OFF"/>
-      <show id="8412" name="BeeEye Center LED Sequential Red"/>
-      <show id="8501" name="Bouncing Bottom"/>
+      <show id="8210" name="Moving Head Bee Strobe Off"/>
+      <show id="300" name="Disco Ball"/>
    </shows>
 </doc>

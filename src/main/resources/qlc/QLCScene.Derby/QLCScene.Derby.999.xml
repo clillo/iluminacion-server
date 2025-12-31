@@ -4,7 +4,7 @@
         <id>999</id>
         <type>Scene</type>
         <path>Derby</path>
-        <name>Off</name>
+        <name>Derby Off</name>
         <blackout>true</blackout>
     </common>
     <points>

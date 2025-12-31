@@ -5,7 +5,7 @@
       <id>3009</id>
       <type>Scene</type>
       <path>Moving Head Beam On/Off</path>
-      <name>All Off</name>
+      <name>Moving Head Beam All Off</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="14" type="DIMMER" value="0"/>

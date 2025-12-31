@@ -9,8 +9,9 @@
    </common>
    <shows>
       <show id="8200" name="On"/>
-      <show id="8228" name="Focus OFF"/>
-      <show id="8412" name="BeeEye Center LED Sequential Red"/>
-      <show id="8501" name="Bouncing Bottom"/>
+      <show id="8104" name="White"/>
+      <show id="8220" name="Focus Difuse"/>
+      <show id="8218" name="Strobe Fast"/>
+      <show id="8600" name="Front"/>
    </shows>
 </doc>

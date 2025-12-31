@@ -5,7 +5,7 @@
       <id>28</id>
       <type>Scene</type>
       <path>Spider</path>
-      <name>All</name>
+      <name>Spider All On</name>
    </common>
    <points>
       <point fixture="4" channel="2" value="255"/>

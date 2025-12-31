@@ -5,7 +5,7 @@
       <id>2000</id>
       <type>Scene</type>
       <path>Moving Head Beam + Spot Color On.Off</path>
-      <name>All On</name>
+      <name>Moving Head Beam + Spot All On</name>
    </common>
    <points>
       <point fixture-robotic="true" fixture="8" type="DIMMER" value="255"/>
