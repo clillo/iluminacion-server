@@ -213,29 +213,11 @@ public class QLCScene extends QLCFunction{
                     qlcPointList.add(QLCPoint.buildRawPoint(fixture, baseChannel + 3, c.getW()));
                 }
             }
-        } else {
-            // Si no hay steps, pero hay fixtures definidos, generar QLCPoints vacíos (para escenas de colores aleatorios)
-            for (Integer fixtureId : fixtures) {
-                final cl.clillo.lighting.fixture.qlc.QLCFixture fixture = fixtureListBuilder.getFixture(fixtureId);
-                if (fixture == null) {
-                    log.warn("Fixture {} not found, skipping", fixtureId);
-                    continue;
-                }
-
-                for (int led = 0; led < ledCount; led++) {
-                    int baseChannel = 21 + 4 * led;
-                    qlcPointList.add(QLCPoint.buildRawPoint(fixture, baseChannel + 0, 0));
-                    qlcPointList.add(QLCPoint.buildRawPoint(fixture, baseChannel + 1, 0));
-                    qlcPointList.add(QLCPoint.buildRawPoint(fixture, baseChannel + 2, 0));
-                    qlcPointList.add(QLCPoint.buildRawPoint(fixture, baseChannel + 3, 0));
-                }
-            }
         }
 
         Collections.sort(qlcPointList);
         final String path = effect.path != null && !effect.path.isBlank() ? effect.path : "Moving Head Bee Eye Color";
-        final String subType = effect.subType != null && !effect.subType.isBlank() ? effect.subType : null;
-        final QLCScene scene = new QLCScene(effect.id, "Scene", effect.name, path, qlcPointList, false, subType);
+        final QLCScene scene = new QLCScene(effect.id, "Scene", effect.name, path, qlcPointList, false, null);
         scene.setLedPoints(ledPointsList);
         return scene;
     }
@@ -267,7 +249,6 @@ public class QLCScene extends QLCFunction{
         public String name;
         public String type = "Scene";
         public String path;
-        public String subType;
         public List<Integer> applyToFixtures;
         public int ledCount = 6;
         public List<EffectStepJson> steps = new ArrayList<>();

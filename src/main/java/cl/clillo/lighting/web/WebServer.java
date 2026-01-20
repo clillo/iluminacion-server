@@ -8,7 +8,6 @@ import cl.clillo.lighting.config.NetworkConfigService;
 import cl.clillo.lighting.config.ExternalConfigService;
 import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.external.dmx.Dmx;
-import cl.clillo.lighting.model.QLCCollection;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.model.QLCFunction;
@@ -123,12 +122,6 @@ public class WebServer {
             } else if (path != null && path.startsWith("/scenes/")) {
                 // GET /api/scenes/{id} - Obtener una escena específica
                 handleGetScene(req, resp, path);
-            } else if (path != null && path.equals("/collections")) {
-                // GET /api/collections - Listar todas las collections
-                handleGetCollections(req, resp);
-            } else if (path != null && path.startsWith("/collections/")) {
-                // GET /api/collections/{id} - Obtener una collection específica
-                handleGetCollection(req, resp, path);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -179,9 +172,6 @@ public class WebServer {
             } else if (path != null && path.startsWith("/scenes/") && path.endsWith("/send-point")) {
                 // PUT /api/scenes/{id}/send-point - Enviar un punto a ArtNet en tiempo real
                 handleSendPointToArtNet(req, resp, path);
-            } else if (path != null && path.startsWith("/collections/") && path.endsWith("/update")) {
-                // PUT /api/collections/{id}/update - Actualizar una collection
-                handleUpdateCollection(req, resp, path);
             } else {
                 resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 sendJsonResponse(resp, Map.of("error", "Not found"));
@@ -242,8 +232,6 @@ public class WebServer {
                     return path.contains("Laser");
                 case "derby":
                     return path.contains("Derby");
-                case "spiders":
-                    return path.contains("Spider");
                 default:
                     return false;
             }
@@ -264,8 +252,8 @@ public class WebServer {
             ));
             groups.add(Map.of(
                 "id", "moving-head-hibrid",
-                "name", "Moving Head Beam + Spot",
-                "displayName", "Moving Head Beam + Spot"
+                "name", "Moving Head Hibrid",
+                "displayName", "Moving Head Hibrid"
             ));
             groups.add(Map.of(
                 "id", "laser",
@@ -276,11 +264,6 @@ public class WebServer {
                 "id", "derby",
                 "name", "Derby",
                 "displayName", "Derby"
-            ));
-            groups.add(Map.of(
-                "id", "spiders",
-                "name", "Spiders",
-                "displayName", "Spiders"
             ));
             
             sendJsonResponse(resp, Map.of("groups", groups));
@@ -1192,170 +1175,6 @@ public class WebServer {
             }
         }
 
-        private void handleGetCollections(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-            ShowCollection collection = ShowCollection.getInstance();
-            List<Map<String, Object>> collections = new ArrayList<>();
-            
-            for (Show show : collection.getShowList()) {
-                if (show.getFunction() instanceof QLCCollection) {
-                    QLCCollection qlcCollection = show.getFunction();
-                    Map<String, Object> collectionData = new HashMap<>();
-                    collectionData.put("id", qlcCollection.getId());
-                    collectionData.put("name", qlcCollection.getName());
-                    collectionData.put("path", qlcCollection.getPath());
-                    collectionData.put("type", qlcCollection.getType());
-                    collectionData.put("showCount", qlcCollection.getShowList() != null ? qlcCollection.getShowList().size() : 0);
-                    
-                    // Agregar lista de shows con sus IDs y nombres
-                    List<Map<String, Object>> shows = new ArrayList<>();
-                    if (qlcCollection.getShowList() != null) {
-                        for (Show s : qlcCollection.getShowList()) {
-                            Map<String, Object> showData = new HashMap<>();
-                            showData.put("id", s.getId());
-                            showData.put("name", s.getName());
-                            shows.add(showData);
-                        }
-                    }
-                    collectionData.put("shows", shows);
-                    collections.add(collectionData);
-                }
-            }
-            
-            sendJsonResponse(resp, Map.of("collections", collections));
-        }
-
-        private void handleGetCollection(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
-            try {
-                String[] parts = path.split("/");
-                if (parts.length < 3) {
-                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    sendJsonResponse(resp, Map.of("error", "Invalid collection ID"));
-                    return;
-                }
-                
-                int collectionId = Integer.parseInt(parts[2]);
-                ShowCollection collection = ShowCollection.getInstance();
-                
-                QLCCollection foundCollection = null;
-                for (Show show : collection.getShowList()) {
-                    if (show.getFunction() instanceof QLCCollection && show.getFunction().getId() == collectionId) {
-                        foundCollection = show.getFunction();
-                        break;
-                    }
-                }
-                
-                if (foundCollection == null) {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    sendJsonResponse(resp, Map.of("error", "Collection not found"));
-                    return;
-                }
-                
-                Map<String, Object> collectionData = new HashMap<>();
-                collectionData.put("id", foundCollection.getId());
-                collectionData.put("name", foundCollection.getName());
-                collectionData.put("path", foundCollection.getPath());
-                collectionData.put("type", foundCollection.getType());
-                
-                // Agregar lista de shows
-                List<Map<String, Object>> shows = new ArrayList<>();
-                if (foundCollection.getShowList() != null) {
-                    for (Show s : foundCollection.getShowList()) {
-                        Map<String, Object> showData = new HashMap<>();
-                        showData.put("id", s.getId());
-                        showData.put("name", s.getName());
-                        shows.add(showData);
-                    }
-                }
-                collectionData.put("shows", shows);
-                
-                sendJsonResponse(resp, collectionData);
-            } catch (NumberFormatException e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                sendJsonResponse(resp, Map.of("error", "Invalid collection ID format"));
-            } catch (Exception e) {
-                log.error("Error al obtener collection", e);
-                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                sendJsonResponse(resp, Map.of("error", "Error al obtener la collection: " + e.getMessage()));
-            }
-        }
-
-        private void handleUpdateCollection(HttpServletRequest req, HttpServletResponse resp, String path) throws IOException {
-            try {
-                String[] parts = path.split("/");
-                if (parts.length < 3) {
-                    resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                    sendJsonResponse(resp, Map.of("error", "Invalid collection ID"));
-                    return;
-                }
-                
-                int collectionId = Integer.parseInt(parts[2]);
-                
-                Map<String, Object> requestData = objectMapper.readValue(req.getReader(), 
-                        objectMapper.getTypeFactory().constructMapType(Map.class, String.class, Object.class));
-                
-                ShowCollection collection = ShowCollection.getInstance();
-                
-                QLCCollection foundCollection = null;
-                Show foundShow = null;
-                for (Show show : collection.getShowList()) {
-                    if (show.getFunction() instanceof QLCCollection && show.getFunction().getId() == collectionId) {
-                        foundCollection = show.getFunction();
-                        foundShow = show;
-                        break;
-                    }
-                }
-                
-                if (foundCollection == null) {
-                    resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
-                    sendJsonResponse(resp, Map.of("error", "Collection not found"));
-                    return;
-                }
-                
-                // Actualizar nombre si se proporciona
-                String name = (String) requestData.get("name");
-                if (name != null && !name.trim().isEmpty()) {
-                    foundShow.setName(name);
-                }
-                
-                // Actualizar lista de shows si se proporciona
-                @SuppressWarnings("unchecked")
-                List<Integer> showIds = (List<Integer>) requestData.get("showIds");
-                if (showIds != null) {
-                    // Limpiar lista actual
-                    foundCollection.getShowList().clear();
-                    
-                    // Agregar los shows especificados
-                    for (Integer showId : showIds) {
-                        Show show = collection.getShow(showId);
-                        if (show != null) {
-                            foundCollection.addShow(show);
-                        }
-                    }
-                }
-                
-                // Guardar el archivo XML
-                try {
-                    String dir = ShowCollection.getInstance().getDirectory(foundCollection);
-                    foundCollection.writeToConfigFile(dir);
-                    log.info("Collection {} guardada en: {}", collectionId, dir);
-                } catch (Exception e) {
-                    log.error("Error al guardar el archivo XML de la collection {}", collectionId, e);
-                    resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                    sendJsonResponse(resp, Map.of("error", "Error al guardar el archivo: " + e.getMessage()));
-                    return;
-                }
-                
-                sendJsonResponse(resp, Map.of("status", "ok", "message", "Collection actualizada y guardada correctamente", "collectionId", collectionId));
-            } catch (NumberFormatException e) {
-                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-                sendJsonResponse(resp, Map.of("error", "Invalid collection ID format"));
-            } catch (Exception e) {
-                log.error("Error al actualizar collection", e);
-                resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
-                sendJsonResponse(resp, Map.of("error", "Error al actualizar la collection: " + e.getMessage()));
-            }
-        }
-
         private void sendJsonResponse(HttpServletResponse resp, Object data) throws IOException {
             resp.setContentType("application/json");
             resp.setCharacterEncoding("UTF-8");
@@ -1403,13 +1222,6 @@ public class WebServer {
                 resp.setCharacterEncoding("UTF-8");
                 PrintWriter out = resp.getWriter();
                 out.write(getScenesConfigHtml());
-                out.flush();
-            } else if (path != null && path.equals("/collections-config.html")) {
-                // Servir la página de configuración de collections
-                resp.setContentType("text/html");
-                resp.setCharacterEncoding("UTF-8");
-                PrintWriter out = resp.getWriter();
-                out.write(getCollectionsConfigHtml());
                 out.flush();
             } else if (path != null && path.startsWith("/scene-position-edit.html")) {
                 // Servir la página de edición especial de posiciones robóticas
@@ -1786,7 +1598,6 @@ public class WebServer {
                     "            <a href=\"/dmx-map.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🗺️ Mapa DMX</a>\n" +
                     "            <a href=\"/network-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">⚙️ Configuración de Red</a>\n" +
                     "            <a href=\"/scenes-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">🎭 Configuración de Escenas</a>\n" +
-                    "            <a href=\"/collections-config.html\" class=\"group-btn\" style=\"text-decoration: none; display: inline-block; text-align: center; color: #fff;\">📚 Configuración de Collections</a>\n" +
                     "        </div>\n" +
                     "    </div>\n" +
                     "    \n" +
@@ -2197,19 +2008,9 @@ public class WebServer {
                     "        function renderShows() {\n" +
                     "            const content = document.getElementById('content');\n" +
                     "            \n" +
-                    "            // Filtrar solo escenas para moving-head-hibrid cuyo path comience con 'Moving Head Beam + Spot'\n" +
-                    "            let filteredShows = shows;\n" +
-                    "            if (selectedGroup === 'moving-head-hibrid') {\n" +
-                    "                filteredShows = shows.filter(show => {\n" +
-                    "                    return show.type === 'Scene' && \n" +
-                    "                           show.path && \n" +
-                    "                           show.path.startsWith('Moving Head Beam + Spot');\n" +
-                    "                });\n" +
-                    "            }\n" +
-                    "            \n" +
                     "            // Agrupar por path\n" +
                     "            const grouped = {};\n" +
-                    "            filteredShows.forEach(show => {\n" +
+                    "            shows.forEach(show => {\n" +
                     "                const path = show.path || 'Sin categoría';\n" +
                     "                if (!grouped[path]) grouped[path] = [];\n" +
                     "                grouped[path].push(show);\n" +
@@ -3388,20 +3189,12 @@ public class WebServer {
                     "        <div id=\"message\" class=\"message\"></div>\n" +
                     "        \n" +
                     "        <div class=\"controls\">\n" +
-                    "            <div class=\"filter-group\" style=\"display: flex; gap: 15px; align-items: center; flex-wrap: wrap;\">\n" +
-                    "                <div style=\"display: flex; gap: 10px; align-items: center;\">\n" +
-                    "                    <label for=\"pathFilter\" style=\"font-weight: 600; color: #555;\">Filtrar por Path:</label>\n" +
-                    "                    <select id=\"pathFilter\" style=\"padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px;\">\n" +
-                    "                        <option value=\"\">Todos</option>\n" +
-                    "                    </select>\n" +
-                    "                </div>\n" +
-                    "                <div style=\"display: flex; gap: 10px; align-items: center;\">\n" +
-                    "                    <label for=\"subTypeFilter\" style=\"font-weight: 600; color: #555;\">Filtrar por SubType:</label>\n" +
-                    "                    <select id=\"subTypeFilter\" style=\"padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px;\">\n" +
-                    "                        <option value=\"\">Todos</option>\n" +
-                    "                        <option value=\"robotic.position.static\">robotic.position.static</option>\n" +
-                    "                    </select>\n" +
-                    "                </div>\n" +
+                    "            <div class=\"filter-group\" style=\"display: flex; gap: 10px; align-items: center;\">\n" +
+                    "                <label for=\"subTypeFilter\" style=\"font-weight: 600; color: #555;\">Filtrar por SubType:</label>\n" +
+                    "                <select id=\"subTypeFilter\" style=\"padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px;\">\n" +
+                    "                    <option value=\"\">Todos</option>\n" +
+                    "                    <option value=\"robotic.position.static\">robotic.position.static</option>\n" +
+                    "                </select>\n" +
                     "            </div>\n" +
                     "            <button class=\"refresh-btn\" onclick=\"loadScenes()\">🔄 Actualizar</button>\n" +
                     "        </div>\n" +
@@ -3471,7 +3264,6 @@ public class WebServer {
                     "                const data = await response.json();\n" +
                     "                scenes = data.scenes || [];\n" +
                     "                \n" +
-                    "                populatePathFilter();\n" +
                     "                renderTable();\n" +
                     "            } catch (error) {\n" +
                     "                console.error('Error cargando escenas:', error);\n" +
@@ -3480,50 +3272,18 @@ public class WebServer {
                     "            }\n" +
                     "        }\n" +
                     "        \n" +
-                    "        function populatePathFilter() {\n" +
-                    "            const pathFilter = document.getElementById('pathFilter');\n" +
-                    "            const currentValue = pathFilter.value;\n" +
-                    "            \n" +
-                    "            // Obtener paths únicos de las escenas\n" +
-                    "            const paths = [...new Set(scenes.map(scene => scene.path).filter(p => p))].sort();\n" +
-                    "            \n" +
-                    "            // Limpiar opciones excepto Todos\n" +
-                    "            pathFilter.innerHTML = '<option value=\"\">Todos</option>';\n" +
-                    "            \n" +
-                    "            // Agregar opciones de paths\n" +
-                    "            paths.forEach(path => {\n" +
-                    "                const option = document.createElement('option');\n" +
-                    "                option.value = path;\n" +
-                    "                option.textContent = path;\n" +
-                    "                pathFilter.appendChild(option);\n" +
-                    "            });\n" +
-                    "            \n" +
-                    "            // Restaurar valor anterior si existe\n" +
-                    "            if (currentValue) {\n" +
-                    "                pathFilter.value = currentValue;\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        \n" +
                     "        function renderTable() {\n" +
                     "            const tbody = document.getElementById('tableBody');\n" +
-                    "            const pathFilter = document.getElementById('pathFilter').value;\n" +
                     "            const subTypeFilter = document.getElementById('subTypeFilter').value;\n" +
                     "            \n" +
-                    "            // Filtrar escenas por path y subType\n" +
+                    "            // Filtrar escenas por subType\n" +
                     "            let filteredScenes = scenes;\n" +
-                    "            if (pathFilter) {\n" +
-                    "                filteredScenes = filteredScenes.filter(scene => scene.path === pathFilter);\n" +
-                    "            }\n" +
                     "            if (subTypeFilter) {\n" +
-                    "                filteredScenes = filteredScenes.filter(scene => scene.subType === subTypeFilter);\n" +
+                    "                filteredScenes = scenes.filter(scene => scene.subType === subTypeFilter);\n" +
                     "            }\n" +
                     "            \n" +
                     "            if (filteredScenes.length === 0) {\n" +
-                    "                const filters = [];\n" +
-                    "                if (pathFilter) filters.push('path \"' + pathFilter + '\"');\n" +
-                    "                if (subTypeFilter) filters.push('subType \"' + subTypeFilter + '\"');\n" +
-                    "                const filterText = filters.length > 0 ? ' con ' + filters.join(' y ') : '';\n" +
-                    "                tbody.innerHTML = '<tr><td colspan=\"6\" class=\"empty\">No se encontraron escenas' + filterText + '</td></tr>';\n" +
+                    "                tbody.innerHTML = '<tr><td colspan=\"6\" class=\"empty\">No se encontraron escenas' + (subTypeFilter ? ' con subType \"' + subTypeFilter + '\"' : '') + '</td></tr>';\n" +
                     "                return;\n" +
                     "            }\n" +
                     "            \n" +
@@ -3626,491 +3386,11 @@ public class WebServer {
                     "            }\n" +
                     "        }\n" +
                     "        \n" +
-                    "        // Event listeners para los filtros\n" +
-                    "        document.getElementById('pathFilter').addEventListener('change', renderTable);\n" +
+                    "        // Event listener para el filtro\n" +
                     "        document.getElementById('subTypeFilter').addEventListener('change', renderTable);\n" +
                     "        \n" +
                     "        // Cargar escenas al iniciar\n" +
                     "        loadScenes();\n" +
-                    "    </script>\n" +
-                    "</body>\n" +
-                    "</html>";
-        }
-
-        private String getCollectionsConfigHtml() {
-            return "<!DOCTYPE html>\n" +
-                    "<html lang=\"es\">\n" +
-                    "<head>\n" +
-                    "    <meta charset=\"UTF-8\">\n" +
-                    "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n" +
-                    "    <title>Configuración de Collections</title>\n" +
-                    "    <style>\n" +
-                    "        * {\n" +
-                    "            margin: 0;\n" +
-                    "            padding: 0;\n" +
-                    "            box-sizing: border-box;\n" +
-                    "        }\n" +
-                    "        body {\n" +
-                    "            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;\n" +
-                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
-                    "            min-height: 100vh;\n" +
-                    "            padding: 20px;\n" +
-                    "        }\n" +
-                    "        .container {\n" +
-                    "            max-width: 1400px;\n" +
-                    "            margin: 0 auto;\n" +
-                    "            background: white;\n" +
-                    "            border-radius: 12px;\n" +
-                    "            box-shadow: 0 10px 40px rgba(0,0,0,0.2);\n" +
-                    "            padding: 30px;\n" +
-                    "        }\n" +
-                    "        h1 {\n" +
-                    "            color: #333;\n" +
-                    "            margin-bottom: 10px;\n" +
-                    "            font-size: 2em;\n" +
-                    "        }\n" +
-                    "        .subtitle {\n" +
-                    "            color: #666;\n" +
-                    "            margin-bottom: 30px;\n" +
-                    "            font-size: 1.1em;\n" +
-                    "        }\n" +
-                    "        .back-btn {\n" +
-                    "            padding: 10px 20px;\n" +
-                    "            background: #6c757d;\n" +
-                    "            color: white;\n" +
-                    "            border: none;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            cursor: pointer;\n" +
-                    "            font-weight: 600;\n" +
-                    "            margin-bottom: 20px;\n" +
-                    "            transition: all 0.3s;\n" +
-                    "            text-decoration: none;\n" +
-                    "            display: inline-block;\n" +
-                    "        }\n" +
-                    "        .back-btn:hover {\n" +
-                    "            background: #5a6268;\n" +
-                    "            transform: translateY(-2px);\n" +
-                    "        }\n" +
-                    "        .controls {\n" +
-                    "            display: flex;\n" +
-                    "            justify-content: space-between;\n" +
-                    "            align-items: center;\n" +
-                    "            margin-bottom: 20px;\n" +
-                    "            flex-wrap: wrap;\n" +
-                    "            gap: 15px;\n" +
-                    "        }\n" +
-                    "        .filter-group {\n" +
-                    "            display: flex;\n" +
-                    "            gap: 15px;\n" +
-                    "            align-items: center;\n" +
-                    "            flex-wrap: wrap;\n" +
-                    "        }\n" +
-                    "        .refresh-btn {\n" +
-                    "            padding: 10px 20px;\n" +
-                    "            background: #667eea;\n" +
-                    "            color: white;\n" +
-                    "            border: none;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            cursor: pointer;\n" +
-                    "            font-weight: 600;\n" +
-                    "            transition: all 0.3s;\n" +
-                    "        }\n" +
-                    "        .refresh-btn:hover {\n" +
-                    "            background: #5568d3;\n" +
-                    "        }\n" +
-                    "        .table-container {\n" +
-                    "            overflow-x: auto;\n" +
-                    "            border-radius: 8px;\n" +
-                    "            box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n" +
-                    "        }\n" +
-                    "        table {\n" +
-                    "            width: 100%;\n" +
-                    "            border-collapse: collapse;\n" +
-                    "            background: white;\n" +
-                    "        }\n" +
-                    "        thead {\n" +
-                    "            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);\n" +
-                    "            color: white;\n" +
-                    "        }\n" +
-                    "        th {\n" +
-                    "            padding: 15px;\n" +
-                    "            text-align: left;\n" +
-                    "            font-weight: 600;\n" +
-                    "        }\n" +
-                    "        tbody tr {\n" +
-                    "            border-bottom: 1px solid #eee;\n" +
-                    "            transition: background-color 0.2s;\n" +
-                    "        }\n" +
-                    "        tbody tr:hover {\n" +
-                    "            background-color: #f8f9fa;\n" +
-                    "        }\n" +
-                    "        tbody tr:nth-child(even) {\n" +
-                    "            background-color: #fafafa;\n" +
-                    "        }\n" +
-                    "        td {\n" +
-                    "            padding: 12px 15px;\n" +
-                    "            color: #333;\n" +
-                    "        }\n" +
-                    "        .id-badge {\n" +
-                    "            display: inline-block;\n" +
-                    "            background: #667eea;\n" +
-                    "            color: white;\n" +
-                    "            padding: 4px 10px;\n" +
-                    "            border-radius: 12px;\n" +
-                    "            font-weight: 600;\n" +
-                    "            font-size: 0.9em;\n" +
-                    "        }\n" +
-                    "        .edit-btn {\n" +
-                    "            padding: 6px 12px;\n" +
-                    "            background: #667eea;\n" +
-                    "            color: white;\n" +
-                    "            border: none;\n" +
-                    "            border-radius: 4px;\n" +
-                    "            cursor: pointer;\n" +
-                    "            font-size: 0.9em;\n" +
-                    "            transition: all 0.3s;\n" +
-                    "        }\n" +
-                    "        .edit-btn:hover {\n" +
-                    "            background: #5568d3;\n" +
-                    "        }\n" +
-                    "        .modal {\n" +
-                    "            display: none;\n" +
-                    "            position: fixed;\n" +
-                    "            z-index: 1000;\n" +
-                    "            left: 0;\n" +
-                    "            top: 0;\n" +
-                    "            width: 100%;\n" +
-                    "            height: 100%;\n" +
-                    "            background-color: rgba(0,0,0,0.5);\n" +
-                    "        }\n" +
-                    "        .modal-content {\n" +
-                    "            background-color: white;\n" +
-                    "            margin: 5% auto;\n" +
-                    "            padding: 30px;\n" +
-                    "            border-radius: 12px;\n" +
-                    "            width: 90%;\n" +
-                    "            max-width: 600px;\n" +
-                    "            max-height: 80vh;\n" +
-                    "            overflow-y: auto;\n" +
-                    "        }\n" +
-                    "        .modal-header {\n" +
-                    "            display: flex;\n" +
-                    "            justify-content: space-between;\n" +
-                    "            align-items: center;\n" +
-                    "            margin-bottom: 20px;\n" +
-                    "        }\n" +
-                    "        .close {\n" +
-                    "            color: #aaa;\n" +
-                    "            font-size: 28px;\n" +
-                    "            font-weight: bold;\n" +
-                    "            cursor: pointer;\n" +
-                    "        }\n" +
-                    "        .close:hover {\n" +
-                    "            color: #000;\n" +
-                    "        }\n" +
-                    "        .form-group {\n" +
-                    "            margin-bottom: 20px;\n" +
-                    "        }\n" +
-                    "        label {\n" +
-                    "            display: block;\n" +
-                    "            margin-bottom: 5px;\n" +
-                    "            font-weight: 600;\n" +
-                    "            color: #333;\n" +
-                    "        }\n" +
-                    "        input, select, textarea {\n" +
-                    "            width: 100%;\n" +
-                    "            padding: 10px;\n" +
-                    "            border: 2px solid #ddd;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            font-size: 14px;\n" +
-                    "        }\n" +
-                    "        input:focus, select:focus, textarea:focus {\n" +
-                    "            outline: none;\n" +
-                    "            border-color: #667eea;\n" +
-                    "        }\n" +
-                    "        .save-btn {\n" +
-                    "            padding: 10px 20px;\n" +
-                    "            background: #28a745;\n" +
-                    "            color: white;\n" +
-                    "            border: none;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            cursor: pointer;\n" +
-                    "            font-weight: 600;\n" +
-                    "            margin-right: 10px;\n" +
-                    "        }\n" +
-                    "        .save-btn:hover {\n" +
-                    "            background: #218838;\n" +
-                    "        }\n" +
-                    "        .cancel-btn {\n" +
-                    "            padding: 10px 20px;\n" +
-                    "            background: #6c757d;\n" +
-                    "            color: white;\n" +
-                    "            border: none;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            cursor: pointer;\n" +
-                    "            font-weight: 600;\n" +
-                    "        }\n" +
-                    "        .cancel-btn:hover {\n" +
-                    "            background: #5a6268;\n" +
-                    "        }\n" +
-                    "        .loading {\n" +
-                    "            text-align: center;\n" +
-                    "            padding: 40px;\n" +
-                    "            color: #666;\n" +
-                    "        }\n" +
-                    "        .empty {\n" +
-                    "            text-align: center;\n" +
-                    "            padding: 40px;\n" +
-                    "            color: #999;\n" +
-                    "        }\n" +
-                    "        .shows-list {\n" +
-                    "            max-height: 200px;\n" +
-                    "            overflow-y: auto;\n" +
-                    "            border: 1px solid #ddd;\n" +
-                    "            border-radius: 6px;\n" +
-                    "            padding: 10px;\n" +
-                    "        }\n" +
-                    "        .show-item {\n" +
-                    "            padding: 5px;\n" +
-                    "            margin: 5px 0;\n" +
-                    "            background: #f8f9fa;\n" +
-                    "            border-radius: 4px;\n" +
-                    "        }\n" +
-                    "    </style>\n" +
-                    "</head>\n" +
-                    "<body>\n" +
-                    "    <div class=\"container\">\n" +
-                    "        <a href=\"/\" class=\"back-btn\">← Volver</a>\n" +
-                    "        <h1>📚 Configuración de Collections</h1>\n" +
-                    "        <p class=\"subtitle\">Gestiona las collections y sus shows asociados</p>\n" +
-                    "        \n" +
-                    "        <div class=\"controls\">\n" +
-                    "            <div class=\"filter-group\">\n" +
-                    "                <label for=\"pathFilter\" style=\"font-weight: 600; color: #555;\">Filtrar por Path:</label>\n" +
-                    "                <select id=\"pathFilter\" style=\"padding: 8px 12px; border: 2px solid #ddd; border-radius: 6px; font-size: 14px;\">\n" +
-                    "                    <option value=\"\">Todos</option>\n" +
-                    "                </select>\n" +
-                    "            </div>\n" +
-                    "            <button class=\"refresh-btn\" onclick=\"loadCollections()\">🔄 Actualizar</button>\n" +
-                    "        </div>\n" +
-                    "        \n" +
-                    "        <div class=\"table-container\">\n" +
-                    "            <table id=\"collectionsTable\">\n" +
-                    "                <thead>\n" +
-                    "                    <tr>\n" +
-                    "                        <th>ID</th>\n" +
-                    "                        <th>Nombre</th>\n" +
-                    "                        <th>Path</th>\n" +
-                    "                        <th>Shows</th>\n" +
-                    "                        <th>Acciones</th>\n" +
-                    "                    </tr>\n" +
-                    "                </thead>\n" +
-                    "                <tbody id=\"tableBody\">\n" +
-                    "                    <tr>\n" +
-                    "                        <td colspan=\"5\" class=\"loading\">Cargando collections...</td>\n" +
-                    "                    </tr>\n" +
-                    "                </tbody>\n" +
-                    "            </table>\n" +
-                    "        </div>\n" +
-                    "    </div>\n" +
-                    "    \n" +
-                    "    <!-- Modal de edición -->\n" +
-                    "    <div id=\"editModal\" class=\"modal\">\n" +
-                    "        <div class=\"modal-content\">\n" +
-                    "            <div class=\"modal-header\">\n" +
-                    "                <h2>Editar Collection</h2>\n" +
-                    "                <span class=\"close\" onclick=\"closeModal()\">&times;</span>\n" +
-                    "            </div>\n" +
-                    "            <form id=\"editForm\">\n" +
-                    "                <div class=\"form-group\">\n" +
-                    "                    <label for=\"editName\">Nombre:</label>\n" +
-                    "                    <input type=\"text\" id=\"editName\" required>\n" +
-                    "                </div>\n" +
-                    "                <div class=\"form-group\">\n" +
-                    "                    <label>Shows en la Collection:</label>\n" +
-                    "                    <div id=\"showsList\" class=\"shows-list\">\n" +
-                    "                        <div class=\"loading\">Cargando shows...</div>\n" +
-                    "                    </div>\n" +
-                    "                </div>\n" +
-                    "                <div style=\"margin-top: 20px;\">\n" +
-                    "                    <button type=\"submit\" class=\"save-btn\">💾 Guardar</button>\n" +
-                    "                    <button type=\"button\" class=\"cancel-btn\" onclick=\"closeModal()\">Cancelar</button>\n" +
-                    "                </div>\n" +
-                    "            </form>\n" +
-                    "        </div>\n" +
-                    "    </div>\n" +
-                    "    \n" +
-                    "    <script>\n" +
-                    "        let collections = [];\n" +
-                    "        let allShows = [];\n" +
-                    "        let currentEditingCollection = null;\n" +
-                    "        \n" +
-                    "        async function loadCollections() {\n" +
-                    "            try {\n" +
-                    "                document.getElementById('tableBody').innerHTML = \n" +
-                    "                    '<tr><td colspan=\"5\" class=\"loading\">Cargando collections...</td></tr>';\n" +
-                    "                \n" +
-                    "                const response = await fetch('/api/collections');\n" +
-                    "                const data = await response.json();\n" +
-                    "                collections = data.collections || [];\n" +
-                    "                \n" +
-                    "                // Cargar todos los shows disponibles\n" +
-                    "                const showsResponse = await fetch('/api/shows');\n" +
-                    "                const showsData = await showsResponse.json();\n" +
-                    "                allShows = showsData.shows || [];\n" +
-                    "                \n" +
-                    "                populatePathFilter();\n" +
-                    "                renderTable();\n" +
-                    "            } catch (error) {\n" +
-                    "                console.error('Error cargando collections:', error);\n" +
-                    "                document.getElementById('tableBody').innerHTML = \n" +
-                    "                    '<tr><td colspan=\"5\" class=\"empty\">Error al cargar las collections</td></tr>';\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        function populatePathFilter() {\n" +
-                    "            const pathFilter = document.getElementById('pathFilter');\n" +
-                    "            const currentValue = pathFilter.value;\n" +
-                    "            \n" +
-                    "            const paths = [...new Set(collections.map(c => c.path).filter(p => p))].sort();\n" +
-                    "            \n" +
-                    "            pathFilter.innerHTML = '<option value=\"\">Todos</option>';\n" +
-                    "            paths.forEach(path => {\n" +
-                    "                const option = document.createElement('option');\n" +
-                    "                option.value = path;\n" +
-                    "                option.textContent = path;\n" +
-                    "                pathFilter.appendChild(option);\n" +
-                    "            });\n" +
-                    "            \n" +
-                    "            if (currentValue) {\n" +
-                    "                pathFilter.value = currentValue;\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        function renderTable() {\n" +
-                    "            const tbody = document.getElementById('tableBody');\n" +
-                    "            const pathFilter = document.getElementById('pathFilter').value;\n" +
-                    "            \n" +
-                    "            let filteredCollections = collections;\n" +
-                    "            if (pathFilter) {\n" +
-                    "                filteredCollections = filteredCollections.filter(c => c.path === pathFilter);\n" +
-                    "            }\n" +
-                    "            \n" +
-                    "            if (filteredCollections.length === 0) {\n" +
-                    "                const filterText = pathFilter ? ' con path \"' + pathFilter + '\"' : '';\n" +
-                    "                tbody.innerHTML = '<tr><td colspan=\"5\" class=\"empty\">No se encontraron collections' + filterText + '</td></tr>';\n" +
-                    "                return;\n" +
-                    "            }\n" +
-                    "            \n" +
-                    "            tbody.innerHTML = filteredCollections.map(collection => {\n" +
-                    "                const showsText = collection.shows && collection.shows.length > 0 ? \n" +
-                    "                    collection.shows.map(s => s.id + ': ' + (s.name || '-')).join(', ') : \n" +
-                    "                    'Ninguno';\n" +
-                    "                \n" +
-                    "                return `\n" +
-                    "                    <tr>\n" +
-                    "                        <td><span class=\"id-badge\">${collection.id}</span></td>\n" +
-                    "                        <td><strong>${collection.name || '-'}</strong></td>\n" +
-                    "                        <td>${collection.path || '-'}</td>\n" +
-                    "                        <td style=\"max-width: 400px; overflow: hidden; text-overflow: ellipsis;\" title=\"${showsText}\">${showsText}</td>\n" +
-                    "                        <td>\n" +
-                    "                            <button class=\"edit-btn\" onclick=\"editCollection(${collection.id})\">Editar</button>\n" +
-                    "                        </td>\n" +
-                    "                    </tr>\n" +
-                    "                `;\n" +
-                    "            }).join('');\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        async function editCollection(collectionId) {\n" +
-                    "            try {\n" +
-                    "                const response = await fetch(`/api/collections/${collectionId}`);\n" +
-                    "                const collection = await response.json();\n" +
-                    "                \n" +
-                    "                currentEditingCollection = collection;\n" +
-                    "                document.getElementById('editName').value = collection.name || '';\n" +
-                    "                \n" +
-                    "                // Renderizar lista de shows\n" +
-                    "                const showsListDiv = document.getElementById('showsList');\n" +
-                    "                const collectionShowIds = new Set((collection.shows || []).map(s => s.id));\n" +
-                    "                \n" +
-                    "                showsListDiv.innerHTML = allShows.map(show => {\n" +
-                    "                    const checked = collectionShowIds.has(show.id) ? 'checked' : '';\n" +
-                    "                    return `\n" +
-                    "                        <div class=\"show-item\">\n" +
-                    "                            <label style=\"display: flex; align-items: center; cursor: pointer;\">\n" +
-                    "                                <input type=\"checkbox\" value=\"${show.id}\" ${checked} style=\"margin-right: 10px; width: auto;\">\n" +
-                    "                                <span><strong>ID ${show.id}:</strong> ${show.name || '-'} (${show.type || '-'})</span>\n" +
-                    "                            </label>\n" +
-                    "                        </div>\n" +
-                    "                    `;\n" +
-                    "                }).join('');\n" +
-                    "                \n" +
-                    "                document.getElementById('editModal').style.display = 'block';\n" +
-                    "            } catch (error) {\n" +
-                    "                console.error('Error cargando collection:', error);\n" +
-                    "                alert('Error al cargar la collection');\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        function closeModal() {\n" +
-                    "            document.getElementById('editModal').style.display = 'none';\n" +
-                    "            currentEditingCollection = null;\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        document.getElementById('editForm').addEventListener('submit', async function(e) {\n" +
-                    "            e.preventDefault();\n" +
-                    "            \n" +
-                    "            if (!currentEditingCollection) return;\n" +
-                    "            \n" +
-                    "            const collectionId = currentEditingCollection.id;\n" +
-                    "            const name = document.getElementById('editName').value;\n" +
-                    "            \n" +
-                    "            // Obtener IDs de shows seleccionados\n" +
-                    "            const selectedShowIds = Array.from(document.querySelectorAll('#showsList input[type=\"checkbox\"]:checked'))\n" +
-                    "                .map(cb => parseInt(cb.value));\n" +
-                    "            \n" +
-                    "            const updateData = {\n" +
-                    "                name: name,\n" +
-                    "                showIds: selectedShowIds\n" +
-                    "            };\n" +
-                    "            \n" +
-                    "            try {\n" +
-                    "                const response = await fetch(`/api/collections/${collectionId}/update`, {\n" +
-                    "                    method: 'PUT',\n" +
-                    "                    headers: {\n" +
-                    "                        'Content-Type': 'application/json'\n" +
-                    "                    },\n" +
-                    "                    body: JSON.stringify(updateData)\n" +
-                    "                });\n" +
-                    "                \n" +
-                    "                const result = await response.json();\n" +
-                    "                \n" +
-                    "                if (response.ok) {\n" +
-                    "                    alert('Collection actualizada correctamente');\n" +
-                    "                    closeModal();\n" +
-                    "                    loadCollections();\n" +
-                    "                } else {\n" +
-                    "                    alert('Error: ' + (result.error || 'Error desconocido'));\n" +
-                    "                }\n" +
-                    "            } catch (error) {\n" +
-                    "                console.error('Error actualizando collection:', error);\n" +
-                    "                alert('Error al actualizar la collection');\n" +
-                    "            }\n" +
-                    "        });\n" +
-                    "        \n" +
-                    "        // Cerrar modal al hacer clic fuera\n" +
-                    "        window.onclick = function(event) {\n" +
-                    "            const modal = document.getElementById('editModal');\n" +
-                    "            if (event.target == modal) {\n" +
-                    "                closeModal();\n" +
-                    "            }\n" +
-                    "        }\n" +
-                    "        \n" +
-                    "        // Event listener para el filtro\n" +
-                    "        document.getElementById('pathFilter').addEventListener('change', renderTable);\n" +
-                    "        \n" +
-                    "        // Cargar collections al iniciar\n" +
-                    "        loadCollections();\n" +
                     "    </script>\n" +
                     "</body>\n" +
                     "</html>";
