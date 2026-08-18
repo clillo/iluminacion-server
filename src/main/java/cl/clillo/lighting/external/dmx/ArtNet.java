@@ -26,9 +26,11 @@ public class ArtNet {
     private ArtNet(){
         // Cargar IP desde configuración externa
         ExternalConfigService configService = ExternalConfigService.getInstance();
-        artnetAddress = configService.getArtNetIpAddress();
+        ArtNetUtils artNetUtils = new ArtNetUtils();
+        artNetUtils.detectArtNet();
+        artnetAddress = artNetUtils.getLocalArtNetAddress();// configService.getArtNetIpAddress();
         artNetClient = new ArtNetClient(null);
-        artNetClient.start();
+        artNetClient.start(artnetAddress);
 
         dmxData = new HashMap<>();
         for (int i=0; i<MAX_UNIVERSES; i++) {
@@ -75,7 +77,8 @@ public class ArtNet {
 
     public void broadCast(){
         for (int i=0; i<MAX_UNIVERSES; i++) {
-            artNetClient.unicastDmx(artnetAddress, 0, i, dmxData.get(i));
+          //  artNetClient.unicastDmx(artnetAddress, 0, i, dmxData.get(i));
+            artNetClient.broadcastDmx(0, i, dmxData.get(i));
         }
     }
 
