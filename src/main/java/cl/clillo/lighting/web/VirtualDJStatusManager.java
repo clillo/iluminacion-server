@@ -4,6 +4,7 @@ import cl.clillo.lighting.external.virtualdj.OS2LServer;
 import cl.clillo.lighting.external.virtualdj.VDJBMPEvent;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicLong;
@@ -11,16 +12,10 @@ import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * Mantiene un snapshot del estado de comunicación con VirtualDJ (OS2L).
- * <p>
- * Nota: Se registra como listener de {@link OS2LServer} de forma lazy para evitar fallas si el puerto ya está ocupado.
  */
 public class VirtualDJStatusManager implements VDJBMPEvent {
 
-    private static final int DEFAULT_OS2L_PORT = 4444;
-    private static final long CONNECTED_THRESHOLD_MS = 10_000;
-
     private final AtomicBoolean registered = new AtomicBoolean(false);
-    private final AtomicReference<String> registerError = new AtomicReference<>(null);
 
     private final AtomicReference<String> lastRemoteIp = new AtomicReference<>(null);
     private final AtomicLong lastEventAtMs = new AtomicLong(0);
@@ -36,30 +31,28 @@ public class VirtualDJStatusManager implements VDJBMPEvent {
     private volatile String lastButtonName = null;
     private volatile String lastButtonState = null;
 
-    private void ensureRegistered() {
-        if (registered.get() || registerError.get() != null) return;
-        if (!registered.compareAndSet(false, true)) return;
-        try {
-            OS2LServer.getInstance().addListener(this);
-        } catch (Throwable t) {
-            registerError.set(t.getClass().getSimpleName() + ": " + (t.getMessage() == null ? "" : t.getMessage()));
-        }
+    private OS2LServer server() {
+        final OS2LServer server = OS2LServer.getInstance();
+        if (registered.compareAndSet(false, true))
+            server.addListener(this);
+        return server;
     }
 
     public Map<String, Object> getStatus() {
-        ensureRegistered();
+        final OS2LServer server = server();
 
         long now = System.currentTimeMillis();
         String ip = lastRemoteIp.get();
         long lastSeen = lastEventAtMs.get();
-
-        boolean connected = ip != null && lastSeen > 0 && (now - lastSeen) <= CONNECTED_THRESHOLD_MS;
+        List<String> clients = server.getConnectedClients();
 
         Map<String, Object> map = new HashMap<>();
-        map.put("os2lPort", DEFAULT_OS2L_PORT);
-        map.put("registered", registerError.get() == null); // true si pudo registrarse
-        map.put("registerError", registerError.get());
-        map.put("connected", connected);
+        map.put("os2lPort", server.getPort());
+        map.put("listening", server.isListening());
+        map.put("bindError", server.getBindError());
+        map.put("connected", !clients.isEmpty());
+        map.put("connectedClients", clients);
+        map.put("localAddresses", server.getLocalAddresses());
         map.put("lastRemoteIp", ip);
         map.put("lastEventAtMs", lastSeen == 0 ? null : lastSeen);
         map.put("lastSeenAgoMs", lastSeen == 0 ? null : (now - lastSeen));
@@ -131,5 +124,3 @@ public class VirtualDJStatusManager implements VDJBMPEvent {
     @Override public void beatD2() { touchEvent(); }
     @Override public void beatD4() { touchEvent(); }
 }
-
-

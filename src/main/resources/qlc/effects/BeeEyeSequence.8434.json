@@ -1,0 +1,84 @@
+{
+  "id": 8434,
+  "name": "Center Pulse Gold",
+  "type": "Sequence",
+  "path": "Moving Head Bee Eye Color",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        {
+          "led": 0,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 1,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 2,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 3,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 4,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 5,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 6,
+          "color": "gold.full"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        {
+          "led": 0,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 1,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 2,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 3,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 4,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 5,
+          "color": "darkblue.full"
+        },
+        {
+          "led": 6,
+          "color": "off"
+        }
+      ]
+    }
+  ]
+}

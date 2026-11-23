@@ -1,0 +1,48 @@
+{
+  "id": 8109,
+  "name": "Gold Countdown",
+  "type": "Scene",
+  "path": "Moving Head Bee Eye Color",
+  "applyToFixtures": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        {
+          "led": 0,
+          "color": "gold.full"
+        },
+        {
+          "led": 1,
+          "color": "gold.full"
+        },
+        {
+          "led": 2,
+          "color": "gold.full"
+        },
+        {
+          "led": 3,
+          "color": "gold.full"
+        },
+        {
+          "led": 4,
+          "color": "gold.full"
+        },
+        {
+          "led": 5,
+          "color": "gold.full"
+        },
+        {
+          "led": 6,
+          "color": "gold.full"
+        }
+      ]
+    }
+  ]
+}

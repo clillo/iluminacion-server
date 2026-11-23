@@ -335,8 +335,9 @@ function renderVirtualDJStatus(data) {
     const el = document.getElementById('vdjStatus');
     if (!el) return;
     const connected = data.connected ? 'SI' : 'NO';
-    const regOk = data.registered ? 'SI' : 'NO';
-    const err = data.registerError ? data.registerError : '-';
+    const listening = data.listening ? 'SI' : 'NO';
+    const err = data.bindError ? data.bindError : '-';
+    const os2lDirectIp = (data.localAddresses && data.localAddresses.length) ? data.localAddresses.join('<br>') : '-';
     const ip = data.lastRemoteIp ? data.lastRemoteIp : '-';
     const ago = (data.lastSeenAgoMs != null) ? (Math.round(data.lastSeenAgoMs/1000) + 's') : '-';
     const bpm = (data.lastBeat && data.lastBeat.bpm != null) ? data.lastBeat.bpm : '-';
@@ -344,9 +345,10 @@ function renderVirtualDJStatus(data) {
 
     el.innerHTML = '' +
       '<div class="kv">' +
+        '<div class="k">os2lDirectIp en VirtualDJ</div><div class="v">' + os2lDirectIp + '</div>' +
         '<div class="k">OS2L port</div><div class="v">' + data.os2lPort + '</div>' +
-        '<div class="k">Listener registrado</div><div class="v">' + regOk + '</div>' +
-        '<div class="k">Error registro</div><div class="v">' + err + '</div>' +
+        '<div class="k">Servidor escuchando</div><div class="v">' + listening + '</div>' +
+        '<div class="k">Error puerto</div><div class="v">' + err + '</div>' +
         '<div class="k">Conectado</div><div class="v">' + connected + '</div>' +
         '<div class="k">IP VirtualDJ</div><div class="v">' + ip + '</div>' +
         '<div class="k">Último evento</div><div class="v">' + ago + '</div>' +

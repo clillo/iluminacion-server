@@ -24,15 +24,15 @@ public class RunOrderTypePicker extends JPanel {
     public RunOrderTypePicker() {
         setLayout(null);
 
-        loopForward.setBounds(10, 10, 140, 30);
-        loopBackward.setBounds(10, 40, 140, 30);
-        pingPong.setBounds(10, 70, 100, 30);
-        random.setBounds(10, 100, 100, 30);
+        loopForward.setBounds(0, 0, 140, 25);
+        loopBackward.setBounds(0, 25, 140, 25);
+        pingPong.setBounds(0, 50, 140, 25);
+        random.setBounds(0, 75, 140, 25);
 
-        x1.setBounds(10, 150, 50, 20);
-        x2.setBounds(50, 150, 50, 20);
-        x3.setBounds(90, 150, 50, 20);
-        x4.setBounds(130, 150, 50, 20);
+        x1.setBounds(0, 105, 50, 25);
+        x2.setBounds(50, 105, 50, 25);
+        x3.setBounds(100, 105, 50, 25);
+        x4.setBounds(150, 105, 50, 25);
 
         addToButtonGroup(this, loopForward, loopBackward, pingPong, random);
         addToButtonGroup(this, x1, x2, x3, x4);

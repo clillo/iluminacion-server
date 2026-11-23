@@ -1,0 +1,282 @@
+{
+  "id": 8428,
+  "name": "Breath Amber",
+  "type": "Sequence",
+  "path": "Moving Head Bee Eye Color",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail3"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail2"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail1"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.full"
+        },
+        {
+          "led": 1,
+          "color": "amber.full"
+        },
+        {
+          "led": 2,
+          "color": "amber.full"
+        },
+        {
+          "led": 3,
+          "color": "amber.full"
+        },
+        {
+          "led": 4,
+          "color": "amber.full"
+        },
+        {
+          "led": 5,
+          "color": "amber.full"
+        },
+        {
+          "led": 6,
+          "color": "amber.full"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail1"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail1"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail2"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail2"
+        }
+      ]
+    },
+    {
+      "index": 6,
+      "leds": [
+        {
+          "led": 0,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 1,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 2,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 3,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 4,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 5,
+          "color": "amber.trail3"
+        },
+        {
+          "led": 6,
+          "color": "amber.trail3"
+        }
+      ]
+    },
+    {
+      "index": 7,
+      "leds": [
+        {
+          "led": 0,
+          "color": "off"
+        },
+        {
+          "led": 1,
+          "color": "off"
+        },
+        {
+          "led": 2,
+          "color": "off"
+        },
+        {
+          "led": 3,
+          "color": "off"
+        },
+        {
+          "led": 4,
+          "color": "off"
+        },
+        {
+          "led": 5,
+          "color": "off"
+        },
+        {
+          "led": 6,
+          "color": "off"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+{
+  "id": 8425,
+  "name": "Hue Rotate Ring",
+  "type": "Sequence",
+  "path": "Moving Head Bee Eye Color",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        {
+          "led": 0,
+          "color": "red.full"
+        },
+        {
+          "led": 1,
+          "color": "orange.full"
+        },
+        {
+          "led": 2,
+          "color": "yellow.full"
+        },
+        {
+          "led": 3,
+          "color": "green.full"
+        },
+        {
+          "led": 4,
+          "color": "cyan.full"
+        },
+        {
+          "led": 5,
+          "color": "magenta.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        {
+          "led": 0,
+          "color": "orange.full"
+        },
+        {
+          "led": 1,
+          "color": "yellow.full"
+        },
+        {
+          "led": 2,
+          "color": "green.full"
+        },
+        {
+          "led": 3,
+          "color": "cyan.full"
+        },
+        {
+          "led": 4,
+          "color": "magenta.full"
+        },
+        {
+          "led": 5,
+          "color": "red.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        {
+          "led": 0,
+          "color": "yellow.full"
+        },
+        {
+          "led": 1,
+          "color": "green.full"
+        },
+        {
+          "led": 2,
+          "color": "cyan.full"
+        },
+        {
+          "led": 3,
+          "color": "magenta.full"
+        },
+        {
+          "led": 4,
+          "color": "red.full"
+        },
+        {
+          "led": 5,
+          "color": "orange.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "leds": [
+        {
+          "led": 0,
+          "color": "green.full"
+        },
+        {
+          "led": 1,
+          "color": "cyan.full"
+        },
+        {
+          "led": 2,
+          "color": "magenta.full"
+        },
+        {
+          "led": 3,
+          "color": "red.full"
+        },
+        {
+          "led": 4,
+          "color": "orange.full"
+        },
+        {
+          "led": 5,
+          "color": "yellow.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "leds": [
+        {
+          "led": 0,
+          "color": "cyan.full"
+        },
+        {
+          "led": 1,
+          "color": "magenta.full"
+        },
+        {
+          "led": 2,
+          "color": "red.full"
+        },
+        {
+          "led": 3,
+          "color": "orange.full"
+        },
+        {
+          "led": 4,
+          "color": "yellow.full"
+        },
+        {
+          "led": 5,
+          "color": "green.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    },
+    {
+      "index": 5,
+      "leds": [
+        {
+          "led": 0,
+          "color": "magenta.full"
+        },
+        {
+          "led": 1,
+          "color": "red.full"
+        },
+        {
+          "led": 2,
+          "color": "orange.full"
+        },
+        {
+          "led": 3,
+          "color": "yellow.full"
+        },
+        {
+          "led": 4,
+          "color": "green.full"
+        },
+        {
+          "led": 5,
+          "color": "cyan.full"
+        },
+        {
+          "led": 6,
+          "color": "white.trail2"
+        }
+      ]
+    }
+  ]
+}

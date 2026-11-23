@@ -10,16 +10,20 @@ import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.slf4j.Slf4j;
 
+import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 @Slf4j
 public class ControllerSeqPanel extends JPanel implements ActionListener, ChangeListener, VDJBMPEvent {
@@ -43,7 +47,10 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
     private Show showSelected;
 
     private PositionAdjustable positionAdjustable;
+    private static final int MAX_MESSAGES = 5;
+
     private final JTextArea txtCommands = new JTextArea();
+    private final Deque<String> lastMessages = new ArrayDeque<>();
 
     public ControllerSeqPanel(final String fixtureGroupName) {
         setLayout(null);
@@ -51,7 +58,7 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
       //  lblTittle.setBounds(10, 10, 60, 40);
      //   this.add(lblTittle);
 
-        runOrderTypePicker.setBounds(10,70,140,130);
+        runOrderTypePicker.setBounds(10,100,200,130);
         this.add(runOrderTypePicker);
 
         universalTime.setBounds(10,250,140,30);
@@ -77,10 +84,16 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
         btnSave.addActionListener(this);
         btnEdit.addActionListener(this);
 
-        final JScrollPane pnlCommands = new JScrollPane(txtCommands);
-        pnlCommands.setBounds(10,10, 180, 200);
+        txtCommands.setEditable(false);
+        txtCommands.setFocusable(false);
+        txtCommands.setFont(txtCommands.getFont().deriveFont(11f));
+        txtCommands.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Color.GRAY), BorderFactory.createEmptyBorder(2, 4, 2, 4)));
+        final Insets insets = txtCommands.getInsets();
+        final int lineHeight = txtCommands.getFontMetrics(txtCommands.getFont()).getHeight();
+        txtCommands.setBounds(10, 10, 180, MAX_MESSAGES * lineHeight + insets.top + insets.bottom);
 
-        this.add(pnlCommands, BorderLayout.CENTER);
+        this.add(txtCommands);
         OS2LServer.getInstance().addListener(this);
     }
 
@@ -207,12 +220,22 @@ public class ControllerSeqPanel extends JPanel implements ActionListener, Change
 
     @Override
     public void command(int id, int param) {
-        txtCommands.append(id+"\t"+param+"\n");
+        addMessage(id+"\t"+param);
     }
 
     @Override
     public void button(String name, String state) {
-        txtCommands.append(name+"\n");
+        addMessage(name);
+    }
+
+    private void addMessage(final String message) {
+        SwingUtilities.invokeLater(() -> {
+            lastMessages.addFirst(message);
+            while (lastMessages.size() > MAX_MESSAGES)
+                lastMessages.removeLast();
+            txtCommands.setText(String.join("\n", lastMessages));
+            txtCommands.setCaretPosition(0);
+        });
     }
 
     @Override

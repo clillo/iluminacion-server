@@ -6,6 +6,9 @@ public interface VDJBMPEvent {
 
     void remoteIp(String ip);
 
+    default void remoteDisconnected(String ip) {
+    }
+
     void command(int id, int param);
 
     void button(String name, String state);

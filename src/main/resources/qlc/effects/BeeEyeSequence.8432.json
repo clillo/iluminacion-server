@@ -1,0 +1,150 @@
+{
+  "id": 8432,
+  "name": "Warm Open Soft",
+  "type": "Sequence",
+  "path": "Moving Head Bee Eye Color",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "holdMs": 1000,
+  "applyToFixtures": [
+    20,
+    21,
+    22,
+    23
+  ],
+  "ledCount": 7,
+  "steps": [
+    {
+      "index": 0,
+      "leds": [
+        {
+          "led": 0,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 1,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 2,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 3,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 4,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 5,
+          "color": "warmwhite.full"
+        },
+        {
+          "led": 6,
+          "color": "warmwhite.full"
+        }
+      ]
+    },
+    {
+      "index": 1,
+      "leds": [
+        {
+          "led": 0,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 1,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 2,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 3,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 4,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 5,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 6,
+          "color": "warmwhite.trail1"
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "leds": [
+        {
+          "led": 0,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 1,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 2,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 3,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 4,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 5,
+          "color": "warmwhite.trail2"
+        },
+        {
+          "led": 6,
+          "color": "warmwhite.trail2"
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "leds": [
+        {
+          "led": 0,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 1,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 2,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 3,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 4,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 5,
+          "color": "warmwhite.trail1"
+        },
+        {
+          "led": 6,
+          "color": "warmwhite.trail1"
+        }
+      ]
+    }
+  ]
+}

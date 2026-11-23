@@ -4,6 +4,7 @@ import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.external.dmx.ArtNet;
 import cl.clillo.lighting.external.dmx.ArtNetConnectionListener;
 import cl.clillo.lighting.external.midi.KeyData;
+import cl.clillo.lighting.external.virtualdj.OS2LServer;
 import cl.clillo.lighting.external.midi.MidiConnectionListener;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
@@ -28,6 +29,9 @@ import java.awt.event.ActionListener;
 import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnectionListener, ArtNetConnectionListener, ChangeListener, ActionListener, IOS2LEventListener  {
 
@@ -36,6 +40,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
 
     public static final int WIDTH1 = 1364;
     public static final int HEIGHT1 = 900;
+    private static final long VIRTUALDJ_STATUS_REFRESH_SECONDS = 2;
 
     private final List<JSlider> pnlListDimmer;
     private final MidiHandler midiHandler;
@@ -52,6 +57,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
     private final JTextField txtEvent = new JTextField();
     private final JLabel lblMidiStatus = new JLabel();
     private final JLabel lblArtNetStatus = new JLabel();
+    private final JLabel lblVirtualDJStatus = new JLabel();
     private final DimmerManager[] dimmers;
 
     private boolean upDown;
@@ -131,7 +137,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
 
         lblMidiStatus.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 255, 120, 36);
         lblArtNetStatus.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 296, 120, 36);
-        for (JLabel statusLabel: List.of(lblMidiStatus, lblArtNetStatus)) {
+        lblVirtualDJStatus.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 337, 120, 52);
+        for (JLabel statusLabel: List.of(lblMidiStatus, lblArtNetStatus, lblVirtualDJStatus)) {
             statusLabel.setOpaque(true);
             statusLabel.setHorizontalAlignment(JLabel.CENTER);
             panelDimmers.add(statusLabel);
@@ -150,6 +157,40 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
 
         ArtNet.getInstance().addConnectionListener(this);
         showArtNetStatus();
+
+        startVirtualDJStatusRefresh();
+    }
+
+    private void startVirtualDJStatusRefresh() {
+        final ScheduledExecutorService refresher = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            final Thread thread = new Thread(runnable, "virtualdj-status-refresh");
+            thread.setDaemon(true);
+            return thread;
+        });
+        refresher.scheduleWithFixedDelay(() -> {
+            final OS2LServer server = OS2LServer.getInstance();
+            final String bindError = server.getBindError();
+            final List<String> clients = server.getConnectedClients();
+            final List<String> localAddresses = server.getLocalAddresses();
+            SwingUtilities.invokeLater(() -> showVirtualDJStatus(server.getPort(), bindError, clients, localAddresses));
+        }, 0, VIRTUALDJ_STATUS_REFRESH_SECONDS, TimeUnit.SECONDS);
+    }
+
+    private void showVirtualDJStatus(final int port, final String bindError, final List<String> clients,
+                                     final List<String> localAddresses) {
+        final String addresses = localAddresses.isEmpty() ? "no network" : String.join("<br>", localAddresses);
+        lblVirtualDJStatus.setToolTipText("<html>Configura <b>os2lDirectIp</b> en VirtualDJ con:<br>" + addresses + "</html>");
+
+        if (bindError != null) {
+            lblVirtualDJStatus.setText("<html><center>VirtualDJ<br>port " + port + " busy</center></html>");
+            lblVirtualDJStatus.setBackground(Color.ORANGE);
+        } else if (!clients.isEmpty()) {
+            lblVirtualDJStatus.setText("<html><center>VirtualDJ<br>" + String.join("<br>", clients) + "</center></html>");
+            lblVirtualDJStatus.setBackground(Color.GREEN);
+        } else {
+            lblVirtualDJStatus.setText("<html><center>VirtualDJ<br><font size=\"2\">" + addresses + "</font></center></html>");
+            lblVirtualDJStatus.setBackground(Color.LIGHT_GRAY);
+        }
     }
 
     @Override
