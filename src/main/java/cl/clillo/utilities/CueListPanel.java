@@ -47,8 +47,8 @@ public class CueListPanel extends JPanel {
         gc.gridx++;
         top.add(loopChk, gc);
         gc.gridx++;
-        JButton loadBtn = new JButton("Load XML");
-        JButton saveBtn = new JButton("Save XML");
+        JButton loadBtn = new JButton("Load JSON");
+        JButton saveBtn = new JButton("Save JSON");
         top.add(loadBtn, gc);
         gc.gridx++;
         top.add(saveBtn, gc);
@@ -90,8 +90,8 @@ public class CueListPanel extends JPanel {
         // Actions
         loopChk.addActionListener(e -> cueList.setLoop(loopChk.isSelected()));
         nameField.addActionListener(e -> renameCueList());
-        saveBtn.addActionListener(this::saveXml);
-        loadBtn.addActionListener(this::loadXml);
+        saveBtn.addActionListener(this::saveJson);
+        loadBtn.addActionListener(this::loadJson);
         addBtn.addActionListener(this::addCueFromCurrent);
         delBtn.addActionListener(e -> deleteSelected());
         upBtn.addActionListener(e -> moveSelected(-1));
@@ -144,12 +144,12 @@ public class CueListPanel extends JPanel {
         cueJList.setSelectedIndex(newIdx);
     }
 
-    private void saveXml(ActionEvent e) {
+    private void saveJson(ActionEvent e) {
         try {
             JFileChooser fc = new JFileChooser();
             if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File f = fc.getSelectedFile();
-                new CueListXmlIO().write(f, currentFromUI());
+                File f = ensureJsonExtension(fc.getSelectedFile());
+                new CueListJsonIO().write(f, currentFromUI());
                 JOptionPane.showMessageDialog(this, "Guardado: " + f.getAbsolutePath());
             }
         } catch (Exception ex) {
@@ -157,12 +157,12 @@ public class CueListPanel extends JPanel {
         }
     }
 
-    private void loadXml(ActionEvent e) {
+    private void loadJson(ActionEvent e) {
         try {
             JFileChooser fc = new JFileChooser();
             if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
-                CueList loaded = new CueListXmlIO().read(f);
+                CueList loaded = new CueListJsonIO().read(f);
                 nameField.setText(loaded.name());
                 loopChk.setSelected(loaded.loop());
                 listModel.clear();
@@ -170,7 +170,14 @@ public class CueListPanel extends JPanel {
                 JOptionPane.showMessageDialog(this, "Cargado: " + f.getAbsolutePath());
             }
         } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, "Error al cargar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Error al cargar: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private static File ensureJsonExtension(File file) {
+        String name = file.getName();
+        if (!name.toLowerCase().endsWith(".json"))
+            return new File(file.getParentFile(), name + ".json");
+        return file;
     }
 }

@@ -1,21 +1,13 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -77,57 +69,6 @@ public class QLCEfxLine extends QLCEfx{
             nodeDelta=-1;
         }
         return nodes.get(nodePos);
-    }
-
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        super.writeElements(out);
-        writeElementsFixture(out, getFixtureList());
-
-        out.writeStartElement("points");
-
-        out.writeStartElement("origin");
-            out.writeStartElement("x");
-            out.writeCharacters(String.valueOf(originX));
-            out.writeEndElement();
-            out.writeStartElement("y");
-            out.writeCharacters(String.valueOf(originY));
-            out.writeEndElement();
-        out.writeEndElement();
-        out.writeStartElement("destiny");
-            out.writeStartElement("x");
-            out.writeCharacters(String.valueOf(destinyX));
-            out.writeEndElement();
-            out.writeStartElement("y");
-            out.writeCharacters(String.valueOf(destinyY));
-            out.writeEndElement();
-        out.writeEndElement();
-
-        out.writeEndElement();
-
-    }
-
-    public static QLCEfxLine read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = XMLParser.getDocument(file);
-        final QLCElement function = QLCElement.read(doc);
-
-        final QLCEfxLine qlcEfxMultiLine = new QLCEfxLine(function.getId(), function.getType(), function.getName(),function.getPath(),null,null,null,null, new ArrayList<>());
-
-        Node common = doc.getElementsByTagName("fixtures").item(0);
-        NodeList list = common.getChildNodes();
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                qlcEfxMultiLine.getFixtureList().add(buildFixtureData(fixtureListBuilder, node));
-            }
-        }
-
-        qlcEfxMultiLine.updateParameters(
-                XMLParser.getPathDouble(doc, "/doc/points/origin/x"),
-                XMLParser.getPathDouble(doc, "/doc/points/origin/y"),
-                XMLParser.getPathDouble(doc, "/doc/points/destiny/x"),
-                XMLParser.getPathDouble(doc, "/doc/points/destiny/y"));
-
-        return qlcEfxMultiLine;
     }
 
     public static QLCEfxLine readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {

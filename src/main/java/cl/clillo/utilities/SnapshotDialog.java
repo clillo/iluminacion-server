@@ -53,13 +53,13 @@ public class SnapshotDialog {
         addRow(p, c, r++, "start channel (1-based)", startChan);
         addRow(p, c, r++, "dimmer index (0-based, -1 none)", dimmerIdx);
 
-        int ok = JOptionPane.showConfirmDialog(parent, p, "Snapshot XML", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
+        int ok = JOptionPane.showConfirmDialog(parent, p, "Snapshot JSON", JOptionPane.OK_CANCEL_OPTION, JOptionPane.PLAIN_MESSAGE);
         if (ok == JOptionPane.OK_OPTION) {
             JFileChooser fc = new JFileChooser();
-            fc.setDialogTitle("Guardar snapshot XML");
+            fc.setDialogTitle("Guardar snapshot JSON");
             fc.setFileSelectionMode(JFileChooser.FILES_ONLY);
             if (fc.showSaveDialog(parent) == JFileChooser.APPROVE_OPTION) {
-                File chosen = ensureXmlExtension(fc.getSelectedFile());
+                File chosen = ensureJsonExtension(fc.getSelectedFile());
 
                 if (chosen.exists()) {
                     int ow = JOptionPane.showConfirmDialog(parent,
@@ -88,10 +88,10 @@ public class SnapshotDialog {
         } else { c.gridwidth = 2; p.add(comp, c); c.gridwidth = 1; }
     }
 
-    private static File ensureXmlExtension(File f) {
+    private static File ensureJsonExtension(File f) {
         String name = f.getName();
-        if (!name.toLowerCase().endsWith(".xml")) {
-            return new File(f.getParentFile(), name + ".xml");
+        if (!name.toLowerCase().endsWith(".json")) {
+            return new File(f.getParentFile(), name + ".json");
         }
         return f;
     }

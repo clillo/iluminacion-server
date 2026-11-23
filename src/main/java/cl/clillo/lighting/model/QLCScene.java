@@ -1,7 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -10,14 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -90,38 +82,6 @@ public class QLCScene extends QLCFunction{
                 return false;
 
         return true;
-    }
-
-    public static QLCScene read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = XMLParser.getDocument(file);
-        final QLCElement function = QLCElement.read(doc);
-
-        // Leer subType del nodo common
-        Node common = doc.getElementsByTagName("common").item(0);
-        String subType = null;
-        if (common != null) {
-            subType = XMLParser.getNodeString(common, "subType");
-        }
-
-        final List<QLCPoint> qlcPointList = new ArrayList<>();
-
-        Node points = doc.getElementsByTagName("points").item(0);
-        NodeList list = points.getChildNodes();
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                final QLCPoint point = QLCPoint.build(function.getId(), fixtureListBuilder, node);
-                if (point!=null)
-                    qlcPointList.add(point);
-            }
-        }
-
-        Collections.sort(qlcPointList);
-        final QLCScene scene = new QLCScene(function.getId(), function.getType(), function.getName(),function.getPath(), qlcPointList, function.isInitEventTrigger(), subType);
-        scene.setBlackout(function.isBlackout());
-        scene.setTotalBlackout(function.isTotalBlackout());
-
-        return scene;
     }
 
     /**
@@ -302,46 +262,6 @@ public class QLCScene extends QLCFunction{
         final ArrayNode points = ConfigJsonIO.createArray();
         ConfigJsonIO.writePoints(points, qlcPointList);
         root.set("points", points);
-    }
-
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        // Escribir el nodo common con subType si existe
-        out.writeStartElement("common");
-        out.writeStartElement("id");
-        out.writeCharacters(String.valueOf(getId()));
-        out.writeEndElement();
-        out.writeStartElement("type");
-        out.writeCharacters(String.valueOf(getType()));
-        out.writeEndElement();
-        out.writeStartElement("path");
-        out.writeCharacters(String.valueOf(getPath()));
-        out.writeEndElement();
-        out.writeStartElement("name");
-        out.writeCharacters(getName());
-        out.writeEndElement();
-
-        if (isBlackout()){
-            out.writeStartElement("blackout");
-            out.writeCharacters("true");
-            out.writeEndElement();
-        }
-
-        if (isTotalBlackout()){
-            out.writeStartElement("system");
-            out.writeCharacters("TotalBlackout");
-            out.writeEndElement();
-        }
-        
-        // Escribir subType si existe
-        if (subType != null && !subType.isEmpty()) {
-            out.writeStartElement("subType");
-            out.writeCharacters(subType);
-            out.writeEndElement();
-        }
-
-        out.writeEndElement();
-        
-        QLCPoint.write(out, qlcPointList);
     }
 
     /**

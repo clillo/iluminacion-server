@@ -1,7 +1,6 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
-import cl.clillo.lighting.repository.XMLParser;
 import cl.clillo.lighting.utils.MultiLineScrambler;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
@@ -10,14 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -104,72 +96,6 @@ public class QLCEfxMultiLine extends QLCEfx{
             nodePos=0;
         }
         return nodes.get(nodePos);
-    }
-
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        super.writeElements(out);
-        writeElementsFixture(out, getFixtureList());
-
-        out.writeStartElement("dimensions");
-
-        out.writeStartElement("leftUp");
-            out.writeStartElement("x");
-            out.writeCharacters(String.valueOf(leftUp.getX()));
-            out.writeEndElement();
-            out.writeStartElement("y");
-            out.writeCharacters(String.valueOf(leftUp.getY()));
-            out.writeEndElement();
-        out.writeEndElement();
-        out.writeStartElement("rightDown");
-            out.writeStartElement("x");
-            out.writeCharacters(String.valueOf(rightDown.getX()));
-            out.writeEndElement();
-            out.writeStartElement("y");
-            out.writeCharacters(String.valueOf(rightDown.getY()));
-            out.writeEndElement();
-        out.writeEndElement();
-
-        out.writeEndElement();
-
-        out.writeStartElement("config");
-        out.writeStartElement("loops");
-        out.writeCharacters(String.valueOf(loops));
-        out.writeEndElement();
-        out.writeStartElement("type");
-        out.writeCharacters(String.valueOf(scramblerType));
-        out.writeEndElement();
-        out.writeEndElement();
-    }
-
-    public static QLCEfxMultiLine read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = XMLParser.getDocument(file);
-        final QLCElement function = QLCElement.read(doc);
-
-        final QLCEfxMultiLine qlcEfxMultiLine = new QLCEfxMultiLine(function.getId(), function.getType(),
-                function.getName(),function.getPath(),null,null,null,null,
-                new ArrayList<>(), XMLParser.getPathInt(doc, "/doc/config/loops"),
-                MultiLineScrambler.Type.of( XMLParser.getPathString(doc, "/doc/config/type")));
-
-        Node common = doc.getElementsByTagName("fixtures").item(0);
-        NodeList list = common.getChildNodes();
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                qlcEfxMultiLine.getFixtureList().add(buildFixtureData(fixtureListBuilder, node));
-            }
-        }
-
-        qlcEfxMultiLine.updateParameters(
-                RealPoint.builder()
-                        .x(XMLParser.getPathDouble(doc, "/doc/dimensions/leftUp/x"))
-                        .y(XMLParser.getPathDouble(doc, "/doc/dimensions/leftUp/y"))
-                        .build(),
-                RealPoint.builder()
-                        .x(XMLParser.getPathDouble(doc, "/doc/dimensions/rightDown/x"))
-                        .y(XMLParser.getPathDouble(doc, "/doc/dimensions/rightDown/y"))
-                        .build());
-
-        return qlcEfxMultiLine;
     }
 
     public static QLCEfxMultiLine readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {

@@ -42,8 +42,8 @@ public class GroupsPanel extends JPanel {
         JButton addBtn = new JButton("Agregar/Actualizar");
         JButton delBtn = new JButton("Eliminar");
         JPanel btns = new JPanel();
-        JButton loadBtn = new JButton("Load XML");
-        JButton saveBtn = new JButton("Save XML");
+        JButton loadBtn = new JButton("Load JSON");
+        JButton saveBtn = new JButton("Save JSON");
         btns.add(addBtn);
         btns.add(delBtn);
         btns.add(loadBtn);
@@ -65,16 +65,16 @@ public class GroupsPanel extends JPanel {
         delBtn.addActionListener(e -> deleteSelected());
         groupList.addListSelectionListener(e -> onSelect());
 
-        loadBtn.addActionListener(e -> loadXml());
-        saveBtn.addActionListener(e -> saveXml());
+        loadBtn.addActionListener(e -> loadJson());
+        saveBtn.addActionListener(e -> saveJson());
         submaster.addChangeListener(e -> updateSubmaster());
     }
-    private void saveXml() {
+    private void saveJson() {
         try {
             JFileChooser fc = new JFileChooser();
             if (fc.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
-                File f = fc.getSelectedFile();
-                new FixtureGroupsXmlIO().write(f, modelGetGroups());
+                File f = ensureJsonExtension(fc.getSelectedFile());
+                new FixtureGroupsJsonIO().write(f, modelGetGroups());
                 JOptionPane.showMessageDialog(this, "Guardado: " + f.getAbsolutePath());
             }
         } catch (Exception ex) {
@@ -82,12 +82,12 @@ public class GroupsPanel extends JPanel {
         }
     }
 
-    private void loadXml() {
+    private void loadJson() {
         try {
             JFileChooser fc = new JFileChooser();
             if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
                 File f = fc.getSelectedFile();
-                java.util.List<FixtureGroup> loaded = new FixtureGroupsXmlIO().read(f);
+                java.util.List<FixtureGroup> loaded = new FixtureGroupsJsonIO().read(f);
                 listModel.clear();
                 for (FixtureGroup g : loaded) {
                     listModel.addElement(g);
@@ -204,6 +204,13 @@ public class GroupsPanel extends JPanel {
             first = false;
         }
         return sb.toString();
+    }
+
+    private static File ensureJsonExtension(File file) {
+        String name = file.getName();
+        if (!name.toLowerCase().endsWith(".json"))
+            return new File(file.getParentFile(), name + ".json");
+        return file;
     }
 
     // Métodos puente al modelo (para no romper si aún no implementas grupos en DmxModel)

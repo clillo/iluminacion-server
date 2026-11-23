@@ -83,12 +83,12 @@ public final class MainFrame extends JFrame {
             @Override public void actionPerformed(ActionEvent e) { saveCsv(); }
         }));
 
-        tb.add(new JButton(new AbstractAction("Snapshot XML...") {
+        tb.add(new JButton(new AbstractAction("Snapshot JSON...") {
             @Override public void actionPerformed(ActionEvent e) {
                 var res = SnapshotDialog.show(MainFrame.this, model.size());
                 if (res != null) {
                     try {
-                        SnapshotXmlWriter.write(res.file, model, res.meta, res.fixtureId, res.fixtureRobotic, res.startChannel, res.dimmerIndex);
+                        SnapshotJsonWriter.write(res.file, model, res.meta, res.fixtureId, res.fixtureRobotic, res.startChannel, res.dimmerIndex);
                         showStatus("Snapshot guardado: " + res.file.getName());
                     } catch (Exception ex) {
                         JOptionPane.showMessageDialog(MainFrame.this, "Error guardando snapshot: " + ex.getMessage(),

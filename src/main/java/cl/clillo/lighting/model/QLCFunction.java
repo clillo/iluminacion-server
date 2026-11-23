@@ -1,21 +1,12 @@
 package cl.clillo.lighting.model;
 
-import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
-import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
-import org.w3c.dom.Node;
 
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,59 +29,6 @@ public class QLCFunction extends QLCElement{
         return new QLCFunctionBuilder();
     }
 
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        out.writeStartElement("common");
-        out.writeStartElement("id");
-        out.writeCharacters(String.valueOf(id));
-        out.writeEndElement();
-        out.writeStartElement("type");
-        out.writeCharacters(String.valueOf(type));
-        out.writeEndElement();
-        out.writeStartElement("path");
-        out.writeCharacters(String.valueOf(path));
-        out.writeEndElement();
-        out.writeStartElement("name");
-        out.writeCharacters(name);
-        out.writeEndElement();
-
-        if (isBlackout()){
-            out.writeStartElement("blackout");
-            out.writeCharacters("true");
-            out.writeEndElement();
-        }
-
-        if (isTotalBlackout()){
-            out.writeStartElement("system");
-            out.writeCharacters("TotalBlackout");
-            out.writeEndElement();
-        }
-
-        out.writeEndElement();
-    }
-
-    protected void writeElementsFixture(final XMLStreamWriter out, final List<QLCEfxFixtureData> fixtureDataList) throws XMLStreamException {
-        out.writeStartElement("fixtures");
-        for (QLCEfxFixtureData data: fixtureDataList) {
-            out.writeStartElement("fixture");
-
-            out.writeStartElement("id");
-            if (data.getRoboticFixture()!=null)
-                out.writeCharacters(String.valueOf(data.getRoboticFixture().getId()));
-            else
-                out.writeCharacters(String.valueOf(data.getFixture().getId()));
-            out.writeEndElement();
-            out.writeStartElement("offset");
-            out.writeCharacters(String.valueOf(data.getStartOffset()));
-            out.writeEndElement();
-            out.writeStartElement("reverse");
-            out.writeCharacters(String.valueOf(data.isReverse()));
-            out.writeEndElement();
-            out.writeEndElement();
-        }
-        out.writeEndElement();
-
-    }
-
     public String configFileBaseName() {
         String name = this.getClass().getSimpleName() + ".";
         if (path == null || path.isEmpty())
@@ -110,44 +48,6 @@ public class QLCFunction extends QLCElement{
 
     protected void writeJson(final ObjectNode root) {
         ConfigJsonIO.writeCommon(root, this);
-    }
-
-    /** @deprecated kept for tools that still emit XML snapshots */
-    @Deprecated
-    public void writeToXmlConfigFile(final String dir){
-        ByteArrayOutputStream outputStream;
-        try {
-            String name = configFileBaseName();
-            outputStream = new ByteArrayOutputStream();
-            XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
-                    new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-
-            out.writeStartDocument();
-            out.writeStartElement("doc");
-
-            out.writeStartElement("title");
-            out.writeCharacters(name);
-            out.writeEndElement();
-
-            writeElements(out);
-
-            out.writeEndElement();
-            out.writeEndDocument();
-
-            out.close();
-
-            XMLParser.writeXMLFile(dir  + "/" + name + ".xml", outputStream);
-
-        } catch (XMLStreamException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    protected static QLCEfxFixtureData buildFixtureData(final FixtureListBuilder fixtureListBuilder, final Node node){
-        return QLCEfxFixtureData.builder().fixture(fixtureListBuilder.getFixture(XMLParser.getNodeInt(node, "id")))
-                .startOffset(XMLParser.getNodeDouble(node, "offset"))
-                .reverse(XMLParser.getNodeBoolean(node, "reverse"))
-                .build();
     }
 
     public void setShow(Show show) {

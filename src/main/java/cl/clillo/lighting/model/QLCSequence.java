@@ -2,7 +2,6 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.executor.IOS2LEventListener;
-import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -11,14 +10,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -217,74 +209,6 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
             steps.add(stepNode);
         }
         root.set("steps", steps);
-    }
-
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        super.writeElements(out);
-        out.writeStartElement("behaviour");
-        out.writeAttribute("order", String.valueOf(runOrder));
-        out.writeAttribute("direction", String.valueOf(direction));
-        out.writeAttribute("vdjType", String.valueOf(vdjType));
-        out.writeEndElement();
-        writeSteps(out);
-    }
-
-    protected void writeSteps(final XMLStreamWriter out) throws XMLStreamException {
-        out.writeStartElement("steps");
-        for (QLCStep step: qlcStepList) {
-            if (step instanceof QLCFakeStep)
-                continue;
-            out.writeStartElement("step");
-            out.writeAttribute("id", String.valueOf(step.getId()));
-            out.writeAttribute("fadeIn", String.valueOf(step.getFadeIn()));
-            out.writeAttribute("hold", String.valueOf(step.getHold()));
-            out.writeAttribute("fadeOut", String.valueOf(step.getFadeOut()));
-
-            QLCPoint.write(out, step.getPointList());
-
-            out.writeEndElement();
-        }
-        out.writeEndElement();
-
-    }
-
-    public static QLCSequence read(final FixtureListBuilder fixtureListBuilder, final File file) throws ParserConfigurationException, IOException, SAXException {
-        final Document doc = XMLParser.getDocument(file);
-        final QLCElement function = QLCElement.read(doc);
-
-        final List<QLCStep> qlcStepList = new ArrayList<>();
-
-        final Node behaviour = doc.getElementsByTagName("behaviour").item(0);
-
-        QLCDirection direction = QLCDirection.FORWARD;
-        QLCRunOrder runOrder = QLCRunOrder.LOOP;
-        IOS2LEventListener.Type vdjType = IOS2LEventListener.Type.UNIVERSAL;
-        if (behaviour!=null) {
-            direction = QLCDirection.valueOf(XMLParser.getStringAttributeValue(behaviour, "direction"));
-            runOrder = QLCRunOrder.valueOf(XMLParser.getStringAttributeValue(behaviour, "order"));
-            if (XMLParser.getStringAttributeValue(behaviour, "vdjType")!=null)
-                vdjType = IOS2LEventListener.Type.valueOf(XMLParser.getStringAttributeValue(behaviour, "vdjType"));
-        }
-
-        final QLCSpeed qlcSpeed = QLCSpeed.builder().build();
-
-        final Node common = doc.getElementsByTagName("steps").item(0);
-        final NodeList list = common.getChildNodes();
-
-        for (int temp = 0; temp < list.getLength(); temp++) {
-            Node node = list.item(temp);
-            if (node.getNodeType() == Node.ELEMENT_NODE) {
-                final QLCStep step = buildStep(fixtureListBuilder, node);
-                if (step!=null) {
-                    qlcStepList.add(step);
-                }
-            }
-        }
-
-        final QLCSequence sequence = new QLCSequence(function.getId(), function.getType(), function.getName(),
-                function.getPath(), direction, runOrder, qlcStepList, null, qlcSpeed);
-        sequence.setVdjType(vdjType);
-        return sequence;
     }
 
     /**
@@ -550,25 +474,6 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
         public Integer g;
         public Integer b;
         public Integer w;
-    }
-
-    protected static QLCStep buildStep(final FixtureListBuilder fixtureListBuilder, final Node node){
-        final List<QLCPoint> points = new ArrayList<>();
-        QLCStep.QLCStepBuilder qlcStep = QLCStep.builder()
-                .fadeIn(XMLParser.getIntAttributeValue(node, "fadeIn"))
-                .hold(XMLParser.getIntAttributeValue(node, "hold"))
-                .fadeOut(XMLParser.getIntAttributeValue(node, "fadeOut"))
-                .id(XMLParser.getIntAttributeValue(node, "id"))
-                .pointList(points);
-
-        for(Node pointXML: XMLParser.getNodeList(node, "points")){
-            final QLCPoint point = QLCPoint.build(0, fixtureListBuilder, pointXML);
-            if (point!=null)
-                points.add(point);
-
-        }
-
-        return qlcStep.build();
     }
 
     protected int[] getDimmerChannels(){
