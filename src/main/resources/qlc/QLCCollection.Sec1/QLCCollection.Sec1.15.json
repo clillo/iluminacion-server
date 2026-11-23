@@ -1,0 +1,76 @@
+{
+  "id": 15,
+  "type": "Collection",
+  "name": "Circle Pink Mid",
+  "path": "Sec1",
+  "shows": [
+    {
+      "id": 3006,
+      "name": "Moving Head Beam Seq 2"
+    },
+    {
+      "id": 3105,
+      "name": "Moving Head Beam Pink"
+    },
+    {
+      "id": 3511,
+      "name": "Moving Head Beam Circle 2"
+    },
+    {
+      "id": 2006,
+      "name": "Moving Head Beam + Spot Seq 2"
+    },
+    {
+      "id": 2105,
+      "name": "Moving Head Beam + Spot Magenta"
+    },
+    {
+      "id": 2511,
+      "name": "Moving Head Beam + Spot Circle 2"
+    },
+    {
+      "id": 3006,
+      "name": "Moving Head Beam Seq 2"
+    },
+    {
+      "id": 3105,
+      "name": "Moving Head Beam Pink"
+    },
+    {
+      "id": 3511,
+      "name": "Moving Head Beam Circle 2"
+    },
+    {
+      "id": 2006,
+      "name": "Moving Head Beam + Spot Seq 2"
+    },
+    {
+      "id": 2105,
+      "name": "Moving Head Beam + Spot Magenta"
+    },
+    {
+      "id": 2300,
+      "name": "Moving Head Beam + Spot Gobos Open Wide"
+    },
+    {
+      "id": 2401,
+      "name": "Moving Head Beam + Spot Gobos Prisma Off"
+    },
+    {
+      "id": 2511,
+      "name": "Moving Head Beam + Spot Circle 2"
+    },
+    {
+      "id": 3006,
+      "name": "Moving Head Beam Seq 2"
+    },
+    {
+      "id": 3105,
+      "name": "Moving Head Beam Pink"
+    },
+    {
+      "id": 3511,
+      "name": "Moving Head Beam Circle 2"
+    }
+  ]
+}

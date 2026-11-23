@@ -1,0 +1,32 @@
+{
+  "id": 2001,
+  "type": "Scene",
+  "name": "Outer",
+  "path": "Moving Head Beam + Spot Color On.Off",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 10,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 11,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 18,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": 2000,
+  "type": "Scene",
+  "name": "Moving Head Beam + Spot All On",
+  "path": "Moving Head Beam + Spot Color On.Off",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 10,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 11,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 18,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

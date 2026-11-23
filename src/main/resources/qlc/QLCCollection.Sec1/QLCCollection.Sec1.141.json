@@ -1,0 +1,40 @@
+{
+  "id": 141,
+  "type": "Collection",
+  "name": "Blue 1",
+  "path": "Sec1",
+  "shows": [
+    {
+      "id": 2520,
+      "name": "Eight"
+    },
+    {
+      "id": 3520,
+      "name": "Eight"
+    },
+    {
+      "id": 4520,
+      "name": "Moving Head Spot Eight"
+    },
+    {
+      "id": 6007,
+      "name": "Seq 3"
+    },
+    {
+      "id": 6104,
+      "name": "Blue"
+    },
+    {
+      "id": 36,
+      "name": "Blue1"
+    },
+    {
+      "id": 141,
+      "name": "Blue 1"
+    },
+    {
+      "id": 1001,
+      "name": "Spiders 1"
+    }
+  ]
+}

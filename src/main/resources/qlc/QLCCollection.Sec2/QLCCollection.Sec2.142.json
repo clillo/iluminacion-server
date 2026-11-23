@@ -1,0 +1,36 @@
+{
+  "id": 142,
+  "type": "Collection",
+  "name": "Spiders Rainbow Oscilante",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 142,
+      "name": "Spiders Rainbow Oscilante"
+    },
+    {
+      "id": 153,
+      "name": "Spiders - Sec Fast"
+    },
+    {
+      "id": 1001,
+      "name": "Spiders 1"
+    },
+    {
+      "id": 8200,
+      "name": "On"
+    },
+    {
+      "id": 8228,
+      "name": "Focus OFF"
+    },
+    {
+      "id": 8412,
+      "name": "BeeEye Center LED Sequential Red"
+    },
+    {
+      "id": 8501,
+      "name": "Bouncing Bottom"
+    }
+  ]
+}

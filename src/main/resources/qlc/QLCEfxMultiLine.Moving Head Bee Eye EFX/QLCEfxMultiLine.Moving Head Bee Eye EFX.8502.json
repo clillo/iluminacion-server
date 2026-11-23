@@ -1,0 +1,42 @@
+{
+  "id": 8502,
+  "type": "QLCEfxMultiLine",
+  "name": "Bouncing External",
+  "path": "Moving Head Bee Eye EFX",
+  "fixtures": [
+    {
+      "id": 20,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "offset": 90.0,
+      "reverse": true
+    },
+    {
+      "id": 22,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 23,
+      "offset": 270.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "leftUp": {
+      "x": 9480.629213483146,
+      "y": 35680.71111111111
+    },
+    "rightDown": {
+      "x": 30190.74157303371,
+      "y": 61458.20444444445
+    }
+  },
+  "config": {
+    "loops": 20,
+    "type": "CROSS"
+  }
+}

@@ -1,0 +1,104 @@
+{
+  "id": 3603,
+  "type": "Scene",
+  "name": "Front cross 1",
+  "path": "Moving Head Beam Positions",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 156,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 14,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 14,
+      "value": 16,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 14,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 15,
+      "value": 176,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 15,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 15,
+      "value": 16,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 15,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 16,
+      "value": 156,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 16,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 16,
+      "value": 16,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 16,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 17,
+      "value": 176,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 17,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 17,
+      "value": 16,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 17,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

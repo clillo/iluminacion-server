@@ -1,0 +1,68 @@
+{
+  "id": 6101,
+  "type": "Scene",
+  "name": "Red",
+  "path": "Moving Head Color",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 9,
+      "value": 18,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 12,
+      "value": 18,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 14,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 15,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 16,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 17,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

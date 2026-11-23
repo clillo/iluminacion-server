@@ -1,0 +1,20 @@
+{
+  "id": 4452,
+  "type": "Scene",
+  "name": "Strobe Fast",
+  "path": "Moving Head Spot Strobe",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 240,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 12,
+      "value": 240,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    }
+  ]
+}

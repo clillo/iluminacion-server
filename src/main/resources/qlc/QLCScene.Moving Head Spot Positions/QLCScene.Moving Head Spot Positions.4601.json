@@ -1,0 +1,56 @@
+{
+  "id": 4601,
+  "type": "Scene",
+  "name": "Down",
+  "path": "Moving Head Spot Positions",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 172,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 9,
+      "value": 112,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 9,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 9,
+      "value": 96,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 169,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 12,
+      "value": 113,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 12,
+      "value": 8,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 18,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

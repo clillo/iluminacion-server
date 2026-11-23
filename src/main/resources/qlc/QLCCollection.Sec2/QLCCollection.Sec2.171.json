@@ -1,0 +1,24 @@
+{
+  "id": 171,
+  "type": "Collection",
+  "name": "Countdown 9",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 8201,
+      "name": "Off"
+    },
+    {
+      "id": 8228,
+      "name": "Focus OFF"
+    },
+    {
+      "id": 8210,
+      "name": "Moving Head Bee Strobe Off"
+    },
+    {
+      "id": 300,
+      "name": "Disco Ball"
+    }
+  ]
+}

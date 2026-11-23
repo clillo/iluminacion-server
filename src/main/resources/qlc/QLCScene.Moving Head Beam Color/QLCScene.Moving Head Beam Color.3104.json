@@ -1,0 +1,32 @@
+{
+  "id": 3104,
+  "type": "Scene",
+  "name": "Yellow",
+  "path": "Moving Head Beam Color",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 90,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 15,
+      "value": 90,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 16,
+      "value": 90,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 17,
+      "value": 90,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

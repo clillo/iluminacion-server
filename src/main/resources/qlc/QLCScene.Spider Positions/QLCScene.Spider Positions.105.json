@@ -1,0 +1,28 @@
+{
+  "id": 105,
+  "type": "Scene",
+  "name": "Spider - Center",
+  "path": "Spider Positions",
+  "points": [
+    {
+      "fixture": 4,
+      "value": 92,
+      "channel": 0
+    },
+    {
+      "fixture": 4,
+      "value": 92,
+      "channel": 1
+    },
+    {
+      "fixture": 5,
+      "value": 92,
+      "channel": 0
+    },
+    {
+      "fixture": 5,
+      "value": 92,
+      "channel": 1
+    }
+  ]
+}

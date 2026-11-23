@@ -1,0 +1,24 @@
+{
+  "id": 170,
+  "type": "Collection",
+  "name": "Countdown 8",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 8200,
+      "name": "Moving Head Bee Eye On"
+    },
+    {
+      "id": 8103,
+      "name": "Moving Head Bee Eye Blue"
+    },
+    {
+      "id": 8600,
+      "name": "Moving Head Bee Eye Front"
+    },
+    {
+      "id": 8218,
+      "name": "Moving Head Bee Strobe Fast"
+    }
+  ]
+}

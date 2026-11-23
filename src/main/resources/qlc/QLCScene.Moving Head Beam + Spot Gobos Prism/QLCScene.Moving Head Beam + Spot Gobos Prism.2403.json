@@ -1,0 +1,32 @@
+{
+  "id": 2403,
+  "type": "Scene",
+  "name": "Prisma Rotating Slow",
+  "path": "Moving Head Beam + Spot Gobos Prism",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 137,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 10,
+      "value": 137,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 11,
+      "value": 137,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 18,
+      "value": 137,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": 2301,
+  "type": "Scene",
+  "name": "Open Close",
+  "path": "Moving Head Beam + Spot Gobos",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 10,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 10,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 10,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 10,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    }
+  ]
+}

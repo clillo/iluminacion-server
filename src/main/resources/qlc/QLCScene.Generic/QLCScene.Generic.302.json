@@ -1,0 +1,9 @@
+{
+  "id": 302,
+  "type": "Scene",
+  "name": "Blackout",
+  "path": "Generic",
+  "blackout": true,
+  "totalBlackout": true,
+  "points": []
+}

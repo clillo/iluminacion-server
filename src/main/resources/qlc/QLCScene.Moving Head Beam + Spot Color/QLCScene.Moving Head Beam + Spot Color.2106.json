@@ -1,0 +1,32 @@
+{
+  "id": 2106,
+  "type": "Scene",
+  "name": "Cyan",
+  "path": "Moving Head Beam + Spot Color",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

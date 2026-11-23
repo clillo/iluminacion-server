@@ -1,0 +1,34 @@
+{
+  "id": 8510,
+  "type": "QLCEfxCircle",
+  "name": "Circle 1",
+  "path": "Moving Head Bee Eye EFX",
+  "fixtures": [
+    {
+      "id": 20,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "offset": 90.0,
+      "reverse": true
+    },
+    {
+      "id": 22,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 23,
+      "offset": 270.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "centerX": 45952.0,
+    "centerY": 14563.0,
+    "width": 5940.0,
+    "height": 9340.0
+  }
+}

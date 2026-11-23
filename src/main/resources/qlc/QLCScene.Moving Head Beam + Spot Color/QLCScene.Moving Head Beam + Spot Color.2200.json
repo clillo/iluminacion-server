@@ -1,0 +1,32 @@
+{
+  "id": 2200,
+  "type": "Scene",
+  "name": "Color Change Slow",
+  "path": "Moving Head Beam + Spot Color",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 160,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 160,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 160,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 160,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

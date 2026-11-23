@@ -1,0 +1,158 @@
+{
+  "id": 5207,
+  "type": "Chaser",
+  "name": "Efectos Laser",
+  "path": "Laser",
+  "blackoutShowId": 160,
+  "properties": {
+    "runOrder": "RANDOM",
+    "direction": "FORWARD",
+    "speed": "2"
+  },
+  "shows": [
+    {
+      "id": 159,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 164,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 162,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 169,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 161,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 163,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 165,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 264,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 167,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 166,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 257,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 258,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 256,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 168,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 266,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 265,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 259,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 262,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 261,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 260,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 263,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 158,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 267,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 268,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    }
+  ]
+}

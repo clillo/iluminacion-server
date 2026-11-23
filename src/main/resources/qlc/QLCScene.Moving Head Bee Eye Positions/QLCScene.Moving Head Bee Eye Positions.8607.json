@@ -1,0 +1,105 @@
+{
+  "id": 8607,
+  "type": "Scene",
+  "name": "Disco Ball",
+  "path": "Moving Head Bee Eye Positions",
+  "subType": "robotic.position.static",
+  "points": [
+    {
+      "fixture": 20,
+      "value": 185,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 20,
+      "value": 201,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 20,
+      "value": 38,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 20,
+      "value": 194,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 21,
+      "value": 178,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 21,
+      "value": 177,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 21,
+      "value": 19,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 21,
+      "value": 212,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 22,
+      "value": 157,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 22,
+      "value": 29,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 22,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 22,
+      "value": 206,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 23,
+      "value": 203,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 23,
+      "value": 61,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 23,
+      "value": 15,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 23,
+      "value": 88,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

@@ -1,0 +1,123 @@
+{
+  "id": 4005,
+  "type": "Sequence",
+  "name": "Seq 1",
+  "path": "Moving Head Spot Sequence",
+  "order": "PINGPONG",
+  "direction": "BACKWARD",
+  "vdjType": "BEAT_X_1",
+  "steps": [
+    {
+      "id": 0,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 9,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_SHAKE"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_INDEX"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_NORMAL_SHAKE"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_SHAKE"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_INDEX"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_NORMAL_SHAKE"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_SHAKE"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_INDEX"
+        },
+        {
+          "fixture": 9,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_NORMAL_SHAKE"
+        },
+        {
+          "fixture": 12,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_SHAKE"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_INDEX"
+        },
+        {
+          "fixture": 12,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "GOBO_NORMAL_SHAKE"
+        }
+      ]
+    }
+  ]
+}

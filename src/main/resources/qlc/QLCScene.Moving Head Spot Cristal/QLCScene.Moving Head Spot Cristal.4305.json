@@ -1,0 +1,20 @@
+{
+  "id": 4305,
+  "type": "Scene",
+  "name": "Cristal Violeta",
+  "path": "Moving Head Spot Cristal",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 150,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    },
+    {
+      "fixture": 12,
+      "value": 150,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    }
+  ]
+}

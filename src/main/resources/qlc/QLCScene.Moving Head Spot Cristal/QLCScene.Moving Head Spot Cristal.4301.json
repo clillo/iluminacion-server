@@ -1,0 +1,20 @@
+{
+  "id": 4301,
+  "type": "Scene",
+  "name": "Rotating Cristal",
+  "path": "Moving Head Spot Cristal",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 100,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL_ROTATING"
+    },
+    {
+      "fixture": 12,
+      "value": 100,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL_ROTATING"
+    }
+  ]
+}

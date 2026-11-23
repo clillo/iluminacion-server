@@ -1,0 +1,44 @@
+{
+  "id": 805,
+  "type": "Collection",
+  "name": "Moving static secuencial",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 267,
+      "name": "wave lento"
+    },
+    {
+      "id": 805,
+      "name": "Moving static secuencial"
+    },
+    {
+      "id": 2009,
+      "name": "All Off"
+    },
+    {
+      "id": 3000,
+      "name": "All On"
+    },
+    {
+      "id": 3211,
+      "name": "Strobe Slow"
+    },
+    {
+      "id": 3521,
+      "name": "Eight 1"
+    },
+    {
+      "id": 4000,
+      "name": "All On"
+    },
+    {
+      "id": 4451,
+      "name": "All On"
+    },
+    {
+      "id": 4521,
+      "name": "Eight 1"
+    }
+  ]
+}

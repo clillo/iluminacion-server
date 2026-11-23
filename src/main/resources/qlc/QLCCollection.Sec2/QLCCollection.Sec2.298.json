@@ -1,0 +1,20 @@
+{
+  "id": 298,
+  "type": "Collection",
+  "name": "Mirror Ball Beam Color Rotating",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 4000,
+      "name": "Moving Head Spot All On"
+    },
+    {
+      "id": 4200,
+      "name": "Moving Head Spot Rotating Color"
+    },
+    {
+      "id": 4620,
+      "name": "Moving Head Spot Disco Ball"
+    }
+  ]
+}

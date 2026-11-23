@@ -1,0 +1,56 @@
+{
+  "id": 4605,
+  "type": "Scene",
+  "name": "Cross Two",
+  "path": "Moving Head Spot Positions",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 150,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 9,
+      "value": 53,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 9,
+      "value": 140,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 9,
+      "value": 108,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 191,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 12,
+      "value": 52,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 12,
+      "value": 240,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 42,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "id": 4611,
+  "type": "Scene",
+  "name": "Y Two",
+  "path": "Moving Head Spot Positions",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 71,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 9,
+      "value": 240,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 155,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 12,
+      "value": 73,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 12,
+      "value": 44,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 166,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

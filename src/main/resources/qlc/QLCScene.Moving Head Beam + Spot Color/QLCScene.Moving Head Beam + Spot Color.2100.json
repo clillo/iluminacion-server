@@ -1,0 +1,32 @@
+{
+  "id": 2100,
+  "type": "Scene",
+  "name": "White",
+  "path": "Moving Head Beam + Spot Color",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

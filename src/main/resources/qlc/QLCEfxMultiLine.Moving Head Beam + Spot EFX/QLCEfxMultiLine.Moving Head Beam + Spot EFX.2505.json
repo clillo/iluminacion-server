@@ -1,0 +1,42 @@
+{
+  "id": 2505,
+  "type": "QLCEfxMultiLine",
+  "name": "Bouncing Top",
+  "path": "Moving Head Beam + Spot EFX",
+  "fixtures": [
+    {
+      "id": 8,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 10,
+      "offset": 90.0,
+      "reverse": true
+    },
+    {
+      "id": 11,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "offset": 270.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "leftUp": {
+      "x": 34792.988764044945,
+      "y": 728.1777777777778
+    },
+    "rightDown": {
+      "x": 56331.50561797753,
+      "y": 21189.97333333333
+    }
+  },
+  "config": {
+    "loops": 20,
+    "type": "TOP"
+  }
+}

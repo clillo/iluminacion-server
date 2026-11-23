@@ -1,0 +1,20 @@
+{
+  "id": 4303,
+  "type": "Scene",
+  "name": "Cristal Azul 2",
+  "path": "Moving Head Spot Cristal",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    },
+    {
+      "fixture": 12,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": 4607,
+  "type": "Scene",
+  "name": "Cross Three",
+  "path": "Moving Head Spot Positions",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 193,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 9,
+      "value": 68,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 9,
+      "value": 132,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 9,
+      "value": 64,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 154,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 12,
+      "value": 66,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 12,
+      "value": 212,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 254,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

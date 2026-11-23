@@ -1,0 +1,34 @@
+{
+  "id": 2512,
+  "type": "QLCEfxCircle",
+  "name": "Circle 3",
+  "path": "Moving Head Beam + Spot EFX",
+  "fixtures": [
+    {
+      "id": 8,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 10,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 11,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "offset": 0.0,
+      "reverse": false
+    }
+  ],
+  "dimensions": {
+    "centerX": 42708.0,
+    "centerY": 13107.0,
+    "width": 7610.0,
+    "height": 12190.0
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "id": 4101,
+  "type": "Scene",
+  "name": "Red",
+  "path": "Moving Head Spot",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 18,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 12,
+      "value": 18,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": 4001,
+  "type": "Scene",
+  "name": "Outer",
+  "path": "Moving Head Spot On/Off",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_SHAKE"
+    },
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_INDEX"
+    },
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_NORMAL_SHAKE"
+    },
+    {
+      "fixture": 12,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 12,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_SHAKE"
+    },
+    {
+      "fixture": 12,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_INDEX"
+    },
+    {
+      "fixture": 12,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_NORMAL_SHAKE"
+    }
+  ]
+}

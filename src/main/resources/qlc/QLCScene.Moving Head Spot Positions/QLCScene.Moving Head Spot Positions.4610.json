@@ -1,0 +1,56 @@
+{
+  "id": 4610,
+  "type": "Scene",
+  "name": "Y One",
+  "path": "Moving Head Spot Positions",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 178,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 9,
+      "value": 5,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 9,
+      "value": 176,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 161,
+      "fixtureRobotic": true,
+      "channelType": "PAN"
+    },
+    {
+      "fixture": 12,
+      "value": 6,
+      "fixtureRobotic": true,
+      "channelType": "TILT"
+    },
+    {
+      "fixture": 12,
+      "value": 8,
+      "fixtureRobotic": true,
+      "channelType": "PAN_FINE"
+    },
+    {
+      "fixture": 12,
+      "value": 222,
+      "fixtureRobotic": true,
+      "channelType": "TILT_FINE"
+    }
+  ]
+}

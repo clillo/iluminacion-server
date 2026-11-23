@@ -1,0 +1,24 @@
+{
+  "id": 297,
+  "type": "Collection",
+  "name": "Mirror Ball Beam + Spot Color Rotating",
+  "path": "Sec1",
+  "shows": [
+    {
+      "id": 2000,
+      "name": "Moving Head Beam + Spot All On"
+    },
+    {
+      "id": 2200,
+      "name": "Moving Head Beam + Spot Color Change Slow"
+    },
+    {
+      "id": 2300,
+      "name": "Moving Head Beam + Spot Gobos Open Wide"
+    },
+    {
+      "id": 2607,
+      "name": "Moving Head Beam + Spot Disco Ball"
+    }
+  ]
+}

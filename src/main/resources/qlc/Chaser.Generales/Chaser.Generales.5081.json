@@ -1,0 +1,56 @@
+{
+  "id": 5081,
+  "type": "Chaser",
+  "name": "Secuencia 3",
+  "path": "Generales",
+  "blackoutShowId": 160,
+  "properties": {
+    "runOrder": "RANDOM",
+    "direction": "FORWARD",
+    "speed": "1"
+  },
+  "shows": [
+    {
+      "id": 92,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 130,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 802,
+      "fadeIn": 0,
+      "hold": 40000,
+      "fadeOut": 0
+    },
+    {
+      "id": 137,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 166,
+      "fadeIn": 0,
+      "hold": 5000,
+      "fadeOut": 0
+    },
+    {
+      "id": 803,
+      "fadeIn": 0,
+      "hold": 30000,
+      "fadeOut": 0
+    },
+    {
+      "id": 801,
+      "fadeIn": 0,
+      "hold": 20000,
+      "fadeOut": 0
+    }
+  ]
+}

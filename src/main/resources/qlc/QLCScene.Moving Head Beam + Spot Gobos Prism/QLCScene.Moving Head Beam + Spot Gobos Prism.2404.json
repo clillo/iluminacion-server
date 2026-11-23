@@ -1,0 +1,32 @@
+{
+  "id": 2404,
+  "type": "Scene",
+  "name": "Prisma Rotating Medium",
+  "path": "Moving Head Beam + Spot Gobos Prism",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 167,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 10,
+      "value": 167,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 11,
+      "value": 167,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 18,
+      "value": 167,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    }
+  ]
+}

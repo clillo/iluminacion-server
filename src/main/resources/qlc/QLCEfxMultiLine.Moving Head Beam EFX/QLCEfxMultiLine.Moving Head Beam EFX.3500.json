@@ -1,0 +1,42 @@
+{
+  "id": 3500,
+  "type": "QLCEfxMultiLine",
+  "name": "Bouncing Cross",
+  "path": "Moving Head Beam EFX",
+  "fixtures": [
+    {
+      "id": 14,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "offset": 90.0,
+      "reverse": true
+    },
+    {
+      "id": 16,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "offset": 270.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "leftUp": {
+      "x": 35328.0,
+      "y": 1966.08
+    },
+    "rightDown": {
+      "x": 55936.0,
+      "y": 25704.675555555557
+    }
+  },
+  "config": {
+    "loops": 20,
+    "type": "CROSS"
+  }
+}

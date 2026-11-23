@@ -1,0 +1,64 @@
+{
+  "id": 1401,
+  "type": "QLCEfxCircle",
+  "name": "circle 1",
+  "path": "Moving Head Movements",
+  "fixtures": [
+    {
+      "id": 12,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 9,
+      "offset": 36.0,
+      "reverse": true
+    },
+    {
+      "id": 14,
+      "offset": 72.0,
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "offset": 108.0,
+      "reverse": true
+    },
+    {
+      "id": 16,
+      "offset": 144.0,
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "offset": 180.0,
+      "reverse": true
+    },
+    {
+      "id": 8,
+      "offset": 216.0,
+      "reverse": false
+    },
+    {
+      "id": 10,
+      "offset": 252.0,
+      "reverse": true
+    },
+    {
+      "id": 11,
+      "offset": 288.0,
+      "reverse": false
+    },
+    {
+      "id": 18,
+      "offset": 314.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "centerX": 45952.0,
+    "centerY": 14563.555555555555,
+    "width": 8520.0,
+    "height": 13190.0
+  }
+}

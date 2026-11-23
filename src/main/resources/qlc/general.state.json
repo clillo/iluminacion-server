@@ -1,0 +1,64 @@
+{
+  "masterDimmer": {
+    "rgbw": 124,
+    "movingHeadSpotBeam": 100,
+    "movingHeadSpot": 96,
+    "movingHeadBeam": 100
+  },
+  "virtualDJEvents": [
+    {
+      "id": 1001,
+      "show": 427
+    },
+    {
+      "id": 1002,
+      "show": 153
+    }
+  ],
+  "virtualDJCommands": [
+    {
+      "name": "POI_countdown_0",
+      "show": 301
+    },
+    {
+      "name": "POI_countdown_1",
+      "show": 144
+    },
+    {
+      "name": "POI_countdown_2",
+      "show": 146
+    },
+    {
+      "name": "POI_countdown_3",
+      "show": 147
+    },
+    {
+      "name": "POI_countdown_4",
+      "show": 148
+    },
+    {
+      "name": "POI_countdown_5",
+      "show": 150
+    },
+    {
+      "name": "POI_countdown_6",
+      "show": 154
+    },
+    {
+      "name": "POI_countdown_7",
+      "show": 156
+    },
+    {
+      "name": "POI_countdown_8",
+      "show": 170
+    },
+    {
+      "name": "POI_countdown_9",
+      "show": 171
+    },
+    {
+      "name": "POI_countdown_10",
+      "show": 172
+    }
+  ]
+}

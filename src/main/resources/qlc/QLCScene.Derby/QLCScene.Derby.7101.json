@@ -1,0 +1,88 @@
+{
+  "id": 7101,
+  "type": "Scene",
+  "name": "Red Static",
+  "path": "Derby",
+  "points": [
+    {
+      "fixture": 6,
+      "value": 255,
+      "channel": 0
+    },
+    {
+      "fixture": 6,
+      "value": 255,
+      "channel": 1
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 2
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 3
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 5
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 6,
+      "value": 0,
+      "channel": 7
+    },
+    {
+      "fixture": 7,
+      "value": 255,
+      "channel": 0
+    },
+    {
+      "fixture": 7,
+      "value": 255,
+      "channel": 1
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 2
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 3
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 5
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 7
+    }
+  ]
+}

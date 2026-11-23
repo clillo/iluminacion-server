@@ -1,0 +1,20 @@
+{
+  "id": 4450,
+  "type": "Scene",
+  "name": "Strobe Off",
+  "path": "Moving Head Spot Strobe",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 12,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    }
+  ]
+}

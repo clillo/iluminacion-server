@@ -1,0 +1,32 @@
+{
+  "id": 3211,
+  "type": "Scene",
+  "name": "Strobe Slow",
+  "path": "Moving Head Beam Strobe",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 15,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 16,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 17,
+      "value": 20,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    }
+  ]
+}

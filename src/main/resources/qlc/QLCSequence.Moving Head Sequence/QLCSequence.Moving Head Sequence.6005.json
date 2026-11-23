@@ -1,0 +1,971 @@
+{
+  "id": 6005,
+  "type": "Sequence",
+  "name": "Seq 1",
+  "path": "Moving Head Sequence",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "vdjType": "BEAT_X_1",
+  "steps": [
+    {
+      "id": 0,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 14,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 15,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 16,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 17,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 20,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 21,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 22,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 23,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    }
+  ]
+}

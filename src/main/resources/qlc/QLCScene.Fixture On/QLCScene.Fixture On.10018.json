@@ -1,0 +1,14 @@
+{
+  "id": 10018,
+  "type": "Scene",
+  "name": "beam+spot 4 On",
+  "path": "Fixture On",
+  "points": [
+    {
+      "fixture": 18,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

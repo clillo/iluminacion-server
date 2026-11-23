@@ -1,0 +1,60 @@
+{
+  "id": 802,
+  "type": "Collection",
+  "name": "Moving static secuencial",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 999,
+      "name": "Off"
+    },
+    {
+      "id": 2000,
+      "name": "All On"
+    },
+    {
+      "id": 2200,
+      "name": "Color Change Slow"
+    },
+    {
+      "id": 2302,
+      "name": "Gobo 1"
+    },
+    {
+      "id": 2403,
+      "name": "Prisma Rotating Slow"
+    },
+    {
+      "id": 2521,
+      "name": "Eight 1"
+    },
+    {
+      "id": 3009,
+      "name": "All Off"
+    },
+    {
+      "id": 4000,
+      "name": "All On"
+    },
+    {
+      "id": 4307,
+      "name": "Cristal Rotating"
+    },
+    {
+      "id": 4350,
+      "name": "Gobos Off"
+    },
+    {
+      "id": 4403,
+      "name": "Prism Rotation Slow"
+    },
+    {
+      "id": 4610,
+      "name": "Y One"
+    },
+    {
+      "id": 7104,
+      "name": "Pink Static"
+    }
+  ]
+}

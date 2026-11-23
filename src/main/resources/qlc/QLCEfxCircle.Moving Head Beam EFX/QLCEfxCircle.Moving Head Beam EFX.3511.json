@@ -1,0 +1,34 @@
+{
+  "id": 3511,
+  "type": "QLCEfxCircle",
+  "name": "Circle 2",
+  "path": "Moving Head Beam EFX",
+  "fixtures": [
+    {
+      "id": 14,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 15,
+      "offset": 90.0,
+      "reverse": false
+    },
+    {
+      "id": 16,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 17,
+      "offset": 270.0,
+      "reverse": false
+    }
+  ],
+  "dimensions": {
+    "centerX": 42156.0,
+    "centerY": 13689.0,
+    "width": 6060.0,
+    "height": 13190.0
+  }
+}

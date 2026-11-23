@@ -1,0 +1,42 @@
+{
+  "id": 8504,
+  "type": "QLCEfxMultiLine",
+  "name": "Bouncing Right",
+  "path": "Moving Head Bee Eye EFX",
+  "fixtures": [
+    {
+      "id": 20,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 21,
+      "offset": 90.0,
+      "reverse": true
+    },
+    {
+      "id": 22,
+      "offset": 180.0,
+      "reverse": false
+    },
+    {
+      "id": 23,
+      "offset": 270.0,
+      "reverse": true
+    }
+  ],
+  "dimensions": {
+    "leftUp": {
+      "x": 9986.876404494382,
+      "y": 36044.8
+    },
+    "rightDown": {
+      "x": 29178.247191011236,
+      "y": 61603.84
+    }
+  },
+  "config": {
+    "loops": 20,
+    "type": "CROSS"
+  }
+}

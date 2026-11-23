@@ -1,0 +1,32 @@
+{
+  "id": 2102,
+  "type": "Scene",
+  "name": "Orange",
+  "path": "Moving Head Beam + Spot Color",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 40,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 40,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 40,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 40,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

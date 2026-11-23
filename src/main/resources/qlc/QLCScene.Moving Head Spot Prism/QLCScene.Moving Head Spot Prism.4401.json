@@ -1,0 +1,20 @@
+{
+  "id": 4401,
+  "type": "Scene",
+  "name": "Prism On",
+  "path": "Moving Head Spot Prism",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 50,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 12,
+      "value": 50,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    }
+  ]
+}

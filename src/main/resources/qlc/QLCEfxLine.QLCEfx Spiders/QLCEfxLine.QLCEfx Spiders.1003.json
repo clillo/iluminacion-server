@@ -1,0 +1,24 @@
+{
+  "id": 1003,
+  "type": "QLCEfxLine",
+  "name": "Spiders 3",
+  "path": "QLCEfx Spiders",
+  "fixtures": [
+    {
+      "id": 4,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 5,
+      "offset": 0.0,
+      "reverse": true
+    }
+  ],
+  "line": {
+    "originX": 100.0,
+    "originY": 100.0,
+    "destinyX": 65000.0,
+    "destinyY": 61000.0
+  }
+}

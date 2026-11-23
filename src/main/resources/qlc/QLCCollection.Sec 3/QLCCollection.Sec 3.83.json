@@ -1,0 +1,48 @@
+{
+  "id": 83,
+  "type": "Collection",
+  "name": "MVCXX",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 266,
+      "name": "Laser linea paneando rotando"
+    },
+    {
+      "id": 2000,
+      "name": "Moving Head Beam + Spot  All On"
+    },
+    {
+      "id": 2106,
+      "name": "Moving Head Beam + Spot Cyan"
+    },
+    {
+      "id": 2504,
+      "name": "Moving Head Beam + Spot Bouncing Right"
+    },
+    {
+      "id": 266,
+      "name": "Laser linea paneando rotando"
+    },
+    {
+      "id": 2000,
+      "name": "Moving Head Beam + Spot All On"
+    },
+    {
+      "id": 2106,
+      "name": "Moving Head Beam + Spot Cyan"
+    },
+    {
+      "id": 2305,
+      "name": "Moving Head Beam + Spot Gobo 4"
+    },
+    {
+      "id": 2403,
+      "name": "Moving Head Beam + Spot Prisma Rotating Slow"
+    },
+    {
+      "id": 2504,
+      "name": "Moving Head Beam + Spot Bouncing Right"
+    }
+  ]
+}

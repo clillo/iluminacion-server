@@ -1,0 +1,44 @@
+{
+  "id": 154,
+  "type": "Collection",
+  "name": "Countdown 6",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 92,
+      "name": "Pink Rotating"
+    },
+    {
+      "id": 153,
+      "name": "Spiders - Sec Fast"
+    },
+    {
+      "id": 2000,
+      "name": "All On"
+    },
+    {
+      "id": 2202,
+      "name": "Color Change medium"
+    },
+    {
+      "id": 2521,
+      "name": "Eight 1"
+    },
+    {
+      "id": 3000,
+      "name": "All On"
+    },
+    {
+      "id": 3104,
+      "name": "Yellow"
+    },
+    {
+      "id": 3521,
+      "name": "Eight 1"
+    },
+    {
+      "id": 8602,
+      "name": "Down full"
+    }
+  ]
+}

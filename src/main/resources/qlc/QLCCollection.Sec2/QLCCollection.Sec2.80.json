@@ -1,0 +1,40 @@
+{
+  "id": 80,
+  "type": "Collection",
+  "name": "Blue Strobo RGB",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 80,
+      "name": "Blue Strobo RGB"
+    },
+    {
+      "id": 200,
+      "name": "Blue Slow Strobo"
+    },
+    {
+      "id": 7106,
+      "name": "Red/Green Static"
+    },
+    {
+      "id": 8200,
+      "name": "On"
+    },
+    {
+      "id": 8228,
+      "name": "Focus OFF"
+    },
+    {
+      "id": 8236,
+      "name": "Rotating Slow R"
+    },
+    {
+      "id": 8423,
+      "name": "X Green"
+    },
+    {
+      "id": 8601,
+      "name": "Down"
+    }
+  ]
+}

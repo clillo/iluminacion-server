@@ -1,0 +1,128 @@
+{
+  "id": 261,
+  "type": "Scene",
+  "name": "Puntos Cuatro Colores",
+  "path": "Laser",
+  "points": [
+    {
+      "fixture": 13,
+      "value": 225,
+      "channel": 0
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 1
+    },
+    {
+      "fixture": 13,
+      "value": 255,
+      "channel": 2
+    },
+    {
+      "fixture": 13,
+      "value": 25,
+      "channel": 3
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 13,
+      "value": 232,
+      "channel": 5
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 7
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 8
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 9
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 10
+    },
+    {
+      "fixture": 13,
+      "value": 255,
+      "channel": 11
+    },
+    {
+      "fixture": 13,
+      "value": 152,
+      "channel": 12
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 13
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 14
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 15
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 16
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 17
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 18
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 19
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 20
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 21
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 22
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 23
+    }
+  ]
+}

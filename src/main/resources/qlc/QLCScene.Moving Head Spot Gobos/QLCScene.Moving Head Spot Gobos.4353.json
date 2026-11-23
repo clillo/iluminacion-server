@@ -1,0 +1,20 @@
+{
+  "id": 4353,
+  "type": "Scene",
+  "name": "Gobo 2",
+  "path": "Moving Head Spot Gobos",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 55,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_INDEX"
+    },
+    {
+      "fixture": 12,
+      "value": 55,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_INDEX"
+    }
+  ]
+}

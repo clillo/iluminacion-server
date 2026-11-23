@@ -1,0 +1,52 @@
+{
+  "id": 804,
+  "type": "Collection",
+  "name": "Moving static secuencial",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 160,
+      "name": "Off"
+    },
+    {
+      "id": 260,
+      "name": "Puntos Ocho Colores"
+    },
+    {
+      "id": 998,
+      "name": "Off"
+    },
+    {
+      "id": 2005,
+      "name": "Seq 1"
+    },
+    {
+      "id": 2101,
+      "name": "Red"
+    },
+    {
+      "id": 3005,
+      "name": "Seq 1"
+    },
+    {
+      "id": 3101,
+      "name": "Red"
+    },
+    {
+      "id": 3210,
+      "name": "Strobe Off"
+    },
+    {
+      "id": 4005,
+      "name": "Seq 1"
+    },
+    {
+      "id": 4101,
+      "name": "Red"
+    },
+    {
+      "id": 6700,
+      "name": "Up and Down"
+    }
+  ]
+}

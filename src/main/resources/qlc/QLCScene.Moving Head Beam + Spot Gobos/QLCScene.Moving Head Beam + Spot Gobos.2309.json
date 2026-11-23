@@ -1,0 +1,32 @@
+{
+  "id": 2309,
+  "type": "Scene",
+  "name": "Gobo Rotating Fast",
+  "path": "Moving Head Beam + Spot Gobos",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    }
+  ]
+}

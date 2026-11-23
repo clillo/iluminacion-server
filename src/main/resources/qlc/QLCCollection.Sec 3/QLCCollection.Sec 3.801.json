@@ -1,0 +1,32 @@
+{
+  "id": 801,
+  "type": "Collection",
+  "name": "Moving static secuencial",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 2005,
+      "name": "Seq 1"
+    },
+    {
+      "id": 2103,
+      "name": "Yellow"
+    },
+    {
+      "id": 2605,
+      "name": "Down cross 1"
+    },
+    {
+      "id": 3006,
+      "name": "Seq 2"
+    },
+    {
+      "id": 3103,
+      "name": "Blue"
+    },
+    {
+      "id": 3606,
+      "name": "Down cross 2"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": 3200,
+  "type": "Scene",
+  "name": "Rotating",
+  "path": "Moving Head Beam Color",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 200,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 15,
+      "value": 200,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 16,
+      "value": 200,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    },
+    {
+      "fixture": 17,
+      "value": 200,
+      "fixtureRobotic": true,
+      "channelType": "COLOR_WHEEL"
+    }
+  ]
+}

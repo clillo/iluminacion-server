@@ -1,0 +1,14 @@
+{
+  "id": 10017,
+  "type": "Scene",
+  "name": "Moving Head Beam 4 On",
+  "path": "Fixture On",
+  "points": [
+    {
+      "fixture": 17,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

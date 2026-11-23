@@ -1,0 +1,79 @@
+{
+  "id": 160,
+  "type": "Scene",
+  "name": "Off",
+  "path": "Laser",
+  "blackout": true,
+  "points": [
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 0
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 1
+    },
+    {
+      "fixture": 13,
+      "value": 255,
+      "channel": 2
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 3
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 5
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 7
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 8
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 9
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 10
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 11
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 12
+    },
+    {
+      "fixture": 13,
+      "value": 0,
+      "channel": 13
+    }
+  ]
+}

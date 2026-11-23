@@ -1,0 +1,32 @@
+{
+  "id": 4500,
+  "type": "QLCEfxMultiLine",
+  "name": "Bouncing Cross",
+  "path": "Moving Head Spot EFX",
+  "fixtures": [
+    {
+      "id": 9,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 12,
+      "offset": 180.0,
+      "reverse": false
+    }
+  ],
+  "dimensions": {
+    "leftUp": {
+      "x": 8698.247191011236,
+      "y": 34224.35555555556
+    },
+    "rightDown": {
+      "x": 30420.85393258427,
+      "y": 61021.29777777778
+    }
+  },
+  "config": {
+    "loops": 20,
+    "type": "CROSS"
+  }
+}

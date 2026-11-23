@@ -1,0 +1,32 @@
+{
+  "id": 8212,
+  "type": "Scene",
+  "name": "Strobe Slow",
+  "path": "Moving Head Bee Eye Strobe",
+  "points": [
+    {
+      "fixture": 20,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 21,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 22,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 23,
+      "value": 80,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    }
+  ]
+}

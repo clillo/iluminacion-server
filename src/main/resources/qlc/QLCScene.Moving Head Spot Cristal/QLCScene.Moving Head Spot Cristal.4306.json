@@ -1,0 +1,20 @@
+{
+  "id": 4306,
+  "type": "Scene",
+  "name": "Cristal Amarillo",
+  "path": "Moving Head Spot Cristal",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 180,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    },
+    {
+      "fixture": 12,
+      "value": 180,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_CRISTAL"
+    }
+  ]
+}

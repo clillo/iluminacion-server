@@ -1,0 +1,24 @@
+{
+  "id": 1,
+  "type": "Collection",
+  "name": "Moving Head Circle Pink",
+  "path": "Sec 3",
+  "shows": [
+    {
+      "id": 3000,
+      "name": "Moving Head Beam All On"
+    },
+    {
+      "id": 3105,
+      "name": "Moving Head Beam Pink"
+    },
+    {
+      "id": 3210,
+      "name": "Moving Head Beam Strobe Off"
+    },
+    {
+      "id": 3510,
+      "name": "Moving Head Beam Circle 1"
+    }
+  ]
+}

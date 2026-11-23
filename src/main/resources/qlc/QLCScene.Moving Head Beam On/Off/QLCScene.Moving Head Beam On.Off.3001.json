@@ -1,0 +1,32 @@
+{
+  "id": 3001,
+  "type": "Scene",
+  "name": "Outer",
+  "path": "Moving Head Beam On/Off",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 15,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 16,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 17,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

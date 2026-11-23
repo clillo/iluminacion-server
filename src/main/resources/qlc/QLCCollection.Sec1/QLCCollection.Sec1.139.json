@@ -1,0 +1,28 @@
+{
+  "id": 139,
+  "type": "Collection",
+  "name": "Red Green 3",
+  "path": "Sec1",
+  "shows": [
+    {
+      "id": 6005,
+      "name": "Seq 1"
+    },
+    {
+      "id": 6106,
+      "name": "Moving Head Beam + Spot Green"
+    },
+    {
+      "id": 6700,
+      "name": "Up and Down"
+    },
+    {
+      "id": 41,
+      "name": "Green 2"
+    },
+    {
+      "id": 1001,
+      "name": "Spiders 1"
+    }
+  ]
+}

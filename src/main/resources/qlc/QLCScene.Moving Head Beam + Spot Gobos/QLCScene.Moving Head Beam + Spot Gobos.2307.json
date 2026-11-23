@@ -1,0 +1,32 @@
+{
+  "id": 2307,
+  "type": "Scene",
+  "name": "Gobo 6",
+  "path": "Moving Head Beam + Spot Gobos",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 70,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 70,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 70,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 70,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    }
+  ]
+}

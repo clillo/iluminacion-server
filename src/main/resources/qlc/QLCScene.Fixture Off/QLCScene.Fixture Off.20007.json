@@ -1,0 +1,48 @@
+{
+  "id": 20007,
+  "type": "Scene",
+  "name": "Fixture 7 Off",
+  "path": "Fixture Off",
+  "points": [
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 0
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 1
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 2
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 3
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 5
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 7,
+      "value": 0,
+      "channel": 7
+    }
+  ]
+}

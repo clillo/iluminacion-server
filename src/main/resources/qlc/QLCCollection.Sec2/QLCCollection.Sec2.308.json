@@ -1,0 +1,12 @@
+{
+  "id": 308,
+  "type": "Collection",
+  "name": "Spoting Red Laser",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 265,
+      "name": "Laser linea rotando"
+    }
+  ]
+}

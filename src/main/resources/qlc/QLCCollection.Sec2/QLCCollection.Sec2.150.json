@@ -1,0 +1,12 @@
+{
+  "id": 150,
+  "type": "Collection",
+  "name": "Countdown 5",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 8201,
+      "name": "Off"
+    }
+  ]
+}

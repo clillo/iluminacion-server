@@ -1,0 +1,58 @@
+{
+  "id": 20005,
+  "type": "Scene",
+  "name": "Fixture 5 Off",
+  "path": "Fixture Off",
+  "points": [
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 2
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 3
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 4
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 5
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 6
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 7
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 8
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 9
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 10
+    },
+    {
+      "fixture": 5,
+      "value": 0,
+      "channel": 11
+    }
+  ]
+}

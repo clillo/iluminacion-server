@@ -1,0 +1,14 @@
+{
+  "id": 20017,
+  "type": "Scene",
+  "name": "Fixture 17 Off",
+  "path": "Fixture Off",
+  "points": [
+    {
+      "fixture": 17,
+      "value": 0,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "id": 152,
+  "type": "Collection",
+  "name": "Rainbow 1",
+  "path": "Sec2",
+  "shows": [
+    {
+      "id": 267,
+      "name": "Laser wave lento"
+    },
+    {
+      "id": 2606,
+      "name": "Moving Head Beam + Spot Down cross 2"
+    },
+    {
+      "id": 3605,
+      "name": "Moving Head Beam + Spot Down cross 1"
+    },
+    {
+      "id": 4607,
+      "name": "Moving Head Beam + Spot Cross Three"
+    },
+    {
+      "id": 6006,
+      "name": "Moving Head Beam + Spot Seq 2"
+    },
+    {
+      "id": 6101,
+      "name": "Moving Head Beam + Spot Red"
+    }
+  ]
+}

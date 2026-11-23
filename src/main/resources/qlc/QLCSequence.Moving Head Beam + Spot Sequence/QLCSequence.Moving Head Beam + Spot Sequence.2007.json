@@ -1,0 +1,75 @@
+{
+  "id": 2007,
+  "type": "Sequence",
+  "name": "Seq 3",
+  "path": "Moving Head Beam + Spot Sequence",
+  "order": "PINGPONG",
+  "direction": "BACKWARD",
+  "vdjType": "BEAT_X_1",
+  "steps": [
+    {
+      "id": 0,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "fadeIn": 0,
+      "hold": 2000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 8,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 10,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 11,
+          "value": 255,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        },
+        {
+          "fixture": 18,
+          "value": 0,
+          "fixtureRobotic": true,
+          "channelType": "DIMMER"
+        }
+      ]
+    }
+  ]
+}

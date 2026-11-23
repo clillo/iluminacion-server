@@ -1,0 +1,32 @@
+{
+  "id": 2303,
+  "type": "Scene",
+  "name": "Gobo 2",
+  "path": "Moving Head Beam + Spot Gobos",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 10,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 11,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    },
+    {
+      "fixture": 18,
+      "value": 30,
+      "fixtureRobotic": true,
+      "channelType": "GOBO_WHEEL"
+    }
+  ]
+}

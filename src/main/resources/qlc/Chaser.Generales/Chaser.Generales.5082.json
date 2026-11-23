@@ -1,0 +1,62 @@
+{
+  "id": 5082,
+  "type": "Chaser",
+  "name": "Secuencia 4",
+  "path": "Generales",
+  "blackoutShowId": 160,
+  "properties": {
+    "runOrder": "RANDOM",
+    "direction": "FORWARD",
+    "speed": "2"
+  },
+  "shows": [
+    {
+      "id": 92,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 300,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 139,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 141,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 157,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 297,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 80,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    },
+    {
+      "id": 142,
+      "fadeIn": 0,
+      "hold": 10000,
+      "fadeOut": 0
+    }
+  ]
+}

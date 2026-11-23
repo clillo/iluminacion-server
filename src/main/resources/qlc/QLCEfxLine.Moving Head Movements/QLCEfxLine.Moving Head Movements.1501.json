@@ -1,0 +1,19 @@
+{
+  "id": 1501,
+  "type": "QLCEfxLine",
+  "name": "line-1",
+  "path": "Moving Head Movements",
+  "fixtures": [
+    {
+      "id": 12,
+      "offset": 0.0,
+      "reverse": false
+    }
+  ],
+  "line": {
+    "originX": 57088.0,
+    "originY": 3786.0,
+    "destinyX": 38848.0,
+    "destinyY": 20461.795555555556
+  }
+}

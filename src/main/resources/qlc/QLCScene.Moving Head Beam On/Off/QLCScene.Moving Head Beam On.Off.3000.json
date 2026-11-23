@@ -1,0 +1,32 @@
+{
+  "id": 3000,
+  "type": "Scene",
+  "name": "Moving Head Beam All On",
+  "path": "Moving Head Beam On/Off",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 15,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 16,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    },
+    {
+      "fixture": 17,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "id": 4403,
+  "type": "Scene",
+  "name": "Prism Rotation Slow",
+  "path": "Moving Head Spot Prism",
+  "points": [
+    {
+      "fixture": 9,
+      "value": 161,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 12,
+      "value": 161,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    }
+  ]
+}

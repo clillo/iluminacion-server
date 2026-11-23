@@ -1,0 +1,14 @@
+{
+  "id": 10022,
+  "type": "Scene",
+  "name": "BeeEye 3 On",
+  "path": "Fixture On",
+  "points": [
+    {
+      "fixture": 22,
+      "value": 255,
+      "fixtureRobotic": true,
+      "channelType": "DIMMER"
+    }
+  ]
+}

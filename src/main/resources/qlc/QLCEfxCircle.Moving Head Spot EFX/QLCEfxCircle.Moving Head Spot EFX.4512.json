@@ -1,0 +1,24 @@
+{
+  "id": 4512,
+  "type": "QLCEfxCircle",
+  "name": "Circle 3",
+  "path": "Moving Head Spot EFX",
+  "fixtures": [
+    {
+      "id": 9,
+      "offset": 0.0,
+      "reverse": false
+    },
+    {
+      "id": 12,
+      "offset": 180.0,
+      "reverse": false
+    }
+  ],
+  "dimensions": {
+    "centerX": 21492.494382022473,
+    "centerY": 49152.0,
+    "width": 8520.0,
+    "height": 13190.0
+  }
+}

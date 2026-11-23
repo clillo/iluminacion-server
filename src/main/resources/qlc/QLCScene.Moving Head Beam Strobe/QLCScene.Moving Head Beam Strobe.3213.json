@@ -1,0 +1,32 @@
+{
+  "id": 3213,
+  "type": "Scene",
+  "name": "Strobo Fast",
+  "path": "Moving Head Beam Strobe",
+  "points": [
+    {
+      "fixture": 14,
+      "value": 130,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 15,
+      "value": 130,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 16,
+      "value": 130,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    },
+    {
+      "fixture": 17,
+      "value": 130,
+      "fixtureRobotic": true,
+      "channelType": "STROBE"
+    }
+  ]
+}

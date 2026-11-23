@@ -1,0 +1,28 @@
+{
+  "id": 112,
+  "type": "Scene",
+  "name": "Spider - L L R R",
+  "path": "Spider Positions",
+  "points": [
+    {
+      "fixture": 4,
+      "value": 10,
+      "channel": 0
+    },
+    {
+      "fixture": 4,
+      "value": 0,
+      "channel": 1
+    },
+    {
+      "fixture": 5,
+      "value": 175,
+      "channel": 0
+    },
+    {
+      "fixture": 5,
+      "value": 175,
+      "channel": 1
+    }
+  ]
+}

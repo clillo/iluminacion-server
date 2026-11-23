@@ -1,0 +1,32 @@
+{
+  "id": 2402,
+  "type": "Scene",
+  "name": "Prisma On",
+  "path": "Moving Head Beam + Spot Gobos Prism",
+  "points": [
+    {
+      "fixture": 8,
+      "value": 128,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 10,
+      "value": 128,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 11,
+      "value": 128,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    },
+    {
+      "fixture": 18,
+      "value": 128,
+      "fixtureRobotic": true,
+      "channelType": "PRISM_ROTATION"
+    }
+  ]
+}
