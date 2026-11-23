@@ -50,10 +50,12 @@ public class ColorsCatalog {
 	}
 
 	public static Map<String, ColorEntry> getAll() {
+		loadFromClasspath();
 		return Collections.unmodifiableMap(NAME_TO_COLOR);
 	}
 
 	public static ColorEntry get(String name) {
+		loadFromClasspath();
 		return NAME_TO_COLOR.get(name);
 	}
 

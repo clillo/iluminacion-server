@@ -2,6 +2,9 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.repository.XMLParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -125,6 +128,39 @@ public class QLCEfxLine extends QLCEfx{
                 XMLParser.getPathDouble(doc, "/doc/points/destiny/y"));
 
         return qlcEfxMultiLine;
+    }
+
+    public static QLCEfxLine readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        final QLCEfxLine efx = new QLCEfxLine(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "QLCEfxLine"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                null, null, null, null,
+                ConfigJsonIO.buildFixtures(fixtureListBuilder, root.get("fixtures")));
+        final JsonNode line = root.path("line");
+        efx.updateParameters(
+                line.path("originX").asDouble(0),
+                line.path("originY").asDouble(0),
+                line.path("destinyX").asDouble(0),
+                line.path("destinyY").asDouble(0));
+        return efx;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        root.put("type", "QLCEfxLine");
+        final ArrayNode fixtures = ConfigJsonIO.createArray();
+        ConfigJsonIO.writeFixtures(fixtures, getFixtureList());
+        root.set("fixtures", fixtures);
+        final ObjectNode line = ConfigJsonIO.createObject();
+        line.put("originX", originX);
+        line.put("originY", originY);
+        line.put("destinyX", destinyX);
+        line.put("destinyY", destinyY);
+        root.set("line", line);
     }
 
 }

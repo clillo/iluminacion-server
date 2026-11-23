@@ -2,6 +2,8 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.repository.XMLParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -112,5 +114,38 @@ public class QLCEfxCircle extends QLCEfx{
                 XMLParser.getNodeDouble(dimensions, "height"));
 
         return qlcEfxCircle;
+    }
+
+    public static QLCEfxCircle readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        final QLCEfxCircle efx = new QLCEfxCircle(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "QLCEfxCircle"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                null, null, null, null,
+                ConfigJsonIO.buildFixtures(fixtureListBuilder, root.get("fixtures")));
+        final JsonNode dimensions = root.path("dimensions");
+        efx.updateParameters(
+                dimensions.path("centerX").asDouble(0),
+                dimensions.path("centerY").asDouble(0),
+                dimensions.path("width").asDouble(0),
+                dimensions.path("height").asDouble(0));
+        return efx;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        root.put("type", "QLCEfxCircle");
+        final com.fasterxml.jackson.databind.node.ArrayNode fixtures = ConfigJsonIO.createArray();
+        ConfigJsonIO.writeFixtures(fixtures, getFixtureList());
+        root.set("fixtures", fixtures);
+        final ObjectNode dimensions = ConfigJsonIO.createObject();
+        dimensions.put("centerX", centerX);
+        dimensions.put("centerY", centerY);
+        dimensions.put("width", width);
+        dimensions.put("height", height);
+        root.set("dimensions", dimensions);
     }
 }

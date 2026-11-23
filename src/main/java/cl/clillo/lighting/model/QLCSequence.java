@@ -4,7 +4,10 @@ import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.executor.IOS2LEventListener;
 import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -190,6 +193,32 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
         return sb.toString();
     }
 
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        if (runOrder != null)
+            root.put("order", runOrder.name());
+        if (direction != null)
+            root.put("direction", direction.name());
+        if (vdjType != null)
+            root.put("vdjType", vdjType.name());
+        final ArrayNode steps = ConfigJsonIO.createArray();
+        for (QLCStep step : qlcStepList) {
+            if (step instanceof QLCFakeStep)
+                continue;
+            final ObjectNode stepNode = ConfigJsonIO.createObject();
+            stepNode.put("id", step.getId());
+            stepNode.put("fadeIn", step.getFadeIn());
+            stepNode.put("hold", step.getHold());
+            stepNode.put("fadeOut", step.getFadeOut());
+            final ArrayNode points = ConfigJsonIO.createArray();
+            ConfigJsonIO.writePoints(points, step.getPointList());
+            stepNode.set("points", points);
+            steps.add(stepNode);
+        }
+        root.set("steps", steps);
+    }
+
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
         super.writeElements(out);
         out.writeStartElement("behaviour");
@@ -259,13 +288,15 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
     }
 
     /**
-     * Lee una secuencia desde un archivo JSON (formato de efectos BeeEye).
-     * El JSON debe tener: id, name, type="Sequence", path, order, direction, holdMs, applyToFixtures, ledCount, steps.
-     * Cada step puede tener leds (con color o r/g/b/w) o ledPoints.
+     * Lee una secuencia desde JSON channel-points (migrado) o BeeEye (leds).
      */
     public static QLCSequence readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
-        final ObjectMapper mapper = new ObjectMapper();
-        final EffectJson effect = mapper.readValue(file, EffectJson.class);
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        if (!ConfigJsonIO.isBeeEyeEffect(root))
+            return readFromChannelJson(fixtureListBuilder, root);
+
+        final ObjectMapper mapper = ConfigJsonIO.mapper();
+        final EffectJson effect = mapper.treeToValue(root, EffectJson.class);
 
         if (!"Sequence".equalsIgnoreCase(effect.type)) {
             throw new IllegalArgumentException("JSON file is not a Sequence (type=" + effect.type + ")");
@@ -428,6 +459,43 @@ public class QLCSequence extends QLCFunction implements Sequenceable{
                         .collect(Collectors.toList());
             }
         }
+        return sequence;
+    }
+
+    private static QLCSequence readFromChannelJson(final FixtureListBuilder fixtureListBuilder, final JsonNode root) {
+        final List<QLCStep> qlcStepList = new ArrayList<>();
+        final JsonNode stepsNode = root.get("steps");
+        if (stepsNode != null && stepsNode.isArray()) {
+            for (JsonNode stepNode : stepsNode) {
+                final List<QLCPoint> points = ConfigJsonIO.buildPoints(fixtureListBuilder, stepNode.get("points"));
+                Collections.sort(points);
+                qlcStepList.add(QLCStep.builder()
+                        .id(stepNode.path("id").asInt(0))
+                        .fadeIn(stepNode.path("fadeIn").asInt(0))
+                        .hold(stepNode.path("hold").asInt(0))
+                        .fadeOut(stepNode.path("fadeOut").asInt(0))
+                        .pointList(points)
+                        .build());
+            }
+        }
+
+        final QLCDirection direction = QLCDirection.valueOf(
+                ConfigJsonIO.text(root, "direction", "FORWARD"));
+        final QLCRunOrder runOrder = QLCRunOrder.valueOf(
+                ConfigJsonIO.text(root, "order", "LOOP"));
+        final QLCSequence sequence = new QLCSequence(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "Sequence"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                direction,
+                runOrder,
+                qlcStepList,
+                null,
+                QLCSpeed.builder().build());
+        final String vdjType = ConfigJsonIO.text(root, "vdjType", null);
+        if (vdjType != null)
+            sequence.setVdjType(IOS2LEventListener.Type.valueOf(vdjType));
         return sequence;
     }
 

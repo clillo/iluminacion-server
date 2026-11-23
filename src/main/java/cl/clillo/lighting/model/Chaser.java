@@ -1,6 +1,9 @@
 package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.repository.XMLParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.ToString;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
@@ -122,6 +125,73 @@ public class Chaser extends QLCFunction implements Sequenceable{
                 function.getPath(), qlcDirection, qlcRunOrder, qlcSpeed, qlcFunctionList);
         chaser.setBlackoutShow(blackoutShow);
         return chaser;
+    }
+
+    public static Chaser readFromJson(final ShowCollection collection, final File file) throws IOException {
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        final List<ChaserStep> steps = new ArrayList<>();
+        final JsonNode showsNode = root.get("shows");
+        if (showsNode != null && showsNode.isArray()) {
+            for (JsonNode showNode : showsNode) {
+                final int showId = showNode.path("id").asInt(-1);
+                final Show show = collection.getShow(showId);
+                if (show == null) {
+                    System.out.println("Show no existe: " + showId);
+                    System.exit(0);
+                }
+                steps.add(ChaserStep.builder()
+                        .id(showId)
+                        .fadeIn(showNode.path("fadeIn").asInt(0))
+                        .hold(showNode.path("hold").asInt(0))
+                        .fadeOut(showNode.path("fadeOut").asInt(0))
+                        .show(show)
+                        .build());
+            }
+        }
+
+        final JsonNode properties = root.path("properties");
+        final QLCDirection direction = QLCDirection.valueOf(
+                ConfigJsonIO.text(properties, "direction", "FORWARD"));
+        final QLCRunOrder runOrder = QLCRunOrder.valueOf(
+                ConfigJsonIO.text(properties, "runOrder", "RANDOM"));
+        final int speed = properties.path("speed").asInt(1);
+
+        final Chaser chaser = new Chaser(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "Chaser"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                direction,
+                runOrder,
+                speed,
+                steps);
+        if (root.has("blackoutShowId"))
+            chaser.setBlackoutShow(collection.getShow(root.path("blackoutShowId").asInt(-1)));
+        return chaser;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        if (blackoutShow != null)
+            root.put("blackoutShowId", blackoutShow.getId());
+        final ObjectNode properties = ConfigJsonIO.createObject();
+        properties.put("runOrder", String.valueOf(runOrder));
+        properties.put("direction", String.valueOf(direction));
+        properties.put("speed", String.valueOf(qlcSpeed));
+        root.set("properties", properties);
+        final ArrayNode shows = ConfigJsonIO.createArray();
+        for (ChaserStep step : chaserSteps) {
+            if (step.getShow() == null)
+                continue;
+            final ObjectNode showNode = ConfigJsonIO.createObject();
+            showNode.put("id", step.getShow().getId());
+            showNode.put("fadeIn", step.getFadeIn());
+            showNode.put("hold", step.getHold());
+            showNode.put("fadeOut", step.getFadeOut());
+            shows.add(showNode);
+        }
+        root.set("shows", shows);
     }
 
     public List<ChaserStep> getChaserSteps() {

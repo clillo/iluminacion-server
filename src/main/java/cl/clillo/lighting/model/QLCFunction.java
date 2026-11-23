@@ -3,6 +3,7 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.fixture.qlc.QLCRoboticFixture;
 import cl.clillo.lighting.repository.XMLParser;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
 import org.w3c.dom.Node;
@@ -11,6 +12,8 @@ import javax.xml.stream.XMLOutputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.XMLStreamWriter;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -88,17 +91,33 @@ public class QLCFunction extends QLCElement{
 
     }
 
-    public void writeToConfigFile(final String dir){
+    public String configFileBaseName() {
+        String name = this.getClass().getSimpleName() + ".";
+        if (path == null || path.isEmpty())
+            return name + this.name;
+        return name + path.replace('/', '.') + "." + id;
+    }
+
+    public void writeToConfigFile(final String dir) {
+        try {
+            final ObjectNode root = ConfigJsonIO.createObject();
+            writeJson(root);
+            ConfigJsonIO.write(new File(dir, configFileBaseName() + ".json"), root);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void writeJson(final ObjectNode root) {
+        ConfigJsonIO.writeCommon(root, this);
+    }
+
+    /** @deprecated kept for tools that still emit XML snapshots */
+    @Deprecated
+    public void writeToXmlConfigFile(final String dir){
         ByteArrayOutputStream outputStream;
         try {
-            String name = this.getClass().getSimpleName() + "." ;
-
-            if (path==null || path.isEmpty())
-                name = name + this.name;
-            else {
-                String fakePath = path.replace('/','.');
-                name = name + fakePath + "." + id;
-            }
+            String name = configFileBaseName();
             outputStream = new ByteArrayOutputStream();
             XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
                     new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));

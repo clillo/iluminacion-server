@@ -2,6 +2,9 @@ package cl.clillo.lighting.model;
 
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.repository.XMLParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -138,6 +141,48 @@ public class QLCEfxSpline extends QLCEfx{
 
         efxSpline.updateParameters(realPoints);
         return efxSpline;
+    }
+
+    public static QLCEfxSpline readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        final QLCEfxSpline efx = new QLCEfxSpline(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "QLCEfxSpline"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                null, null, null, null,
+                ConfigJsonIO.buildFixtures(fixtureListBuilder, root.get("fixtures")));
+        final List<RealPoint> points = new ArrayList<>();
+        final JsonNode realPointsNode = root.get("realPoints");
+        if (realPointsNode != null && realPointsNode.isArray()) {
+            for (JsonNode pointNode : realPointsNode) {
+                points.add(RealPoint.builder()
+                        .x(pointNode.path("x").asDouble(0))
+                        .y(pointNode.path("y").asDouble(0))
+                        .build());
+            }
+        }
+        efx.updateParameters(points);
+        return efx;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        root.put("type", "QLCEfxSpline");
+        final ArrayNode fixtures = ConfigJsonIO.createArray();
+        ConfigJsonIO.writeFixtures(fixtures, getFixtureList());
+        root.set("fixtures", fixtures);
+        final ArrayNode realPointsNode = ConfigJsonIO.createArray();
+        if (realPoints != null) {
+            for (RealPoint point : realPoints) {
+                final ObjectNode pointNode = ConfigJsonIO.createObject();
+                pointNode.put("x", point.getX());
+                pointNode.put("y", point.getY());
+                realPointsNode.add(pointNode);
+            }
+        }
+        root.set("realPoints", realPointsNode);
     }
 
 }

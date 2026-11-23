@@ -3,7 +3,10 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.repository.XMLParser;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -122,13 +125,16 @@ public class QLCScene extends QLCFunction{
     }
 
     /**
-     * Lee una escena desde un archivo JSON (formato de efectos BeeEye).
-     * El JSON debe tener: id, name, type="Scene", path, applyToFixtures, ledCount, steps.
-     * Cada step puede tener leds (con color o r/g/b/w) o ledPoints.
+     * Lee una escena desde JSON: formato channel-points (migrado desde XML)
+     * o formato BeeEye (applyToFixtures + leds).
      */
     public static QLCScene readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
-        final ObjectMapper mapper = new ObjectMapper();
-        final EffectJson effect = mapper.readValue(file, EffectJson.class);
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        if (!ConfigJsonIO.isBeeEyeEffect(root))
+            return readFromChannelJson(fixtureListBuilder, root);
+
+        final ObjectMapper mapper = ConfigJsonIO.mapper();
+        final EffectJson effect = mapper.treeToValue(root, EffectJson.class);
 
         if (!"Scene".equalsIgnoreCase(effect.type)) {
             throw new IllegalArgumentException("JSON file is not a Scene (type=" + effect.type + ")");
@@ -269,6 +275,33 @@ public class QLCScene extends QLCFunction{
         public Integer g;
         public Integer b;
         public Integer w;
+    }
+
+    private static QLCScene readFromChannelJson(final FixtureListBuilder fixtureListBuilder, final JsonNode root) {
+        final List<QLCPoint> qlcPointList = ConfigJsonIO.buildPoints(fixtureListBuilder, root.get("points"));
+        Collections.sort(qlcPointList);
+        final String subType = ConfigJsonIO.text(root, "subType", null);
+        final QLCScene scene = new QLCScene(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "Scene"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                qlcPointList,
+                root.path("initTrigger").asBoolean(false),
+                subType);
+        scene.setBlackout(root.path("blackout").asBoolean(false));
+        scene.setTotalBlackout(root.path("totalBlackout").asBoolean(false));
+        return scene;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        if (subType != null && !subType.isEmpty())
+            root.put("subType", subType);
+        final ArrayNode points = ConfigJsonIO.createArray();
+        ConfigJsonIO.writePoints(points, qlcPointList);
+        root.set("points", points);
     }
 
     protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {

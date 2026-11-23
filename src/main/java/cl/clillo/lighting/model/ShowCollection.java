@@ -7,9 +7,7 @@ import cl.clillo.lighting.fixture.qlc.QLCFixture;
 import cl.clillo.lighting.repository.StateRepository;
 import cl.clillo.lighting.utils.FileUtils;
 import lombok.Getter;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -259,26 +257,26 @@ public class ShowCollection {
     }
 
     private void addFromDirectory(final File file){
-        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".json");
 
         try {
             for (File f: files){
                 if (f.getName().startsWith("QLCEfxCircle"))
-                    addQLCEfx(QLCEfxCircle.read(qlcModel, f));
+                    addQLCEfx(QLCEfxCircle.readFromJson(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxSpline"))
-                     addQLCEfx(QLCEfxSpline.read(qlcModel, f));
+                     addQLCEfx(QLCEfxSpline.readFromJson(qlcModel, f));
                  if (f.getName().startsWith("QLCEfxMultiLine"))
-                    addQLCEfx(QLCEfxMultiLine.read(qlcModel, f));
+                    addQLCEfx(QLCEfxMultiLine.readFromJson(qlcModel, f));
                 if (f.getName().startsWith("QLCEfxLine"))
-                    addQLCEfx(QLCEfxLine.read(qlcModel, f));
+                    addQLCEfx(QLCEfxLine.readFromJson(qlcModel, f));
                  if (f.getName().startsWith("QLCScene"))
-                     addQLCFunction(QLCScene.read(qlcModel, f));
+                     addQLCFunction(QLCScene.readFromJson(qlcModel, f));
                 if (f.getName().startsWith("QLCSequence"))
-                    addQLCFunction(QLCSequence.read(qlcModel, f));
+                    addQLCFunction(QLCSequence.readFromJson(qlcModel, f));
 
             }
 
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -360,13 +358,13 @@ public class ShowCollection {
     }
 
     private void addCollectionFromDir(final File file){
-        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".xml");
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "QLC", ".json");
         try {
             for (File f: files){
                 if (f.getName().startsWith("QLCCollection"))
-                    addQLCFunction(QLCCollection.read(this, f));
+                    addQLCFunction(QLCCollection.readFromJson(this, f));
             }
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
@@ -374,12 +372,12 @@ public class ShowCollection {
     }
 
     private void addChaserFromDir(final File file){
-        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "Chaser", ".xml");
+        final List<File> files = FileUtils.getFiles(file.getAbsolutePath(), "Chaser", ".json");
         try {
             for (File f: files)
-                addQLCFunction(Chaser.read(this, f));
+                addQLCFunction(Chaser.readFromJson(this, f));
 
-        } catch (ParserConfigurationException | IOException | SAXException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
 

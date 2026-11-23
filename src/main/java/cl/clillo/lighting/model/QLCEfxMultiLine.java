@@ -3,6 +3,9 @@ package cl.clillo.lighting.model;
 import cl.clillo.lighting.config.FixtureListBuilder;
 import cl.clillo.lighting.repository.XMLParser;
 import cl.clillo.lighting.utils.MultiLineScrambler;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -167,6 +170,54 @@ public class QLCEfxMultiLine extends QLCEfx{
                         .build());
 
         return qlcEfxMultiLine;
+    }
+
+    public static QLCEfxMultiLine readFromJson(final FixtureListBuilder fixtureListBuilder, final File file) throws IOException {
+        final JsonNode root = ConfigJsonIO.readTree(file);
+        final JsonNode config = root.path("config");
+        final QLCEfxMultiLine efx = new QLCEfxMultiLine(
+                root.path("id").asInt(),
+                ConfigJsonIO.text(root, "type", "QLCEfxMultiLine"),
+                ConfigJsonIO.text(root, "name", ""),
+                ConfigJsonIO.text(root, "path", ""),
+                null, null, null, null,
+                ConfigJsonIO.buildFixtures(fixtureListBuilder, root.get("fixtures")),
+                config.path("loops").asInt(1),
+                MultiLineScrambler.Type.of(ConfigJsonIO.text(config, "type", null)));
+        final JsonNode dimensions = root.path("dimensions");
+        efx.updateParameters(
+                RealPoint.builder()
+                        .x(dimensions.path("leftUp").path("x").asDouble(0))
+                        .y(dimensions.path("leftUp").path("y").asDouble(0))
+                        .build(),
+                RealPoint.builder()
+                        .x(dimensions.path("rightDown").path("x").asDouble(0))
+                        .y(dimensions.path("rightDown").path("y").asDouble(0))
+                        .build());
+        return efx;
+    }
+
+    @Override
+    protected void writeJson(final ObjectNode root) {
+        super.writeJson(root);
+        root.put("type", "QLCEfxMultiLine");
+        final ArrayNode fixtures = ConfigJsonIO.createArray();
+        ConfigJsonIO.writeFixtures(fixtures, getFixtureList());
+        root.set("fixtures", fixtures);
+        final ObjectNode dimensions = ConfigJsonIO.createObject();
+        final ObjectNode leftUpNode = ConfigJsonIO.createObject();
+        leftUpNode.put("x", leftUp.getX());
+        leftUpNode.put("y", leftUp.getY());
+        final ObjectNode rightDownNode = ConfigJsonIO.createObject();
+        rightDownNode.put("x", rightDown.getX());
+        rightDownNode.put("y", rightDown.getY());
+        dimensions.set("leftUp", leftUpNode);
+        dimensions.set("rightDown", rightDownNode);
+        root.set("dimensions", dimensions);
+        final ObjectNode config = ConfigJsonIO.createObject();
+        config.put("loops", loops);
+        config.put("type", String.valueOf(scramblerType));
+        root.set("config", config);
     }
 
 }

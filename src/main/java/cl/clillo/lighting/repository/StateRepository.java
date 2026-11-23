@@ -1,22 +1,16 @@
 package cl.clillo.lighting.repository;
 
 import cl.clillo.lighting.config.QLCReader;
+import cl.clillo.lighting.model.ConfigJsonIO;
 import cl.clillo.lighting.model.Point;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
-import org.w3c.dom.Document;
-import org.w3c.dom.Node;
-import org.xml.sax.SAXException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.stream.XMLOutputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +18,7 @@ import java.util.Map;
 
 public class StateRepository {
 
-    private static final String FILENAME = QLCReader.repoBase + "/general.state.xml";
+    private static final String FILENAME = QLCReader.repoBase + "/general.state.json";
 
     private List<Point> limitMasterDimmer = new ArrayList<>();
     private final Map<Integer, Integer> events = new HashMap<>();
@@ -108,103 +102,61 @@ public class StateRepository {
     }
 
     public void write(){
-        ByteArrayOutputStream outputStream;
         try {
-            String name = this.getClass().getSimpleName() ;
+            final ObjectNode root = ConfigJsonIO.createObject();
+            final ObjectNode masterDimmer = ConfigJsonIO.createObject();
+            masterDimmer.put("rgbw", rgbwMasterDimmer);
+            masterDimmer.put("movingHeadSpotBeam", movingHeadSpotBeamMasterDimmer);
+            masterDimmer.put("movingHeadSpot", movingHeadSpotMasterDimmer);
+            masterDimmer.put("movingHeadBeam", movingHeadBeamMasterDimmer);
+            root.set("masterDimmer", masterDimmer);
 
-            outputStream = new ByteArrayOutputStream();
-            XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(
-                    new OutputStreamWriter(outputStream, StandardCharsets.UTF_8));
-
-            out.writeStartDocument();
-            out.writeStartElement("doc");
-
-            out.writeStartElement("title");
-            out.writeCharacters(name);
-            out.writeEndElement();
-
-            writeElements(out);
-
-            out.writeStartElement("virtualDJEvents");
-            for (Map.Entry<Integer, Integer> entry: events.entrySet()){
-                out.writeStartElement("event");
-                out.writeAttribute("id", String.valueOf(entry.getKey()));
-                out.writeAttribute("show", String.valueOf(entry.getValue()));
-                out.writeEndElement();
+            final ArrayNode eventsNode = ConfigJsonIO.createArray();
+            for (Map.Entry<Integer, Integer> entry : events.entrySet()) {
+                final ObjectNode event = ConfigJsonIO.createObject();
+                event.put("id", entry.getKey());
+                event.put("show", entry.getValue());
+                eventsNode.add(event);
             }
+            root.set("virtualDJEvents", eventsNode);
 
-            out.writeEndElement();
-
-            out.writeStartElement("virtualDJCommands");
-            for (Map.Entry<String, Integer> entry: commands.entrySet()){
-                out.writeStartElement("command");
-                out.writeAttribute("name", String.valueOf(entry.getKey()));
-                out.writeAttribute("show", String.valueOf(entry.getValue()));
-                out.writeEndElement();
+            final ArrayNode commandsNode = ConfigJsonIO.createArray();
+            for (Map.Entry<String, Integer> entry : commands.entrySet()) {
+                final ObjectNode command = ConfigJsonIO.createObject();
+                command.put("name", entry.getKey());
+                command.put("show", entry.getValue());
+                commandsNode.add(command);
             }
+            root.set("virtualDJCommands", commandsNode);
 
-            out.writeEndElement();
-
-            out.writeEndElement();
-            out.writeEndDocument();
-            out.close();
-
-            XMLParser.writeXMLFile(FILENAME, outputStream);
-
-        } catch ( XMLStreamException e) {
+            ConfigJsonIO.write(new File(FILENAME), root);
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    protected void writeElements(final XMLStreamWriter out) throws XMLStreamException {
-        out.writeStartElement("masterDimmer");
-        out.writeStartElement("rgbw");
-        out.writeCharacters(String.valueOf(rgbwMasterDimmer));
-        out.writeEndElement();
-
-        out.writeStartElement("movingHeadSpotBeam");
-        out.writeCharacters(String.valueOf(movingHeadSpotBeamMasterDimmer));
-        out.writeEndElement();
-
-        out.writeStartElement("movingHeadSpot");
-        out.writeCharacters(String.valueOf(movingHeadSpotMasterDimmer));
-        out.writeEndElement();
-
-        out.writeStartElement("movingHeadBeam");
-        out.writeCharacters(String.valueOf(movingHeadBeamMasterDimmer));
-        out.writeEndElement();
-        out.writeEndElement();
     }
 
     private void read(){
         try {
             maxDimmerValues = new HashMap<>();
-            final Document doc = XMLParser.getDocument(new File(FILENAME));
-            rgbwMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/rgbw");
-            movingHeadSpotBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpotBeam");
-            movingHeadSpotMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadSpot");
-            movingHeadBeamMasterDimmer = XMLParser.getPathInt(doc, "doc/masterDimmer/movingHeadBeam");
-            Node docNode = XMLParser.getNode(doc, "doc");
-            if (docNode==null)
-                return;
-            final List<Node> events = XMLParser.getNodeList(docNode, "virtualDJEvents");
-            for (Node node: events){
-                if (!node.hasAttributes())
-                    continue;
-                int eventId = XMLParser.getIntAttributeValue(node, "id");
-                int showId = XMLParser.getIntAttributeValue(node, "show");
-                this.events.put(eventId, showId);
+            final JsonNode root = ConfigJsonIO.readTree(new File(FILENAME));
+            final JsonNode masterDimmer = root.path("masterDimmer");
+            rgbwMasterDimmer = masterDimmer.path("rgbw").asInt(0);
+            movingHeadSpotBeamMasterDimmer = masterDimmer.path("movingHeadSpotBeam").asInt(0);
+            movingHeadSpotMasterDimmer = masterDimmer.path("movingHeadSpot").asInt(0);
+            movingHeadBeamMasterDimmer = masterDimmer.path("movingHeadBeam").asInt(0);
+
+            final JsonNode eventsNode = root.get("virtualDJEvents");
+            if (eventsNode != null && eventsNode.isArray()) {
+                for (JsonNode event : eventsNode)
+                    this.events.put(event.path("id").asInt(), event.path("show").asInt());
             }
 
-            final List<Node> comms = XMLParser.getNodeList(docNode, "virtualDJCommands");
-            for (Node node: comms){
-                if (!node.hasAttributes())
-                    continue;
-                String commandName = XMLParser.getStringAttributeValue(node, "name");
-                int showId = XMLParser.getIntAttributeValue(node, "show");
-                this.commands.put(commandName, showId);
+            final JsonNode commandsNode = root.get("virtualDJCommands");
+            if (commandsNode != null && commandsNode.isArray()) {
+                for (JsonNode command : commandsNode)
+                    this.commands.put(command.path("name").asText(), command.path("show").asInt());
             }
-        }  catch (ParserConfigurationException | IOException| SAXException e) {
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
