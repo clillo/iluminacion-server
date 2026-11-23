@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>BeeEye Control</title>
+    <link rel="stylesheet" href="/css/index.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Control de Iluminación</h1>
+    </div>
+    
+    <div id="groupSelection" class="group-selection">
+        <div class="group-selection-title">Seleccione el grupo de fixtures a configurar</div>
+        <div class="group-buttons" id="groupButtons">
+            <div class="loading">Cargando grupos...</div>
+        </div>
+    </div>
+    
+    <div id="testEntry" class="test-section">
+        <div class="test-section-title">Modo Test / Configuración final</div>
+        <div class="group-buttons">
+            <button class="group-btn" onclick="openTestChase()">Chasing de fixtures</button>
+            <button class="group-btn" onclick="openTestVirtualDJ()">Estado de comunicación con VirtualDJ</button>
+            <button class="group-btn" onclick="openFixtureConfig()">Configuración de Fixtures</button>
+            <a href="/dmx-map.html" class="group-btn" style="text-decoration: none; display: inline-block; text-align: center; color: #fff;">🗺️ Mapa DMX</a>
+            <a href="/network-config.html" class="group-btn" style="text-decoration: none; display: inline-block; text-align: center; color: #fff;">⚙️ Configuración de Red</a>
+            <a href="/scenes-config.html" class="group-btn" style="text-decoration: none; display: inline-block; text-align: center; color: #fff;">🎭 Configuración de Escenas</a>
+        </div>
+    </div>
+    
+    <div id="mainContent" class="hidden">
+        <button class="back-btn" id="backBtn">← Volver a selección de grupos</button>
+        <button class="blackout-btn" id="blackoutBtn">BLACKOUT</button>
+        
+        <div class="beeeye-section hidden" id="beeeyeSection">
+            <div class="beeeye-section-title">Estado BeeEye</div>
+            <div class="beeeye-grid" id="beeeyeGrid">
+                <div class="loading">Cargando estado BeeEye...</div>
+            </div>
+        </div>
+        
+        <div id="content">
+            <div class="loading">Cargando efectos...</div>
+        </div>
+    </div>
+    
+    <div id="testContent" class="hidden">
+        <button class="back-btn" id="testBackBtn">← Volver al inicio</button>
+        <div id="testChaseView" class="hidden">
+            <div class="test-view-title">Chasing de fixtures</div>
+            <div class="card">
+                <div class="loading" style="padding: 10px;">Preparado para implementar el chasing. Próximo paso: elegir grupo, velocidad y patrón.</div>
+            </div>
+        </div>
+        <div id="testVdjView" class="hidden">
+            <div class="test-view-title">Estado de comunicación con VirtualDJ</div>
+            <div class="card">
+                <div id="vdjStatus" class="loading" style="padding: 10px;">Cargando estado...</div>
+            </div>
+        </div>
+        <div id="testFixtureConfigView" class="hidden">
+            <div class="test-view-title">Configuración de Fixtures</div>
+            <div class="card" style="margin-bottom: 20px;">
+                <div class="fixture-header">Configuración General</div>
+                <div class="fixture-form">
+                    <label>Máximo de Universos:</label>
+                    <input type="number" id="maxUniverses" value="2" min="1" max="15" style="width: 100px;">
+                </div>
+                <button class="save-btn" onclick="saveMaxUniverses()" style="margin-top: 10px;">Guardar máximo de universos</button>
+            </div>
+            <div id="fixturesList" class="card">
+                <div class="loading" style="padding: 10px;">Cargando fixtures...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/index.js"></script>
+</body>
+</html>

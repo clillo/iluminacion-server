@@ -1,44 +1,67 @@
 package cl.clillo.lighting.external.dmx;
 
-public class ArtNetUtils {
+import lombok.extern.slf4j.Slf4j;
 
-    private String localArtNetAddress;
-    private String artNetNodeAddress;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
-    public void detectArtNet() {
-        try {
-            for (var iface : NetworkInterfaceScanner.findIpv4Interfaces()) {
-                var nodes = ArtNetDiscovery.discover(iface,500);
+@Slf4j
+public final class ArtNetUtils {
 
-                if (!nodes.isEmpty()) {
-                    localArtNetAddress = iface.address().getHostAddress();
-                    artNetNodeAddress = nodes.getFirst().getHostAddress();
+    private static final int DISCOVERY_TIMEOUT_MS = 500;
 
-                    System.out.println("Art-Net detectado:");
-                    System.out.println("  Local : " + localArtNetAddress);
-                    System.out.println("  Nodo  : " + artNetNodeAddress);
+    public record Detection(NetworkInterfaceScanner.InterfaceInfo networkInterface, InetAddress nodeAddress) {
 
-                    return;
-                }
-            }
-
-            System.err.println("No se encontró ningún nodo Art-Net");
-
-        } catch (Exception e) {
-            throw new RuntimeException("Error detectando Art-Net", e);
+        public String localAddress() {
+            return networkInterface.address().getHostAddress();
         }
     }
 
-    public String getArtNetNodeAddress() {
-        return artNetNodeAddress;
+    private ArtNetUtils() {
     }
 
-    public String getLocalArtNetAddress() {
-        return localArtNetAddress;
+    public static Optional<Detection> detect(final String preferredLocalAddress) {
+        for (NetworkInterfaceScanner.InterfaceInfo networkInterface : interfacesInPriorityOrder(preferredLocalAddress)) {
+            final List<InetAddress> nodes = discover(networkInterface);
+            if (!nodes.isEmpty())
+                return Optional.of(new Detection(networkInterface, nodes.getFirst()));
+        }
+        return Optional.empty();
+    }
+
+    public static boolean isReachable(final Detection detection) {
+        return discover(detection.networkInterface()).contains(detection.nodeAddress());
+    }
+
+    private static List<NetworkInterfaceScanner.InterfaceInfo> interfacesInPriorityOrder(final String preferredLocalAddress) {
+        final List<NetworkInterfaceScanner.InterfaceInfo> interfaces;
+        try {
+            interfaces = new ArrayList<>(NetworkInterfaceScanner.findIpv4Interfaces());
+        } catch (SocketException e) {
+            log.warn("Could not list network interfaces", e);
+            return List.of();
+        }
+        interfaces.sort(Comparator.comparing(networkInterface ->
+                !networkInterface.address().getHostAddress().equals(preferredLocalAddress)));
+        return interfaces;
+    }
+
+    private static List<InetAddress> discover(final NetworkInterfaceScanner.InterfaceInfo networkInterface) {
+        try {
+            return ArtNetDiscovery.discover(networkInterface, DISCOVERY_TIMEOUT_MS);
+        } catch (Exception e) {
+            log.debug("Art-Net discovery failed on {}", networkInterface.interfaceName(), e);
+            return List.of();
+        }
     }
 
     public static void main(String[] args) {
-        ArtNetUtils artNetUtils = new ArtNetUtils();
-        artNetUtils.detectArtNet();
+        System.out.println(detect(null)
+                .map(detection -> "Local: " + detection.localAddress() + "  Nodo: " + detection.nodeAddress().getHostAddress())
+                .orElse("No se encontró ningún nodo Art-Net"));
     }
 }

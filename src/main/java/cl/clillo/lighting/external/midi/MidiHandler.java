@@ -1,256 +1,215 @@
 package cl.clillo.lighting.external.midi;
 
+import lombok.extern.slf4j.Slf4j;
+
 import javax.sound.midi.MidiDevice;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Receiver;
+import javax.sound.midi.Sequencer;
 import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Transmitter;
-import java.util.ArrayList;
-import java.util.HashMap;
+import javax.sound.midi.Synthesizer;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class MidiHandler {
 
-    private final Map<String, KeyData> keyDataMapByPos;
-    private MidiDevice mainMidiDevice;
+    private static final String DEVICE_NAME = "APC";
+    private static final long WATCH_INTERVAL_SECONDS = 2;
 
     private static final class InstanceHolder {
-        private static MidiHandler instance;
-
-        public static MidiHandler getInstance(final MidiEvent midiEvent) {
-            if (instance==null)
-                instance = new MidiHandler(midiEvent);
-            return instance;
-        }
-
-        public static MidiHandler getInstance() {
-            if (instance==null)
-                throw new RuntimeException("Not implemented");
-            return instance;
-        }
-    }
-
-    public static MidiHandler getInstance(final MidiEvent midiEvent) {
-        return InstanceHolder.getInstance(midiEvent);
+        private static final MidiHandler instance = new MidiHandler();
     }
 
     public static MidiHandler getInstance() {
-        return InstanceHolder.getInstance();
+        return InstanceHolder.instance;
     }
 
-    private MidiHandler(final MidiEvent midiEvent) {
-        keyDataMapByPos = new HashMap<>();
-        Map<String, KeyData> keyDataMapByChannel = new HashMap<>();
+    private final ApcMiniLayout layout = new ApcMiniLayout();
+    private final List<MidiConnectionListener> connectionListeners = new CopyOnWriteArrayList<>();
+    private volatile MidiEvent midiEvent;
 
-        for (int matrixX=0; matrixX<KeyData.MAX_X; matrixX++)
-            for (int matrixY=0; matrixY<KeyData.MAX_Y; matrixY++) {
-                final KeyData keyData = KeyData.buildMatrixButton(matrixX, matrixY);
-                keyDataMapByPos.put(matrixX + "-" + matrixY, keyData);
-                keyDataMapByChannel.put("M-"+keyData.getChannel(), keyData);
-            }
+    private volatile MidiDevice inputDevice;
+    private MidiDevice outputDevice;
+    private volatile Receiver outputReceiver;
 
-        for (int posY=0; posY<KeyData.MAX_Y; posY++)  {
-            final KeyData keyData = KeyData.buildSideButton(posY);
-            keyDataMapByPos.put("Y-"+posY, keyData);
-            keyDataMapByChannel.put("M-"+keyData.getChannel(), keyData);
+    private MidiHandler() {
+        checkDevice();
 
-        }
+        final ScheduledExecutorService watcher = Executors.newSingleThreadScheduledExecutor(runnable -> {
+            final Thread thread = new Thread(runnable, "midi-device-watcher");
+            thread.setDaemon(true);
+            return thread;
+        });
+        watcher.scheduleWithFixedDelay(this::checkDevice, WATCH_INTERVAL_SECONDS, WATCH_INTERVAL_SECONDS, TimeUnit.SECONDS);
+    }
 
-        for (int posX=0; posX<KeyData.MAX_X; posX++)  {
-            final KeyData keyData = KeyData.buildSliderButton(posX);
-            keyDataMapByPos.put("X-"+posX, keyData);
-            keyDataMapByChannel.put("M-"+keyData.getChannel(), keyData);
-        }
+    public void setMidiEvent(final MidiEvent midiEvent) {
+        this.midiEvent = midiEvent;
+    }
 
-        for (int posX=0; posX<KeyData.MAX_X+1; posX++)  {
-            final KeyData keyData = KeyData.buildSlider(posX);
-            keyDataMapByPos.put("SL-"+posX, keyData);
-            keyDataMapByChannel.put("SL-"+keyData.getChannel(), keyData);
+    public void addConnectionListener(final MidiConnectionListener listener) {
+        connectionListeners.add(listener);
+    }
 
-        }
+    public boolean isConnected() {
+        return inputDevice != null;
+    }
 
-        final KeyData keyData = KeyData.buildShiftButton();
-        keyDataMapByPos.put("SHIFT", keyData);
-        keyDataMapByChannel.put("M-"+keyData.getChannel(), keyData);
+    public String getDeviceName() {
+        final MidiDevice device = inputDevice;
+        return device == null ? null : device.getDeviceInfo().getName();
+    }
 
-        List<MidiDevice> midiDevices = getTransmitterDevices();
-
-        for (MidiDevice device : midiDevices) {
-            try {
-                //  device = MidiSystem.getMidiDevice(info);
-                //    if (!"APC MINI".equals(info.getName()))
-                //      continue;
-
-                List<Transmitter> transmitters = device.getTransmitters();
-
-                for (Transmitter transmitter : transmitters) {
-                    transmitter.setReceiver(
-                            new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent)
-                    );
-                }
-
-                Transmitter trans = device.getTransmitter();
-                trans.setReceiver(new MidiInputReceiver(device.getDeviceInfo().toString(), keyDataMapByChannel, midiEvent));
-
-                mainMidiDevice = device;
-
-            } catch (MidiUnavailableException e) {
-                e.printStackTrace();
-            }
-        }
-
+    private synchronized void checkDevice() {
         try {
-            if (mainMidiDevice==null)
-                return;
-            mainMidiDevice.open();
-
-            System.out.println(mainMidiDevice.getDeviceInfo()+" Was Opened");
-
-            for (int i=0; i<KeyData.MAX_X; i++)
-                for (int j=0; j<KeyData.MAX_X; j++)
-                    this.send(i,j, KeyData.StateLight.OFF);
-        } catch (MidiUnavailableException e) {
-            throw new RuntimeException(e);
+            if (inputDevice == null)
+                connect();
+            else if (!Arrays.asList(MidiSystem.getMidiDeviceInfo()).contains(inputDevice.getDeviceInfo()))
+                disconnect();
+        } catch (RuntimeException e) {
+            // an exception would cancel the scheduled watcher
+            log.error("Error checking MIDI device", e);
         }
-
     }
 
-    public List<MidiDevice> getTransmitterDevices() {
-        MidiDevice.Info[] deviceInfo = MidiSystem.getMidiDeviceInfo();
+    private void connect() {
+        MidiDevice inputCandidate = null;
+        MidiDevice outputCandidate = null;
+        for (MidiDevice.Info info : MidiSystem.getMidiDeviceInfo()) {
+            if (!info.getName().contains(DEVICE_NAME))
+                continue;
 
-        List<MidiDevice> transmitterDevices = new ArrayList<>();
-        for(int i=0;i<deviceInfo.length;i++) {
+            final MidiDevice device;
             try {
-                MidiDevice device = MidiSystem.getMidiDevice(deviceInfo[i]);
-                if(device.getMaxTransmitters()!=0 && deviceInfo[i].getName().contains("APC")) {
-                    transmitterDevices.add(device);
-                }
+                device = MidiSystem.getMidiDevice(info);
             } catch (MidiUnavailableException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
+                continue;
             }
+            if (device instanceof Sequencer || device instanceof Synthesizer)
+                continue;
 
+            if (inputCandidate == null && device.getMaxTransmitters() != 0)
+                inputCandidate = device;
+            if (outputCandidate == null && device.getMaxReceivers() != 0)
+                outputCandidate = device;
         }
-        return transmitterDevices;
+
+        if (inputCandidate == null)
+            return;
+
+        final String name = inputCandidate.getDeviceInfo().getName();
+        try {
+            inputCandidate.open();
+            inputCandidate.getTransmitter().setReceiver(new InputReceiver());
+            if (outputCandidate != null) {
+                outputCandidate.open();
+                outputReceiver = outputCandidate.getReceiver();
+            } else
+                log.warn("{} has no MIDI output, pad lights will not be updated", name);
+        } catch (MidiUnavailableException e) {
+            log.warn("Could not open MIDI device {}", name, e);
+            outputReceiver = null;
+            inputCandidate.close();
+            if (outputCandidate != null)
+                outputCandidate.close();
+            return;
+        }
+
+        inputDevice = inputCandidate;
+        outputDevice = outputCandidate;
+        log.info("MIDI device {} connected", name);
+
+        clearLights();
+        for (MidiConnectionListener listener : connectionListeners)
+            listener.onMidiConnected(name);
     }
-/*
-    public void getTransmiter(){
-        MidiDevices<ArrayList> transmitterDevices = getTransmitterDevices();
-        for(MidiDevice tmp : transmitterDevices) {
-            if(tmp.getDeviceInfo().equals(info)) {
-                try {
-                    midiController = tmp;
-                    Transmitter transmitter = midiController.getTransmitter();
-                    // something that implements receiver
-                    midiReceiver = new MidiReceiver();
-                    transmitter.setReceiver(midiReceiver);
-                    midiController.open();
-                    System.out.println("controller set ok");
-                } catch (MidiUnavailableException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-        }
+
+    private void disconnect() {
+        final String name = inputDevice.getDeviceInfo().getName();
+        outputReceiver = null;
+        if (outputDevice != null)
+            outputDevice.close();
+        inputDevice.close();
+        outputDevice = null;
+        inputDevice = null;
+        log.info("MIDI device {} disconnected", name);
+
+        for (MidiConnectionListener listener : connectionListeners)
+            listener.onMidiDisconnected();
     }
-*/
-    public ShortMessage getShortMessage(final int matrixX, final int matrixY, final KeyData.StateLight stateLight){
-        if(!keyDataMapByPos.containsKey(matrixX+"-"+matrixY)){
-            System.out.println(matrixX+"-"+matrixY);
-        }
-        return keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
+
+    private void clearLights() {
+        for (int matrixX = 0; matrixX < KeyData.MAX_X; matrixX++)
+            for (int matrixY = 0; matrixY < KeyData.MAX_Y; matrixY++)
+                send(matrixX, matrixY, KeyData.StateLight.OFF);
+
+        for (int posY = 0; posY < KeyData.MAX_Y; posY++)
+            sendSide(posY, KeyData.StateLight.OFF);
+
+        for (int posX = 0; posX < KeyData.MAX_X; posX++)
+            sendSlider(posX, KeyData.StateLight.OFF);
+    }
+
+    public ShortMessage getShortMessage(final int matrixX, final int matrixY, final KeyData.StateLight stateLight) {
+        return layout.matrixButton(matrixX, matrixY).getMessage(stateLight);
     }
 
     public void send(final int matrixX, final int matrixY, final KeyData.StateLight stateLight) {
-        final Receiver receiver;
-        try {
-            receiver = MidiSystem.getReceiver();
-        } catch (MidiUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        final ShortMessage myMsg = keyDataMapByPos.get(matrixX+"-"+matrixY).getMessage(stateLight);
-        receiver.send(myMsg, -1);
-
-    }
-
-    public void send(final ShortMessage myMsg) {
-        final Receiver receiver;
-        try {
-            receiver = MidiSystem.getReceiver();
-        } catch (MidiUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        receiver.send(myMsg, -1);
-
+        send(getShortMessage(matrixX, matrixY, stateLight));
     }
 
     public void sendSide(final int posY, final KeyData.StateLight stateLight) {
-        final Receiver receiver;
-        try {
-            receiver = MidiSystem.getReceiver();
-        } catch (MidiUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        final ShortMessage myMsg = keyDataMapByPos.get("Y-"+posY).getMessage(stateLight);
-        receiver.send(myMsg, -1);
-
+        send(layout.sideButton(posY).getMessage(stateLight));
     }
 
     public void sendSlider(final int posX, final KeyData.StateLight stateLight) {
-        final Receiver receiver;
-        try {
-            receiver = MidiSystem.getReceiver();
-        } catch (MidiUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        final ShortMessage myMsg = keyDataMapByPos.get("X-"+posX).getMessage(stateLight);
-        receiver.send(myMsg, -1);
-
+        send(layout.sliderButton(posX).getMessage(stateLight));
     }
 
-    public static class MidiInputReceiver implements Receiver {
-        private final String name;
-        private final Map<String, KeyData> keyDataMapByChannel;
-        private final MidiEvent midiEvent;
-
-        public MidiInputReceiver(final String name, final Map<String, KeyData> keyDataMapByChannel, final MidiEvent midiEvent) {
-            this.name = name;
-            this.keyDataMapByChannel = keyDataMapByChannel;
-            this.midiEvent = midiEvent;
+    public void send(final ShortMessage message) {
+        final Receiver receiver = outputReceiver;
+        if (receiver == null)
+            return;
+        try {
+            receiver.send(message, -1);
+        } catch (IllegalStateException e) {
+            log.debug("MIDI output is closed", e);
         }
+    }
 
-        public void send(MidiMessage msg, long timeStamp) {
-            if (msg instanceof ShortMessage) {
-                final ShortMessage shortMessage = (ShortMessage) msg;
-                final String prefix =shortMessage.getCommand() == 176?"SL-": "M-";
-                final KeyData keyData = keyDataMapByChannel.get(prefix+ shortMessage.getData1());
+    private final class InputReceiver implements Receiver {
 
-                if (keyData!=null) {
-                    // slider
-                    if (shortMessage.getCommand() == 176) {
-                        keyData.setValue(shortMessage.getData2()/127.0);
-                        midiEvent.onSlide(keyData);
-                        return;
-                    }
-                    if (shortMessage.getCommand() == 144)
-                        midiEvent.onKeyPress(keyData);
-                    else
-                        if (keyData.isShiftButton())
-                            midiEvent.onKeyRelease(keyData);
+        @Override
+        public void send(final MidiMessage message, final long timeStamp) {
+            final MidiEvent listener = midiEvent;
+            if (listener == null || !(message instanceof ShortMessage shortMessage))
+                return;
 
-                    return;
-                }
-
-                System.out.println("data1: " + shortMessage.getData1() +
-                        "\tdata2: "+shortMessage.getData2()+
-                        "\tcommand: "+shortMessage.getCommand());
-
-
+            final KeyData keyData = layout.fromIncoming(shortMessage);
+            if (keyData == null) {
+                log.debug("Unmapped MIDI message data1: {} data2: {} command: {}",
+                        shortMessage.getData1(), shortMessage.getData2(), shortMessage.getCommand());
+                return;
             }
+
+            if (shortMessage.getCommand() == ShortMessage.CONTROL_CHANGE) {
+                keyData.setValue(shortMessage.getData2() / 127.0);
+                listener.onSlide(keyData);
+            } else if (shortMessage.getCommand() == ShortMessage.NOTE_ON)
+                listener.onKeyPress(keyData);
+            else if (keyData.isShiftButton())
+                listener.onKeyRelease(keyData);
         }
-        public void close() {}
+
+        @Override
+        public void close() {
+        }
     }
 }

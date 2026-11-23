@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Configuración de Red - ArtNet</title>
+    <link rel="stylesheet" href="/css/network-config.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Volver</a>
+        <h1>⚙️ Configuración de Red</h1>
+        <p class="subtitle">Configuración de interfaces de red para ArtNet</p>
+        
+        <div class="current-config" id="currentConfig">
+            <strong>IP ArtNet actual:</strong> <span id="currentArtNetIp">Cargando...</span>
+        </div>
+        <div id="saveMessage" style="display: none; padding: 10px; margin-bottom: 20px; border-radius: 6px; background: #d4edda; color: #155724; border: 1px solid #c3e6cb;"></div>
+        
+        <div class="section">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h2 class="section-title">Interfaces de Red Cableadas</h2>
+                <button class="refresh-btn" onclick="loadInterfaces()">🔄 Actualizar</button>
+            </div>
+            <div id="interfacesList">
+                <div class="loading">Cargando interfaces de red...</div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="/js/network-config.js"></script>
+</body>
+</html>

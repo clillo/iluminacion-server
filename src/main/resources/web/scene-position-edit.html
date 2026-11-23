@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Posiciones Robóticas</title>
+    <link rel="stylesheet" href="/css/scene-position-edit.css">
+</head>
+<body>
+    <div class="container">
+        <a href="/scenes-config.html" class="back-btn">← Volver a Escenas</a>
+        <h1>🎯 Editar Posiciones Robóticas</h1>
+        <p class="subtitle">Visualización y edición de coordenadas de fixtures robóticos</p>
+        
+        <div id="message" class="message"></div>
+        
+        <div id="sceneInfo" class="scene-info">
+            <div class="loading">Cargando información de la escena...</div>
+        </div>
+        
+        <div class="editor-container">
+            <div class="canvas-section">
+                <h3 style="margin-bottom: 15px; color: #333;">Editor Gráfico de Posiciones</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="positionCanvas" width="800" height="800"></canvas>
+                </div>
+                <div class="canvas-controls">
+                    <button class="control-btn secondary" onclick="resetView()">🔄 Resetear Vista</button>
+                    <button class="control-btn secondary" onclick="centerAll()">🎯 Centrar Todos</button>
+                    <button class="control-btn success" onclick="savePositions()">💾 Guardar Cambios</button>
+                </div>
+                <div class="legend">
+                    <strong>Instrucciones:</strong> Haz clic y arrastra los puntos azules para mover las posiciones de los fixtures. Los valores se actualizan automáticamente en la tabla.
+                </div>
+            </div>
+            
+            <div class="info-panel">
+                <h3>Información del Fixture Seleccionado</h3>
+                <div id="selectedFixtureInfo">
+                    <div class="info-item">
+                        <p>Selecciona un fixture en el canvas para ver sus detalles</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <h3>Control de Posición</h3>
+                <div class="dpad-container">
+                    <div class="dpad-row">
+                        <div></div>
+                        <button class="dpad-btn" id="btnUp" onclick="moveFixture('up')" disabled>↑</button>
+                        <div></div>
+                    </div>
+                    <div class="dpad-row">
+                        <button class="dpad-btn" id="btnLeft" onclick="moveFixture('left')" disabled>←</button>
+                        <div style="width: 60px; height: 60px;"></div>
+                        <button class="dpad-btn" id="btnRight" onclick="moveFixture('right')" disabled>→</button>
+                    </div>
+                    <div class="dpad-row">
+                        <div></div>
+                        <button class="dpad-btn" id="btnDown" onclick="moveFixture('down')" disabled>↓</button>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="invert-controls">
+                    <label>Invertir Controles:</label>
+                    <div class="toggle-buttons">
+                        <button class="toggle-btn" id="toggleInvertPan" onclick="toggleInvert('pan')">🔄 Invertir Pan</button>
+                        <button class="toggle-btn" id="toggleInvertTilt" onclick="toggleInvert('tilt')">🔄 Invertir Tilt</button>
+                    </div>
+                </div>
+                <div class="increment-selector">
+                    <label>Incremento (coordenadas):</label>
+                    <div class="increment-buttons">
+                        <button class="increment-btn active" onclick="setIncrement(1)" data-increment="1">1</button>
+                        <button class="increment-btn" onclick="setIncrement(10)" data-increment="10">10</button>
+                        <button class="increment-btn" onclick="setIncrement(100)" data-increment="100">100</button>
+                        <button class="increment-btn" onclick="setIncrement(500)" data-increment="500">500</button>
+                    </div>
+                </div>
+                <div class="fixture-selector" style="margin-top: 20px; padding: 15px; background: white; border-radius: 6px;">
+                    <label style="display: block; margin-bottom: 10px; font-weight: 600; color: #333;">Seleccionar Fixture:</label>
+                    <div id="fixtureRadioList" style="max-height: 200px; overflow-y: auto;">
+                        <div class="loading">Cargando fixtures...</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table id="positionsTable">
+                <thead>
+                    <tr>
+                        <th>Fixture (ID + Nombre)</th>
+                        <th>Pan</th>
+                        <th>Pan Fine</th>
+                        <th>Tilt</th>
+                        <th>Tilt Fine</th>
+                        <th>X (Pan×256+PanFine)</th>
+                        <th>Y (Tilt×256+TiltFine)</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <tr>
+                        <td colspan="7" class="loading">Cargando posiciones...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="/js/scene-position-edit.js"></script>
+</body>
+</html>

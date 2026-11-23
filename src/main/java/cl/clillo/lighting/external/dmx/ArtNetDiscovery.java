@@ -1,10 +1,17 @@
 package cl.clillo.lighting.external.dmx;
 
-import java.net.*;
+import lombok.extern.slf4j.Slf4j;
+
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.SocketTimeoutException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 public final class ArtNetDiscovery {
 
     private static final int ARTNET_PORT = 6454;
@@ -12,10 +19,7 @@ public final class ArtNetDiscovery {
     private ArtNetDiscovery() {
     }
 
-    public static List<InetAddress> discover(
-            NetworkInterfaceScanner.InterfaceInfo interfaceInfo,
-            int timeoutMs
-    ) throws Exception {
+    public static List<InetAddress> discover(NetworkInterfaceScanner.InterfaceInfo interfaceInfo, int timeoutMs) throws Exception {
 
         List<InetAddress> nodes = new ArrayList<>();
 
@@ -26,9 +30,7 @@ public final class ArtNetDiscovery {
             return nodes;
         }
 
-        try (DatagramSocket socket =
-                     new DatagramSocket(
-                             new InetSocketAddress(localAddress, 0))) {
+        try (DatagramSocket socket = new DatagramSocket(new InetSocketAddress(localAddress, 0))) {
 
             socket.setBroadcast(true);
             socket.setSoTimeout(timeoutMs);
@@ -45,8 +47,7 @@ public final class ArtNetDiscovery {
 
             socket.send(request);
 
-            long end =
-                    System.currentTimeMillis() + timeoutMs;
+            long end = System.currentTimeMillis() + timeoutMs;
 
             while (System.currentTimeMillis() < end) {
                 try {
@@ -66,11 +67,7 @@ public final class ArtNetDiscovery {
 
                         nodes.add(response.getAddress());
 
-                        System.out.println(
-                                "Art-Net node encontrado: "
-                                        + response.getAddress()
-                                        .getHostAddress()
-                        );
+                        log.debug("Art-Net node encontrado: {}", response.getAddress().getHostAddress());
                     }
 
                 } catch (SocketTimeoutException e) {
@@ -115,30 +112,19 @@ public final class ArtNetDiscovery {
         return packet;
     }
 
-    private static boolean isArtPollReply(
-            byte[] data,
-            int length
-    ) {
+    private static boolean isArtPollReply(byte[] data, int length) {
 
         if (length < 10) {
             return false;
         }
 
-        String id =
-                new String(
-                        data,
-                        0,
-                        8,
-                        StandardCharsets.US_ASCII
-                );
+        String id = new String(data, 0, 8, StandardCharsets.US_ASCII);
 
         if (!"Art-Net\0".equals(id)) {
             return false;
         }
 
-        int opcode =
-                (data[8] & 0xff)
-                        | ((data[9] & 0xff) << 8);
+        int opcode = (data[8] & 0xff) | ((data[9] & 0xff) << 8);
 
         // ArtPollReply = 0x2100
         return opcode == 0x2100;

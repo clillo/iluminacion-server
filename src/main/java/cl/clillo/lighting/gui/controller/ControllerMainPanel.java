@@ -1,7 +1,10 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.executor.IOS2LEventListener;
+import cl.clillo.lighting.external.dmx.ArtNet;
+import cl.clillo.lighting.external.dmx.ArtNetConnectionListener;
 import cl.clillo.lighting.external.midi.KeyData;
+import cl.clillo.lighting.external.midi.MidiConnectionListener;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
@@ -10,12 +13,15 @@ import cl.clillo.lighting.model.ShowCollection;
 import cl.clillo.lighting.repository.StateRepository;
 
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JSlider;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -23,7 +29,7 @@ import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeListener, ActionListener, IOS2LEventListener  {
+public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnectionListener, ArtNetConnectionListener, ChangeListener, ActionListener, IOS2LEventListener  {
 
     @Serial
     private static final long serialVersionUID = -5869553409971473557L;
@@ -44,6 +50,8 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
 
     private final JTextField txtPos = new JTextField();
     private final JTextField txtEvent = new JTextField();
+    private final JLabel lblMidiStatus = new JLabel();
+    private final JLabel lblArtNetStatus = new JLabel();
     private final DimmerManager[] dimmers;
 
     private boolean upDown;
@@ -52,10 +60,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     public ControllerMainPanel() {
 
         pnlListDimmer = new ArrayList<>();
-        midiHandler = MidiHandler.getInstance(this);
+        midiHandler = MidiHandler.getInstance();
+        midiHandler.setMidiEvent(this);
         midiPages = new JTabbedPane();
         midiPages.setBounds(0, 0, WIDTH1 + 280, HEIGHT1-280);
-        cleanMatrix();
         add(midiPages);
         final HeadPanels headPanels = HeadPanels.getInstance();
         controllerEditPanels = new ControllerEditPanel[headPanels.getHeadPanels().size()];
@@ -121,6 +129,14 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(txtPos);
         panelDimmers.add(txtEvent);
 
+        lblMidiStatus.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 255, 120, 36);
+        lblArtNetStatus.setBounds(EFXMConfigureMainPanel.WIDTH1+ 20, 296, 120, 36);
+        for (JLabel statusLabel: List.of(lblMidiStatus, lblArtNetStatus)) {
+            statusLabel.setOpaque(true);
+            statusLabel.setHorizontalAlignment(JLabel.CENTER);
+            panelDimmers.add(statusLabel);
+        }
+
         JTabbedPane chaserPages = new JTabbedPane();
         chaserPages.setBounds(580, 0, 850, 400);
         chaserPages.addTab("Chaser Executor",new ControllerChaser());
@@ -128,6 +144,72 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
         panelDimmers.add(chaserPages);
 
         ShowCollection.getInstance().getOs2LScheduler().setIos2LEventListener(this);
+
+        midiHandler.addConnectionListener(this);
+        showMidiStatus();
+
+        ArtNet.getInstance().addConnectionListener(this);
+        showArtNetStatus();
+    }
+
+    @Override
+    public void onArtNetConnected(final String nodeAddress) {
+        SwingUtilities.invokeLater(this::showArtNetStatus);
+    }
+
+    @Override
+    public void onArtNetDisconnected() {
+        SwingUtilities.invokeLater(this::showArtNetStatus);
+    }
+
+    private void showArtNetStatus() {
+        final ArtNet artNet = ArtNet.getInstance();
+        showStatus(lblArtNetStatus, "ArtNet", artNet.isConnected(), artNet.getNodeAddress());
+    }
+
+    private static void showStatus(final JLabel label, final String name, final boolean connected, final String detail) {
+        label.setText("<html><center>" + name + "<br>" + (connected ? detail : "not connected") + "</center></html>");
+        label.setBackground(connected ? Color.GREEN : Color.LIGHT_GRAY);
+    }
+
+    @Override
+    public void onMidiConnected(final String deviceName) {
+        SwingUtilities.invokeLater(() -> {
+            showMidiStatus();
+            refreshMidiLights();
+        });
+    }
+
+    @Override
+    public void onMidiDisconnected() {
+        SwingUtilities.invokeLater(this::showMidiStatus);
+    }
+
+    private void showMidiStatus() {
+        showStatus(lblMidiStatus, "MIDI", midiHandler.isConnected(), midiHandler.getDeviceName());
+    }
+
+    private void refreshMidiLights() {
+        activeIndex = -1;
+        activePanel(midiPages.getSelectedIndex());
+        refreshSliderLights();
+    }
+
+    private void refreshSliderLights() {
+        final KeyData.StateLight upDownLight = sliderLight(upDown);
+        midiHandler.sendSlider(0, upDownLight);
+        midiHandler.sendSlider(1, upDownLight);
+
+        final KeyData.StateLight leftRightLight = sliderLight(leftRight);
+        midiHandler.sendSlider(2, leftRightLight);
+        midiHandler.sendSlider(3, leftRightLight);
+
+        for (DimmerManager dimmerManager: dimmers)
+            midiHandler.sendSlider(7 - dimmerManager.getIndex(), sliderLight(dimmerManager.isActive()));
+    }
+
+    private static KeyData.StateLight sliderLight(final boolean active) {
+        return active ? KeyData.StateLight.GREEN_BLINK : KeyData.StateLight.OFF;
     }
 
     @Override
@@ -148,13 +230,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
                 case 0:
                 case 1:
                     upDown = !upDown;
-                    if (upDown) {
-                        midiHandler.sendSlider(0, KeyData.StateLight.GREEN_BLINK);
-                        midiHandler.sendSlider(1, KeyData.StateLight.GREEN_BLINK);
-                    }else {
-                        midiHandler.sendSlider(0, KeyData.StateLight.OFF);
-                        midiHandler.sendSlider(1, KeyData.StateLight.OFF);
-                    }
                     for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
                         PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
                         if (positionAdjustable != null)
@@ -164,13 +239,6 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
                 case 2:
                 case 3:
                     leftRight = !leftRight;
-                    if (leftRight) {
-                        midiHandler.sendSlider(2, KeyData.StateLight.GREEN_BLINK);
-                        midiHandler.sendSlider(3, KeyData.StateLight.GREEN_BLINK);
-                    }else {
-                        midiHandler.sendSlider(2, KeyData.StateLight.OFF);
-                        midiHandler.sendSlider(3, KeyData.StateLight.OFF);
-                    }
                     for (ControllerEditPanel  controllerEditPanel: controllerEditPanels) {
                         PositionAdjustable positionAdjustable = controllerEditPanel.getPanelSeq().getPositionAdjustable();
                         if (positionAdjustable != null)
@@ -182,20 +250,12 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
                 case 6:
                 case 7:
                     for (DimmerManager dimmerManager: dimmers)
-                        selectSlider(dimmerManager, 7-keyData.getValue(), keyData.getValue());
+                        if (dimmerManager.getIndex() == 7 - keyData.getValue())
+                            dimmerManager.setActive(!dimmerManager.isActive());
                     break;
 
             }
-        }
-    }
-
-    private void selectSlider(DimmerManager dimmerManager, int index, int slider){
-        if (dimmerManager.getIndex()==index) {
-            dimmerManager.setActive(!dimmerManager.isActive());
-            if (dimmerManager.isActive())
-                midiHandler.sendSlider(slider, KeyData.StateLight.GREEN_BLINK);
-            else
-                midiHandler.sendSlider(slider, KeyData.StateLight.OFF);
+            refreshSliderLights();
         }
     }
 
@@ -242,10 +302,10 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, ChangeList
     }
 
     private void activePanel(int index){
-        if (activeIndex==index || index>7)
+        if (activeIndex==index || index<0 || index>7)
             return;
         cleanMatrix();
-        for (int i=0; i<7; i++)
+        for (int i=0; i<KeyData.MAX_Y; i++)
             midiHandler.sendSide(i, KeyData.StateLight.OFF);
         midiHandler.sendSide(7-index, KeyData.StateLight.RED);
         controllerEditPanels[index].activePanel();
