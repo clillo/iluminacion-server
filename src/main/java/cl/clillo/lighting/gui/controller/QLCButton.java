@@ -116,14 +116,19 @@ public class QLCButton implements ItemListener {
 
         show.setExecuting(isExecuting());
         ShowCollection.getInstance().executeShow(show);
-        if (isExecuting()) {
-            midiHandler.send(onMessage);
-        } else {
-            midiHandler.send(offMessage);
-        }
+        refreshMidiLight();
 
         if (buttonSelectedListener != null)
             buttonSelectedListener.onFinishChange(this);
+    }
+
+    /** Actualiza solo el LED del pad MIDI (sin re-ejecutar el show). */
+    public void refreshMidiLight() {
+        if (show == null) {
+            midiHandler.send(nullMessage);
+            return;
+        }
+        midiHandler.send(isExecuting() ? onMessage : offMessage);
     }
 
     public String getMapKey() {

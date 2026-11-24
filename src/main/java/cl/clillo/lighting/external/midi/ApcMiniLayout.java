@@ -47,6 +47,10 @@ public class ApcMiniLayout {
         return keyDataByPos.get("X-" + posX);
     }
 
+    public KeyData shiftButton() {
+        return keyDataByPos.get("SHIFT");
+    }
+
     public KeyData fromIncoming(final ShortMessage message) {
         if (message.getCommand() == ShortMessage.CONTROL_CHANGE)
             return sliderKeys.get(message.getData1());

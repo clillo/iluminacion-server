@@ -1,8 +1,10 @@
 package cl.clillo.lighting.gui.controller;
 
 import cl.clillo.lighting.external.midi.KeyData;
+import cl.clillo.lighting.external.midi.MidiShiftBank;
 import cl.clillo.lighting.model.QLCFunction;
 import cl.clillo.lighting.model.QLCScene;
+import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
 import lombok.extern.slf4j.Slf4j;
 
@@ -111,30 +113,46 @@ public class MidiButtonFunctionRepository {
         buttonGroup = createRows( 61, "Scene", "Moving Head Bee Eye Color", 4, 3,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, "MHead Bee Eye");
         createRows( 64, "Sequence", "Moving Head Bee Eye Sequence", 1, 2,  KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN,buttonGroup,"MHead Bee Eye");
 
+        // Bank B: nuevas secuencias / looks (Shift)
+        buttonGroup = createRowsForIds(100, new int[]{9000, 9001, 9002}, 0, 7,
+                KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, null, "Laser-Derby", MidiShiftBank.BANK_B);
+        createRowsForIds(100, new int[]{9003, 9004, 9005}, 0, 6,
+                KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Laser-Derby", MidiShiftBank.BANK_B);
+        createRowsForIds(100, new int[]{9012, 9013}, 0, 5,
+                KeyData.StateLight.YELLOW_BLINK, KeyData.StateLight.YELLOW, buttonGroup, "Laser-Derby", MidiShiftBank.BANK_B);
+        createRowsForIds(100, new int[]{9006, 9007, 9010, 9011}, 0, 4,
+                KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "Laser-Derby", MidiShiftBank.BANK_B);
+
+        createRowsForIds(110, new int[]{9040, 9041, 9042, 9043}, 0, 7,
+                KeyData.StateLight.RED_BLINK, KeyData.StateLight.RED, null, "Collections", MidiShiftBank.BANK_B);
+
+        buttonGroup = createRowsForIds(120, new int[]{8425, 8426, 8427, 8428, 8429, 8430, 8431, 8432}, 0, 7,
+                KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, null, "MHead Bee Eye", MidiShiftBank.BANK_B);
+        createRowsForIds(120, new int[]{8433, 8434, 8435, 8436, 8106, 8107, 8108, 8109}, 0, 6,
+                KeyData.StateLight.GREEN_BLINK, KeyData.StateLight.GREEN, buttonGroup, "MHead Bee Eye", MidiShiftBank.BANK_B);
 
         consistencyCheck();
     }
 
     private void consistencyCheck(){
         for (Map.Entry<String, PageConfig> panel: buttonGroupMapByCategory.entrySet()){
+            for (int bank = MidiShiftBank.BANK_A; bank <= MidiShiftBank.BANK_B; bank++) {
+                for (ButtonGroup buttonGroup: panel.getValue().getButtonGroups(bank)) {
+                    if (buttonGroup.getGlobalOff() == null)
+                        log.debug("Panel: " + panel.getKey() + " bank " + bank
+                                + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
 
-            for (ButtonGroup buttonGroup: panel.getValue().getButtonGroups()) {
-                QLCScene blackoutScene = null;
-                if (buttonGroup.getGlobalOff()!=null)
-                    blackoutScene = buttonGroup.getGlobalOff();
-
-                if (blackoutScene == null)
-                    log.debug("Panel: " + panel.getKey() + " buttonGroup "+ buttonGroup.getId() + " doesn't have blackout scene");
-
-                for (QLCButton button: buttonGroup.getButtonList())
-                    buttonByShow.put(button.getShow().getId(), button);
+                    for (QLCButton button: buttonGroup.getButtonList())
+                        if (button.getShow() != null)
+                            buttonByShow.put(button.getShow().getId(), button);
+                }
             }
         }
     }
 
     private ButtonGroup createRows(final int groupId, final String type, final String path, int matrixX,
                                    int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState, final String category) {
-        return createRows(groupId, type, path,  matrixX, matrixY, onState,  offState, null, category );
+        return createRows(groupId, type, path,  matrixX, matrixY, onState,  offState, null, category, MidiShiftBank.BANK_A);
     }
 
     private int[] getShowsId(final List<QLCFunction> list){
@@ -155,32 +173,50 @@ public class MidiButtonFunctionRepository {
     private ButtonGroup createRows(final int groupId, final String type, final String path, int matrixX,
                                    int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState,
                                    ButtonGroup buttonGroup, final String category){
-        final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList(type, path);
-        int[] showIds = getShowsId(list);
-        int i;
+        return createRows(groupId, type, path, matrixX, matrixY, onState, offState, buttonGroup, category, MidiShiftBank.BANK_A);
+    }
 
+    private ButtonGroup createRows(final int groupId, final String type, final String path, int matrixX,
+                                   int matrixY, final KeyData.StateLight onState, final KeyData.StateLight offState,
+                                   ButtonGroup buttonGroup, final String category, final int bank){
+        final List<QLCFunction> list = ShowCollection.getInstance().getFunctionList(type, path);
         QLCScene blackoutScene = null;
         for (QLCFunction function: list){
             if(function.isBlackout())
                 blackoutScene = (QLCScene)function;
         }
+        return placeShows(groupId, type, getShowsId(list), matrixX, matrixY, onState, offState,
+                buttonGroup, category, bank, blackoutScene);
+    }
 
-        if (buttonGroup ==null)
+    private ButtonGroup createRowsForIds(final int groupId, final int[] showIds, int matrixX, int matrixY,
+                                         final KeyData.StateLight onState, final KeyData.StateLight offState,
+                                         final ButtonGroup buttonGroup, final String category, final int bank) {
+        return placeShows(groupId, "BankB", showIds, matrixX, matrixY, onState, offState,
+                buttonGroup, category, bank, null);
+    }
+
+    private ButtonGroup placeShows(final int groupId, final String type, final int[] showIds, int matrixX, int matrixY,
+                                   final KeyData.StateLight onState, final KeyData.StateLight offState,
+                                   ButtonGroup buttonGroup, final String category, final int bank,
+                                   final QLCScene blackoutScene) {
+        if (buttonGroup == null)
             buttonGroup = new ButtonGroup(groupId, type, new ArrayList<>());
 
-        if (buttonGroup.getGlobalOff()==null && blackoutScene!=null)
+        if (buttonGroup.getGlobalOff() == null && blackoutScene != null)
             buttonGroup.setGlobalOff(blackoutScene);
 
-        final List<QLCButton> laserButtons = buttonGroup.getButtonList();
-
-        for (i=0; i<showIds.length; i++){
-            QLCButton qlcButton = new QLCButton(matrixX, matrixY, ShowCollection.getInstance().getShow(showIds[i]),1,
-                    onState, offState, KeyData.StateLight.OFF);
-
-            laserButtons.add(qlcButton);
+        final List<QLCButton> buttons = buttonGroup.getButtonList();
+        for (int showId : showIds) {
+            final Show show = ShowCollection.getInstance().getShow(showId);
+            if (show == null) {
+                log.warn("MIDI map: show {} not found (category={}, bank={})", showId, category, bank);
+                continue;
+            }
+            buttons.add(new QLCButton(matrixX, matrixY, show, 1, onState, offState, KeyData.StateLight.OFF));
             matrixX++;
-            if (matrixX>7){
-                matrixX=0;
+            if (matrixX > 7) {
+                matrixX = 0;
                 matrixY--;
             }
         }
@@ -188,7 +224,10 @@ public class MidiButtonFunctionRepository {
         if (!buttonGroupMapByCategory.containsKey(category))
             buttonGroupMapByCategory.put(category, new PageConfig(new ArrayList<>()));
 
-        buttonGroupMapByCategory.get(category).getButtonGroups().add(buttonGroup);
+        final PageConfig pageConfig = buttonGroupMapByCategory.get(category);
+        final List<ButtonGroup> bankGroups = pageConfig.getButtonGroups(bank);
+        if (!bankGroups.contains(buttonGroup))
+            bankGroups.add(buttonGroup);
         return buttonGroup;
     }
 

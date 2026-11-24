@@ -8,6 +8,8 @@ import cl.clillo.lighting.external.virtualdj.OS2LServer;
 import cl.clillo.lighting.external.midi.MidiConnectionListener;
 import cl.clillo.lighting.external.midi.MidiEvent;
 import cl.clillo.lighting.external.midi.MidiHandler;
+import cl.clillo.lighting.external.midi.MidiShiftBank;
+import lombok.extern.slf4j.Slf4j;
 import cl.clillo.lighting.gui.movements.EFXMConfigureMainPanel;
 import cl.clillo.lighting.model.Show;
 import cl.clillo.lighting.model.ShowCollection;
@@ -33,6 +35,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+@Slf4j
 public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnectionListener, ArtNetConnectionListener, ChangeListener, ActionListener, IOS2LEventListener  {
 
     @Serial
@@ -255,6 +258,11 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
 
     @Override
     public void onKeyPress(final KeyData keyData) {
+        if (keyData.getMidiInputType() == KeyData.MidiInputType.SHIFT_BUTTON) {
+            toggleShiftBank();
+            return;
+        }
+
         if (keyData.getMidiInputType() == KeyData.MidiInputType.SIDE_BUTTON){
             selectPanel(keyData.getValue());
             return;
@@ -306,6 +314,18 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
                 midiHandler.send(i, j, KeyData.StateLight.OFF);
     }
 
+    private void toggleShiftBank() {
+        final int bank = MidiShiftBank.getInstance().toggle();
+        cleanMatrix();
+        for (ControllerEditPanel panel : controllerEditPanels)
+            if (panel != null)
+                panel.setBank(bank);
+        midiHandler.sendShift(bank == MidiShiftBank.BANK_B
+                ? KeyData.StateLight.GREEN
+                : KeyData.StateLight.OFF);
+        log.info("MIDI bank {}", bank == MidiShiftBank.BANK_B ? "B" : "A");
+    }
+
     private void selectPanel(int index){
         activePanel(7-index);
         midiPages.removeChangeListener(this);
@@ -315,7 +335,7 @@ public class ControllerMainPanel extends JPanel implements MidiEvent, MidiConnec
 
     @Override
     public void onKeyRelease(KeyData keyData) {
-
+        // Shift es toggle en press; release se ignora.
     }
 
     @Override

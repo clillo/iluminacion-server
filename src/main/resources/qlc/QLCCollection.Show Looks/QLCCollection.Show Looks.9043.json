@@ -1,0 +1,36 @@
+{
+  "id": 9043,
+  "type": "Collection",
+  "name": "Peak Drop",
+  "path": "Show Looks",
+  "shows": [
+    {
+      "id": 3000,
+      "name": "Moving Head Beam All On"
+    },
+    {
+      "id": 9013,
+      "name": "Peak White Strobe"
+    },
+    {
+      "id": 9002,
+      "name": "Laser Flash 1of4"
+    },
+    {
+      "id": 9007,
+      "name": "RGBW White Flash 1of4"
+    },
+    {
+      "id": 8108,
+      "name": "Peak White"
+    },
+    {
+      "id": 8431,
+      "name": "Peak Punch White"
+    },
+    {
+      "id": 153,
+      "name": "Spiders - Sec Fast"
+    }
+  ]
+}

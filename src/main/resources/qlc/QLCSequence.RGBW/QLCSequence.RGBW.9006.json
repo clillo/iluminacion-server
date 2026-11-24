@@ -1,0 +1,1155 @@
+{
+  "id": 9006,
+  "type": "Sequence",
+  "name": "RGBW Breath Amber",
+  "path": "RGBW",
+  "order": "LOOP",
+  "direction": "FORWARD",
+  "vdjType": "BEAT_X_1",
+  "steps": [
+    {
+      "id": 0,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 40
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 80
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 40
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 10
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 1,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 100
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 180
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 90
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 30
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 200
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 255
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 140
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 60
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 255
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 255
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 160
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 80
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 200
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 255
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 140
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 60
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 100
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 180
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 90
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 30
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 40
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 80
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 40
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 10
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "fadeIn": 0,
+      "hold": 1000,
+      "fadeOut": 0,
+      "points": [
+        {
+          "fixture": 0,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 0,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 1,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 5,
+          "value": 0
+        },
+        {
+          "fixture": 2,
+          "channel": 6,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 0,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 1,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 2,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 3,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 4,
+          "value": 0
+        },
+        {
+          "fixture": 3,
+          "channel": 5,
+          "value": 0
+        }
+      ]
+    }
+  ]
+}

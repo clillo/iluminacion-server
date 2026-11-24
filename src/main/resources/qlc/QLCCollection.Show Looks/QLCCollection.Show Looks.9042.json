@@ -1,0 +1,28 @@
+{
+  "id": 9042,
+  "type": "Collection",
+  "name": "Build",
+  "path": "Show Looks",
+  "shows": [
+    {
+      "id": 143,
+      "name": "Spiders - Sec Slow"
+    },
+    {
+      "id": 9000,
+      "name": "Laser Color Cycle Circle"
+    },
+    {
+      "id": 9004,
+      "name": "Derby Color Ping Pong"
+    },
+    {
+      "id": 9006,
+      "name": "RGBW Breath Amber"
+    },
+    {
+      "id": 8106,
+      "name": "Warm Amber Open"
+    }
+  ]
+}

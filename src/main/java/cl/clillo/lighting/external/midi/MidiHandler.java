@@ -173,6 +173,10 @@ public class MidiHandler {
         send(layout.sliderButton(posX).getMessage(stateLight));
     }
 
+    public void sendShift(final KeyData.StateLight stateLight) {
+        send(layout.shiftButton().getMessage(stateLight));
+    }
+
     public void send(final ShortMessage message) {
         final Receiver receiver = outputReceiver;
         if (receiver == null)
@@ -202,9 +206,14 @@ public class MidiHandler {
             if (shortMessage.getCommand() == ShortMessage.CONTROL_CHANGE) {
                 keyData.setValue(shortMessage.getData2() / 127.0);
                 listener.onSlide(keyData);
-            } else if (shortMessage.getCommand() == ShortMessage.NOTE_ON)
-                listener.onKeyPress(keyData);
-            else if (keyData.isShiftButton())
+            } else if (shortMessage.getCommand() == ShortMessage.NOTE_ON) {
+                // velocity 0 = note-off en algunos controladores; Shift es toggle solo en press real
+                if (shortMessage.getData2() == 0) {
+                    if (keyData.isShiftButton())
+                        listener.onKeyRelease(keyData);
+                } else
+                    listener.onKeyPress(keyData);
+            } else if (keyData.isShiftButton())
                 listener.onKeyRelease(keyData);
         }
 

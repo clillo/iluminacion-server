@@ -1,0 +1,128 @@
+{
+  "id": 9010,
+  "type": "Scene",
+  "name": "Amber Soft",
+  "path": "RGBW",
+  "points": [
+    {
+      "fixture": 0,
+      "channel": 0,
+      "value": 160
+    },
+    {
+      "fixture": 0,
+      "channel": 1,
+      "value": 255
+    },
+    {
+      "fixture": 0,
+      "channel": 2,
+      "value": 140
+    },
+    {
+      "fixture": 0,
+      "channel": 3,
+      "value": 0
+    },
+    {
+      "fixture": 0,
+      "channel": 4,
+      "value": 40
+    },
+    {
+      "fixture": 0,
+      "channel": 5,
+      "value": 0
+    },
+    {
+      "fixture": 1,
+      "channel": 0,
+      "value": 160
+    },
+    {
+      "fixture": 1,
+      "channel": 1,
+      "value": 255
+    },
+    {
+      "fixture": 1,
+      "channel": 2,
+      "value": 140
+    },
+    {
+      "fixture": 1,
+      "channel": 3,
+      "value": 0
+    },
+    {
+      "fixture": 1,
+      "channel": 4,
+      "value": 40
+    },
+    {
+      "fixture": 1,
+      "channel": 5,
+      "value": 0
+    },
+    {
+      "fixture": 2,
+      "channel": 0,
+      "value": 160
+    },
+    {
+      "fixture": 2,
+      "channel": 1,
+      "value": 255
+    },
+    {
+      "fixture": 2,
+      "channel": 2,
+      "value": 140
+    },
+    {
+      "fixture": 2,
+      "channel": 3,
+      "value": 0
+    },
+    {
+      "fixture": 2,
+      "channel": 4,
+      "value": 40
+    },
+    {
+      "fixture": 2,
+      "channel": 5,
+      "value": 0
+    },
+    {
+      "fixture": 3,
+      "channel": 0,
+      "value": 160
+    },
+    {
+      "fixture": 3,
+      "channel": 1,
+      "value": 255
+    },
+    {
+      "fixture": 3,
+      "channel": 2,
+      "value": 140
+    },
+    {
+      "fixture": 3,
+      "channel": 3,
+      "value": 0
+    },
+    {
+      "fixture": 3,
+      "channel": 4,
+      "value": 40
+    },
+    {
+      "fixture": 3,
+      "channel": 5,
+      "value": 0
+    }
+  ]
+}

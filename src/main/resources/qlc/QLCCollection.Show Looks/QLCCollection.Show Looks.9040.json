@@ -1,0 +1,28 @@
+{
+  "id": 9040,
+  "type": "Collection",
+  "name": "Warm Open",
+  "path": "Show Looks",
+  "shows": [
+    {
+      "id": 9010,
+      "name": "Amber Soft"
+    },
+    {
+      "id": 9012,
+      "name": "Warm Soft Static"
+    },
+    {
+      "id": 160,
+      "name": "Laser Off"
+    },
+    {
+      "id": 8106,
+      "name": "Warm Amber Open"
+    },
+    {
+      "id": 3009,
+      "name": "Moving Head Beam All Off"
+    }
+  ]
+}
